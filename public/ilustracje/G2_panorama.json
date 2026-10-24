@@ -1,0 +1,102 @@
+{
+ "site": [
+  49.33904,
+  20.04698
+ ],
+ "eyeM": 917,
+ "azimuthFrom": 240.0,
+ "azimuthTo": 124.0,
+ "verticalExaggeration": 3.2,
+ "peaks": [
+  {
+   "slug": "kominiarski-wierch",
+   "name": "Kominiarski Wierch",
+   "height": 1829,
+   "az": 234.75,
+   "dist_km": 18.8,
+   "dem": 1800,
+   "visible": true
+  },
+  {
+   "slug": "ciemniak",
+   "name": "Ciemniak",
+   "height": 2096,
+   "az": 220.98,
+   "dist_km": 15.9,
+   "dem": 2070,
+   "visible": true
+  },
+  {
+   "slug": "czerwone-wierchy",
+   "name": "Czerwone Wierchy",
+   "height": 2122,
+   "az": 219.77,
+   "dist_km": 15.6,
+   "dem": 2099,
+   "visible": true
+  },
+  {
+   "slug": "giewont",
+   "name": "Giewont",
+   "height": 1894,
+   "az": 219.84,
+   "dist_km": 12.8,
+   "dem": 1837,
+   "visible": true
+  },
+  {
+   "slug": "swinica",
+   "name": "Świnica",
+   "height": 2301,
+   "az": 192.05,
+   "dist_km": 13.5,
+   "dem": 2208,
+   "visible": true
+  },
+  {
+   "slug": "woloszyn",
+   "name": "Wołoszyn",
+   "height": 2155,
+   "az": 179.67,
+   "dist_km": 12.2,
+   "dem": 2122,
+   "visible": true
+  },
+  {
+   "slug": "gerlach",
+   "name": "Gerlach",
+   "height": 2655,
+   "az": 162.08,
+   "dist_km": 20.5,
+   "dem": 2605,
+   "visible": true
+  },
+  {
+   "slug": "lodowy",
+   "name": "Lodowy Szczyt",
+   "height": 2627,
+   "az": 148.11,
+   "dist_km": 18.6,
+   "dem": 2559,
+   "visible": true
+  },
+  {
+   "slug": "lomnica",
+   "name": "Łomnica",
+   "height": 2634,
+   "az": 143.1,
+   "dist_km": 20.0,
+   "dem": 2584,
+   "visible": true
+  },
+  {
+   "slug": "hawran",
+   "name": "Hawrań",
+   "height": 2152,
+   "az": 132.6,
+   "dist_km": 14.8,
+   "dem": 2084,
+   "visible": true
+  }
+ ]
+}

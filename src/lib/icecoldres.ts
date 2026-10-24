@@ -7,7 +7,7 @@ import 'server-only'
  * Błąd lub brak API nie może zepsuć strony: funkcje zwracają null, a widok chowa ceny.
  */
 const API = process.env.ICECOLDRES_API_URL ?? 'https://icecoldres.audiowizard.pl'
-export const ICECOLDRES_SLUG = process.env.ICECOLDRES_SLUG ?? 'matygowa-osada'
+export const ICECOLDRES_SLUG = process.env.ICECOLDRES_SLUG ?? 'booking'
 
 export interface PublicUnitType {
   id: string

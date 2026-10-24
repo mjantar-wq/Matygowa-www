@@ -1,9 +1,9 @@
 # Matygowa-www
 
-Nowa strona Matygowej Osady: Next.js 16 z wbudowanym panelem treści Payload 3 (`/admin`), na Cloudflare Workers (OpenNext), baza D1, pliki w R2.
+Nowa strona Matygowej Osady: Next.js 16 z wbudowanym panelem treści Payload 3 (`/panel`), na Cloudflare Workers (OpenNext), baza D1, pliki w R2.
 Rezerwacje, ceny i promocje pochodzą z IceColdRes (publiczne API), do czasu jego uruchomienia przyciski prowadzą do Hotres (przełącznik w panelu: Ustawienia strony → Rezerwacje).
 
-- Środowisko testowe: https://matygowa.audiowizard.pl (panel: `/admin`)
+- Środowisko testowe: https://matygowa.audiowizard.pl (panel: `/panel`)
 - Koncepcja i plan: dokument projektu „Matygowa Osada: koncepcja, szkielet, specyfikacja i plan nowej strony”
 - Wdrożenie i sekrety: [`docs/wdrozenie.md`](docs/wdrozenie.md)
 
@@ -14,7 +14,7 @@ pnpm install
 cp .env.example .env            # PAYLOAD_SECRET=dowolny-ciąg
 pnpm payload migrate            # lokalna D1 w .wrangler/
 pnpm seed                       # treści robocze z content/
-pnpm dev                        # http://localhost:3000, panel: /admin
+pnpm dev                        # http://localhost:3000, panel: /panel
 ```
 
 Kontrola: `pnpm typecheck && pnpm lint && pnpm test && pnpm test:e2e`.

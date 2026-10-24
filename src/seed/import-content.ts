@@ -193,6 +193,9 @@ async function main() {
         address: s.contact?.address,
         social: Object.entries(s.social ?? {}).map(([label, url]) => ({ label, url: String(url) })),
         priceSlogan: s.booking_bar?.best_rate?.[locale],
+        // import służy środowisku testowemu: testujemy integrację z IceColdRes (produkcja: decyzja Michała w grudniu)
+        bookingEngine: 'icecoldres',
+        icecoldresUrl: 'https://icecoldres.audiowizard.pl',
         seoTitle: s.seo_default?.title?.[locale],
         seoDescription: s.seo_default?.description?.[locale],
       },

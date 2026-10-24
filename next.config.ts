@@ -23,7 +23,8 @@ const nextConfig: NextConfig = {
     return { beforeFiles: localeRewrites(ENABLED_LOCALES), afterFiles: [], fallback: [] }
   },
   async redirects() {
-    return localeRedirects(ENABLED_LOCALES)
+    // panel treści jest pod /panel (domyślny /admin Payloada zostaje tylko jako przekierowanie)
+    return [{ source: '/admin/:path*', destination: '/panel/:path*', permanent: false }, ...localeRedirects(ENABLED_LOCALES)]
   },
   async headers() {
     return [
@@ -37,7 +38,7 @@ const nextConfig: NextConfig = {
         ],
       },
       // panelu nie da się osadzić w ramce (clickjacking)
-      { source: '/admin/:path*', headers: [{ key: 'Content-Security-Policy', value: "frame-ancestors 'self'" }] },
+      { source: '/panel/:path*', headers: [{ key: 'Content-Security-Policy', value: "frame-ancestors 'self'" }] },
     ]
   },
 

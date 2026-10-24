@@ -23,7 +23,7 @@ DOMY = [
 # Budynek z apartamentami (otwarcie wiosną 2027): obrys z rzutu dachu i linie kalenic.
 APT_OBRYS = "M816,170 L874,116 L940,136 L962,186 L1010,226 L1002,292 L956,304 L918,270 L862,208 L818,194 Z"
 APT_KALENICE = "M845,165 L905,150 L935,175 M905,150 L898,128 M935,175 L975,240 L962,282 M975,240 L1000,258"
-APARTAMENTY = [("czerwone-wierchy", "Czerwone Wierchy"), ("giewont", "Giewont"), ("kominiarski", "Kominiarski")]
+APARTAMENTY = [("czerwone-wierchy", "Czerwone Wierchy"), ("giewont", "Giewont"), ("kominiarski", "Kominiarski Wierch"), ("ciemniak", "Ciemniak")]  # Ciemniak: nazwa wstępna, bez podpisu na zdjęciu (content/README.md)
 
 def dach(cx, cy, w, h, rot=0):
     """Dach czterospadowy w rzucie: obrys i kalenica z czterema narożnymi grzbietami."""
@@ -92,11 +92,11 @@ for slug, nazwa, wys, cx, cy, w, h in DOMY:
              f'<text class="opis" x="{cx}" y="{cy + h/2 + 44}" text-anchor="middle">{wys} m n.p.m.</text></g>')
 
 apts = ",".join(n for _, n in APARTAMENTY)
-L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" tabindex="0" role="button" aria-label="Apartamenty Czerwone Wierchy, Giewont i Kominiarski, otwarcie wiosną 2027">')
+L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" tabindex="0" role="button" aria-label="Apartamenty Czerwone Wierchy, Giewont, Kominiarski Wierch i Ciemniak, otwarcie wiosną 2027">')
 L.append(f'<path class="dach" d="{APT_OBRYS}"/><path class="kalenica" d="{APT_KALENICE}"/><circle class="znacznik" cx="915" cy="210" r="5"/>')
 L.append('<rect class="etykieta-tlo" x="830" y="20" width="230" height="46" rx="2"/>'
          '<text class="nazwa" x="945" y="40" text-anchor="middle">Apartamenty</text>'
-         '<text class="opis" x="945" y="58" text-anchor="middle">wiosna 2027 · 3 apartamenty</text></g>')
+         '<text class="opis" x="945" y="58" text-anchor="middle">wiosna 2027 · 4 apartamenty</text></g>')
 L.append('</g></svg>')
 
 out = ROOT / "public/ilustracje/G1_mapa_osady.svg"; out.parent.mkdir(parents=True, exist_ok=True)

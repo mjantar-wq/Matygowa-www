@@ -41,17 +41,17 @@ export default async function UnitPage({ params }: SlugParams) {
       <section className="mo-hero">
         <div className="mo-hero__media"><Media media={unit.hero} priority /></div>
         <div className="mo-container mo-hero__content">
-          <p className="mo-eyebrow" style={{ color: 'inherit' }}>
+          <p className="mo-label" style={{ color: 'inherit' }}>
             {t.house.kind[unit.kind]}
             {unit.status === 'comingSoon' ? ` · ${t.house.comingSoon}` : ''}
           </p>
-          <h1 className="mo-display">{unit.name}</h1>
+          <h1 className="mo-display-xl">{unit.name}</h1>
           {unit.peak?.elevation ? <p className="mo-lede">{t.house.elevation(unit.peak.elevation)}{unit.peak.range ? ` · ${unit.peak.range}` : ''}</p> : null}
         </div>
       </section>
 
       <section className="mo-section mo-container">
-        {facts.length ? <p className="mo-eyebrow">{facts.join(' · ')}</p> : null}
+        {facts.length ? <p className="mo-label">{facts.join(' · ')}</p> : null}
         {unit.tagline ? <p className="mo-lede" style={{ marginBlock: 'var(--space-5)' }}>{unit.tagline}</p> : null}
         <RichText data={unit.story} />
         {!unit.story ? <Placeholder label={t.placeholder} note="Opowieść o domu" /> : null}
@@ -65,12 +65,12 @@ export default async function UnitPage({ params }: SlugParams) {
 
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{t.house.gallery}</h2>
-        <div className="mo-cards" style={{ marginBlockStart: 'var(--space-5)' }}>
+        <div className="mo-cards">
           {unit.gallery?.length ? unit.gallery.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null)) : <Placeholder label={t.placeholder} />}
         </div>
         {unit.plans?.length ? (
           <>
-            <h3 className="mo-h3" style={{ marginBlockStart: 'var(--space-7)' }}>{t.house.plan}</h3>
+            <h3 className="mo-h3">{t.house.plan}</h3>
             {unit.plans.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null))}
           </>
         ) : null}
@@ -85,9 +85,9 @@ export default async function UnitPage({ params }: SlugParams) {
 
       {unit.status === 'bookable' ? (
         <section className="mo-section mo-container">
-          <h2 className="mo-h2" style={{ marginBlockEnd: 'var(--space-5)' }}>{t.house.availability}</h2>
+          <h2 className="mo-h2">{t.house.availability}</h2>
           {promos.map((p) => (
-            <p key={p.id} className="mo-eyebrow" style={{ color: 'var(--color-bursztyn-tekst)' }}>
+            <p key={p.id} className="mo-label" style={{ color: 'var(--color-bursztyn-tekst)' }}>
               {ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}
             </p>
           ))}
@@ -96,7 +96,7 @@ export default async function UnitPage({ params }: SlugParams) {
       ) : null}
 
       <section className="mo-section mo-container">
-        <h2 className="mo-h2" style={{ marginBlockEnd: 'var(--space-5)' }}>{t.house.others}</h2>
+        <h2 className="mo-h2">{t.house.others}</h2>
         <PeaksPanorama units={all.filter((u) => u.id !== unit.id)} ctx={ctx} />
       </section>
     </article>

@@ -26,7 +26,7 @@ export default async function LocaleLayout({ children, params }: LocaleParams & 
   return (
     <html lang={ctx.locale} dir={dirOf(ctx.locale)} data-sezon={seasonOf()} data-pora="dzien" className={`${fraunces.variable} ${inter.variable} ${rufina.variable}`}>
       <body>
-        <a className="mo-skip mo-button" href="#tresc">{ctx.t.skipToContent}</a>
+        <a className="mo-skip mo-btn mo-btn--glowny" href="#tresc">{ctx.t.skipToContent}</a>
         <SiteHeader locale={ctx.locale} t={ctx.t} />
         <main id="tresc">{children}</main>
         <SiteFooter locale={ctx.locale} t={ctx.t} settings={ctx.settings} />

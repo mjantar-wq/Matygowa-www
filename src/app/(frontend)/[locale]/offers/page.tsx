@@ -22,27 +22,29 @@ export default async function OffersPage({ params }: LocaleParams) {
   return (
     <CmsPage route="offers" ctx={ctx}>
       <section className="mo-section mo-container">
-        <p className="mo-eyebrow" style={{ marginBlockEnd: 'var(--space-5)' }}>{ctx.settings?.priceSlogan || ctx.t.booking.lowestPrice}</p>
+        <p className="mo-label">{ctx.settings?.priceSlogan || ctx.t.booking.lowestPrice}</p>
         <div className="mo-cards">
           {promotions.map((p) => {
             const extra = offers.find((o) => o.icecoldresPromotionId === p.id)
             return (
-              <article key={p.id} className="mo-card">
+              <article key={p.id} className="mo-card mo-card--poziom">
                 <div className="mo-card__media"><Media media={extra?.image} /></div>
-                <p className="mo-eyebrow">{ctx.t.offers.onlyHere}</p>
-                <h2 className="mo-h3">{pl ? p.badge : p.en.badge || p.badge}</h2>
-                <p>{pl ? p.description : p.en.description || p.description}</p>
+                <p className="mo-card__eyebrow"><span className="mo-badge">{ctx.t.offers.onlyHere}</span></p>
+                <h2 className="mo-h3 mo-card__title">{pl ? p.badge : p.en.badge || p.badge}</h2>
+                <p className="mo-body-s mo-card__text">{pl ? p.description : p.en.description || p.description}</p>
+                <p className="mo-card__meta" />
               </article>
             )
           })}
           {offers
             .filter((o) => !o.icecoldresPromotionId || !promotions.some((p) => p.id === o.icecoldresPromotionId))
             .map((o) => (
-              <article key={o.id} className="mo-card">
+              <article key={o.id} className="mo-card mo-card--poziom">
                 <div className="mo-card__media"><Media media={o.image} /></div>
-                <h2 className="mo-h3">{o.title}</h2>
-                <p>{o.summary}</p>
-                <RichText data={o.content} />
+                <p className="mo-card__eyebrow"><span className="mo-label">{ctx.t.nav.offers}</span></p>
+                <h2 className="mo-h3 mo-card__title">{o.title}</h2>
+                <div className="mo-body-s mo-card__text">{o.summary}</div>
+                <div className="mo-card__meta mo-prose"><RichText data={o.content} /></div>
               </article>
             ))}
         </div>

@@ -18,7 +18,7 @@ function Heading({ eyebrow, heading, level = 2 }: { eyebrow?: string | null; hea
   const H = level === 1 ? 'h1' : 'h2'
   return (
     <header style={{ display: 'grid', gap: 'var(--space-3)', marginBlockEnd: 'var(--space-6)' }}>
-      {eyebrow ? <p className="mo-eyebrow">{eyebrow}</p> : null}
+      {eyebrow ? <p className="mo-label">{eyebrow}</p> : null}
       {heading ? <H className={level === 1 ? 'mo-h1' : 'mo-h2'}>{heading}</H> : null}
     </header>
   )
@@ -39,7 +39,7 @@ function Hero({ block, ctx }: Props<'hero'>) {
         <Media media={block.image} priority />
       </div>
       <div className="mo-container mo-hero__content">
-        <h1 className="mo-display">{block.headline}</h1>
+        <h1 className="mo-display-xl">{block.headline}</h1>
         {block.subline ? <p className="mo-lede">{block.subline}</p> : null}
         {block.showBookingBar !== false ? <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} /> : null}
       </div>
@@ -53,11 +53,11 @@ function Intro({ block }: Props<'intro'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       {block.stats?.length ? (
-        <dl style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-7)', marginBlockStart: 'var(--space-7)' }}>
+        <dl className="mo-stats">
           {block.stats.map((s) => (
             <div key={s.id}>
-              <dt className="mo-muted">{s.label}</dt>
-              <dd style={{ fontSize: 'var(--text-figure)', fontFamily: 'var(--font-display)' }}>{s.value}</dd>
+              <dt className="mo-label">{s.label}</dt>
+              <dd className="mo-price">{s.value}</dd>
             </div>
           ))}
         </dl>
@@ -100,7 +100,7 @@ function HouseInside({ block, ctx }: Props<'houseInside'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <div className="mo-cards" style={{ marginBlockStart: 'var(--space-6)' }}>
+      <div className="mo-cards">
         {block.rooms?.map((r) => (
           <article key={r.id} className="mo-card">
             <div className="mo-card__media"><Media media={r.image} /></div>
@@ -121,7 +121,7 @@ async function Rituals({ block, ctx }: Props<'rituals'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <ol className="mo-cards" style={{ marginBlockStart: 'var(--space-6)' }}>
+      <ol className="mo-cards">
         {block.steps?.map((s) => (
           <li key={s.id} className="mo-card">
             <div className="mo-card__media"><Media media={s.image} /></div>
@@ -131,7 +131,7 @@ async function Rituals({ block, ctx }: Props<'rituals'>) {
         ))}
       </ol>
       {services.length ? (
-        <ul style={{ marginBlockStart: 'var(--space-6)' }}>
+        <ul>
           {services.map((s) => (
             <li key={s.id}>
               {ctx.locale === 'pl' ? s.name : s.en.name || s.name}: {formatPrice(s.price, ctx.locale)}
@@ -167,7 +167,7 @@ async function Surroundings({ block, ctx }: Props<'surroundings'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       <Media media={block.map} fallback={`${ctx.t.placeholder}: mapa okolicy`} />
-      <div className="mo-cards" style={{ marginBlockStart: 'var(--space-6)' }}>
+      <div className="mo-cards">
         {attractions.map((a) => (
           <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">
             <div className="mo-card__media"><Media media={a.image} /></div>
@@ -226,7 +226,7 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
       <div className="mo-cards">
         {promotions.map((p) => (
           <article key={p.id} className="mo-card">
-            <p className="mo-eyebrow">{ctx.t.offers.onlyHere}</p>
+            <p className="mo-label">{ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}</h3>
             <p>{ctx.locale === 'pl' ? p.description : p.en.description || p.description}</p>
           </article>
@@ -239,7 +239,7 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
           </Link>
         ))}
       </div>
-      <p style={{ marginBlockStart: 'var(--space-5)' }}>
+      <p>
         <Link href={href(ctx.locale, 'offers')}>{ctx.t.nav.offers}</Link> · <Link href={href(ctx.locale, 'news')}>{ctx.t.nav.news}</Link>
       </p>
     </Section>

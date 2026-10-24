@@ -26,27 +26,29 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
   }
 
   return (
-    <form className="mo-booking-bar" onSubmit={submit} aria-label={t.check}>
+    <>
+    <form className="mo-booking" onSubmit={submit} aria-label={t.check}>
       <label className="mo-field">
-        {t.arrival}
+        <span className="mo-label">{t.arrival}</span>
         <input type="date" min={today} value={arrival} onChange={(e) => setArrival(e.target.value)} />
       </label>
       <label className="mo-field">
-        {t.departure}
+        <span className="mo-label">{t.departure}</span>
         <input type="date" min={arrival || today} value={departure} onChange={(e) => setDeparture(e.target.value)} />
       </label>
       <label className="mo-field">
-        {t.adults}
+        <span className="mo-label">{t.adults}</span>
         <input type="number" min={1} max={20} value={adults} onChange={(e) => setAdults(Number(e.target.value))} />
       </label>
       <label className="mo-field">
-        {t.children}
+        <span className="mo-label">{t.children}</span>
         <input type="number" min={0} max={20} value={children} onChange={(e) => setChildren(Number(e.target.value))} />
       </label>
-      <button className="mo-button" type="submit">
+      <button className="mo-btn mo-btn--glowny" type="submit">
         {t.check}
       </button>
-      <p className="mo-booking-bar__slogan">{slogan || t.lowestPrice}</p>
     </form>
+    <p className="mo-label mo-booking-note">{slogan || t.lowestPrice}</p>
+    </>
   )
 }

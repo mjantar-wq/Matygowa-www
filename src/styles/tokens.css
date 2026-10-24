@@ -1,75 +1,189 @@
-/*
- * TYMCZASOWE tokeny wyglądu. Źródło prawdy i finalne wartości dostarcza wątek spójności wizualnej
- * (design/tokens.json → ten plik). Komponenty używają wyłącznie tych zmiennych, nigdy wartości wpisanych na sztywno.
- * Tryby: <html data-sezon="zima|lato" data-pora="dzien|noc">.
- */
-:root {
-  --color-tlo: #f6f4ef;
-  --color-tlo-2: #ecebe5;
-  --color-powierzchnia: #ffffff;
-  --color-linia: #d8d6cf;
-  --color-linia-mocna: #a9a69c;
-  --color-atrament: #23262a;
-  --color-atrament-2: #3c4046;
-  --color-wyciszony: #6b6e72;
-  --color-swierk: #1f3a2e;
-  --color-cta: #1f3a2e;
-  --color-na-cta: #ffffff;
-  --color-bursztyn: #c98a3b;
-  --color-bursztyn-tekst: #8a5a1c;
-  --color-poziomica: #c9c6bd;
-  --color-na-zdjeciu: #ffffff;
-  --color-zaslona: rgb(0 0 0 / 0.35);
-  --color-fokus: #c98a3b;
+/* Matygowa Osada: tokeny wyglądu. Źródło: design/tokens.json
+   (system wizualny: https://claude.ai/artifact/3yKkA57MMib2E9qbuJ8gQd).
+   Plik generowany przez scripts/build-tokens.py; nie edytuj ręcznie. */
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
-  --space-8: 64px;
-  --space-9: 96px;
-  --space-10: 128px;
-  --space-11: 192px;
-
-  --text-display-xl: clamp(2.75rem, 6vw, 5.5rem);
-  --text-display-l: clamp(2.25rem, 4.5vw, 4rem);
-  --text-h1: clamp(2rem, 3.5vw, 3rem);
-  --text-h2: clamp(1.625rem, 2.6vw, 2.25rem);
-  --text-h3: clamp(1.25rem, 1.8vw, 1.5rem);
-  --text-lede: clamp(1.125rem, 1.6vw, 1.375rem);
-  --text-story: 1.1875rem;
-  --text-price: 1.25rem;
-  --text-gwara: 1rem;
-  --text-body: 1rem;
-  --text-body-s: 0.875rem;
+@theme {
+  --color-tlo: #f1f3f2;
+  --color-tlo-2: #e4e9e7;
+  --color-powierzchnia: #fbfcfb;
+  --color-linia: #d2d9d6;
+  --color-linia-mocna: #7f8b86;
+  --color-atrament: #1c2321;
+  --color-atrament-2: #37413d;
+  --color-wyciszony: #56625e;
+  --color-swierk: #1f5c4a;
+  --color-cta: #1f5c4a;
+  --color-na-cta: #f4f6f5;
+  --color-bursztyn: #c47a2a;
+  --color-bursztyn-tekst: #8a4c12;
+  --color-poziomica: #6e8b98;
+  --color-na-zdjeciu: #f7f8f6;
+  --color-zaslona: rgba(12, 18, 16, 0.48);
+  --color-fokus: #1f5c4a;
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-ui: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-tabliczka: var(--font-rufina), Georgia, serif;
+  --text-display-xl: clamp(3.5rem, 1.9155rem + 6.7606vw, 8rem);
+  --text-display-xl--line-height: 0.92;
+  --text-display-xl--letter-spacing: -0.025em;
+  --text-display-xl--font-weight: 300;
+  --text-display-l: clamp(2.75rem, 1.7817rem + 4.1315vw, 5.5rem);
+  --text-display-l--line-height: 0.95;
+  --text-display-l--letter-spacing: -0.02em;
+  --text-display-l--font-weight: 300;
+  --text-h1: clamp(2.375rem, 1.8028rem + 2.4413vw, 4rem);
+  --text-h1--line-height: 1.0;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h1--font-weight: 340;
+  --text-h2: clamp(2rem, 1.6479rem + 1.5023vw, 3rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 380;
+  --text-h3: clamp(1.5rem, 1.3680rem + 0.5634vw, 1.875rem);
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.005em;
+  --text-h3--font-weight: 400;
+  --text-lede: clamp(1.25rem, 1.1620rem + 0.3756vw, 1.5rem);
+  --text-lede--line-height: 1.45;
+  --text-lede--font-weight: 360;
+  --text-story: clamp(1.125rem, 1.0810rem + 0.1878vw, 1.25rem);
+  --text-story--line-height: 1.6;
+  --text-story--font-weight: 380;
+  --text-price: 1.625rem;
+  --text-price--line-height: 1.2;
+  --text-price--font-weight: 400;
+  --text-gwara: 1.5rem;
+  --text-gwara--line-height: 1.25;
+  --text-gwara--font-weight: 380;
+  --text-tabliczka: 0.875rem;
+  --text-tabliczka--line-height: 1.2;
+  --text-tabliczka--letter-spacing: 0.1em;
+  --text-tabliczka--font-weight: 700;
+  --text-body: clamp(1rem, 0.9780rem + 0.0939vw, 1.0625rem);
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+  --text-body-s: 0.9375rem;
+  --text-body-s--line-height: 1.55;
+  --text-body-s--font-weight: 400;
   --text-label: 0.75rem;
-  --text-figure: 2.5rem;
+  --text-label--line-height: 1.33;
+  --text-label--letter-spacing: 0.16em;
+  --text-label--font-weight: 500;
+  --text-figure: 0.8125rem;
+  --text-figure--line-height: 1.25;
+  --text-figure--letter-spacing: 0.06em;
+  --text-figure--font-weight: 500;
   --text-button: 0.9375rem;
-  --text-field: 1rem;
-
+  --text-button--line-height: 1.2;
+  --text-button--letter-spacing: 0.01em;
+  --text-button--font-weight: 500;
+  --text-field: 1.0625rem;
+  --text-field--line-height: 1.4;
+  --text-field--font-weight: 500;
   --radius-0: 0;
   --radius-pole: 2px;
   --radius-kropka: 999px;
-
-  --kontener: 1280px;
-  --rynna: 24px;
-  --margines: clamp(16px, 5vw, 64px);
-  --miara-tekstu: 64ch;
-
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-ui: var(--font-inter), system-ui, sans-serif;
-  --font-tabliczka: var(--font-rufina), Georgia, serif;
+  --ease-mgla: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-przejscie: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-:root[data-pora='noc'] {
-  --color-tlo: #15181b;
-  --color-tlo-2: #1d2125;
-  --color-powierzchnia: #22272b;
-  --color-linia: #343a40;
-  --color-atrament: #ecebe5;
-  --color-atrament-2: #cfcdc6;
-  --color-wyciszony: #9a9c9e;
+:root {
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --space-11: 12rem;
+  --kontener: 1440px;
+  --kolumny: 12;
+  --rynna: 32px;
+  --margines: 96px;
+  --miara-tekstu: 34em;
+  --proporcja-dom: 4 / 5;
+  --proporcja-atrakcja: 3 / 2;
+  --proporcja-kadr: 16 / 9;
+  --pole-wys: 64px;
+  --przycisk-wys: 52px;
+  --przycisk-maly: 44px;
+  --przelacznik-wys: 40px;
+  --naglowek-wys: 72px;
+  --dymek-szer: 300px;
+  --linia-grubosc: 1px;
+  --ruch-szybki: 240ms;
+  --ruch-sredni: 600ms;
+  --ruch-wolny: 900ms;
+  --ruch-mgla: 1200ms;
+  --cien-wyskakujace: 0 24px 48px rgba(12, 18, 16, 0.16);
+  /* Siatka telefonu; tablet i desktop niżej. */
+  --margines: 1.25rem;
+  --rynna: 1.5rem;
+  --sekcja-y: var(--space-9);
+  color-scheme: light;
 }
+@media (min-width: 768px) { :root { --margines: 3rem; --sekcja-y: var(--space-10); } }
+@media (min-width: 1024px) { :root { --margines: 6rem; --rynna: 2rem; --sekcja-y: var(--space-11); } }
+
+:root[data-pora="noc"] {
+  --color-tlo: #0d1412;
+  --color-tlo-2: #131c19;
+  --color-powierzchnia: #18221f;
+  --color-linia: #2a3632;
+  --color-linia-mocna: #66746f;
+  --color-atrament: #ecede8;
+  --color-atrament-2: #c8cec9;
+  --color-wyciszony: #98a39e;
+  --color-swierk: #8cc2ad;
+  --color-cta: #e3a65a;
+  --color-na-cta: #1a1208;
+  --color-bursztyn: #e3a65a;
+  --color-bursztyn-tekst: #ebb676;
+  --color-poziomica: #7f9dab;
+  --color-zaslona: rgba(5, 9, 8, 0.6);
+  --color-fokus: #e3a65a;
+  --cien-wyskakujace: 0 24px 48px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+:root[data-sezon="lato"] {
+  --color-tlo: #f2f3ee;
+  --color-tlo-2: #e6e8de;
+  --color-powierzchnia: #fbfbf8;
+  --color-linia: #d5d8cc;
+  --color-linia-mocna: #818775;
+  --color-atrament-2: #383f38;
+  --color-wyciszony: #585f54;
+  --color-bursztyn-tekst: #874b11;
+  --color-poziomica: #7c8a4c;
+  --color-zaslona: rgba(14, 18, 12, 0.44);
+}
+
+:root[data-sezon="lato"][data-pora="noc"] {
+  --color-tlo: #0f1411;
+  --color-tlo-2: #151c17;
+  --color-powierzchnia: #1a221c;
+  --color-linia: #2c362e;
+  --color-linia-mocna: #68746a;
+  --color-atrament: #eeede6;
+  --color-atrament-2: #cacdc4;
+  --color-wyciszony: #9ea597;
+  --color-swierk: #9cc7a8;
+  --color-cta: #e3a65a;
+  --color-na-cta: #1a1208;
+  --color-bursztyn: #e3a65a;
+  --color-bursztyn-tekst: #ebb676;
+  --color-poziomica: #97a36b;
+  --color-na-zdjeciu: #f7f8f6;
+  --color-zaslona: rgba(5, 9, 6, 0.6);
+  --color-fokus: #e3a65a;
+  --cien-wyskakujace: 0 24px 48px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+/* Zmiana pory dnia i roku: tylko kolory, w tempie mgły. Klasę mo-przejscie dodaje przełącznik na czas zmiany. */
+:root.mo-przejscie, :root.mo-przejscie * { transition: background-color var(--ruch-mgla) var(--ease-przejscie), color var(--ruch-mgla) var(--ease-przejscie), border-color var(--ruch-mgla) var(--ease-przejscie), fill var(--ruch-mgla) var(--ease-przejscie), stroke var(--ruch-mgla) var(--ease-przejscie) !important; }
+@media (prefers-reduced-motion: reduce) { :root.mo-przejscie, :root.mo-przejscie * { transition: none !important; } }

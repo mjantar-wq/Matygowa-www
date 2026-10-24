@@ -9,7 +9,7 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
     <footer className="mo-footer">
       <div className="mo-container mo-footer__grid">
         <div>
-          <p className="mo-eyebrow">{t.footer.contact}</p>
+          <p className="mo-label">{t.footer.contact}</p>
           {settings?.phone ? <p><a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a></p> : null}
           {settings?.email ? <p><a href={`mailto:${settings.email}`}>{settings.email}</a></p> : null}
           {settings?.address ? <p style={{ whiteSpace: 'pre-line' }}>{settings.address}</p> : null}
@@ -24,7 +24,7 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
         </nav>
         {settings?.social?.length ? (
           <div>
-            <p className="mo-eyebrow">{t.footer.follow}</p>
+            <p className="mo-label">{t.footer.follow}</p>
             <ul>{settings.social.map((s) => <li key={s.id ?? s.url}><a href={s.url} rel="noopener">{s.label}</a></li>)}</ul>
           </div>
         ) : null}

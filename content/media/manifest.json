@@ -1,0 +1,306 @@
+{
+ "rule": "Każdy plik z sufiksem _cgi jest tymczasowy: w CMS pole isPlaceholder = true, blokada publikacji na produkcji.",
+ "items": [
+  {
+   "file": "B1_bania_alpenglow_3x2_cgi.webp",
+   "shot": "B1",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B1)."
+  },
+  {
+   "file": "B1_bania_lato_3x2_cgi.webp",
+   "shot": "B1",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B1)."
+  },
+  {
+   "file": "B2_bania_noc_3x2_cgi.webp",
+   "shot": "B2",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B2)."
+  },
+  {
+   "file": "B2_bania_noc_9x16_cgi.webp",
+   "shot": "B2",
+   "width": 540,
+   "height": 963,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B2)."
+  },
+  {
+   "file": "B3_reka_para_3x2_cgi.webp",
+   "shot": "B3",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B3)."
+  },
+  {
+   "file": "B5_sciezka_do_bani_3x2_cgi.webp",
+   "shot": "B5",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B5)."
+  },
+  {
+   "file": "B6_kawa_taras_3x2_cgi.webp",
+   "shot": "B6",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B6)."
+  },
+  {
+   "file": "K1_panorama_tatry_21x9_cgi.webp",
+   "shot": "K1",
+   "width": 1119,
+   "height": 466,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K1)."
+  },
+  {
+   "file": "K2_hero_osada_lato_16x9_cgi.webp",
+   "shot": "K2",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K2)."
+  },
+  {
+   "file": "K2_hero_osada_noc_16x9_cgi.webp",
+   "shot": "K2",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K2)."
+  },
+  {
+   "file": "K2_hero_osada_swit_16x9_cgi.webp",
+   "shot": "K2",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K2)."
+  },
+  {
+   "file": "K2_hero_osada_swit_9x16_cgi.webp",
+   "shot": "K2",
+   "width": 540,
+   "height": 963,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K2)."
+  },
+  {
+   "file": "K3_dron_przelot_16x9_cgi.webp",
+   "shot": "K3",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K3)."
+  },
+  {
+   "file": "K4_osada_zmierzch_16x9_cgi.webp",
+   "shot": "K4",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K4)."
+  },
+  {
+   "file": "K5_osada_top-down_cgi.webp",
+   "shot": "K5",
+   "width": 722,
+   "height": 722,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K5)."
+  },
+  {
+   "file": "K6_dom_orbita_16x9_cgi.webp",
+   "shot": "K6",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K6)."
+  },
+  {
+   "file": "K7_dojazd_16x9_cgi.webp",
+   "shot": "K7",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K7)."
+  },
+  {
+   "file": "K8_punkt_widokowy_16x9_cgi.webp",
+   "shot": "K8",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K8)."
+  },
+  {
+   "file": "K9_detal_szron_3x2_cgi.webp",
+   "shot": "K9",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie K9)."
+  },
+  {
+   "file": "T1_swit_gran_16x9_cgi.webp",
+   "shot": "T1",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie T1)."
+  },
+  {
+   "file": "T3_noc_gwiazdy_16x9_cgi.webp",
+   "shot": "T3",
+   "width": 963,
+   "height": 542,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie T3)."
+  },
+  {
+   "file": "V10_ciemniak_okno_3x2_cgi.webp",
+   "shot": "V10",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V10)."
+  },
+  {
+   "file": "V1_hawran_okno_3x2_cgi.webp",
+   "shot": "V1",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V1)."
+  },
+  {
+   "file": "V2_gerlach_okno_3x2_cgi.webp",
+   "shot": "V2",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V2)."
+  },
+  {
+   "file": "V3_swinica_okno_3x2_cgi.webp",
+   "shot": "V3",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V3)."
+  },
+  {
+   "file": "V4_woloszyn_okno_3x2_cgi.webp",
+   "shot": "V4",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V4)."
+  },
+  {
+   "file": "V5_lomnica_okno_3x2_cgi.webp",
+   "shot": "V5",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V5)."
+  },
+  {
+   "file": "V6_lodowy_okno_3x2_cgi.webp",
+   "shot": "V6",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V6)."
+  },
+  {
+   "file": "V7_czerwone-wierchy_okno_3x2_cgi.webp",
+   "shot": "V7",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V7)."
+  },
+  {
+   "file": "V8_kominiarski_okno_3x2_cgi.webp",
+   "shot": "V8",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V8)."
+  },
+  {
+   "file": "V9_giewont_okno_3x2_cgi.webp",
+   "shot": "V9",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie V9)."
+  },
+  {
+   "file": "W1_salon_kominek_3x2_cgi.webp",
+   "shot": "W1",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie W1)."
+  },
+  {
+   "file": "W2_kuchnia_stol_3x2_cgi.webp",
+   "shot": "W2",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie W2)."
+  },
+  {
+   "file": "W3_sypialnia_ranek_3x2_cgi.webp",
+   "shot": "W3",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie W3)."
+  },
+  {
+   "file": "W5_sauna_3x2_cgi.webp",
+   "shot": "W5",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie W5)."
+  },
+  {
+   "file": "W6_taras_wejscie_3x2_cgi.webp",
+   "shot": "W6",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie W6)."
+  },
+  {
+   "file": "W7_detal_drewno_kawa_3x2_cgi.webp",
+   "shot": "W7",
+   "width": 884,
+   "height": 590,
+   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie W7)."
+  },
+  {
+   "file": "K2_hero_osada_swit_16x9_cgi.mp4",
+   "shot": "K2",
+   "width": 1920,
+   "height": 1080,
+   "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  },
+  {
+   "file": "K2_hero_osada_swit_9x16_cgi.mp4",
+   "shot": "K2",
+   "width": 1080,
+   "height": 1920,
+   "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  },
+  {
+   "file": "K2_hero_osada_noc_16x9_cgi.mp4",
+   "shot": "K2",
+   "width": 1920,
+   "height": 1080,
+   "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  },
+  {
+   "file": "K4_osada_zmierzch_16x9_cgi.mp4",
+   "shot": "K4",
+   "width": 1920,
+   "height": 1080,
+   "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  },
+  {
+   "file": "B2_bania_noc_9x16_cgi.mp4",
+   "shot": "B2",
+   "width": 1080,
+   "height": 1920,
+   "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  },
+  {
+   "file": "T3_noc_gwiazdy_16x9_cgi.mp4",
+   "shot": "T3",
+   "width": 1920,
+   "height": 1080,
+   "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  }
+ ]
+}

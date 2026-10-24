@@ -17,6 +17,8 @@ test.describe('Szkielet strony', () => {
   })
 
   test('wszystkie podstrony menu odpowiadają', async ({ request }) => {
+    // w trybie dev każda podstrona kompiluje się przy pierwszym wejściu
+    test.setTimeout(120_000)
     for (const path of ['/rytualy', '/okolica', '/oferty', '/aktualnosci', '/osada', '/galeria', '/przewodnik', '/kontakt', '/en/rituals', '/en/contact']) {
       const res = await request.get(path)
       expect(res.status(), path).toBe(200)

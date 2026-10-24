@@ -40,7 +40,7 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 ## Pierwsze uruchomienie panelu
 
 1. Po pierwszym wdrożeniu otwórz `https://matygowa.audiowizard.pl/admin` i załóż konto administratora (pierwsze konto zakłada się samo).
-2. Treści robocze: `CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… PAYLOAD_REMOTE_BINDINGS=true pnpm seed`.
+2. Treści robocze i obrazy CGI: GitHub → Actions → CI → **Run workflow** z zaznaczonym „Wgraj treści robocze…”. Import nadpisuje te same wpisy w panelu, więc po rozpoczęciu edycji w panelu uruchamiamy go tylko świadomie.
 3. Ustawienia strony → Rezerwacje: silnik Hotres do czasu decyzji o IceColdRes (grudzień 2026).
 
 ## Integracja z IceColdRes

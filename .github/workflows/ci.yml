@@ -5,6 +5,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      import_content:
+        description: 'Wgraj treści robocze i obrazy CGI z content/ do bazy na Cloudflare (nadpisuje te same wpisy w panelu)'
+        type: boolean
+        default: false
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -109,3 +114,23 @@ jobs:
           done
           echo "::error::matygowa.audiowizard.pl nie odpowiada po wdrożeniu"
           exit 1
+
+  import:
+    name: Import treści do bazy na Cloudflare
+    needs: deploy
+    if: github.event_name == 'workflow_dispatch' && inputs.import_content
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+      PAYLOAD_REMOTE_BINDINGS: 'true'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm seed

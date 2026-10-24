@@ -22,7 +22,7 @@ export async function CmsPage({ route, slug, ctx, fallback, children, required }
       {!hasHero ? (
         <header className="mo-section mo-container" style={{ paddingBlockEnd: 0 }}>
           <h1 className="mo-h1">{page?.title ?? ctx.t.nav[route]}</h1>
-          {page?.intro ? <p className="mo-lede" style={{ marginBlockStart: 'var(--space-4)' }}>{page.intro}</p> : null}
+          {page?.intro ? <p className="mo-lede">{page.intro}</p> : null}
         </header>
       ) : null}
       {blocks?.length ? <RenderBlocks blocks={blocks} ctx={ctx} /> : null}

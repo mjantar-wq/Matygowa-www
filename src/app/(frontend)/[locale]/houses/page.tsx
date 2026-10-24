@@ -22,7 +22,7 @@ export default async function HousesPage({ params }: LocaleParams) {
         const list = units.filter((u) => u.kind === kind)
         return list.length ? (
           <section key={kind} className="mo-section mo-container">
-            <h2 className="mo-h2" style={{ marginBlockEnd: 'var(--space-6)' }}>{ctx.t.house.kind[kind]}</h2>
+            <h2 className="mo-h2">{ctx.t.house.kind[kind]}</h2>
             <div className="mo-cards">
               {list.map((u) => <UnitCard key={u.id} unit={u} ctx={ctx} priceFrom={priceOf(u)} />)}
             </div>

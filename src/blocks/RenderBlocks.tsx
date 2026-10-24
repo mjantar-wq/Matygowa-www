@@ -53,11 +53,11 @@ function Intro({ block }: Props<'intro'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       {block.stats?.length ? (
-        <dl style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-7)', marginBlockStart: 'var(--space-7)' }}>
+        <dl className="mo-stats">
           {block.stats.map((s) => (
             <div key={s.id}>
-              <dt className="mo-muted">{s.label}</dt>
-              <dd style={{ fontSize: 'var(--text-figure)', fontFamily: 'var(--font-display)' }}>{s.value}</dd>
+              <dt className="mo-label">{s.label}</dt>
+              <dd className="mo-price">{s.value}</dd>
             </div>
           ))}
         </dl>
@@ -100,7 +100,7 @@ function HouseInside({ block, ctx }: Props<'houseInside'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <div className="mo-cards" style={{ marginBlockStart: 'var(--space-6)' }}>
+      <div className="mo-cards">
         {block.rooms?.map((r) => (
           <article key={r.id} className="mo-card">
             <div className="mo-card__media"><Media media={r.image} /></div>
@@ -121,7 +121,7 @@ async function Rituals({ block, ctx }: Props<'rituals'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <ol className="mo-cards" style={{ marginBlockStart: 'var(--space-6)' }}>
+      <ol className="mo-cards">
         {block.steps?.map((s) => (
           <li key={s.id} className="mo-card">
             <div className="mo-card__media"><Media media={s.image} /></div>
@@ -131,7 +131,7 @@ async function Rituals({ block, ctx }: Props<'rituals'>) {
         ))}
       </ol>
       {services.length ? (
-        <ul style={{ marginBlockStart: 'var(--space-6)' }}>
+        <ul>
           {services.map((s) => (
             <li key={s.id}>
               {ctx.locale === 'pl' ? s.name : s.en.name || s.name}: {formatPrice(s.price, ctx.locale)}
@@ -167,7 +167,7 @@ async function Surroundings({ block, ctx }: Props<'surroundings'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       <Media media={block.map} fallback={`${ctx.t.placeholder}: mapa okolicy`} />
-      <div className="mo-cards" style={{ marginBlockStart: 'var(--space-6)' }}>
+      <div className="mo-cards">
         {attractions.map((a) => (
           <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">
             <div className="mo-card__media"><Media media={a.image} /></div>
@@ -239,7 +239,7 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
           </Link>
         ))}
       </div>
-      <p style={{ marginBlockStart: 'var(--space-5)' }}>
+      <p>
         <Link href={href(ctx.locale, 'offers')}>{ctx.t.nav.offers}</Link> · <Link href={href(ctx.locale, 'news')}>{ctx.t.nav.news}</Link>
       </p>
     </Section>

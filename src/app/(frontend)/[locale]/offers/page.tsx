@@ -22,7 +22,7 @@ export default async function OffersPage({ params }: LocaleParams) {
   return (
     <CmsPage route="offers" ctx={ctx}>
       <section className="mo-section mo-container">
-        <p className="mo-label" style={{ marginBlockEnd: 'var(--space-5)' }}>{ctx.settings?.priceSlogan || ctx.t.booking.lowestPrice}</p>
+        <p className="mo-label">{ctx.settings?.priceSlogan || ctx.t.booking.lowestPrice}</p>
         <div className="mo-cards">
           {promotions.map((p) => {
             const extra = offers.find((o) => o.icecoldresPromotionId === p.id)

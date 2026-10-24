@@ -11,10 +11,13 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <header className="mo-header">
       <div className="mo-container mo-header__inner">
-        <Link href={href(locale, 'home')} className="mo-h3" style={{ textDecoration: 'none', color: 'inherit' }}>
-          {t.siteName}
+        <Link href={href(locale, 'home')} className="mo-logo">
+          <span className="mo-sr">{t.siteName}</span>
         </Link>
-        <nav aria-label={t.menu} className="mo-nav">
+        <button type="button" className="mo-menu-btn mo-btn mo-btn--obrys mo-btn--maly" popoverTarget="menu-glowne">
+          {t.menu}
+        </button>
+        <nav aria-label={t.menu} className="mo-nav" id="menu-glowne" popover="auto">
           {MAIN_NAV.map((key) => (
             <Link key={key} href={href(locale, key)}>
               {t.nav[key]}

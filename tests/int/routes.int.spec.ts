@@ -35,7 +35,7 @@ describe('adresy', () => {
 describe('silnik rezerwacji', () => {
   it('IceColdRes dostaje daty, osoby, dom i utm', () => {
     const url = bookingUrl({ bookingEngine: 'icecoldres', icecoldresUrl: 'https://booking.example' }, 'en', { arrival: '2027-01-15', departure: '2027-01-18', adults: 4, children: 1, unit: 'hawran' }, { utm_source: 'ig' })
-    expect(url).toBe('https://booking.example/en/matygowa-osada?arrival=2027-01-15&departure=2027-01-18&adults=4&children=1&unit=hawran&utm_source=ig')
+    expect(url).toBe('https://booking.example/en/booking?arrival=2027-01-15&departure=2027-01-18&adults=4&children=1&unit=hawran&utm_source=ig')
   })
 
   it('do czasu przełączenia prowadzi do Hotres', () => {

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { fraunces, inter, rufina } from '@/app/fonts'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
+import { UtmCapture } from '@/components/UtmCapture'
 import { dirOf } from '@/i18n/locales'
 import { pageContext, type LocaleParams } from '@/lib/page'
 import '@/styles/globals.css'
@@ -29,6 +30,7 @@ export default async function LocaleLayout({ children, params }: LocaleParams & 
         <a className="mo-skip mo-btn mo-btn--glowny" href="#tresc">{ctx.t.skipToContent}</a>
         <SiteHeader locale={ctx.locale} t={ctx.t} />
         <main id="tresc">{children}</main>
+        <UtmCapture />
         <SiteFooter locale={ctx.locale} t={ctx.t} settings={ctx.settings} />
       </body>
     </html>

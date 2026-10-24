@@ -153,6 +153,8 @@ async function main() {
         address: s.contact?.address,
         social: Object.entries(s.social ?? {}).map(([label, url]) => ({ label, url: String(url) })),
         priceSlogan: s.booking_bar?.best_rate?.[locale],
+        // na teście rezerwacje idą do IceColdRes; produkcja (SITE_INDEXABLE=true) zostaje przy wyborze z panelu (decyzja w grudniu)
+        ...(process.env.SITE_INDEXABLE === 'true' ? {} : { bookingEngine: 'icecoldres' as const }),
         seoTitle: s.seo_default?.title?.[locale],
         seoDescription: s.seo_default?.description?.[locale],
       },

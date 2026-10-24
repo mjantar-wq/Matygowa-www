@@ -14,9 +14,14 @@ export interface EngineSettings {
   bookingEngine?: 'hotres' | 'icecoldres' | null
   icecoldresUrl?: string | null
   hotresUrl?: string | null
+  /** adres obiektu w IceColdRes (na teście „booking”: icecoldres.audiowizard.pl/pl/booking) */
+  slug?: string | null
+  /** ceny i wyniki wyszukiwania na stronie (Ustawienia → Rezerwacje); bez nich pasek od razu otwiera silnik */
+  showPrices?: boolean | null
 }
 
-const ICECOLDRES_SLUG = process.env.NEXT_PUBLIC_ICECOLDRES_SLUG ?? 'matygowa-osada'
+/** Parametry kampanii przekazywane do silnika (trafiają do rezerwacji jako jej źródło). */
+export const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'] as const
 
 /**
  * Adres silnika rezerwacji z wypełnionymi danymi (kontrakt IceColdRes, pkt 6). Do uruchomienia
@@ -24,7 +29,7 @@ const ICECOLDRES_SLUG = process.env.NEXT_PUBLIC_ICECOLDRES_SLUG ?? 'matygowa-osa
  */
 export function bookingUrl(settings: EngineSettings | null, locale: Locale, q: BookingQuery = {}, utm: Record<string, string> = {}) {
   if (settings?.bookingEngine === 'icecoldres') {
-    const url = new URL(`/${locale === 'pl' ? 'pl' : 'en'}/${ICECOLDRES_SLUG}`, settings.icecoldresUrl || 'https://icecoldres.audiowizard.pl')
+    const url = new URL(`/${locale === 'pl' ? 'pl' : 'en'}/${settings.slug || 'booking'}`, settings.icecoldresUrl || 'https://icecoldres.audiowizard.pl')
     const params: Record<string, string | undefined> = {
       arrival: q.arrival,
       departure: q.departure,
@@ -33,7 +38,7 @@ export function bookingUrl(settings: EngineSettings | null, locale: Locale, q: B
       ages: q.ages?.length ? q.ages.join(',') : undefined,
       unit: q.unit,
       offer: q.offer,
-      ...utm,
+      ...Object.fromEntries(Object.entries(utm).filter(([k]) => (UTM_KEYS as readonly string[]).includes(k))),
     }
     for (const [k, v] of Object.entries(params)) if (v) url.searchParams.set(k, v)
     return url.toString()
@@ -49,5 +54,13 @@ export function formatPrice(grosze: number, locale: Locale) {
 }
 
 /** Do komponentu w przeglądarce trafiają tylko pola silnika, nie całe ustawienia. */
-export const engineSettings = (s: EngineSettings | null | undefined): EngineSettings | null =>
-  s ? { bookingEngine: s.bookingEngine, icecoldresUrl: s.icecoldresUrl, hotresUrl: s.hotresUrl } : null
+export const engineSettings = (s: (EngineSettings & { showPrices?: boolean | null }) | null | undefined): EngineSettings | null =>
+  s
+    ? {
+        bookingEngine: s.bookingEngine,
+        icecoldresUrl: s.icecoldresUrl,
+        hotresUrl: s.hotresUrl,
+        slug: process.env.ICECOLDRES_SLUG ?? 'booking',
+        showPrices: s.showPrices !== false,
+      }
+    : null

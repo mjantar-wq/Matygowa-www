@@ -51,3 +51,16 @@ export function formatPrice(grosze: number, locale: Locale) {
 /** Do komponentu w przeglądarce trafiają tylko pola silnika, nie całe ustawienia. */
 export const engineSettings = (s: EngineSettings | null | undefined): EngineSettings | null =>
   s ? { bookingEngine: s.bookingEngine, icecoldresUrl: s.icecoldresUrl, hotresUrl: s.hotresUrl, slug: process.env.ICECOLDRES_SLUG ?? 'booking' } : null
+
+/** Domeny silników rezerwacji, do których linki dostają UTM i zdarzenie booking_click. */
+export function engineHosts(s: EngineSettings | null | undefined) {
+  const hosts = new Set(['booking.matygowaosada.pl', 'booking.hotres.pl'])
+  for (const url of [s?.icecoldresUrl, s?.hotresUrl]) {
+    try {
+      if (url) hosts.add(new URL(url).hostname)
+    } catch {
+      // błędny adres w panelu: pomijamy
+    }
+  }
+  return [...hosts]
+}

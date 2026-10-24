@@ -1,0 +1,45 @@
+// Strona Matygowej Osady (Next.js + Payload przez OpenNext). Test: matygowa.audiowizard.pl.
+// D1 matygowa-www (WEUR) i R2 matygowa-www-media (jurysdykcja UE): docs/wdrozenie.md.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "matygowa-www",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "workers_dev": false,
+  "routes": [{ "pattern": "matygowa.audiowizard.pl", "custom_domain": true }],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "D1",
+      "database_id": "50a7b7ac-8504-4e50-86f4-910f39d7b051",
+      "database_name": "matygowa-www"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "R2",
+      "bucket_name": "matygowa-www-media",
+      "jurisdiction": "eu"
+    }
+  ],
+  "vars": {
+    "ICECOLDRES_API_URL": "https://icecoldres.audiowizard.pl",
+    "ICECOLDRES_SLUG": "matygowa-osada",
+    "NEXT_PUBLIC_SITE_URL": "https://matygowa.audiowizard.pl"
+  },
+  "observability": { "enabled": true },
+  // Tylko dla poleceń Payload (migracje, import treści) na bazie w Cloudflare: PAYLOAD_REMOTE_BINDINGS=true.
+  // Build i testy używają lokalnej kopii D1 (.wrangler), więc nie potrzebują dostępu do konta.
+  "env": {
+    "remote": {
+      "d1_databases": [
+        { "binding": "D1", "database_id": "50a7b7ac-8504-4e50-86f4-910f39d7b051", "database_name": "matygowa-www", "remote": true }
+      ],
+      "r2_buckets": [{ "binding": "R2", "bucket_name": "matygowa-www-media", "jurisdiction": "eu", "remote": true }]
+    }
+  }
+}

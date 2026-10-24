@@ -1,0 +1,112 @@
+import type { Locale } from './locales'
+import type { RouteKey } from './routes'
+
+/**
+ * Stałe napisy interfejsu (menu, pasek rezerwacji, etykiety). Treści stron są w panelu (Payload),
+ * tu tylko to, czego redaktor nie zmienia. Nowy język: kopia `en` i tłumaczenie.
+ */
+const pl = {
+  siteName: 'Matygowa Osada',
+  nav: {
+    home: 'Strona główna',
+    houses: 'Domy i apartamenty',
+    rituals: 'Rytuały',
+    surroundings: 'Okolica',
+    offers: 'Oferty',
+    news: 'Aktualności',
+    settlement: 'Osada',
+    gallery: 'Galeria',
+    guide: 'Przewodnik gościa',
+    contact: 'Kontakt',
+    documents: 'Dokumenty',
+  } satisfies Record<RouteKey, string>,
+  skipToContent: 'Przejdź do treści',
+  menu: 'Menu',
+  language: 'Język',
+  booking: {
+    arrival: 'Przyjazd',
+    departure: 'Wyjazd',
+    adults: 'Dorośli',
+    children: 'Dzieci',
+    check: 'Sprawdź termin',
+    book: 'Rezerwuj',
+    lowestPrice: 'Najniższa cena tylko u nas',
+    from: 'od',
+    perNight: 'za noc',
+  },
+  house: {
+    kind: { house: 'Dom', apartment: 'Apartament' },
+    comingSoon: 'Wkrótce',
+    guests: (n: number) => `do ${n} osób`,
+    peak: 'Szczyt',
+    elevation: (m: number) => `${m.toLocaleString('pl-PL')} m n.p.m.`,
+    others: 'Pozostałe domy i apartamenty',
+    amenities: 'Udogodnienia',
+    availability: 'Dostępność i ceny',
+    gallery: 'Galeria',
+    plan: 'Plan',
+  },
+  news: { readMore: 'Czytaj dalej', empty: 'Wkrótce pierwsze wpisy.' },
+  attractions: { distance: (km: number) => `${km.toLocaleString('pl-PL')} km`, all: 'Wszystkie', winter: 'Zima', summer: 'Lato' },
+  offers: { onlyHere: 'Tylko na naszej stronie', empty: 'Aktualne oferty pojawią się wkrótce.' },
+  placeholder: 'Treść w przygotowaniu',
+  footer: { contact: 'Kontakt', follow: 'Obserwuj nas', rights: 'Wszelkie prawa zastrzeżone' },
+  notFound: { title: 'Nie ma takiej strony', back: 'Wróć na stronę główną' },
+}
+
+export type Dictionary = typeof pl
+
+const en: Dictionary = {
+  siteName: 'Matygowa Osada',
+  nav: {
+    home: 'Home',
+    houses: 'Houses & apartments',
+    rituals: 'Rituals',
+    surroundings: 'Surroundings',
+    offers: 'Offers',
+    news: 'News',
+    settlement: 'The settlement',
+    gallery: 'Gallery',
+    guide: 'Guest guide',
+    contact: 'Contact',
+    documents: 'Documents',
+  },
+  skipToContent: 'Skip to content',
+  menu: 'Menu',
+  language: 'Language',
+  booking: {
+    arrival: 'Arrival',
+    departure: 'Departure',
+    adults: 'Adults',
+    children: 'Children',
+    check: 'Check availability',
+    book: 'Book',
+    lowestPrice: 'Best price only here',
+    from: 'from',
+    perNight: 'per night',
+  },
+  house: {
+    kind: { house: 'House', apartment: 'Apartment' },
+    comingSoon: 'Coming soon',
+    guests: (n: number) => `up to ${n} guests`,
+    peak: 'Peak',
+    elevation: (m: number) => `${m.toLocaleString('en-GB')} m a.s.l.`,
+    others: 'Other houses and apartments',
+    amenities: 'Amenities',
+    availability: 'Availability and prices',
+    gallery: 'Gallery',
+    plan: 'Floor plan',
+  },
+  news: { readMore: 'Read more', empty: 'First posts coming soon.' },
+  attractions: { distance: (km: number) => `${km.toLocaleString('en-GB')} km`, all: 'All', winter: 'Winter', summer: 'Summer' },
+  offers: { onlyHere: 'Only on our website', empty: 'Current offers coming soon.' },
+  placeholder: 'Content in preparation',
+  footer: { contact: 'Contact', follow: 'Follow us', rights: 'All rights reserved' },
+  notFound: { title: 'Page not found', back: 'Back to the home page' },
+}
+
+const dictionaries: Partial<Record<Locale, Dictionary>> = { pl, en }
+
+export function getDictionary(locale: Locale): Dictionary {
+  return dictionaries[locale] ?? en
+}

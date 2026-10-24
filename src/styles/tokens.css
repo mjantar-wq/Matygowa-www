@@ -1,0 +1,75 @@
+/*
+ * TYMCZASOWE tokeny wyglądu. Źródło prawdy i finalne wartości dostarcza wątek spójności wizualnej
+ * (design/tokens.json → ten plik). Komponenty używają wyłącznie tych zmiennych, nigdy wartości wpisanych na sztywno.
+ * Tryby: <html data-sezon="zima|lato" data-pora="dzien|noc">.
+ */
+:root {
+  --color-tlo: #f6f4ef;
+  --color-tlo-2: #ecebe5;
+  --color-powierzchnia: #ffffff;
+  --color-linia: #d8d6cf;
+  --color-linia-mocna: #a9a69c;
+  --color-atrament: #23262a;
+  --color-atrament-2: #3c4046;
+  --color-wyciszony: #6b6e72;
+  --color-swierk: #1f3a2e;
+  --color-cta: #1f3a2e;
+  --color-na-cta: #ffffff;
+  --color-bursztyn: #c98a3b;
+  --color-bursztyn-tekst: #8a5a1c;
+  --color-poziomica: #c9c6bd;
+  --color-na-zdjeciu: #ffffff;
+  --color-zaslona: rgb(0 0 0 / 0.35);
+  --color-fokus: #c98a3b;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 192px;
+
+  --text-display-xl: clamp(2.75rem, 6vw, 5.5rem);
+  --text-display-l: clamp(2.25rem, 4.5vw, 4rem);
+  --text-h1: clamp(2rem, 3.5vw, 3rem);
+  --text-h2: clamp(1.625rem, 2.6vw, 2.25rem);
+  --text-h3: clamp(1.25rem, 1.8vw, 1.5rem);
+  --text-lede: clamp(1.125rem, 1.6vw, 1.375rem);
+  --text-story: 1.1875rem;
+  --text-price: 1.25rem;
+  --text-gwara: 1rem;
+  --text-body: 1rem;
+  --text-body-s: 0.875rem;
+  --text-label: 0.75rem;
+  --text-figure: 2.5rem;
+  --text-button: 0.9375rem;
+  --text-field: 1rem;
+
+  --radius-0: 0;
+  --radius-pole: 2px;
+  --radius-kropka: 999px;
+
+  --kontener: 1280px;
+  --rynna: 24px;
+  --margines: clamp(16px, 5vw, 64px);
+  --miara-tekstu: 64ch;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-ui: var(--font-inter), system-ui, sans-serif;
+  --font-tabliczka: var(--font-rufina), Georgia, serif;
+}
+
+:root[data-pora='noc'] {
+  --color-tlo: #15181b;
+  --color-tlo-2: #1d2125;
+  --color-powierzchnia: #22272b;
+  --color-linia: #343a40;
+  --color-atrament: #ecebe5;
+  --color-atrament-2: #cfcdc6;
+  --color-wyciszony: #9a9c9e;
+}

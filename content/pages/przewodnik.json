@@ -1,0 +1,90 @@
+{
+  "slug": "przewodnik",
+  "title": {
+    "pl": "Przewodnik gościa",
+    "en": "Guest guide"
+  },
+  "faq": [
+    {
+      "q": {
+        "pl": "O której przyjazd i wyjazd?",
+        "en": "What time is check-in and check-out?"
+      },
+      "a": {
+        "pl": "Dom czeka na Was od 16:00, wyjazd do 11:00. Kod do drzwi wysyłamy mailem w dniu przyjazdu, po opłaceniu pobytu. Późniejszy wyjazd uzgodnijcie z nami wcześniej.",
+        "en": "Your house is ready from 4 pm, check-out is by 11 am. We email the door code on arrival day, once the stay is paid. If you need to leave later, let us know in advance."
+      }
+    },
+    {
+      "q": {
+        "pl": "Jak wygląda płatność i rezygnacja?",
+        "en": "How do payment and cancellation work?"
+      },
+      "a": {
+        "pl": "Przy rezerwacji wpłacacie 50% wartości pobytu, resztę w terminie z potwierdzenia. Przy rezygnacji ponad 60 dni przed przyjazdem zwracamy całą wpłatę, później wpłata przepada. Na miejscu pobieramy zwrotną kaucję (od 1500 zł, gotówką lub BLIK).",
+        "en": "You pay 50% when booking and the rest by the date in your confirmation. If you cancel more than 60 days before arrival we refund the full deposit; after that it is non-refundable. On site we take a refundable security deposit (from 1,500 PLN, cash or BLIK)."
+      }
+    },
+    {
+      "q": {
+        "pl": "Czy możemy przyjechać z psem?",
+        "en": "Can we bring our dog?"
+      },
+      "a": {
+        "pl": "Tak, psy i koty po wcześniejszym uzgodnieniu. Opłata to 100 zł za zwierzę za pobyt, plus zwrotna kaucja.",
+        "en": "Yes, dogs and cats by prior arrangement. The fee is 100 PLN per pet per stay, plus a refundable deposit."
+      }
+    },
+    {
+      "q": {
+        "pl": "A z małymi dziećmi?",
+        "en": "And with small children?"
+      },
+      "a": {
+        "pl": "Dzieci do 2 lat śpią bezpłatnie w łóżku rodziców. Dajcie znać wcześniej, przygotujemy dom.",
+        "en": "Children under 2 stay free in their parents' bed. Let us know in advance and we will get the house ready."
+      }
+    },
+    {
+      "q": {
+        "pl": "Jak zamówić banię?",
+        "en": "How do we book the hot tub?"
+      },
+      "a": {
+        "pl": "Przy rezerwacji albo później w „Mojej rezerwacji”, do 20:00 dnia poprzedniego. Wodę grzejemy kilka godzin.",
+        "en": "When you book, or later in My Booking, by 8 pm the day before. The water takes several hours to heat."
+      }
+    },
+    {
+      "q": {
+        "pl": "Jakie są zasady w domu?",
+        "en": "What are the house rules?"
+      },
+      "a": {
+        "pl": "Cisza nocna od 23:00 do 8:00. W domach nie palimy. Imprezy i większe spotkania tylko po wcześniejszym uzgodnieniu. Kominek palimy samym drewnem, przy zamkniętych drzwiczkach i nigdy bez opieki.",
+        "en": "Quiet hours are 11 pm to 8 am. No smoking indoors. Parties or larger gatherings only by prior arrangement. The fireplace takes wood only, with the door closed, and is never left unattended."
+      }
+    },
+    {
+      "q": {
+        "pl": "Jak dojechać zimą?",
+        "en": "How do we get here in winter?"
+      },
+      "a": {
+        "pl": "[Do uzupełnienia przez Michała: najlepsza trasa, stan drogi zimą, czy potrzebne łańcuchy, gdzie parkować.]",
+        "en": "[To be completed: best route, winter road conditions, whether chains are needed, where to park.]"
+      },
+      "note": "Brak danych na obecnej stronie."
+    },
+    {
+      "q": {
+        "pl": "Ile lat musi mieć osoba rezerwująca?",
+        "en": "How old must the person booking be?"
+      },
+      "a": {
+        "pl": "Co najmniej 26 lat w dniu przyjazdu.",
+        "en": "At least 26 on the day of arrival."
+      }
+    }
+  ]
+}

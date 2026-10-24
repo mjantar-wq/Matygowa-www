@@ -1,0 +1,65 @@
+{
+ "zrodlo": "Nazwy domków 2026.jpg (dron)",
+ "domy": [
+  {
+   "id": "b-dom-woloszyn",
+   "nazwa": "Wołoszyn",
+   "szczytM": 2155,
+   "x": 457,
+   "y": 250
+  },
+  {
+   "id": "b-dom-lomnica",
+   "nazwa": "Łomnica",
+   "szczytM": 2634,
+   "x": 581,
+   "y": 397
+  },
+  {
+   "id": "b-dom-lodowy",
+   "nazwa": "Lodowy",
+   "szczytM": 2627,
+   "x": 828,
+   "y": 396
+  },
+  {
+   "id": "b-dom-swinica",
+   "nazwa": "Świnica",
+   "szczytM": 2301,
+   "x": 431,
+   "y": 572
+  },
+  {
+   "id": "b-dom-gerlach",
+   "nazwa": "Gerlach",
+   "szczytM": 2655,
+   "x": 681,
+   "y": 572
+  },
+  {
+   "id": "b-dom-hawran",
+   "nazwa": "Hawrań",
+   "szczytM": 2152,
+   "x": 934,
+   "y": 572
+  }
+ ],
+ "apartamenty": {
+  "id": "b-apartamenty",
+  "otwarcie": "2027-04",
+  "lokale": [
+   {
+    "slug": "czerwone-wierchy",
+    "nazwa": "Czerwone Wierchy"
+   },
+   {
+    "slug": "giewont",
+    "nazwa": "Giewont"
+   },
+   {
+    "slug": "kominiarski",
+    "nazwa": "Kominiarski"
+   }
+  ]
+ }
+}

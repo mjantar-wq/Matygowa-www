@@ -194,10 +194,13 @@ async function main() {
     if (!slug) continue
     const found = await payload.find({ collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = found.docs[0]?.id
+    const created = !id
     const kind = slug === 'regulamin' || slug === 'prywatnosc' ? 'document' : 'section'
     for (const locale of LOCALES) {
       const seo = { title: entry.title?.[locale], description: entry.description?.[locale] }
-      if (id) await payload.update({ collection: 'pages', id, locale, data: { seo }, draft: false } as never)
+      // nowa strona potrzebuje tytułu w każdym języku (pole wymagane i tłumaczone)
+      const title = created ? { title: navTitles[slug]?.[locale] ?? slug } : {}
+      if (id) await payload.update({ collection: 'pages', id, locale, data: { ...title, seo }, draft: false } as never)
       else id = ((await payload.create({ collection: 'pages', locale, data: { slug, kind, title: navTitles[slug]?.[locale] ?? slug, seo, _status: 'published' }, draft: false } as never)) as Any).id
     }
     payload.logger.info(`seo: ${slug}`)

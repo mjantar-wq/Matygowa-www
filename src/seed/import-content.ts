@@ -185,6 +185,36 @@ async function main() {
     payload.logger.info(`testimonials: ${t.author}`)
   }
 
+  // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)
+  const seoPages: Any = read('seo-pages.json')
+  const seoKeys: Record<string, string> = { home: 'home', domy: 'houses', rytualy: 'rituals', osada: 'settlement', okolica: 'surroundings', oferty: 'offers', aktualnosci: 'news', galeria: 'gallery', kontakt: 'contact', przewodnik: 'guide', regulamin: 'regulamin', prywatnosc: 'prywatnosc' }
+  const navTitles: Record<string, L> = { houses: { pl: 'Domy i apartamenty', en: 'Houses & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
+  for (const [key, entry] of Object.entries(seoPages) as [string, Any][]) {
+    const slug = seoKeys[key]
+    if (!slug) continue
+    const found = await payload.find({ collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
+    let id = found.docs[0]?.id
+    const kind = slug === 'regulamin' || slug === 'prywatnosc' ? 'document' : 'section'
+    for (const locale of LOCALES) {
+      const seo = { title: entry.title?.[locale], description: entry.description?.[locale] }
+      if (id) await payload.update({ collection: 'pages', id, locale, data: { seo }, draft: false } as never)
+      else id = ((await payload.create({ collection: 'pages', locale, data: { slug, kind, title: navTitles[slug]?.[locale] ?? slug, seo, _status: 'published' }, draft: false } as never)) as Any).id
+    }
+    payload.logger.info(`seo: ${slug}`)
+  }
+
+  // Aktualności na start: szkice z planowaną publikacją (pole publish), widoczne dopiero po publikacji
+  for (const n of fs.existsSync(path.join(DIR, 'news.json')) ? (read('news.json') as Any[]) : []) {
+    const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
+    let id = found.docs[0]?.id
+    for (const locale of LOCALES) {
+      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
+      if (id) await payload.update({ collection: 'news', id, locale, data, draft: true } as never)
+      else id = ((await payload.create({ collection: 'news', locale, data, draft: true } as never)) as Any).id
+    }
+    payload.logger.info(`news: ${n.slug} (szkic, publikacja ${n.publish})`)
+  }
+
   const s = read('settings.json')
   for (const locale of LOCALES) {
     await payload.updateGlobal({

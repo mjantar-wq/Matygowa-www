@@ -1,0 +1,78 @@
+{
+  "slug": "rytualy",
+  "title": {
+    "pl": "Sauna i bania",
+    "en": "Sauna & hot tub"
+  },
+  "lead": {
+    "pl": "Na Podhalu bania to drewniana balia z gorącą wodą, grzana ogniem. U nas każdy dom ma swoją, na tarasie, z widokiem na Tatry. Obok, w domu, czeka prywatna sauna.",
+    "en": "In Podhale, a *bania* is a wooden tub of hot water heated by a wood fire. Every house here has its own, on the terrace, facing the Tatras. Inside, a private sauna is waiting."
+  },
+  "stages": [
+    {
+      "word": {
+        "pl": "Ciepło",
+        "en": "Heat"
+      },
+      "body": {
+        "pl": "Zacznijcie od sauny. Kilkanaście minut suchego ciepła, aż zrobi się cicho w głowie.",
+        "en": "Start in the sauna. A quarter of an hour of dry heat, until your head goes quiet."
+      }
+    },
+    {
+      "word": {
+        "pl": "Mróz",
+        "en": "Frost"
+      },
+      "body": {
+        "pl": "Wyjdźcie na taras. Zimą chłodzi śnieg, latem wieczorne powietrze z gór.",
+        "en": "Step out onto the terrace. In winter the snow cools you, in summer the evening mountain air."
+      }
+    },
+    {
+      "word": {
+        "pl": "Para",
+        "en": "Steam"
+      },
+      "body": {
+        "pl": "Zanurzcie się w bani. Gorąca woda, para unosi się nad brzegiem, a przed Wami panorama od Hawrania po Giewont.",
+        "en": "Sink into the hot tub. Hot water, steam drifting over the rim, and the panorama from Havran to Giewont in front of you."
+      }
+    },
+    {
+      "word": {
+        "pl": "Cisza",
+        "en": "Silence"
+      },
+      "body": {
+        "pl": "Na koniec nic. Koc, herbata, gwiazdy. Tak kończy się dzień w osadzie.",
+        "en": "Then nothing at all. A blanket, a cup of tea, the stars. That is how a day here ends."
+      }
+    }
+  ],
+  "sauna": {
+    "title": {
+      "pl": "Sauna",
+      "en": "Sauna"
+    },
+    "body": {
+      "pl": "Prywatna sauna w każdym domu. Pierwsza sesja dnia (1 godzina) jest w cenie pobytu, każda kolejna kosztuje 50 zł.",
+      "en": "A private sauna in every house. The first session of the day (1 hour) is included in your stay; each further session costs 50 PLN."
+    }
+  },
+  "bania": {
+    "title": {
+      "pl": "Bania",
+      "en": "Hot tub"
+    },
+    "body": {
+      "pl": "Sesja trwa 4 godziny i kosztuje 150 zł. Wodę grzejemy kilka godzin, dlatego banię zamawiacie do 20:00 dnia poprzedniego, przy rezerwacji albo w „Mojej rezerwacji”.",
+      "en": "A session lasts 4 hours and costs 150 PLN. It takes several hours to heat the water, so please book the hot tub by 8 pm the day before, when you book your stay or later in My Booking."
+    }
+  },
+  "rules": {
+    "pl": "W bani nie używamy szkła ani ostrych przedmiotów, a w saunie nie jemy i nie pijemy alkoholu. Ręczniki domowe zostają w domu, do bani zabierzcie własne albo zapytajcie nas o kąpielowe.",
+    "en": "No glass or sharp objects in the hot tub, and no food or alcohol in the sauna. Please keep the house towels indoors; bring your own for the tub or ask us for bath towels."
+  },
+  "rules_note": "Ostatnie zdanie o ręcznikach do potwierdzenia przez Michała."
+}

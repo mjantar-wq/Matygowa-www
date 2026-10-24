@@ -1,0 +1,403 @@
+{
+  "slug": "home",
+  "blocks": [
+    {
+      "type": "hero",
+      "id": "hero",
+      "headline_options": [
+        {
+          "pl": "Dziesięć szczytów. Jeden widok.",
+          "en": "Ten peaks. One view."
+        },
+        {
+          "pl": "Wysoko nad codziennością.",
+          "en": "High above everyday life."
+        },
+        {
+          "pl": "Gliczarów. Widok, który zostaje.",
+          "en": "Gliczarów. A view that stays with you."
+        }
+      ],
+      "headline": {
+        "pl": "Dziesięć szczytów. Jeden widok.",
+        "en": "Ten peaks. One view."
+      },
+      "sub": {
+        "pl": "Domy w Gliczarowie Górnym, każdy nazwany od szczytu, który widać z jego okien. Własna sauna, gorąca bania i cała panorama Tatr.",
+        "en": "Houses in Gliczarów Górny, each named after the peak you see from its windows. Your own sauna, a hot tub and the whole Tatra panorama."
+      },
+      "media": "hero-panorama-swit"
+    },
+    {
+      "type": "intro",
+      "id": "wstep",
+      "eyebrow": {
+        "pl": "Gliczarów Górny",
+        "en": "Gliczarów Górny"
+      },
+      "heading": {
+        "pl": "Tatry nie są tu tłem",
+        "en": "Here, the Tatras are not a backdrop"
+      },
+      "body": {
+        "pl": "Gliczarów Górny leży na wysokości 942 m, tak wysoko, że góry widać stąd przez cały dzień. Są pierwszą rzeczą, którą zobaczycie rano z łóżka, i ostatnią, która gaśnie wieczorem nad banią. Zbudowaliśmy tu domy dla rodzin i przyjaciół, którzy chcą być razem, a jednocześnie mieć własny kąt.",
+        "en": "Gliczarów Górny sits at 942 metres, so high that the mountains stay in view all day. They are the first thing you see from bed in the morning and the last thing to fade at night, above the hot tub. We built these houses for families and friends who want to be together and still have a corner of their own."
+      },
+      "stats": [
+        {
+          "value": "942 m",
+          "label": {
+            "pl": "n.p.m.",
+            "en": "above sea level"
+          }
+        },
+        {
+          "value": "6",
+          "label": {
+            "pl": "domów",
+            "en": "houses"
+          }
+        },
+        {
+          "value": "120 m²",
+          "label": {
+            "pl": "każdy dom",
+            "en": "each house"
+          }
+        },
+        {
+          "value": "4",
+          "label": {
+            "pl": "sypialnie w domu",
+            "en": "bedrooms per house"
+          }
+        },
+        {
+          "value": "4",
+          "label": {
+            "pl": "apartamenty od wiosny 2027",
+            "en": "apartments from spring 2027"
+          }
+        }
+      ]
+    },
+    {
+      "type": "peak_panorama",
+      "id": "panorama",
+      "heading": {
+        "pl": "Dziesięć szczytów, jeden widok",
+        "en": "Ten peaks, one view"
+      },
+      "body": {
+        "pl": "Każdy dom i apartament nosi imię szczytu, który widać z jego okien. Przesuńcie panoramę i wybierzcie swój.",
+        "en": "Every house and apartment is named after a peak you can see from its windows. Drag the panorama and choose yours."
+      },
+      "marker_hint": {
+        "pl": "{peak} · {elevation} m · {unit} · do {guests} osób · od {price}",
+        "en": "{peak} · {elevation} m · {unit} · up to {guests} guests · from {price}"
+      },
+      "map": {
+        "heading": {
+          "pl": "Mapa osady",
+          "en": "Settlement map"
+        },
+        "body": {
+          "pl": "Siedem budynków na zboczu. Strzałki pokazują, w którą stronę patrzą okna każdego z nich.",
+          "en": "Seven buildings on the hillside. The arrows show which way each one's windows look."
+        },
+        "building7": {
+          "pl": "Budynek z apartamentami. Otwarcie wiosną 2027.",
+          "en": "The apartment building. Opening spring 2027."
+        }
+      }
+    },
+    {
+      "type": "day_story",
+      "id": "dzien",
+      "heading": {
+        "pl": "Dzień w osadzie",
+        "en": "A day at the settlement"
+      },
+      "scenes": [
+        {
+          "key": "dawn",
+          "title": {
+            "pl": "Świt",
+            "en": "Dawn"
+          },
+          "summer": {
+            "pl": "Pierwsze światło trafia w granie, zanim dotknie doliny. Kawa na tarasie, rosa na łące, cisza.",
+            "en": "The first light touches the ridges before it reaches the valley. Coffee on the terrace, dew on the meadow, silence."
+          },
+          "winter": {
+            "pl": "Śnieg za oknem jest różowy przez dziesięć minut. Warto nastawić budzik.",
+            "en": "For ten minutes the snow outside the window is pink. It is worth setting an alarm."
+          }
+        },
+        {
+          "key": "day",
+          "title": {
+            "pl": "Dzień",
+            "en": "Day"
+          },
+          "summer": {
+            "pl": "Szlaki w Tatrach, rowery po Pogórzu Gliczarowskim, termy na leniwe popołudnie.",
+            "en": "Trails in the Tatras, bike rides across the foothills, thermal pools for a lazy afternoon."
+          },
+          "winter": {
+            "pl": "Stoki w Białce i Bukowinie są kilka minut stąd. Wracacie, gdy nogi mają dość.",
+            "en": "The slopes in Białka and Bukowina are a few minutes away. Come back when your legs have had enough."
+          }
+        },
+        {
+          "key": "dusk",
+          "title": {
+            "pl": "Zmierzch",
+            "en": "Dusk"
+          },
+          "summer": {
+            "pl": "Sauna, potem chłodne powietrze, a nad Wami ostatnie światło na Łomnicy.",
+            "en": "The sauna, then the cool air, and above you the last light on Lomnica."
+          },
+          "winter": {
+            "pl": "Bania paruje w mrozie. Wy w gorącej wodzie, Tatry gasną po kolei, od zachodu.",
+            "en": "The hot tub steams in the frost. You are in hot water while the peaks go dark one by one, from the west."
+          }
+        },
+        {
+          "key": "night",
+          "title": {
+            "pl": "Noc",
+            "en": "Night"
+          },
+          "summer": {
+            "pl": "Długi stół, otwarte okna, gwiazdy, których w mieście nie widać.",
+            "en": "A long table, open windows, stars you never see in the city."
+          },
+          "winter": {
+            "pl": "Ogień w kominku, wszyscy przy jednym stole i nikt nie patrzy na zegarek.",
+            "en": "A fire in the hearth, everyone at one table, and nobody checking the time."
+          }
+        }
+      ],
+      "day_night_caption": {
+        "day": {
+          "pl": "Za dnia: Tatry od Hawrania po Giewont.",
+          "en": "By day: the Tatras from Havran to Giewont."
+        },
+        "night": {
+          "pl": "Nocą: światło w oknach, para nad banią, gwiazdy.",
+          "en": "By night: light in the windows, steam over the hot tub, stars."
+        }
+      }
+    },
+    {
+      "type": "house_inside",
+      "id": "dom",
+      "heading": {
+        "pl": "Dom od środka",
+        "en": "Inside the house"
+      },
+      "body": {
+        "pl": "Każdy dom ma 120 m² na dwóch poziomach i jest urządzony tak samo. Różni się tylko widokiem.",
+        "en": "Every house has 120 m² over two floors and is furnished the same way. Only the view is different."
+      },
+      "rooms": [
+        {
+          "key": "living",
+          "title": {
+            "pl": "Salon z kominkiem",
+            "en": "Living room with fireplace"
+          },
+          "body": {
+            "pl": "Kanapa, fotele, drewno ułożone przy kominku. Wieczorem to tu wszyscy się schodzą.",
+            "en": "A sofa, armchairs, logs stacked by the fire. In the evening this is where everyone ends up."
+          }
+        },
+        {
+          "key": "kitchen",
+          "title": {
+            "pl": "Kuchnia i stół",
+            "en": "Kitchen and table"
+          },
+          "body": {
+            "pl": "Pełna kuchnia z płytą indukcyjną, piekarnikiem, zmywarką i ekspresem. Stół, przy którym zmieści się cała rodzina.",
+            "en": "A full kitchen with an induction hob, oven, dishwasher and coffee machine. A table big enough for the whole family."
+          }
+        },
+        {
+          "key": "bedrooms",
+          "title": {
+            "pl": "Cztery sypialnie",
+            "en": "Four bedrooms"
+          },
+          "body": {
+            "pl": "Trzy z łóżkiem podwójnym, jedna z dwoma pojedynczymi, które można zsunąć. Pościel i ręczniki czekają.",
+            "en": "Three with a double bed, one with two singles that push together. Bed linen and towels are ready."
+          }
+        },
+        {
+          "key": "bath",
+          "title": {
+            "pl": "Łazienki i sauna",
+            "en": "Bathrooms and sauna"
+          },
+          "body": {
+            "pl": "Dwie łazienki, osobne WC i prywatna sauna. Na tarasie bania z gorącą wodą.",
+            "en": "Two bathrooms, a separate WC and a private sauna. On the terrace, an outdoor hot tub."
+          }
+        }
+      ],
+      "amenities_source": "icecoldres"
+    },
+    {
+      "type": "rituals_teaser",
+      "id": "rytualy",
+      "heading": {
+        "pl": "Ciepło, para, mróz, cisza",
+        "en": "Heat, steam, frost, silence"
+      },
+      "body": {
+        "pl": "Prywatna sauna w każdym domu i gorąca bania na tarasie. Na stronie Sauna i bania opowiadamy, jak z nich korzystać najlepiej.",
+        "en": "A private sauna in every house and a hot tub on the terrace. Our Sauna & hot tub page explains how to enjoy them best."
+      },
+      "cta": {
+        "pl": "Sauna i bania",
+        "en": "Sauna & hot tub"
+      },
+      "link": "rytualy"
+    },
+    {
+      "type": "seasons",
+      "id": "pory-roku",
+      "heading": {
+        "pl": "Dwie pory roku, ten sam widok",
+        "en": "Two seasons, the same view"
+      },
+      "winter": {
+        "pl": "Zimą Gliczarów jest biały i cichy. Narty kilka minut stąd, kulig, termy, a wieczorem bania w śniegu.",
+        "en": "In winter Gliczarów is white and quiet. Ski slopes a few minutes away, sleigh rides, thermal pools, and in the evening a hot tub in the snow."
+      },
+      "summer": {
+        "pl": "Latem łąki pachną sianem, a szlaki zaczynają się niedaleko. Rowery, spływ Dunajcem, długie wieczory na tarasie.",
+        "en": "In summer the meadows smell of hay and the trails start close by. Bikes, rafting on the Dunajec, long evenings on the terrace."
+      }
+    },
+    {
+      "type": "surroundings",
+      "id": "okolica",
+      "heading": {
+        "pl": "Blisko wszystkiego, daleko od zgiełku",
+        "en": "Close to everything, far from the crowds"
+      },
+      "body": {
+        "pl": "Zakopane jest 15 km stąd, Słowacja 13 km. Na tyle blisko, żeby pojechać, i na tyle daleko, żeby wieczorem było cicho.",
+        "en": "Zakopane is 15 km away, Slovakia 13 km. Close enough to visit, far enough for quiet evenings."
+      },
+      "distances": [
+        {
+          "label": {
+            "pl": "Zakopane",
+            "en": "Zakopane"
+          },
+          "value": "15 km"
+        },
+        {
+          "label": {
+            "pl": "Granica ze Słowacją",
+            "en": "Slovak border"
+          },
+          "value": "13 km"
+        },
+        {
+          "label": {
+            "pl": "Termy",
+            "en": "Thermal pools"
+          },
+          "value": "3–15 km"
+        },
+        {
+          "label": {
+            "pl": "Stacja PKP Poronin",
+            "en": "Poronin railway station"
+          },
+          "value": "7 km"
+        },
+        {
+          "label": {
+            "pl": "Lotnisko Kraków-Balice",
+            "en": "Kraków-Balice airport"
+          },
+          "value": "83 km"
+        },
+        {
+          "label": {
+            "pl": "Lotnisko Chopina, Warszawa",
+            "en": "Warsaw Chopin airport"
+          },
+          "value": "320 km"
+        }
+      ],
+      "featured_attractions": 6,
+      "cta": {
+        "pl": "Cała okolica",
+        "en": "Explore the area"
+      },
+      "link": "okolica"
+    },
+    {
+      "type": "nature",
+      "id": "natura",
+      "heading": {
+        "pl": "Prawdziwy luksus to komfort w zgodzie z naturą",
+        "en": "True luxury is comfort in harmony with nature"
+      },
+      "body": {
+        "pl": "Pompy ciepła i kolektory słoneczne dają osadzie około 90% energii, której potrzebuje. Mamy własną ekologiczną oczyszczalnię. Wy czujecie tylko ciepłą podłogę i czyste powietrze.",
+        "en": "Heat pumps and solar collectors provide about 90% of the energy the settlement uses, and we have our own ecological wastewater treatment plant. All you notice is a warm floor and clean air."
+      },
+      "cta": {
+        "pl": "Historia osady",
+        "en": "Our story"
+      },
+      "link": "osada"
+    },
+    {
+      "type": "testimonials",
+      "id": "opinie",
+      "heading": {
+        "pl": "Wracają do nas",
+        "en": "Guests who come back"
+      },
+      "rating_line": {
+        "pl": "Google 5,0",
+        "en": "Google 5.0"
+      },
+      "source": "cms_testimonials"
+    },
+    {
+      "type": "offers_news",
+      "id": "oferty",
+      "heading": {
+        "pl": "Tylko na naszej stronie",
+        "en": "Only on our website"
+      },
+      "body": {
+        "pl": "Oferty i promocje, których nie znajdziecie w innych serwisach.",
+        "en": "Offers and promotions you will not find anywhere else."
+      }
+    },
+    {
+      "type": "booking_invite",
+      "id": "rezerwacja",
+      "heading": {
+        "pl": "Wybierzcie swój szczyt",
+        "en": "Choose your peak"
+      },
+      "body": {
+        "pl": "Sprawdźcie wolne terminy i ceny wszystkich domów w jednym kalendarzu. Wolicie porozmawiać? Zadzwońcie, chętnie doradzimy.",
+        "en": "See free dates and prices for every house in one calendar. Prefer to talk? Give us a call, we are happy to help."
+      }
+    }
+  ]
+}

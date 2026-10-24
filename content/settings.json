@@ -1,0 +1,141 @@
+{
+  "brand": "Matygowa Osada",
+  "tagline": {
+    "pl": "W zgodzie z naturą",
+    "en": "In harmony with nature"
+  },
+  "booking_bar": {
+    "cta": {
+      "pl": "Sprawdź termin",
+      "en": "Check availability"
+    },
+    "arrival": {
+      "pl": "Przyjazd",
+      "en": "Arrival"
+    },
+    "departure": {
+      "pl": "Wyjazd",
+      "en": "Departure"
+    },
+    "guests": {
+      "pl": "Goście",
+      "en": "Guests"
+    },
+    "best_rate": {
+      "pl": "Najniższa cena tylko u nas",
+      "en": "Best rate only on our website"
+    },
+    "best_rate_note": {
+      "pl": "Rezerwując bezpośrednio, płacicie najmniej i rozmawiacie z nami, a nie z pośrednikiem.",
+      "en": "Book direct for the lowest price, and talk to us rather than to a middleman."
+    },
+    "from_price": {
+      "pl": "od {price} za dobę",
+      "en": "from {price} per night"
+    }
+  },
+  "contact": {
+    "phone": "+48 788 267 809",
+    "email": "info@matygowaosada.pl",
+    "address": "ul. Matygówka 30, 34-425 Gliczarów Górny",
+    "company": "DKSKA sp. z o.o., ul. Kombatantów 4/320, 15-110 Białystok, NIP 9662090509, KRS 0000884900"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/matygowa.osada/",
+    "instagram": "https://www.instagram.com/matygowa.osada"
+  },
+  "nav": [
+    {
+      "slug": "domy",
+      "label": {
+        "pl": "Domy i apartamenty",
+        "en": "Houses & apartments"
+      }
+    },
+    {
+      "slug": "rytualy",
+      "label": {
+        "pl": "Sauna i bania",
+        "en": "Sauna & hot tub"
+      }
+    },
+    {
+      "slug": "osada",
+      "label": {
+        "pl": "Osada",
+        "en": "The settlement"
+      }
+    },
+    {
+      "slug": "okolica",
+      "label": {
+        "pl": "Okolica",
+        "en": "Surroundings"
+      }
+    },
+    {
+      "slug": "oferty",
+      "label": {
+        "pl": "Oferty",
+        "en": "Offers"
+      }
+    },
+    {
+      "slug": "aktualnosci",
+      "label": {
+        "pl": "Aktualności",
+        "en": "News"
+      }
+    },
+    {
+      "slug": "galeria",
+      "label": {
+        "pl": "Galeria",
+        "en": "Gallery"
+      }
+    },
+    {
+      "slug": "kontakt",
+      "label": {
+        "pl": "Kontakt",
+        "en": "Contact"
+      }
+    }
+  ],
+  "toggles": {
+    "day": {
+      "pl": "Dzień",
+      "en": "Day"
+    },
+    "night": {
+      "pl": "Noc",
+      "en": "Night"
+    },
+    "winter": {
+      "pl": "Zima",
+      "en": "Winter"
+    },
+    "summer": {
+      "pl": "Lato",
+      "en": "Summer"
+    },
+    "panorama": {
+      "pl": "Panorama",
+      "en": "Panorama"
+    },
+    "map": {
+      "pl": "Mapa osady",
+      "en": "Settlement map"
+    }
+  },
+  "seo_default": {
+    "title": {
+      "pl": "Matygowa Osada | Domy z sauną i banią z widokiem na Tatry, Gliczarów Górny",
+      "en": "Matygowa Osada | Mountain houses with sauna and hot tub, Tatra views, Gliczarów Górny"
+    },
+    "description": {
+      "pl": "Sześć domów po 120 m² w Gliczarowie Górnym: cztery sypialnie, kominek, prywatna sauna, gorąca bania i pełna panorama Tatr. Najniższa cena tylko u nas.",
+      "en": "Six 120 m² houses in Gliczarów Górny: four bedrooms, a fireplace, a private sauna, an outdoor hot tub and the full Tatra panorama. Best rate only on our website."
+    }
+  }
+}

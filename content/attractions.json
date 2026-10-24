@@ -1,0 +1,142 @@
+[
+  {
+    "slug": "kasprowy-wierch",
+    "name": {
+      "pl": "Kolejka na Kasprowy Wierch",
+      "en": "Kasprowy Wierch cable car"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "body": {
+      "pl": "Wjazd z Kuźnic prosto w Tatry. Zimą narty, latem szlaki i widok na obie strony granicy.",
+      "en": "From Kuźnice straight up into the Tatras. Skiing in winter, trails and views across both sides of the border in summer."
+    }
+  },
+  {
+    "slug": "stoki-bialka-bukowina",
+    "name": {
+      "pl": "Stoki w Białce i Bukowinie Tatrzańskiej",
+      "en": "Ski slopes in Białka and Bukowina Tatrzańska"
+    },
+    "season": [
+      "winter"
+    ],
+    "category": "ski",
+    "body": {
+      "pl": "Najbliższe wyciągi są kilka minut samochodem. Duże stacje w Białce i Bukowinie na cały dzień.",
+      "en": "The nearest lifts are a few minutes' drive away, with the big resorts in Białka and Bukowina for a full day out."
+    }
+  },
+  {
+    "slug": "termy",
+    "name": {
+      "pl": "Termy",
+      "en": "Thermal pools"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "thermal",
+    "body": {
+      "pl": "Kilka kompleksów termalnych w promieniu 3–15 km. Dobre na deszczowy dzień i na zmęczone nogi.",
+      "en": "Several thermal spas within 3–15 km. Good for a rainy day and for tired legs."
+    }
+  },
+  {
+    "slug": "skywalk-poronin",
+    "name": {
+      "pl": "SkyWalk Poronin",
+      "en": "SkyWalk Poronin"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "body": {
+      "pl": "Szklany taras widokowy kilka kilometrów od osady.",
+      "en": "A glass viewing terrace a few kilometres from the settlement."
+    }
+  },
+  {
+    "slug": "splyw-dunajcem",
+    "name": {
+      "pl": "Spływ Dunajcem",
+      "en": "Dunajec River rafting"
+    },
+    "season": [
+      "summer"
+    ],
+    "category": "family",
+    "body": {
+      "pl": "Drewniane tratwy, flisacy w strojach i przełom Dunajca w Pieninach.",
+      "en": "Wooden rafts, raftsmen in traditional dress and the Dunajec gorge in the Pieniny Mountains."
+    }
+  },
+  {
+    "slug": "murzasichle",
+    "name": {
+      "pl": "Park linowy i Zagroda Korkoszów w Murzasichlu",
+      "en": "Rope park and Korkoszów Farmstead, Murzasichle"
+    },
+    "season": [
+      "summer"
+    ],
+    "category": "family",
+    "body": {
+      "pl": "Park linowy dla dzieci i dorosłych oraz dawna góralska zagroda.",
+      "en": "A rope park for children and adults, and a traditional highland farmstead."
+    }
+  },
+  {
+    "slug": "balony",
+    "name": {
+      "pl": "Lot balonem",
+      "en": "Hot-air balloon flight"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "body": {
+      "pl": "Starty z Zakopanego i Kościeliska, Tatry z góry.",
+      "en": "Take-offs from Zakopane and Kościelisko: the Tatras from above."
+    }
+  },
+  {
+    "slug": "jaskinie-slowacja",
+    "name": {
+      "pl": "Jaskinie na Słowacji",
+      "en": "Caves in Slovakia"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "family",
+    "body": {
+      "pl": "Jednodniowa wycieczka za granicę, 13 km do Słowacji.",
+      "en": "A day trip across the border, 13 km to Slovakia."
+    }
+  },
+  {
+    "slug": "szlaki-rowery",
+    "name": {
+      "pl": "Szlaki piesze i rowerowe",
+      "en": "Hiking and cycling trails"
+    },
+    "season": [
+      "summer"
+    ],
+    "category": "trails",
+    "body": {
+      "pl": "Gliczarów Górny to start i meta tras rowerowych po Pogórzu Gliczarowskim i na Słowację.",
+      "en": "Gliczarów Górny is the start and finish of cycle routes across the Gliczarów foothills and into Slovakia."
+    }
+  }
+]

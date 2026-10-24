@@ -1,0 +1,124 @@
+{
+  "slug": "osada",
+  "title": {
+    "pl": "Osada",
+    "en": "The settlement"
+  },
+  "sections": [
+    {
+      "id": "historia",
+      "heading": {
+        "pl": "Skąd się tu wzięliśmy",
+        "en": "How we got here"
+      },
+      "body": {
+        "pl": "Kochamy góry, przestrzeń, ciszę i zapach świerków. Od ponad dziesięciu lat prowadziliśmy własne obiekty w innych częściach Polski, ale w czasie pandemii zrozumieliśmy, że chcemy czegoś innego: miejsca, do którego sami chcielibyśmy wracać, z rodziną, z przyjaciółmi albo po prostu na kilka cichych dni. Sprzedaliśmy część obiektów i wybraliśmy Gliczarów Górny. Matygowa Osada łączy naszą miłość do Tatr z doświadczeniem, które zebraliśmy przez lata.",
+        "en": "We love the mountains, open space, silence and the scent of spruce. For more than ten years we ran our own properties elsewhere in Poland, but during the pandemic we realised we wanted something different: a place we would want to come back to ourselves, with family, with friends, or simply for a few quiet days. We sold some of those properties and chose Gliczarów Górny. Matygowa Osada brings together our love of the Tatras and everything we have learned over the years."
+      },
+      "hosts": {
+        "enabled": false,
+        "note": "Decyzja 8: imiona i zdjęcie gospodarzy, do decyzji Michała."
+      }
+    },
+    {
+      "id": "natura",
+      "heading": {
+        "pl": "W zgodzie z naturą",
+        "en": "In harmony with nature"
+      },
+      "body": {
+        "pl": "Osadę budowaliśmy z myślą o tym, co wokół. Kolektory słoneczne i pompy ciepła dają około 90% energii, której potrzebujemy, a ścieki oczyszcza nasza własna ekologiczna oczyszczalnia. Wierzymy, że prawdziwy luksus to komfort w zgodzie z naturą.",
+        "en": "We built the settlement with its surroundings in mind. Solar collectors and heat pumps provide about 90% of the energy we need, and our own ecological treatment plant cleans the wastewater. We believe true luxury is comfort in harmony with nature."
+      }
+    },
+    {
+      "id": "goralszczyzna",
+      "heading": {
+        "pl": "Góralszczyzna dziś",
+        "en": "Highland life today"
+      },
+      "lead": {
+        "pl": "Podhale to nie skansen. To ludzie, którzy wciąż budują z drewna, grają na skrzypcach i robią ser tak, jak ich dziadkowie, i robią to dziś, na co dzień.",
+        "en": "Podhale is not an open-air museum. It is people who still build in wood, play the fiddle and make cheese the way their grandparents did, and do it today, every day."
+      },
+      "items": [
+        {
+          "word": "wierch",
+          "translation": {
+            "pl": "szczyt, wierzchołek",
+            "en": "peak, summit"
+          },
+          "heading": {
+            "pl": "Drewno i gont",
+            "en": "Timber and shingle"
+          },
+          "body": {
+            "pl": "Na Podhalu ciesielka to wciąż zawód, nie hobby. Gont, czyli ręcznie łupane drewniane dachówki, kładzie się tu na domach i kaplicach, a ściany wciąż stawia się na zrąb, z bali łączonych na zamki.",
+            "en": "In Podhale carpentry is still a trade, not a hobby. Shingles, hand-split wooden roof tiles, still go onto houses and chapels here, and walls are still raised from logs locked together at the corners."
+          }
+        },
+        {
+          "word": "baca",
+          "translation": {
+            "pl": "główny pasterz na hali",
+            "en": "head shepherd"
+          },
+          "heading": {
+            "pl": "Oscypek",
+            "en": "Oscypek"
+          },
+          "body": {
+            "pl": "Prawdziwy oscypek robi baca w bacówce, od maja do września, z mleka owczego, i wędzi go w dymie. Od 2008 roku jego nazwa jest chroniona w całej Unii Europejskiej. Zapytajcie nas, gdzie w okolicy kupić go prosto od bacy.",
+            "en": "Real oscypek is made by the head shepherd in his hut from May to September, from sheep's milk, and then smoked. Since 2008 its name has been protected across the European Union. Ask us where to buy it straight from the shepherd."
+          }
+        },
+        {
+          "word": "Wołosi",
+          "translation": {
+            "pl": "wędrowni pasterze z Karpat",
+            "en": "wandering Carpathian shepherds"
+          },
+          "heading": {
+            "pl": "Skąd się wzięli górale",
+            "en": "Where the highlanders came from"
+          },
+          "body": {
+            "pl": "Kultura pasterska przyszła tu razem z Wołochami, którzy od XIV wieku wędrowali z owcami łukiem Karpat. Ślad po nich został w nazwach, na przykład w grani Wołoszyna, od której imię ma jeden z naszych domów.",
+            "en": "Shepherding culture arrived with the Vlachs, who from the 14th century moved with their flocks along the Carpathian arc. They left their mark on place names, such as the Wołoszyn ridge, which gave one of our houses its name."
+          }
+        },
+        {
+          "word": "nuta",
+          "translation": {
+            "pl": "melodia góralska",
+            "en": "a highland tune"
+          },
+          "heading": {
+            "pl": "Muzyka",
+            "en": "Music"
+          },
+          "body": {
+            "pl": "Góralska muzyka to skrzypce i basy, i nuty, które przechodzą z ojca na syna. Na weselach i w karczmach gra się ją do dziś, nie dla turystów, tylko dla siebie.",
+            "en": "Highland music means fiddles and a bass, and tunes passed down from father to son. It is still played at weddings and in inns, not for tourists, but for the people themselves."
+          }
+        },
+        {
+          "word": "gazda",
+          "translation": {
+            "pl": "gospodarz",
+            "en": "the master of the house"
+          },
+          "heading": {
+            "pl": "Ludzie z okolicy",
+            "en": "Our neighbours"
+          },
+          "body": {
+            "pl": "Polecamy tylko tych, których znamy: rzemieślników, przewodników, muzyków i gospodarzy z okolicy. Listę znajdziecie w przewodniku gościa.",
+            "en": "We only recommend people we know: local craftspeople, mountain guides, musicians and farmers. You will find the list in our guest guide."
+          },
+          "note": "Lista partnerów lokalnych do uzupełnienia przez Michała (nazwy, kontakty, zgoda na publikację)."
+        }
+      ]
+    }
+  ]
+}

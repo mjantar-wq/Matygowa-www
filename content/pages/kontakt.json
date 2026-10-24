@@ -1,0 +1,49 @@
+{
+  "slug": "kontakt",
+  "title": {
+    "pl": "Kontakt",
+    "en": "Contact"
+  },
+  "lead": {
+    "pl": "Zadzwońcie albo napiszcie. Chętnie pomożemy wybrać dom i termin.",
+    "en": "Call or write to us. We are happy to help you choose a house and dates."
+  },
+  "address_lines": [
+    "Matygowa Osada",
+    "ul. Matygówka 30",
+    "34-425 Gliczarów Górny",
+    "PL"
+  ],
+  "phone": "+48 788 267 809",
+  "email": "info@matygowaosada.pl",
+  "hours": null,
+  "hours_note": "Celowo bez godzin kontaktu (decyzja Michała).",
+  "form": {
+    "heading": {
+      "pl": "Napiszcie do nas",
+      "en": "Write to us"
+    },
+    "submit": {
+      "pl": "Wyślij",
+      "en": "Send"
+    },
+    "fields": {
+      "name": {
+        "pl": "Imię i nazwisko",
+        "en": "Name"
+      },
+      "email": {
+        "pl": "E-mail",
+        "en": "Email"
+      },
+      "phone": {
+        "pl": "Telefon (opcjonalnie)",
+        "en": "Phone (optional)"
+      },
+      "message": {
+        "pl": "Wiadomość",
+        "en": "Message"
+      }
+    }
+  }
+}

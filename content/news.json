@@ -1,0 +1,39 @@
+[
+  {
+    "slug": "apartamenty-wiosna-2027",
+    "publish": "2027-01-11",
+    "title": {
+      "pl": "Siódmy budynek: cztery apartamenty od wiosny 2027",
+      "en": "The seventh building: four apartments from spring 2027"
+    },
+    "body": {
+      "pl": "Na zboczu osady rośnie siódmy budynek. Wiosną 2027 otworzymy w nim cztery apartamenty, nazwane od szczytów Tatr Zachodnich, które widać z ich okien: Czerwone Wierchy, Giewont, Kominiarski Wierch i Ciemniak. Rezerwacje ruszą, gdy budynek będzie gotowy. Dajcie znać, jeśli chcecie wiedzieć pierwsi.",
+      "en": "A seventh building is rising on the settlement's slope. In spring 2027 it will open as four apartments, named after the Western Tatra peaks you can see from their windows: Czerwone Wierchy, Giewont, Kominiarski Wierch and Ciemniak. Bookings will open once the building is ready. Let us know if you would like to hear first."
+    }
+  },
+  {
+    "slug": "nowa-strona",
+    "publish": "2027-01-11",
+    "title": {
+      "pl": "Nowa strona osady",
+      "en": "Our new website"
+    },
+    "body": {
+      "pl": "Witojcie na nowej stronie. Każdy dom ma tu swoją historię i swój szczyt, a wolne terminy i najniższą cenę sprawdzicie w jednym kalendarzu.",
+      "en": "Welcome to our new website. Every house now has its own story and its own peak, and you can check free dates and the best rate in one calendar."
+    }
+  },
+  {
+    "slug": "ferie-2027",
+    "publish": "2027-01-11",
+    "title": {
+      "pl": "Ferie 2027 pod Tatrami",
+      "en": "Winter holidays 2027 below the Tatras"
+    },
+    "body": {
+      "pl": "Ferie w Małopolsce zaczynają się 15 stycznia. Stoki są kilka minut od osady, a wieczorem czeka bania w śniegu. Sprawdźcie wolne terminy w ofercie Ferie zimowe 2027.",
+      "en": "School winter holidays in Lesser Poland start on 15 January. The slopes are a few minutes away, and in the evening the hot tub waits in the snow. Check free dates in our Winter holidays 2027 offer."
+    },
+    "note": "Data startu ferii z koncepcji (15.01); sprawdzić harmonogram ferii 2027 dla województw."
+  }
+]

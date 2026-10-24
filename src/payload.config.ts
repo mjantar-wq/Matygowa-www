@@ -67,6 +67,8 @@ const cloudflare =
     : await getCloudflareContext({ async: true })
 
 export default buildConfig({
+  // panel treści pod /panel, osobno od panelu rezerwacji IceColdRes (docs/wdrozenie.md)
+  routes: { admin: '/panel' },
   admin: {
     user: Users.slug,
     importMap: {

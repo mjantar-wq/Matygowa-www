@@ -1,0 +1,128 @@
+{
+  "domy": {
+    "path": {
+      "pl": "/domy/",
+      "en": "/en/houses/"
+    },
+    "title": {
+      "pl": "Domy z sauną i banią w Gliczarowie Górnym | Matygowa Osada",
+      "en": "Houses with sauna and hot tub in Gliczarów Górny | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Sześć domów po 120 m² dla 8–10 osób: cztery sypialnie, kominek, prywatna sauna i gorąca bania z widokiem na Tatry.",
+      "en": "Six 120 m² houses for 8–10 guests: four bedrooms, a fireplace, a private sauna and a hot tub facing the Tatras."
+    }
+  },
+  "rytualy": {
+    "path": {
+      "pl": "/sauna-i-bania/",
+      "en": "/en/sauna-and-hot-tub/"
+    },
+    "title": {
+      "pl": "Sauna i bania pod Tatrami | Matygowa Osada",
+      "en": "Sauna and hot tub below the Tatras | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Prywatna sauna w każdym domu i gorąca bania na tarasie z widokiem na Tatry. Zasady i ceny.",
+      "en": "A private sauna in every house and a wood-fired hot tub on the terrace facing the Tatras. Rules and prices."
+    }
+  },
+  "osada": {
+    "path": {
+      "pl": "/osada/",
+      "en": "/en/settlement/"
+    },
+    "title": {
+      "pl": "O osadzie: w zgodzie z naturą | Matygowa Osada",
+      "en": "About the settlement: in harmony with nature | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Historia Matygowej Osady, energia z własnych źródeł i góralszczyzna dziś.",
+      "en": "The story of Matygowa Osada, energy from our own sources, and highland life today."
+    }
+  },
+  "okolica": {
+    "path": {
+      "pl": "/okolica/",
+      "en": "/en/surroundings/"
+    },
+    "title": {
+      "pl": "Okolica: Zakopane, stoki, termy | Matygowa Osada",
+      "en": "Surroundings: Zakopane, ski slopes, thermal pools | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Zakopane 15 km, Słowacja 13 km, termy 3–15 km. Szlaki, stoki i atrakcje wokół Gliczarowa Górnego.",
+      "en": "Zakopane 15 km, Slovakia 13 km, thermal pools 3–15 km. Trails, slopes and attractions around Gliczarów Górny."
+    }
+  },
+  "oferty": {
+    "path": {
+      "pl": "/oferty/",
+      "en": "/en/offers/"
+    },
+    "title": {
+      "pl": "Oferty i promocje tylko na naszej stronie | Matygowa Osada",
+      "en": "Offers available only on our website | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Najniższa cena tylko u nas. Aktualne oferty na pobyt w domach z sauną i banią pod Tatrami.",
+      "en": "Best rate only on our website. Current offers for houses with sauna and hot tub below the Tatras."
+    }
+  },
+  "aktualnosci": {
+    "path": {
+      "pl": "/aktualnosci/",
+      "en": "/en/news/"
+    },
+    "title": {
+      "pl": "Aktualności | Matygowa Osada",
+      "en": "News | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Nowości z osady i wydarzenia w okolicy.",
+      "en": "News from the settlement and events nearby."
+    }
+  },
+  "galeria": {
+    "path": {
+      "pl": "/galeria/",
+      "en": "/en/gallery/"
+    },
+    "title": {
+      "pl": "Galeria: zima i lato w osadzie | Matygowa Osada",
+      "en": "Gallery: winter and summer at the settlement | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Zdjęcia domów, wnętrz, sauny, bani i panoramy Tatr o każdej porze roku.",
+      "en": "Photos of the houses, interiors, sauna, hot tub and the Tatra panorama in every season."
+    }
+  },
+  "kontakt": {
+    "path": {
+      "pl": "/kontakt/",
+      "en": "/en/contact/"
+    },
+    "title": {
+      "pl": "Kontakt | Matygowa Osada, Gliczarów Górny",
+      "en": "Contact | Matygowa Osada, Gliczarów Górny"
+    },
+    "description": {
+      "pl": "ul. Matygówka 30, 34-425 Gliczarów Górny. Tel. +48 788 267 809, info@matygowaosada.pl.",
+      "en": "ul. Matygówka 30, 34-425 Gliczarów Górny, Poland. Phone +48 788 267 809, info@matygowaosada.pl."
+    }
+  },
+  "przewodnik": {
+    "path": {
+      "pl": "/przewodnik/",
+      "en": "/en/guest-guide/"
+    },
+    "title": {
+      "pl": "Przewodnik gościa | Matygowa Osada",
+      "en": "Guest guide | Matygowa Osada"
+    },
+    "description": {
+      "pl": "Przyjazd, wyjazd, dojazd zimą, zwierzęta, bania i zasady domu.",
+      "en": "Check-in, check-out, winter driving, pets, the hot tub and house rules."
+    }
+  }
+}

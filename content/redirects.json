@@ -1,0 +1,142 @@
+[
+  {
+    "from": "/osada/domki/",
+    "to": "/domy/",
+    "status": 301
+  },
+  {
+    "from": "/domki/",
+    "to": "/domy/",
+    "status": 301
+  },
+  {
+    "from": "/o-nas/",
+    "to": "/osada/",
+    "status": 301
+  },
+  {
+    "from": "/oferty-i-promocje/",
+    "to": "/oferty/",
+    "status": 301
+  },
+  {
+    "from": "/oferta-standardowa/",
+    "to": "/oferty/",
+    "status": 301
+  },
+  {
+    "from": "/oferta/standard/",
+    "to": "/oferty/",
+    "status": 301
+  },
+  {
+    "from": "/oferta/winter-holidays/",
+    "to": "/oferty/",
+    "status": 301
+  },
+  {
+    "from": "/oferta/newyear/",
+    "to": "/oferty/",
+    "status": 301
+  },
+  {
+    "from": "/oferta/autumn/",
+    "to": "/oferty/",
+    "status": 301
+  },
+  {
+    "from": "/en/about-us/",
+    "to": "/en/settlement/",
+    "status": 301
+  },
+  {
+    "from": "/en/offers-and-promotions/",
+    "to": "/en/offers/",
+    "status": 301
+  },
+  {
+    "from": "/en/village/cottages/",
+    "to": "/en/houses/",
+    "status": 301
+  },
+  {
+    "from": "/en/offer/standard/",
+    "to": "/en/offers/",
+    "status": 301
+  },
+  {
+    "from": "/en/offer/winter-holidays/",
+    "to": "/en/offers/",
+    "status": 301
+  },
+  {
+    "from": "/en/offer/newyear/",
+    "to": "/en/offers/",
+    "status": 301
+  },
+  {
+    "from": "/en/offer/autumn/",
+    "to": "/en/offers/",
+    "status": 301
+  },
+  {
+    "from": "/osada/domki/hawran/",
+    "to": "/domy/hawran/",
+    "status": 301
+  },
+  {
+    "from": "/en/village/cottages/hawran/",
+    "to": "/en/houses/hawran/",
+    "status": 301
+  },
+  {
+    "from": "/osada/domki/gerlach/",
+    "to": "/domy/gerlach/",
+    "status": 301
+  },
+  {
+    "from": "/en/village/cottages/gerlach/",
+    "to": "/en/houses/gerlach/",
+    "status": 301
+  },
+  {
+    "from": "/osada/domki/swinica/",
+    "to": "/domy/swinica/",
+    "status": 301
+  },
+  {
+    "from": "/en/village/cottages/swinica/",
+    "to": "/en/houses/swinica/",
+    "status": 301
+  },
+  {
+    "from": "/osada/domki/woloszyn/",
+    "to": "/domy/woloszyn/",
+    "status": 301
+  },
+  {
+    "from": "/en/village/cottages/woloszyn/",
+    "to": "/en/houses/woloszyn/",
+    "status": 301
+  },
+  {
+    "from": "/osada/domki/lomnica/",
+    "to": "/domy/lomnica/",
+    "status": 301
+  },
+  {
+    "from": "/en/village/cottages/lomnica/",
+    "to": "/en/houses/lomnica/",
+    "status": 301
+  },
+  {
+    "from": "/osada/domki/lodowy/",
+    "to": "/domy/lodowy/",
+    "status": 301
+  },
+  {
+    "from": "/en/village/cottages/lodowy/",
+    "to": "/en/houses/lodowy/",
+    "status": 301
+  }
+]

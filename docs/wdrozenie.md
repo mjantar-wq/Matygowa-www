@@ -60,6 +60,6 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 
 ## Do zrobienia przed produkcją
 
-- Cloudflare Access na `/panel` (koncepcja F2; Payload nie ma własnego 2FA).
+- Cloudflare Access na `/panel` i `/admin` (Payload nie ma własnego 2FA), bez `/api` (obrazy dla gości). Hasła panelu: PBKDF2 100 000 rund (limit Workers), łatka `patches/payload@3.92.0.patch`; przy aktualizacji Payloada sprawdź, czy łatka nadal pasuje.
 - Bufor stron (ISR w R2) i odświeżanie po zapisie w panelu; dziś strony renderują się przy każdym wejściu.
 - `SITE_INDEXABLE=true` tylko na produkcji (na teście nagłówek `noindex`).

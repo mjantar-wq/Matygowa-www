@@ -170,6 +170,9 @@ async function main() {
   const guide = read('pages/przewodnik.json')
   await upsertPage(payload, upsert, 'guide', () => guide.title, (l) => [{ blockType: 'faq', items: guide.faq.map((f: Any) => ({ question: f.q?.[l], answer: md(f.a?.[l]) })) }])
 
+  const kontakt = read('pages/kontakt.json')
+  await upsertPage(payload, upsert, 'contact', () => kontakt.title, () => [], (l) => kontakt.lead?.[l])
+
   // prawdziwe opinie z Google (bez slugów: rozpoznajemy po autorze)
   for (const t of fs.existsSync(path.join(DIR, 'testimonials.json')) ? (read('testimonials.json') as Any[]) : []) {
     const found = await payload.find({ collection: 'testimonials', where: { author: { equals: t.author } }, limit: 1, depth: 0 })

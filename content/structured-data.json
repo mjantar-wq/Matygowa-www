@@ -1,0 +1,56 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "Matygowa Osada",
+  "url": "https://www.matygowaosada.pl/",
+  "telephone": "+48788267809",
+  "email": "info@matygowaosada.pl",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ul. Matygówka 30",
+    "postalCode": "34-425",
+    "addressLocality": "Gliczarów Górny",
+    "addressCountry": "PL"
+  },
+  "checkinTime": "16:00",
+  "checkoutTime": "11:00",
+  "petsAllowed": true,
+  "numberOfRooms": 6,
+  "amenityFeature": [
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Private sauna",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Outdoor hot tub",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Fireplace",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Free parking",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Wi-Fi",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Mountain view",
+      "value": true
+    }
+  ],
+  "sameAs": [
+    "https://www.facebook.com/matygowa.osada/",
+    "https://www.instagram.com/matygowa.osada"
+  ],
+  "_note": "openingHours celowo pominięte. geo, image i aggregateRating uzupełnia strona przy renderowaniu."
+}

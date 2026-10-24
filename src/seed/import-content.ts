@@ -130,6 +130,18 @@ async function main() {
   const guide = read('pages/przewodnik.json')
   await upsertPage(payload, upsert, 'guide', () => guide.title, (l) => [{ blockType: 'faq', items: guide.faq.map((f: Any) => ({ question: f.q?.[l], answer: md(f.a?.[l]) })) }])
 
+  // prawdziwe opinie z Google (bez slugów: rozpoznajemy po autorze)
+  for (const t of fs.existsSync(path.join(DIR, 'testimonials.json')) ? (read('testimonials.json') as Any[]) : []) {
+    const found = await payload.find({ collection: 'testimonials', where: { author: { equals: t.author } }, limit: 1, depth: 0 })
+    let id = found.docs[0]?.id
+    for (const locale of LOCALES) {
+      const data = { quote: t.quote?.[locale], author: t.author, source: t.source, rating: t.rating ?? undefined, date: t.date ? `${t.date}-01`.slice(0, 10) : undefined }
+      if (id) await payload.update({ collection: 'testimonials', id, locale, data })
+      else id = (await payload.create({ collection: 'testimonials', locale, data })).id
+    }
+    payload.logger.info(`testimonials: ${t.author}`)
+  }
+
   const s = read('settings.json')
   for (const locale of LOCALES) {
     await payload.updateGlobal({

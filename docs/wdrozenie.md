@@ -12,15 +12,30 @@ Każdy push na `main` po zielonym CI wdraża stronę na https://matygowa.audiowi
 
 Koszt: w ramach opłaconego planu Workers Paid (D1 i R2 w darmowych limitach przy tej skali).
 
-## Sekrety repozytorium (GitHub → Settings → Secrets and variables → Actions)
+## Jednorazowa konfiguracja (Michał, ok. 5 minut)
 
-| Sekret | Skąd |
+Wdrożenie robi GitHub Actions, więc potrzebuje własnego tokenu Cloudflare (connector Cloudflare w Claude służy do rozmowy, nie do automatycznych wdrożeń z GitHub). Sekretów nie da się przenieść z innego repozytorium, trzeba je wpisać tutaj.
+
+**Krok 1. Token Cloudflare**
+1. Zaloguj się do Cloudflare i otwórz [gotowy formularz tokenu](https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22d1%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_r2%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22account_settings%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Matygowa-www%20GitHub%20deploy). Uprawnienia są już zaznaczone: Workers Scripts, D1, Workers Routes, R2 (edycja) i Account Settings (odczyt).
+2. W sekcji **Account Resources** zostaw swoje konto. W **Zone Resources** wybierz **Include → Specific zone → audiowizard.pl**.
+3. Na dole **Continue to summary**, potem **Create Token**. Skopiuj token, pokazuje się tylko raz.
+
+**Krok 2. Identyfikator konta**
+W panelu Cloudflare: **Workers & Pages**, po prawej **Account Details**, kopiuj **Account ID**.
+
+**Krok 3. Sekrety w GitHub**
+Otwórz [Settings → Secrets and variables → Actions](https://github.com/mjantar-wq/Matygowa-www/settings/secrets/actions) w repozytorium Matygowa-www i trzy razy **New repository secret**:
+
+| Nazwa | Wartość |
 |---|---|
-| `CLOUDFLARE_API_TOKEN` | ten sam token co w IceColdRes (uprawnienia: Workers Scripts, D1, R2, Workers Routes i DNS strefy audiowizard.pl) |
-| `CLOUDFLARE_ACCOUNT_ID` | jak w IceColdRes |
-| `PAYLOAD_SECRET` | losowy ciąg, np. `openssl rand -hex 32`; trafia do Workera jako sekret |
+| `CLOUDFLARE_API_TOKEN` | token z kroku 1 |
+| `CLOUDFLARE_ACCOUNT_ID` | identyfikator z kroku 2 |
+| `PAYLOAD_SECRET` | dowolny długi losowy ciąg, np. 40 znaków z menedżera haseł; szyfruje sesje panelu |
 
-Bez dwóch pierwszych wdrożenie jest pomijane z ostrzeżeniem, CI działa dalej.
+**Krok 4.** Napisz w wątku projektu, że gotowe. Claude uruchomi wdrożenie i sprawdzi stronę.
+
+Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 
 ## Pierwsze uruchomienie panelu
 

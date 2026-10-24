@@ -16,14 +16,14 @@ Stan: wersja 1, 24.10.2026. Teksty PL i EN, gotowe do importu do Payload CMS.
 | units.json | Domy i apartamenty (6 + 4, apartamenty `coming_soon`), powiązanie `peak` i `icecoldres_code` |
 | pages/home.json | Strona główna jako bloki, w kolejności szkieletu |
 | pages/rytualy.json, osada.json, przewodnik.json | Podstrony |
-| attractions.json, offers.json | Atrakcje, Oferty |
+| attractions.json, offers.json, testimonials.json | Atrakcje, Oferty, Opinie |
 
-Opinie: nie piszemy cytatów od siebie. Do zaimportowania prawdziwe opinie z Google i Booking (z autorem i zgodą).
+testimonials.json: 4 prawdziwe opinie z Google (odczyt z widżetu obecnej strony 24.10.2026), daty przybliżone, EN to tłumaczenie. Ocen pojedynczych opinii widżet nie pokazuje (ogólnie 5,0). Później widżet Google.
 
 ## Do potwierdzenia przez Michała
 1. Nazwy domów potwierdzone (zdjęcie „Nazwy domków 2026”, zgodne z IceColdRes). Ciemniak bez podpisu na zdjęciu, nazwa wstępna.
 2. Nazwy apartamentów są wstępne. Ciemniak jest jednym z czterech Czerwonych Wierchów, więc dwa apartamenty nazywają się od tego samego masywu; tekst to wykorzystuje, ale warto rozważyć inny szczyt.
-3. Wysokość Gliczarowa Górnego (n.p.m.) do wstępu, dojazd zimą do przewodnika, lista lokalnych partnerów, ręczniki do bani.
+3. Lista lokalnych partnerów, ręczniki do bani.
 4. Ceny ofert sezonowych (Boże Narodzenie, ferie) są z obecnej strony; w IceColdRes oznaczone „do potwierdzenia”.
 
 ## Źródła faktów o szczytach

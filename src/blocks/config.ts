@@ -33,7 +33,7 @@ export const IntroBlock = block('intro', 'Wstęp z liczbami', [
     name: 'stats',
     label: 'Liczby',
     type: 'array',
-    maxRows: 4,
+    maxRows: 6,
     fields: [
       { name: 'value', label: 'Wartość', type: 'text', required: true },
       { name: 'label', label: 'Opis', type: 'text', localized: true, required: true },

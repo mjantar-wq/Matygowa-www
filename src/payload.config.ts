@@ -90,6 +90,8 @@ export default buildConfig({
   },
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
+    // schemat tylko z migracji (src/migrations), także lokalnie: jedna droga zmian w dev, CI i na Cloudflare
+    push: false,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
   plugins: [

@@ -1,0 +1,50 @@
+[
+  {
+    "author": "Iga T.",
+    "source": "google",
+    "rating": null,
+    "date": "2026-08",
+    "date_approx": true,
+    "quote": {
+      "pl": "Domki świetnie wyposażone, zadbane i przytulne. Super widoki na góry.",
+      "en": "The cottages are superbly equipped, well kept and cosy. Great mountain views."
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Kamila J.",
+    "source": "google",
+    "rating": null,
+    "date": "2026-07",
+    "date_approx": true,
+    "quote": {
+      "pl": "Spędziliśmy 6 nocy w lipcu w osadzie i był to niesamowity czas. Domki są przytulne i nowoczesne, nie brakuje niczego.",
+      "en": "We spent 6 nights at the settlement in July and it was an amazing time. The cottages are cosy and modern, nothing is missing."
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Szymon S.",
+    "source": "google",
+    "rating": null,
+    "date": "2025-11",
+    "date_approx": true,
+    "quote": {
+      "pl": "Właśnie zakończyliśmy swój pobyt. Jesteśmy zachwyceni.",
+      "en": "We have just finished our stay. We are delighted."
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Marek N.",
+    "source": "google",
+    "rating": null,
+    "date": "2026-08",
+    "date_approx": true,
+    "quote": {
+      "pl": "Świetny gospodarz, super lokalizacja, dziękuję.",
+      "en": "A great host, a superb location, thank you."
+    },
+    "en_is_translation": true
+  }
+]

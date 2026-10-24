@@ -2,6 +2,10 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import { ENABLED_LOCALES } from './src/i18n/locales'
 import { localeRedirects, localeRewrites } from './src/i18n/routes'
+import legacyRedirects from './content/redirects.json'
+
+// Next.js obcina końcowy ukośnik, zanim porówna reguły, więc adresy z WordPressa zapisujemy bez niego
+const noSlash = (p: string) => (p.length > 1 ? p.replace(/\/$/, '') : p)
 
 // Środowisko testowe (matygowa.audiowizard.pl) nie może trafić do wyszukiwarek; produkcja ustawi SITE_INDEXABLE=true.
 const indexable = process.env.SITE_INDEXABLE === 'true'
@@ -23,7 +27,13 @@ const nextConfig: NextConfig = {
     return { beforeFiles: localeRewrites(ENABLED_LOCALES), afterFiles: [], fallback: [] }
   },
   async redirects() {
-    return localeRedirects(ENABLED_LOCALES)
+    // panel treści jest pod /panel (domyślny /admin Payloada zostaje tylko jako przekierowanie)
+    return [
+      { source: '/admin/:path*', destination: '/panel/:path*', permanent: false },
+      // stare adresy obecnej strony (content/redirects.json, wątek treści)
+      ...legacyRedirects.map((r) => ({ source: noSlash(r.from), destination: noSlash(r.to), permanent: r.status === 301 })),
+      ...localeRedirects(ENABLED_LOCALES),
+    ]
   },
   async headers() {
     return [
@@ -37,7 +47,7 @@ const nextConfig: NextConfig = {
         ],
       },
       // panelu nie da się osadzić w ramce (clickjacking)
-      { source: '/admin/:path*', headers: [{ key: 'Content-Security-Policy', value: "frame-ancestors 'self'" }] },
+      { source: '/panel/:path*', headers: [{ key: 'Content-Security-Policy', value: "frame-ancestors 'self'" }] },
     ]
   },
 

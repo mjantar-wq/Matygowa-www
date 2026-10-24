@@ -23,6 +23,44 @@ async function main() {
   const editorConfig = await editorConfigFactory.default({ config: payload.config })
   const md = (text?: string | null) => (text ? convertMarkdownToLexical({ editorConfig, markdown: text }) : null)
 
+  // Materiały tymczasowe CGI (content/media, manifest wątku wizualnego): zawsze isPlaceholder = true.
+  // Plik o tej samej nazwie nie jest wgrywany drugi raz.
+  const media = new Map<string, number | string>()
+  const manifestPath = path.join(DIR, 'media', 'manifest.json')
+  for (const item of fs.existsSync(manifestPath) ? (JSON.parse(fs.readFileSync(manifestPath, 'utf8')).items as Any[]) : []) {
+    const filename: string = item.file
+    const stem = filename.replace(/\.[^.]+$/, '')
+    const describe = stem.replace(/^[A-Z]+\d+_/, '').replace(/_(\d+x\d+_)?cgi$/, '').replace(/[_-]+/g, ' ')
+    const found = await payload.find({ collection: 'media', where: { filename: { equals: filename } }, limit: 1, depth: 0 })
+    let id = found.docs[0]?.id
+    if (!id) {
+      const series = [
+        /_lato_/.test(stem) ? 'summer' : /^[KT]/.test(stem) ? 'winter' : null,
+        /_noc_|gwiazdy/.test(stem) ? 'night' : null,
+        /^[VW]\d/.test(stem) ? 'interiors' : null,
+        /^B\d/.test(stem) ? 'rituals' : null,
+      ].filter(Boolean)
+      id = (
+        await payload.create({
+          collection: 'media',
+          locale: 'pl',
+          filePath: path.join(DIR, 'media', filename),
+          data: { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
+        } as never) as Any
+      ).id
+      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: `Temporary visualisation: ${describe}` } })
+    }
+    media.set(filename, id)
+  }
+  /** Id zdjęcia (webp) albo filmu (mp4) po początku nazwy pliku, np. img('V1_'), video('K2_hero_osada_swit_16x9'). */
+  const byPrefix = (prefix: string, ext: string) => {
+    const key = [...media.keys()].find((k) => k.startsWith(prefix) && k.endsWith(ext))
+    return key ? media.get(key) : undefined
+  }
+  const img = (prefix: string) => byPrefix(prefix, '.webp')
+  const video = (prefix: string) => byPrefix(prefix, '.mp4')
+  if (media.size) payload.logger.info(`media: ${media.size} plików tymczasowych`)
+
   /** Zapis wpisu w obu językach: najpierw PL (tworzy), potem EN (uzupełnia tłumaczenia). */
   async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any) {
     const existing = await payload.find({ collection, where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
@@ -44,7 +82,9 @@ async function main() {
   for (const u of units) {
     const peak = peaks.find((p) => p.slug === u.peak) ?? {}
     const slug = u.icecoldres_code || u.peak
+    const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
+      hero: vShot ? img(`V${vShot}_`) : undefined,
       name: peak.name?.[l] ?? u.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',
@@ -84,19 +124,19 @@ async function main() {
     const base = { eyebrow: b.eyebrow?.[l], heading: b.heading?.[l] }
     switch (b.type) {
       case 'hero':
-        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true }
+        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true, image: img('K2_hero_osada_swit_16x9'), video: video('K2_hero_osada_swit_16x9') }
       case 'intro':
         return { blockType: 'intro', ...base, body: md(b.body?.[l]), stats: b.stats?.map((s: Any) => ({ value: s.value, label: s.label?.[l] })) }
       case 'peak_panorama':
-        return { blockType: 'peaksPanorama', ...base, body: md(b.body?.[l]), showMap: true }
+        return { blockType: 'peaksPanorama', ...base, body: md(b.body?.[l]), showMap: true, image: img('K1_'), map: img('K5_') }
       case 'day_story':
-        return { blockType: 'dayInSettlement', ...base, scenes: b.scenes?.map((s: Any) => ({ time: s.key, title: s.title?.[l], text: s.winter?.[l], summerText: s.summer?.[l] })) }
+        return { blockType: 'dayInSettlement', ...base, scenes: b.scenes?.map((s: Any, i: number) => ({ time: s.key, title: s.title?.[l], text: s.winter?.[l], summerText: s.summer?.[l], image: img(['T1_', 'K2_hero_osada_swit_16x9', 'K4_', 'T3_'][i]) })) }
       case 'house_inside':
-        return { blockType: 'houseInside', ...base, body: md(b.body?.[l]), rooms: b.rooms?.map((r: Any) => ({ title: r.title?.[l], text: r.body?.[l] })) }
+        return { blockType: 'houseInside', ...base, body: md(b.body?.[l]), rooms: b.rooms?.map((r: Any, i: number) => ({ title: r.title?.[l], text: r.body?.[l], image: img(['W1_', 'W2_', 'W3_', 'W5_'][i] ?? 'W') })) }
       case 'rituals_teaser':
         return { blockType: 'rituals', ...base, body: md(b.body?.[l]), showPrices: true }
       case 'seasons':
-        return { blockType: 'seasons', ...base, winter: { text: b.winter?.[l] }, summer: { text: b.summer?.[l] } }
+        return { blockType: 'seasons', ...base, winter: { text: b.winter?.[l], image: img('K2_hero_osada_swit_16x9') }, summer: { text: b.summer?.[l], image: img('K2_hero_osada_lato') } }
       case 'surroundings':
         return { blockType: 'surroundings', ...base, body: md(b.body?.[l]), limit: b.featured_attractions ?? 6 }
       case 'nature':
@@ -116,7 +156,7 @@ async function main() {
 
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
-    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any) => ({ word: s.word?.[l], text: s.body?.[l] })), showPrices: true },
+    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any, i: number) => ({ word: s.word?.[l], text: s.body?.[l], image: img(['B1_', 'B2_', 'B3_', 'B5_'][i] ?? 'B') })), showPrices: true },
     { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), imagePosition: 'end' },
     { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), imagePosition: 'start' },
     { blockType: 'richText', body: md(rytualy.rules?.[l]) },
@@ -130,6 +170,9 @@ async function main() {
   const guide = read('pages/przewodnik.json')
   await upsertPage(payload, upsert, 'guide', () => guide.title, (l) => [{ blockType: 'faq', items: guide.faq.map((f: Any) => ({ question: f.q?.[l], answer: md(f.a?.[l]) })) }])
 
+  const kontakt = read('pages/kontakt.json')
+  await upsertPage(payload, upsert, 'contact', () => kontakt.title, () => [], (l) => kontakt.lead?.[l])
+
   // prawdziwe opinie z Google (bez slugów: rozpoznajemy po autorze)
   for (const t of fs.existsSync(path.join(DIR, 'testimonials.json')) ? (read('testimonials.json') as Any[]) : []) {
     const found = await payload.find({ collection: 'testimonials', where: { author: { equals: t.author } }, limit: 1, depth: 0 })
@@ -140,6 +183,39 @@ async function main() {
       else id = (await payload.create({ collection: 'testimonials', locale, data })).id
     }
     payload.logger.info(`testimonials: ${t.author}`)
+  }
+
+  // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)
+  const seoPages: Any = read('seo-pages.json')
+  const seoKeys: Record<string, string> = { home: 'home', domy: 'houses', rytualy: 'rituals', osada: 'settlement', okolica: 'surroundings', oferty: 'offers', aktualnosci: 'news', galeria: 'gallery', kontakt: 'contact', przewodnik: 'guide', regulamin: 'regulamin', prywatnosc: 'prywatnosc' }
+  const navTitles: Record<string, L> = { houses: { pl: 'Domy i apartamenty', en: 'Houses & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
+  for (const [key, entry] of Object.entries(seoPages) as [string, Any][]) {
+    const slug = seoKeys[key]
+    if (!slug) continue
+    const found = await payload.find({ collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
+    let id = found.docs[0]?.id
+    const created = !id
+    const kind = slug === 'regulamin' || slug === 'prywatnosc' ? 'document' : 'section'
+    for (const locale of LOCALES) {
+      const seo = { title: entry.title?.[locale], description: entry.description?.[locale] }
+      // nowa strona potrzebuje tytułu w każdym języku (pole wymagane i tłumaczone)
+      const title = created ? { title: navTitles[slug]?.[locale] ?? slug } : {}
+      if (id) await payload.update({ collection: 'pages', id, locale, data: { ...title, seo }, draft: false } as never)
+      else id = ((await payload.create({ collection: 'pages', locale, data: { slug, kind, title: navTitles[slug]?.[locale] ?? slug, seo, _status: 'published' }, draft: false } as never)) as Any).id
+    }
+    payload.logger.info(`seo: ${slug}`)
+  }
+
+  // Aktualności na start: szkice z planowaną publikacją (pole publish), widoczne dopiero po publikacji
+  for (const n of fs.existsSync(path.join(DIR, 'news.json')) ? (read('news.json') as Any[]) : []) {
+    const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
+    let id = found.docs[0]?.id
+    for (const locale of LOCALES) {
+      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
+      if (id) await payload.update({ collection: 'news', id, locale, data, draft: true } as never)
+      else id = ((await payload.create({ collection: 'news', locale, data, draft: true } as never)) as Any).id
+    }
+    payload.logger.info(`news: ${n.slug} (szkic, publikacja ${n.publish})`)
   }
 
   const s = read('settings.json')
@@ -153,6 +229,9 @@ async function main() {
         address: s.contact?.address,
         social: Object.entries(s.social ?? {}).map(([label, url]) => ({ label, url: String(url) })),
         priceSlogan: s.booking_bar?.best_rate?.[locale],
+        // import służy środowisku testowemu: testujemy integrację z IceColdRes (produkcja: decyzja Michała w grudniu)
+        bookingEngine: 'icecoldres',
+        icecoldresUrl: 'https://icecoldres.audiowizard.pl',
         seoTitle: s.seo_default?.title?.[locale],
         seoDescription: s.seo_default?.description?.[locale],
       },

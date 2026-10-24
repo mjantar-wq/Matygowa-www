@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { CmsPage, getPage } from '@/components/CmsPage'
+import { StructuredData } from '@/components/StructuredData'
 import { defaultHomeLayout } from '@/lib/defaults'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
 
@@ -11,5 +12,10 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 
 export default async function Home({ params }: LocaleParams) {
   const ctx = await pageContext(params)
-  return <CmsPage route="home" ctx={ctx} fallback={defaultHomeLayout(ctx.locale)} />
+  return (
+    <>
+      <StructuredData locale={ctx.locale} />
+      <CmsPage route="home" ctx={ctx} fallback={defaultHomeLayout(ctx.locale)} />
+    </>
+  )
 }

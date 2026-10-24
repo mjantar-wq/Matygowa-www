@@ -39,17 +39,27 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 
 ## Pierwsze uruchomienie panelu
 
-1. Po pierwszym wdrożeniu otwórz `https://matygowa.audiowizard.pl/admin` i załóż konto administratora (pierwsze konto zakłada się samo).
-2. Treści robocze: `CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… PAYLOAD_REMOTE_BINDINGS=true pnpm seed`.
+1. Po pierwszym wdrożeniu otwórz `https://matygowa.audiowizard.pl/panel` i załóż konto administratora (pierwsze konto zakłada się samo).
+2. Treści robocze i obrazy CGI: GitHub → Actions → CI → **Run workflow** z zaznaczonym „Wgraj treści robocze…”. Import nadpisuje te same wpisy w panelu, więc po rozpoczęciu edycji w panelu uruchamiamy go tylko świadomie.
 3. Ustawienia strony → Rezerwacje: silnik Hotres do czasu decyzji o IceColdRes (grudzień 2026).
 
 ## Integracja z IceColdRes
 
-- API: `ICECOLDRES_API_URL` i `ICECOLDRES_SLUG` w `wrangler.jsonc` (`vars`). Obiekt musi mieć adres `matygowa-osada` (panel IceColdRes → Obiekt → adres strony).
+- API: `ICECOLDRES_API_URL` i `ICECOLDRES_SLUG` w `wrangler.jsonc` (`vars`). Test: `https://icecoldres.audiowizard.pl`, adres obiektu `booking` (silnik: https://icecoldres.audiowizard.pl/pl/booking).
+- Adresy (ustalenie Michała, źródło prawdy: sekcja domen w `docs/integracja-strony.md` w IceColdRes):
+
+  | | Test | Produkcja |
+  |---|---|---|
+  | Strona | `matygowa.audiowizard.pl` | `matygowaosada.pl` |
+  | Panel treści strony | `matygowa.audiowizard.pl/panel` | `matygowaosada.pl/panel` |
+  | Rezerwacje (silnik) | `icecoldres.audiowizard.pl/pl/booking`, `/en/booking` | `booking.matygowaosada.pl` |
+  | Panel IceColdRes | `icecoldres.audiowizard.pl/panel` | `icecoldres.matygowaosada.pl/panel` |
+
+  Zmiana środowiska to `routes` i `vars` (`ICECOLDRES_API_URL`, `ICECOLDRES_SLUG`, `NEXT_PUBLIC_SITE_URL`) w `wrangler.jsonc` oraz adres silnika w Ustawieniach strony. Stary adres panelu `/admin` przekierowuje na `/panel`.
 - Webhook „treść zmieniona” (docs/integracja-strony.md w IceColdRes): w kolejnym kroku pod `POST /api/revalidate/icecoldres`.
 
 ## Do zrobienia przed produkcją
 
-- Cloudflare Access na `/admin` (koncepcja F2; Payload nie ma własnego 2FA).
+- Cloudflare Access na `/panel` i `/admin` (Payload nie ma własnego 2FA), bez `/api` (obrazy dla gości). Hasła panelu: PBKDF2 100 000 rund (limit Workers), łatka `patches/payload@3.92.0.patch`; przy aktualizacji Payloada sprawdź, czy łatka nadal pasuje.
 - Bufor stron (ISR w R2) i odświeżanie po zapisie w panelu; dziś strony renderują się przy każdym wejściu.
 - `SITE_INDEXABLE=true` tylko na produkcji (na teście nagłówek `noindex`).

@@ -17,7 +17,9 @@ test.describe('Szkielet strony', () => {
   })
 
   test('wszystkie podstrony menu odpowiadają', async ({ request }) => {
-    for (const path of ['/rytualy', '/okolica', '/oferty', '/aktualnosci', '/osada', '/galeria', '/przewodnik', '/kontakt', '/en/rituals', '/en/contact']) {
+    // w trybie dev każda podstrona kompiluje się przy pierwszym wejściu
+    test.setTimeout(120_000)
+    for (const path of ['/sauna-i-bania', '/okolica', '/oferty', '/aktualnosci', '/osada', '/galeria', '/przewodnik', '/kontakt', '/en/sauna-and-hot-tub', '/en/guest-guide', '/en/contact']) {
       const res = await request.get(path)
       expect(res.status(), path).toBe(200)
     }

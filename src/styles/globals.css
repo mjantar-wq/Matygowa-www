@@ -2,16 +2,4 @@
 @import './tokens.css';
 @import './components.css';
 
-/* Tailwind korzysta z tych samych tokenów (klasy np. bg-tlo, text-atrament, font-display). */
-@theme inline {
-  --color-tlo: var(--color-tlo);
-  --color-atrament: var(--color-atrament);
-  --color-swierk: var(--color-swierk);
-  --color-bursztyn: var(--color-bursztyn);
-  --font-display: var(--font-display);
-  --font-ui: var(--font-ui);
-}
-
-html { background: var(--color-tlo); color: var(--color-atrament); }
-body { font: var(--text-body) / 1.6 var(--font-ui); }
 img, video { display: block; max-inline-size: 100%; }

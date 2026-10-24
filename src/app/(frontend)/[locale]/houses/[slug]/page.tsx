@@ -41,17 +41,17 @@ export default async function UnitPage({ params }: SlugParams) {
       <section className="mo-hero">
         <div className="mo-hero__media"><Media media={unit.hero} priority /></div>
         <div className="mo-container mo-hero__content">
-          <p className="mo-eyebrow" style={{ color: 'inherit' }}>
+          <p className="mo-label" style={{ color: 'inherit' }}>
             {t.house.kind[unit.kind]}
             {unit.status === 'comingSoon' ? ` · ${t.house.comingSoon}` : ''}
           </p>
-          <h1 className="mo-display">{unit.name}</h1>
+          <h1 className="mo-display-xl">{unit.name}</h1>
           {unit.peak?.elevation ? <p className="mo-lede">{t.house.elevation(unit.peak.elevation)}{unit.peak.range ? ` · ${unit.peak.range}` : ''}</p> : null}
         </div>
       </section>
 
       <section className="mo-section mo-container">
-        {facts.length ? <p className="mo-eyebrow">{facts.join(' · ')}</p> : null}
+        {facts.length ? <p className="mo-label">{facts.join(' · ')}</p> : null}
         {unit.tagline ? <p className="mo-lede" style={{ marginBlock: 'var(--space-5)' }}>{unit.tagline}</p> : null}
         <RichText data={unit.story} />
         {!unit.story ? <Placeholder label={t.placeholder} note="Opowieść o domu" /> : null}
@@ -87,7 +87,7 @@ export default async function UnitPage({ params }: SlugParams) {
         <section className="mo-section mo-container">
           <h2 className="mo-h2" style={{ marginBlockEnd: 'var(--space-5)' }}>{t.house.availability}</h2>
           {promos.map((p) => (
-            <p key={p.id} className="mo-eyebrow" style={{ color: 'var(--color-bursztyn-tekst)' }}>
+            <p key={p.id} className="mo-label" style={{ color: 'var(--color-bursztyn-tekst)' }}>
               {ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}
             </p>
           ))}

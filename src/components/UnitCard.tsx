@@ -11,20 +11,24 @@ export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContex
   return (
     <Link href={href(ctx.locale, 'houses', unit.slug)} className="mo-card">
       <div className="mo-card__media"><Media media={unit.hero} fallback={unit.name} /></div>
-      <p className="mo-eyebrow">
-        {t.house.kind[unit.kind]}
-        {unit.status === 'comingSoon' ? ` · ${t.house.comingSoon}` : ''}
+      <p className="mo-card__eyebrow">
+        {unit.peak?.elevation ? <span className="mo-figure">{t.house.elevation(unit.peak.elevation)}</span> : null}
+        <span className="mo-label">{t.house.kind[unit.kind]}</span>
       </p>
-      <h3 className="mo-h3">{unit.name}</h3>
+      <h3 className="mo-h3 mo-card__title">{unit.name}</h3>
+      <p className="mo-body-s mo-card__text">{unit.maxGuests ? t.house.guests(unit.maxGuests) : null}</p>
       <p className="mo-card__meta">
-        {unit.peak?.elevation ? t.house.elevation(unit.peak.elevation) : null}
-        {unit.maxGuests ? ` · ${t.house.guests(unit.maxGuests)}` : null}
+        {unit.status === 'comingSoon' ? (
+          <span className="mo-badge">{t.house.comingSoon}</span>
+        ) : priceFrom ? (
+          <span className="mo-price">
+            {t.booking.from} {formatPrice(priceFrom, ctx.locale)} <small>{t.booking.perNight}</small>
+          </span>
+        ) : (
+          <span />
+        )}
+        <span className="mo-card__arrow" aria-hidden="true">→</span>
       </p>
-      {priceFrom ? (
-        <p>
-          {t.booking.from} {formatPrice(priceFrom, ctx.locale)} {t.booking.perNight}
-        </p>
-      ) : null}
     </Link>
   )
 }

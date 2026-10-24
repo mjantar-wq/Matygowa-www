@@ -20,7 +20,7 @@ export default async function AttractionPage({ params }: SlugParams) {
   if (!a) notFound()
   return (
     <article className="mo-section mo-container" style={{ display: 'grid', gap: 'var(--space-5)' }}>
-      <p className="mo-eyebrow">{ctx.t.nav.surroundings}{a.distanceKm != null ? ` · ${ctx.t.attractions.distance(a.distanceKm)}` : ''}</p>
+      <p className="mo-label">{ctx.t.nav.surroundings}{a.distanceKm != null ? ` · ${ctx.t.attractions.distance(a.distanceKm)}` : ''}</p>
       <h1 className="mo-h1">{a.name}</h1>
       <Media media={a.image} priority />
       <RichText data={a.description} />

@@ -18,7 +18,7 @@ function Heading({ eyebrow, heading, level = 2 }: { eyebrow?: string | null; hea
   const H = level === 1 ? 'h1' : 'h2'
   return (
     <header style={{ display: 'grid', gap: 'var(--space-3)', marginBlockEnd: 'var(--space-6)' }}>
-      {eyebrow ? <p className="mo-eyebrow">{eyebrow}</p> : null}
+      {eyebrow ? <p className="mo-label">{eyebrow}</p> : null}
       {heading ? <H className={level === 1 ? 'mo-h1' : 'mo-h2'}>{heading}</H> : null}
     </header>
   )
@@ -39,7 +39,7 @@ function Hero({ block, ctx }: Props<'hero'>) {
         <Media media={block.image} priority />
       </div>
       <div className="mo-container mo-hero__content">
-        <h1 className="mo-display">{block.headline}</h1>
+        <h1 className="mo-display-xl">{block.headline}</h1>
         {block.subline ? <p className="mo-lede">{block.subline}</p> : null}
         {block.showBookingBar !== false ? <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} /> : null}
       </div>
@@ -226,7 +226,7 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
       <div className="mo-cards">
         {promotions.map((p) => (
           <article key={p.id} className="mo-card">
-            <p className="mo-eyebrow">{ctx.t.offers.onlyHere}</p>
+            <p className="mo-label">{ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}</h3>
             <p>{ctx.locale === 'pl' ? p.description : p.en.description || p.description}</p>
           </article>

@@ -53,7 +53,7 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
   | Strona | `matygowa.audiowizard.pl` | `matygowaosada.pl` |
   | Panel treści strony | `matygowa.audiowizard.pl/panel` | `matygowaosada.pl/panel` |
   | Rezerwacje (silnik) | `icecoldres.audiowizard.pl/pl/booking`, `/en/booking` | `booking.matygowaosada.pl` |
-  | Panel IceColdRes | `icecoldres.audiowizard.pl/panel` | `icecoldrespanl.matygowaosada.pl` (pisownia do potwierdzenia) |
+  | Panel IceColdRes | `icecoldres.audiowizard.pl/panel` | `icecoldres.matygowaosada.pl/panel` |
 
   Zmiana środowiska to `routes` i `vars` (`ICECOLDRES_API_URL`, `ICECOLDRES_SLUG`, `NEXT_PUBLIC_SITE_URL`) w `wrangler.jsonc` oraz adres silnika w Ustawieniach strony. Stary adres panelu `/admin` przekierowuje na `/panel`.
 - Webhook „treść zmieniona” (docs/integracja-strony.md w IceColdRes): w kolejnym kroku pod `POST /api/revalidate/icecoldres`.

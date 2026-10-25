@@ -201,18 +201,38 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
         // eslint-disable-next-line @next/next/no-img-element -- SVG z public/
         <img src="/ilustracje/G7_mapa_okolicy.svg" alt={ctx.locale === 'pl' ? 'Mapa okolicy Matygowej Osady' : 'Map of the area around Matygowa Osada'} loading="lazy" style={{ inlineSize: '100%', blockSize: 'auto' }} />
       )}
-      <div className="mo-cards">
-        {attractions.map((a) => (
-          <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card" data-scene-focus={`a-${a.slug}`} data-step>
-            <div className="mo-card__media"><Media media={a.image} /></div>
-            <h3 className="mo-h3">{a.name}</h3>
-            {a.distanceKm != null ? <p className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</p> : null}
-          </Link>
-        ))}
-      </div>
+      {immersive ? (
+        // Lista nazw: najechanie albo fokus podświetla atrakcję na mapie (SceneStage) i rozwija jej opis
+        <ul className="mo-attractions">
+          {attractions.map((a) => (
+            <li key={a.id} className="mo-attraction" data-scene-focus={attractionSvgId(a.slug)}>
+              <Link href={href(ctx.locale, 'surroundings', a.slug)} className="mo-attraction__name">
+                <span className="mo-h3">{a.name}</span>
+                {a.distanceKm != null ? <span className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</span> : null}
+              </Link>
+              <div className="mo-attraction__desc">
+                <div>{a.summary ? <p>{a.summary}</p> : <RichText data={a.description} />}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="mo-cards">
+          {attractions.map((a) => (
+            <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">
+              <div className="mo-card__media"><Media media={a.image} /></div>
+              <h3 className="mo-h3">{a.name}</h3>
+              {a.distanceKm != null ? <p className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</p> : null}
+            </Link>
+          ))}
+        </div>
+      )}
     </Section>
   )
 }
+
+/** Atrakcja → element mapy okolicy G7, gdy adres atrakcji różni się od id na mapie. */
+const attractionSvgId = (slug: string) => `a-${({ 'stoki-bialka-bukowina': 'kotelnica' } as Record<string, string>)[slug] ?? slug}`
 
 function Story({ block, immersive }: Props<'story'>) {
   // na stałym tle zdjęcie przejmuje scena

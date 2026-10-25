@@ -167,17 +167,25 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 }
 
 /* Strona główna: opowieść na stałym tle (koncepcja po M1). Scena jest przypięta pod treścią, rozdziały
-   przewijają się nad nią na półprzezroczystych płytach. */
+   przewijają się wprost nad nią. */
 .mo-opowiesc { position: relative; isolation: isolate; }
 .mo-stage { position: fixed; inset: 0; z-index: -1; background: var(--color-tlo); pointer-events: none; }
-.mo-stage__scene { position: absolute; inset: 0; opacity: 0; transition: opacity 800ms var(--ease-mgla); }
+/* Długie, miękkie przenikanie: nowa scena wyłania się, poprzednia gaśnie wolniej */
+.mo-stage__scene { position: absolute; inset: 0; opacity: 0; transition: opacity 1800ms cubic-bezier(0.45, 0, 0.25, 1); }
+.mo-stage__scene[data-active] { transition-duration: 1400ms; z-index: 1; }
 .mo-stage__scene[data-active] { opacity: 1; }
-.mo-stage__scene[data-kind="media"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--color-zaslona), transparent 40%, transparent 60%, var(--color-zaslona)); }
+.mo-stage__scene[data-kind="media"]::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(6, 10, 8, 0.62), rgba(6, 10, 8, 0.4) 34%, rgba(6, 10, 8, 0.08) 62%, transparent 75%),
+    linear-gradient(180deg, var(--color-zaslona), transparent 30%, transparent 75%, var(--color-zaslona));
+}
+@media (max-width: 767px) { .mo-stage__scene[data-kind="media"]::after { background: linear-gradient(180deg, rgba(6, 10, 8, 0.5), rgba(6, 10, 8, 0.38) 50%, rgba(6, 10, 8, 0.55)); } }
 .mo-stage .mo-hero__pause { pointer-events: auto; position: fixed; }
 .mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
 .mo-stage__svg[data-pan] { display: block; }
-.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: 100%; inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 900ms var(--ease-mgla); }
+.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 450ms var(--ease-mgla); }
 .mo-stage__svg .is-lit .accent { transform: scale(1.8); transform-box: fill-box; transform-origin: center; }
 .mo-stage__svg .is-lit :is(text, .peak-name) { fill: var(--color-bursztyn-tekst); }
 .mo-stage__svg .is-lit { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
@@ -191,39 +199,45 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc .mo-hero__lede { max-inline-size: 36rem; }
 .mo-opowiesc .mo-hero .mo-booking { text-shadow: none; }
 
-/* Płyty: każdy blok treści, krok i karta osobno, przejrzyste i tylko tak duże jak tekst, żeby między nimi
-   i przez nie było widać scenę */
+/* Teksty wprost na scenie, bez kafelków. Czytelność daje kolor i cień dopasowane do tła (data-tlo ustawia
+   SceneStage): na zdjęciu jasny tekst z ciemnym cieniem i przyciemnienie od strony tekstu, na ilustracji
+   ciemny tekst z poświatą w kolorze tła. */
 .mo-opowiesc {
-  --plyta: color-mix(in srgb, var(--color-tlo) 66%, transparent);
   --plyta-szer: 34rem;
+  --tekst: var(--color-atrament);
+  --cien: 0 0 2px var(--color-tlo), 0 0 12px var(--color-tlo), 0 0 28px var(--color-tlo);
 }
+.mo-opowiesc[data-tlo="media"] {
+  --tekst: var(--color-na-zdjeciu);
+  --cien: 0 1px 2px rgba(0, 0, 0, 0.6), 0 2px 20px rgba(0, 0, 0, 0.55);
+}
+.mo-opowiesc .mo-section { color: var(--tekst); text-shadow: var(--cien); transition: color var(--ruch-wolny) var(--ease-mgla), text-shadow var(--ruch-wolny) var(--ease-mgla); }
+.mo-opowiesc .mo-section :is(h2, h3, p, li, dt, dd, blockquote, figcaption, a, .mo-label, .mo-card__meta, .mo-muted, .mo-prose, .mo-price):not(.mo-booking-wrap *) { color: inherit; }
+.mo-opowiesc .mo-section :is(p, li, blockquote, .mo-prose):not(.mo-booking-wrap *, .mo-label, .mo-card__meta) { font-size: max(1.1875rem, 1em); line-height: 1.55; }
+.mo-opowiesc .mo-section :is(.mo-booking-wrap, img, .mo-card__media) { text-shadow: none; }
 .mo-opowiesc .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
 .mo-opowiesc [data-step],
 .mo-opowiesc .mo-cards > .mo-card:not([data-step]),
 .mo-opowiesc .mo-steps__step > div {
-  max-inline-size: var(--plyta-szer); padding: var(--space-5) var(--space-6); margin-block: 0;
-  background: var(--plyta); -webkit-backdrop-filter: blur(10px) saturate(1.1); backdrop-filter: blur(10px) saturate(1.1);
-  border: 1px solid color-mix(in srgb, var(--color-linia) 45%, transparent);
+  max-inline-size: var(--plyta-szer); padding: 0; margin-block: 0; background: none; border: 0;
 }
+.mo-opowiesc .mo-section .mo-card { background: none; border: 0; }
 /* Zaproszenie z paskiem rezerwacji potrzebuje szerszej płyty */
 .mo-opowiesc .mo-section > .mo-container > .mo-booking-wrap { max-inline-size: 52rem; }
 .mo-opowiesc .mo-section > .mo-container > * + * { margin-block-start: var(--space-3); }
 .mo-opowiesc .mo-section > .mo-container > header { margin-block-end: 0; }
 .mo-opowiesc .mo-section > .mo-container > header :is(.mo-h1, .mo-h2) { margin-block-end: 0; }
-@media (max-width: 767px) {
-  .mo-opowiesc { --plyta: color-mix(in srgb, var(--color-tlo) 74%, transparent); }
-  .mo-opowiesc .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
-  .mo-opowiesc [data-step], .mo-opowiesc .mo-cards > .mo-card:not([data-step]), .mo-opowiesc .mo-steps__step > div { padding: var(--space-4) var(--space-5); }
-}
 
 /* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić. Karty bez podsiatki,
    inaczej przerwa między krokami rozciąga każdą kartę na kilka ekranów. */
 .mo-opowiesc :is(.mo-cards, .mo-peak-cards, ol):has(> [data-step]) { display: grid !important; grid-template-columns: minmax(0, var(--plyta-szer)) !important; grid-template-rows: none; gap: 55svh !important; list-style: none; padding: 0; margin-block-start: 30svh; }
+/* Domki bliżej siebie: panorama przechodzi płynnie od szczytu do szczytu, bez długiej przerwy */
+.mo-opowiesc .mo-peak-cards:has(> [data-step]) { gap: 18svh !important; }
 .mo-opowiesc .mo-cards > .mo-card { grid-row: auto; grid-template-rows: none; row-gap: var(--space-2); align-content: start; }
 .mo-opowiesc .mo-cards:not(:has(> [data-step])) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), var(--plyta-szer))); row-gap: var(--space-5); }
 .mo-opowiesc :is([data-step], [data-block="seasons"] .mo-card) > .mo-card__media { display: none; }
 .mo-opowiesc .mo-peak-card .mo-card__media { display: block; aspect-ratio: 3 / 2; }
-.mo-opowiesc [data-step].mo-card, .mo-opowiesc [data-step] > .mo-card { color: var(--color-atrament); }
+.mo-opowiesc [data-step].mo-card, .mo-opowiesc [data-step] > .mo-card { color: inherit; }
 .mo-peak-cards { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
 .mo-peak-card { text-decoration: none; color: inherit; display: grid; gap: var(--space-2); }
 .mo-opowiesc [data-step] .mo-peak-card { border: 0; padding: 0; background: none; }
@@ -235,7 +249,6 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 @media (max-width: 1023px) {
   /* na wąskim ekranie mapa w górnej części, płyty przewijają się nad dolną */
   .mo-stage__scene[data-kind="map"] .mo-stage__svg { place-items: start center; padding-block-start: var(--naglowek-wys); }
-  .mo-opowiesc [data-block="surroundings"] :is([data-step], .mo-container > *) { --plyta: color-mix(in srgb, var(--color-tlo) 86%, transparent); }
 }
 
 /* Sauna i bania na stałym tle: scena przejmuje zdjęcia, zostają same słowa */
@@ -254,4 +267,28 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-dock__body { position: relative; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }
 .mo-dock__close { position: absolute; inset-block-start: var(--space-1); inset-inline-end: var(--space-1); inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: none; color: inherit; font-size: 1.5rem; cursor: pointer; }
 @media (max-width: 767px) { .mo-dock__dialog { margin-block-start: var(--space-5); } }
-@media (prefers-reduced-motion: reduce) { .mo-dock__open { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .mo-dock__open, .mo-stage__svg[data-pan] svg { transition: none; } }
+
+/* Okolica: nazwy atrakcji blisko siebie, opis rozwija się po najechaniu (na dotyku jest zawsze widoczny) */
+.mo-attractions { list-style: none; padding: 0; margin-block: var(--space-6) 0; display: grid; gap: var(--space-2); max-inline-size: var(--plyta-szer); }
+.mo-attraction__name { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-2); color: inherit; text-decoration: none; border-block-end: 1px solid color-mix(in srgb, currentColor 25%, transparent); }
+.mo-attraction__name .mo-h3 { margin: 0; transition: color var(--ruch-szybki) var(--ease-mgla); }
+.mo-attraction__desc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--ruch-sredni) var(--ease-mgla); }
+.mo-attraction__desc > div { overflow: hidden; }
+.mo-attraction__desc p { margin: var(--space-2) 0 var(--space-3); }
+.mo-attraction:is(:hover, :focus-within) .mo-attraction__desc { grid-template-rows: 1fr; }
+.mo-attraction:is(:hover, :focus-within) .mo-h3 { color: var(--color-bursztyn-tekst); }
+@media (hover: none) { .mo-attraction__desc { grid-template-rows: 1fr; } }
+.mo-stage__svg .poi circle { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
+.mo-stage__svg .poi.is-lit circle { transform: scale(2); fill: var(--color-bursztyn); }
+.mo-stage__svg .poi.is-lit text { fill: var(--color-bursztyn-tekst); font-weight: 700; }
+
+/* Finał „Wybierzcie swój szczyt”: na środku ekranu, pasek rezerwacji w jednym rzędzie */
+.mo-opowiesc [data-block="bookingInvite"] { min-block-size: calc(100svh - var(--naglowek-wys)); display: grid; align-content: center; padding-block: var(--space-10); }
+.mo-opowiesc [data-block="bookingInvite"] .mo-h2 { font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem); }
+/* tekst i pasek w jednej szerokości */
+.mo-opowiesc [data-block="bookingInvite"].mo-section > .mo-container > * { max-inline-size: 56rem; }
+.mo-opowiesc [data-block="bookingInvite"] :is(.mo-prose, p) { max-inline-size: none; }
+.mo-opowiesc [data-block="bookingInvite"] .mo-container > .mo-booking-wrap { margin-block-start: var(--space-6); }
+.mo-opowiesc .mo-booking-note { color: inherit; text-shadow: var(--cien); }
+@media (max-width: 1023px) { .mo-stage__scene[data-kind="map"] .mo-stage__svg svg { opacity: 0.4; } }

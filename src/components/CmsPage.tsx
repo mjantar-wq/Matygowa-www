@@ -26,7 +26,7 @@ export async function CmsPage({ route, slug, ctx, fallback, children, required, 
     // Strona główna: opowieść na stałym tle (koncepcja po M1)
     const media = await findMany<Media>('media', ctx.locale, { limit: 300, depth: 0 })
     return (
-      <div className="mo-opowiesc">
+      <div className="mo-opowiesc" data-tlo="media">
         <SceneStage scenes={buildScenes(blocks, media)} t={ctx.t.effects} />
         <RenderBlocks blocks={blocks} ctx={ctx} immersive />
         {children}

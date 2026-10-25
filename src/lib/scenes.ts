@@ -57,7 +57,7 @@ function defaults(pick: ReturnType<typeof libraryPicker>) {
     bania: [v('B1_bania_alpenglow'), v('B1_bania_lato', { sezon: 'lato' }), v('B2_bania_noc_3x2', { pora: 'noc' })],
     testimonials: [v('K8_punkt_widokowy'), v('T3_noc_gwiazdy', { pora: 'noc' })],
     offersNews: [v('K6_dom_orbita'), v('K2_hero_osada_noc_16x9', { pora: 'noc' })],
-    bookingInvite: [v('K1_panorama_tatry'), v('K2_hero_osada_noc_16x9', { pora: 'noc' })],
+    bookingInvite: [v('T1_swit_gran'), v('T3_noc_gwiazdy', { pora: 'noc' })],
   }
 }
 

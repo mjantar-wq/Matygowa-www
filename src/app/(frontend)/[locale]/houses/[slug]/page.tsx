@@ -28,6 +28,7 @@ export default async function UnitPage({ params }: SlugParams) {
   const t = ctx.t
   const code = unit.icecoldresCode || unit.slug
   const [all, property, promotions] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: 'order' }), getProperty(), getPromotions()])
+  const others = all.filter((u) => u.id !== unit.id)
   const type = property?.unitTypes.find((u) => u.code === code)
   const amenities = type ? (ctx.locale === 'pl' ? type.amenities : type.amenitiesEn) : []
   const promos = promotions.filter((p) => !p.unitTypeIds || (type && p.unitTypeIds.includes(type.id)))
@@ -107,10 +108,11 @@ export default async function UnitPage({ params }: SlugParams) {
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{t.house.others}</h2>
         <div className="mo-cards">
-          {all
-            .filter((u) => u.id !== unit.id && u.kind === unit.kind)
-            .concat(all.filter((u) => u.id !== unit.id && u.kind !== unit.kind))
-            .slice(0, 4)
+          {/* wszystkie pozostałe tego samego rodzaju (domy: 5), dopełnione drugim rodzajem do 4 kart */}
+          {others
+            .filter((u) => u.kind === unit.kind)
+            .concat(others.filter((u) => u.kind !== unit.kind))
+            .slice(0, Math.max(others.filter((u) => u.kind === unit.kind).length, 4))
             .map((u) => (
               <Link key={u.id} href={href(ctx.locale, 'houses', u.slug)} className="mo-card">
                 <div className="mo-card__media"><Media media={u.hero} /></div>

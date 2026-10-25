@@ -51,11 +51,18 @@
 /* bez overflow: hidden, bo z aspect-ratio ucinałby treść; kwadrat to minimum, dłuższa treść wydłuża kafelek */
 .mo-tile { display: flex; flex-direction: column; aspect-ratio: 1; min-width: 0; background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); }
 .mo-tile[data-off] { opacity: 0.6; }
+/* lista domów (/domy): cały kafelek jest linkiem do strony domu */
+.mo-tiles-wrap { container-type: inline-size; }
+.mo-tiles-wrap .mo-tiles { margin: 0; }
+.mo-tile__link { flex: 1; display: flex; flex-direction: column; color: inherit; text-decoration: none; border-radius: inherit; }
+.mo-tile__link .mo-tile__text { display: block; }
+.mo-tile__link:hover .mo-tile__name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+.mo-tile__link:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: 2px; }
 .mo-tile[data-off] .mo-tile__photo img { filter: grayscale(1); }
 .mo-tile__photo { position: relative; flex: 1 1 auto; border-start-start-radius: inherit; border-start-end-radius: inherit; min-block-size: 11rem; display: block; inline-size: 100%; padding: 0; border: 0; background: var(--color-tlo-2); cursor: pointer; overflow: hidden; }
 .mo-tile__photo:disabled { cursor: default; }
-.mo-tile__photo img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; display: block; transition: transform var(--ruch-wolny) var(--krzywa-mgla); }
-.mo-tile:not([data-off]) .mo-tile__photo:hover img { transform: scale(1.03); }
+.mo-tile__photo > :is(img, video, .mo-placeholder) { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; display: block; transition: transform var(--ruch-wolny) var(--krzywa-mgla); }
+.mo-tile:not([data-off]) :is(.mo-tile__photo:hover, .mo-tile__link:hover) img { transform: scale(1.03); }
 .mo-tile__free, .mo-tile__count { position: absolute; inset-block-start: var(--space-3); padding: 2px var(--space-3); border-radius: var(--radius-pole); font: 500 13px/1.4 var(--font-ui); }
 .mo-tile__free { inset-inline-start: var(--space-3); background: var(--color-powierzchnia); color: var(--color-swierk); }
 .mo-tile__count { inset-inline-end: var(--space-3); background: rgba(0, 0, 0, 0.6); color: #fff; }

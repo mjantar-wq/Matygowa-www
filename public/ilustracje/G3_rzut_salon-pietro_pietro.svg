@@ -9,14 +9,15 @@
 <g id="r-sypialnia-4" class="pokoj-g" data-nazwa="Sypialnia">
 <rect class="pokoj" x="278" y="4" width="294" height="319"/>
 <text class="nazwa" x="426" y="158" text-anchor="middle">Sypialnia</text>
-<text class="dopisek" x="426" y="186" text-anchor="middle">z łazienką</text>
-</g>
-<g id="r-hol" class="pokoj-g" data-nazwa="hol">
-<rect class="pokoj" x="582" y="4" width="136" height="124"/>
+<text class="dopisek" x="426" y="186" text-anchor="middle">z łazienką · ok. 13 m²</text>
 </g>
 <g id="r-wc" class="pokoj-g" data-nazwa="WC">
-<rect class="pokoj" x="582" y="138" width="136" height="186"/>
-<text class="nazwa" x="650" y="238" text-anchor="middle">WC</text>
+<rect class="pokoj" x="582" y="4" width="136" height="176"/>
+<text class="nazwa" x="650" y="100" text-anchor="middle">WC</text>
+</g>
+<g id="r-hol" class="pokoj-g" data-nazwa="Hol">
+<rect class="pokoj" x="582" y="190" width="136" height="134"/>
+<text class="nazwa" x="650" y="264" text-anchor="middle">Hol</text>
 </g>
 <g id="r-schody" class="pokoj-g" data-nazwa="Schody">
 <rect class="pokoj" x="726" y="4" width="141" height="319"/>
@@ -35,8 +36,9 @@
 <g id="r-salon" class="pokoj-g" data-nazwa="Salon z kuchnią">
 <rect class="pokoj" x="132" y="332" width="735" height="379"/>
 <text class="nazwa" x="500" y="516" text-anchor="middle">Salon z kuchnią</text>
-<text class="dopisek" x="500" y="544" text-anchor="middle">i jadalnią</text>
+<text class="dopisek" x="500" y="544" text-anchor="middle">i jadalnią · ok. 38 m²</text>
 </g>
 <rect class="pokoj" x="726" y="323" width="141" height="9"/>
-<rect class="pokoj" x="717" y="4" width="9" height="124"/>
+<rect class="pokoj" x="717" y="190" width="9" height="134"/>
+<rect class="pokoj" x="582" y="323" width="136" height="9"/>
 </svg>

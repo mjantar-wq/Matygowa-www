@@ -50,13 +50,14 @@
 </g>
 <g id="r-sypialnia-1" class="pokoj-g" data-nazwa="Sypialnia">
 <rect class="pokoj" x="4" y="312" width="217" height="293"/>
-<text class="nazwa" x="113" y="467" text-anchor="middle">Sypialnia</text>
+<text class="nazwa" x="113" y="453" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="113" y="481" text-anchor="middle">9,6 m²</text>
 </g>
 <g id="r-salon" class="pokoj-g" data-nazwa="Salon z kuchnią">
 <rect class="pokoj" x="230" y="312" width="765" height="293"/>
 <rect class="pokoj" x="230" y="601" width="539" height="109"/>
 <text class="nazwa" x="613" y="453" text-anchor="middle">Salon z kuchnią</text>
-<text class="dopisek" x="613" y="481" text-anchor="middle">i jadalnią</text>
+<text class="dopisek" x="613" y="481" text-anchor="middle">i jadalnią · 32,5 m²</text>
 </g>
 <rect class="pokoj" x="514" y="95" width="9" height="75"/>
 </svg>

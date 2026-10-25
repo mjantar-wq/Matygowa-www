@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { owner, ownerField } from '../access'
+import { syncAccessEmail } from '../lib/cloudflareAccess'
 
 /**
  * Konta panelu: właściciel (wszystko, jako jedyny zakłada konta i nadaje role), administrator (wszystko poza kontami)
@@ -16,6 +17,20 @@ export const Users: CollectionConfig = {
       async ({ data, operation, req }) => {
         if (operation === 'create' && (await req.payload.count({ collection: 'users', req })).totalDocs === 0) data.role = 'owner'
         return data
+      },
+    ],
+    // e-mail konta trafia do bramki Cloudflare Access na /panel (błąd API nie blokuje zapisu konta)
+    afterChange: [
+      async ({ doc, previousDoc, operation, req }) => {
+        const before = operation === 'create' ? null : previousDoc?.email
+        if (before === doc.email) return doc
+        await syncAccessEmail(doc.email, before ?? null).catch((err) => req.payload.logger.error({ err }, 'Cloudflare Access: nie dopisano e-maila'))
+        return doc
+      },
+    ],
+    afterDelete: [
+      async ({ doc, req }) => {
+        await syncAccessEmail(null, doc.email).catch((err) => req.payload.logger.error({ err }, 'Cloudflare Access: nie wykreślono e-maila'))
       },
     ],
   },

@@ -232,7 +232,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
 }
 
 /** Atrakcja → element mapy okolicy G7, gdy w panelu nie ma własnego id na mapie. */
-const attractionSvgId = (slug: string) => `a-${({ 'stoki-bialka-bukowina': 'kotelnica' } as Record<string, string>)[slug] ?? slug}`
+const attractionSvgId = (slug: string) => `a-${({ 'stoki-bialka-bukowina': 'kotelnica', 'bialka-narty': 'kotelnica', 'terma-bania': 'termy' } as Record<string, string>)[slug] ?? slug}`
 
 function Story({ block, immersive }: Props<'story'>) {
   // na stałym tle zdjęcie przejmuje scena
@@ -253,23 +253,55 @@ function Story({ block, immersive }: Props<'story'>) {
 
 async function Testimonials({ block, ctx }: Props<'testimonials'>) {
   const chosen = (block.items ?? []).filter((x): x is Testimonial => typeof x === 'object')
-  const items = chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 4, sort: '-date' })
+  // 10 opinii (5 × 2 na komputerze, 6 na telefonie); źródła na zmianę, żeby Google i Booking były obok siebie
+  const items = interleave(chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 30, sort: '-date' })).slice(0, 10)
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <div className="mo-cards">
+      <ul className="mo-reviews">
         {items.map((x) => (
-          <figure key={x.id} className="mo-card">
-            <blockquote className="mo-prose">„{x.quote}”</blockquote>
-            <figcaption className="mo-card__meta">
-              {x.author}
-              {x.source ? ` · ${x.source}` : ''}
-              {x.rating ? ` · ${x.rating}` : ''}
-            </figcaption>
-          </figure>
+          <li key={x.id}>
+            <figure className="mo-review">
+              <SourceMark source={x.source} rating={x.rating} />
+              <blockquote>„{x.quote}”</blockquote>
+              <figcaption className="mo-card__meta">{x.author}</figcaption>
+            </figure>
+          </li>
         ))}
-      </div>
+      </ul>
     </Section>
+  )
+}
+
+/** Opinie z kolejnych źródeł na przemian (Google, Booking, …), w obrębie źródła od najnowszej. */
+function interleave(items: Testimonial[]) {
+  const groups = new Map<string, Testimonial[]>()
+  for (const x of items) groups.set(x.source ?? 'other', [...(groups.get(x.source ?? 'other') ?? []), x])
+  const out: Testimonial[] = []
+  for (let i = 0; out.length < items.length; i++) for (const g of groups.values()) if (g[i]) out.push(g[i])
+  return out
+}
+
+/** Znak źródła opinii (słowny, w barwach serwisu) i ocena w jego skali: gwiazdki Google, punkty Booking na 10. */
+function SourceMark({ source, rating }: { source?: Testimonial['source']; rating?: number | null }) {
+  const name = { google: 'Google', booking: 'Booking.com', airbnb: 'Airbnb', other: null }[source ?? 'other']
+  const score = rating ? (source === 'booking' ? `${rating.toLocaleString('pl-PL')}/10` : '★'.repeat(Math.round(Math.min(rating, 5)))) : null
+  return (
+    <p className="mo-review__source" data-source={source ?? 'other'}>
+      {source === 'google' ? (
+        <span className="mo-review__logo" aria-label="Google">
+          {['G', 'o', 'o', 'g', 'l', 'e'].map((c, i) => <span key={i} aria-hidden="true">{c}</span>)}
+        </span>
+      ) : source === 'booking' ? (
+        <span className="mo-review__logo" aria-label="Booking.com">
+          <span aria-hidden="true">Booking</span>
+          <span aria-hidden="true">.com</span>
+        </span>
+      ) : name ? (
+        <span className="mo-review__logo">{name}</span>
+      ) : null}
+      {score ? <span className="mo-review__score">{score}</span> : null}
+    </p>
   )
 }
 

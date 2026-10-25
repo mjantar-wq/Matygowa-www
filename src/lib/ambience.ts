@@ -29,13 +29,13 @@ export function assignSlots(variants: Variant[]): string[][] {
 export const AMBIENCE_KEYS = { pora: 'mo-pora', sezon: 'mo-sezon' } as const
 
 /**
- * Domyślny nastrój dla chwili `now`: zima od listopada do marca, noc między zmierzchem a świtem nad osadą
+ * Domyślny nastrój dla chwili `now`: lato w kalendarzową wiosnę i lato (21.03–22.09), zima jesienią i zimą; noc między zmierzchem a świtem nad osadą
  * (49,34° N, 20,05° E; pół godziny po zachodzie i przed wschodem słońca). Funkcja nie korzysta z niczego
  * spoza siebie, bo jej treść trafia też do skryptu przed malowaniem.
  */
 export function defaultAmbience(now: number): { pora: 'dzien' | 'noc'; sezon: 'zima' | 'lato' } {
   const date = new Date(now)
-  const month = date.getUTCMonth() + 1
+  const monthDay = (date.getUTCMonth() + 1) * 100 + date.getUTCDate()
   const start = Date.UTC(date.getUTCFullYear(), 0, 0)
   const day = Math.floor((now - start) / 86400000)
   const rad = Math.PI / 180
@@ -46,7 +46,7 @@ export function defaultAmbience(now: number): { pora: 'dzien' | 'noc'; sezon: 'z
   const noon = 12 - 20.05 / 15
   const hour = date.getUTCHours() + date.getUTCMinutes() / 60
   const night = hour < noon - halfDay - 0.5 || hour > noon + halfDay + 0.5
-  return { pora: night ? 'noc' : 'dzien', sezon: month >= 11 || month <= 3 ? 'zima' : 'lato' }
+  return { pora: night ? 'noc' : 'dzien', sezon: monthDay >= 321 && monthDay <= 922 ? 'lato' : 'zima' }
 }
 
 /**

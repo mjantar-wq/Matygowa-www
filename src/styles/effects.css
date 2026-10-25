@@ -190,7 +190,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
 .mo-stage__svg[data-pan] { display: block; }
 .mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 450ms var(--ease-mgla); }
-.mo-stage__svg .is-lit .accent { transform: scale(1.8); transform-box: fill-box; transform-origin: center; }
+.mo-stage__svg .is-lit .accent { transform: scale(2.6); transform-box: fill-box; transform-origin: center; fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
 .mo-stage__svg .is-lit :is(text, .peak-name) { fill: var(--color-bursztyn-tekst); }
 .mo-stage__svg .is-lit { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
 .mo-stage__svg .accent, .mo-stage__svg text { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); }
@@ -235,8 +235,9 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 /* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić. Karty bez podsiatki,
    inaczej przerwa między krokami rozciąga każdą kartę na kilka ekranów. */
 .mo-opowiesc :is(.mo-cards, .mo-peak-cards, ol):has(> [data-step]) { display: grid !important; grid-template-columns: minmax(0, var(--plyta-szer)) !important; grid-template-rows: none; gap: 55svh !important; list-style: none; padding: 0; margin-block-start: 30svh; }
-/* Domki bliżej siebie: panorama przechodzi płynnie od szczytu do szczytu, bez długiej przerwy */
+/* Domki, pory dnia i pomieszczenia bliżej siebie: scena przechodzi płynnie, bez długiej przerwy */
 .mo-opowiesc .mo-peak-cards:has(> [data-step]) { gap: 18svh !important; }
+.mo-opowiesc :is([data-block="dayInSettlement"], [data-block="houseInside"]) :is(.mo-cards, ol):has(> [data-step]) { gap: 28svh !important; margin-block-start: 18svh; }
 .mo-opowiesc .mo-cards > .mo-card { grid-row: auto; grid-template-rows: none; row-gap: var(--space-2); align-content: start; }
 .mo-opowiesc .mo-cards:not(:has(> [data-step])) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), var(--plyta-szer))); row-gap: var(--space-5); }
 .mo-opowiesc :is([data-step], [data-block="seasons"] .mo-card) > .mo-card__media { display: none; }
@@ -284,7 +285,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-attraction:is(:hover, :focus-within) .mo-h3 { color: var(--color-bursztyn-tekst); }
 @media (hover: none) { .mo-attraction__desc { grid-template-rows: 1fr; } }
 .mo-stage__svg .poi circle { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
-.mo-stage__svg .poi.is-lit circle { transform: scale(2); fill: var(--color-bursztyn); }
+.mo-stage__svg .poi.is-lit circle { transform: scale(2.6); fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
 .mo-stage__svg .poi.is-lit text { fill: var(--color-bursztyn-tekst); font-weight: 700; }
 
 /* Finał „Wybierzcie swój szczyt”: na środku ekranu, pasek rezerwacji w jednym rzędzie */
@@ -296,3 +297,43 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc [data-block="bookingInvite"] .mo-container > .mo-booking-wrap { margin-block-start: var(--space-6); }
 .mo-opowiesc .mo-booking-note { color: inherit; text-shadow: var(--cien); }
 @media (max-width: 1023px) { .mo-stage__scene[data-kind="map"] .mo-stage__svg svg { opacity: 0.4; } }
+
+/* Karty domków nad panoramą: podpis nad zdjęciem, w jasnej górnej części ekranu, a nie na tle szczytów i ich nazw */
+.mo-opowiesc .mo-peak-card { align-content: start; }
+.mo-opowiesc .mo-peak-card .mo-card__media { order: 1; margin: var(--space-3) 0 0; }
+@media (max-width: 767px) {
+  .mo-stage__svg[data-pan] svg { block-size: min(36svh, 22rem); }
+  .mo-opowiesc .mo-peak-card .mo-card__media { aspect-ratio: 16 / 9; }
+}
+
+/* Wyróżnienie szczytu i atrakcji: reszta przygasa, wybrany punkt jest większy, w kolorze akcentu i pulsuje */
+.mo-stage__svg :is(g[id^="p-"], .poi) { transition: opacity var(--ruch-sredni) var(--ease-mgla); }
+.mo-stage__svg.has-lit :is(g[id^="p-"], .poi):not(.is-lit) { opacity: 0.3; }
+.mo-stage__svg .is-lit .line { stroke: var(--color-bursztyn); stroke-width: 2.5; }
+.mo-stage__svg .is-lit :is(.peak-name, .poi text) { font-weight: 700; }
+@keyframes mo-puls { from { stroke-width: 0; stroke-opacity: 0.7; } to { stroke-width: 9; stroke-opacity: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-stage__svg .is-lit :is(.accent, circle) { animation: mo-puls 1.6s var(--ease-mgla) infinite; }
+}
+
+/* Opinie: świadomy wyjątek od tekstu bez kafelków. Każda opinia na własnym kafelku ze znakiem źródła;
+   10 w układzie 5 × 2 na komputerze, 6 w układzie 2 × 3 na telefonie. */
+.mo-reviews { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 768px) { .mo-reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .mo-reviews { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .mo-reviews > li:nth-child(n + 7) { display: none; } }
+.mo-review { block-size: 100%; margin: 0; display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-3); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); text-shadow: none; }
+.mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { color: var(--color-atrament); text-shadow: none; font-size: var(--text-body-s); line-height: 1.5; }
+.mo-review blockquote { margin: 0; }
+.mo-review__source { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin: 0; }
+.mo-review__logo { font: 700 1.125rem/1 var(--font-ui); letter-spacing: -0.01em; }
+.mo-review__score { font: 600 0.875rem/1 var(--font-ui); color: var(--color-bursztyn-tekst); }
+[data-source="google"] .mo-review__logo > :nth-child(1), [data-source="google"] .mo-review__logo > :nth-child(4) { color: #4285f4; }
+[data-source="google"] .mo-review__logo > :nth-child(2), [data-source="google"] .mo-review__logo > :nth-child(6) { color: #ea4335; }
+[data-source="google"] .mo-review__logo > :nth-child(3) { color: #fbbc05; }
+[data-source="google"] .mo-review__logo > :nth-child(5) { color: #34a853; }
+[data-source="booking"] .mo-review__logo > :first-child { color: #003580; }
+[data-source="booking"] .mo-review__logo > :last-child { color: #009fe3; }
+[data-source="airbnb"] .mo-review__logo { color: #ff5a5f; }
+.mo-opowiesc [data-block="testimonials"].mo-section > .mo-container > .mo-reviews { max-inline-size: none; }
+@media (max-width: 767px) { .mo-review { padding: var(--space-4); } .mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { font-size: 0.875rem; } }

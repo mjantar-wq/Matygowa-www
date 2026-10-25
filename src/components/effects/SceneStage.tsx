@@ -10,7 +10,7 @@ const SVG: Partial<Record<Scene['kind'], string>> = { panorama: '/ilustracje/G2_
 /**
  * Przypięta scena pod całą stroną główną. Rozdział albo krok na środku ekranu (atrybut data-scene) wybiera
  * scenę, a data-scene-focus wskazuje element ilustracji (szczyt w panoramie, atrakcję na mapie okolicy).
- * Sceny montują się dopiero, gdy są najwyżej o jedną przed aktywną, więc strona nie ładuje wszystkiego naraz.
+ * Sceny montują się dopiero, gdy są najwyżej o cztery przed aktywną, więc strona nie ładuje wszystkiego naraz.
  */
 export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effects'] }) {
   const [active, setActive] = useState(scenes[0]?.id)
@@ -53,6 +53,23 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
     }
   }, [scenes])
 
+  // Zdjęcia w treści opowieści ładują się z dużym wyprzedzeniem (2,5 ekranu), a nie dopiero tuż przed wejściem
+  // na ekran jak przy loading="lazy", żeby przy przewijaniu kart domków były już gotowe.
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue
+          ;(e.target as HTMLImageElement).loading = 'eager'
+          io.unobserve(e.target)
+        }
+      },
+      { rootMargin: '250% 0px' },
+    )
+    document.querySelectorAll('.mo-opowiesc img[loading="lazy"]').forEach((img) => io.observe(img))
+    return () => io.disconnect()
+  }, [])
+
   // Najechanie albo fokus na karcie z data-scene-focus (atrakcja, domek) wskazuje element ilustracji od razu.
   useEffect(() => {
     const on = (e: Event) => setHover((e.target as Element).closest<HTMLElement>('[data-scene-focus]')?.dataset.sceneFocus)
@@ -73,7 +90,7 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
     <div className="mo-stage" aria-hidden="true" data-kind={activeKind}>
       {scenes.map((s, i) => {
         const on = s.id === active
-        if (i > reach && !on) return null
+        if (i > reach + 3 && !on) return null
         return (
           <div key={s.id} className="mo-stage__scene" data-kind={s.kind} data-active={on || undefined}>
             {s.kind === 'media' && s.slides ? <HeroStage slides={s.slides} t={t} active={on} eager={i === 0} controls={i === 0} /> : null}
@@ -135,6 +152,7 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
     if (!lit?.classList.contains('is-lit')) {
       el.querySelectorAll('.is-lit').forEach((n) => n.classList.remove('is-lit'))
       lit?.classList.add('is-lit')
+      el.classList.toggle('has-lit', !!lit)
     }
     if (!pan) return
     // Środki obu szczytów względem rysunku, przesunięcie pośrodku wg postępu → szczyt na środku ekranu.
@@ -145,7 +163,11 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
     }
     const [xa, xb] = [cx(find(focus?.a)), cx(find(focus?.b))]
     const x = xa + (xb - xa) * (focus?.t ?? 0)
-    const shift = Math.min(0, Math.max(innerWidth - sr.width, innerWidth / 2 - x))
+    // Szczyt staje na środku wolnej części ekranu, obok kart domków, żeby karta nie zasłaniała swojego szczytu.
+    // Przy skrajnych szczytach panorama może odsunąć się od lewej krawędzi (pod kartami).
+    const cards = document.querySelector('.mo-peak-cards > [data-step]')?.getBoundingClientRect()
+    const anchor = cards && cards.right < innerWidth * 0.7 ? (cards.right + innerWidth) / 2 : innerWidth / 2
+    const shift = Math.min(Math.max(0, anchor - innerWidth / 2), Math.max(innerWidth - sr.width, anchor - x))
     el.style.setProperty('--przesun', `${shift}px`)
   }, [focus, ready, pan])
 

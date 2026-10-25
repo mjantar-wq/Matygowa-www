@@ -101,6 +101,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   `)
   await db.run(sql`CREATE UNIQUE INDEX \`_pages_v_blocks_hosts_locales_locale_parent_id_unique\` ON \`_pages_v_blocks_hosts_locales\` (\`_locale\`,\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_hosts_locales_parent_id_idx\` ON \`_pages_v_blocks_hosts_locales\` (\`_parent_id\`);`)
+  await db.run(sql`ALTER TABLE \`units\` ADD \`bathrooms\` numeric;`)
+  await db.run(sql`ALTER TABLE \`units\` ADD \`separate_wc\` integer;`)
+  await db.run(sql`ALTER TABLE \`units\` ADD \`ensuite_upstairs\` integer;`)
+  await db.run(sql`ALTER TABLE \`_units_v\` ADD \`version_bathrooms\` numeric;`)
+  await db.run(sql`ALTER TABLE \`_units_v\` ADD \`version_separate_wc\` integer;`)
+  await db.run(sql`ALTER TABLE \`_units_v\` ADD \`version_ensuite_upstairs\` integer;`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -112,4 +118,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`_pages_v_blocks_hosts_people_locales\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_hosts\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_hosts_locales\`;`)
+  await db.run(sql`ALTER TABLE \`units\` DROP COLUMN \`bathrooms\`;`)
+  await db.run(sql`ALTER TABLE \`units\` DROP COLUMN \`separate_wc\`;`)
+  await db.run(sql`ALTER TABLE \`units\` DROP COLUMN \`ensuite_upstairs\`;`)
+  await db.run(sql`ALTER TABLE \`_units_v\` DROP COLUMN \`version_bathrooms\`;`)
+  await db.run(sql`ALTER TABLE \`_units_v\` DROP COLUMN \`version_separate_wc\`;`)
+  await db.run(sql`ALTER TABLE \`_units_v\` DROP COLUMN \`version_ensuite_upstairs\`;`)
 }

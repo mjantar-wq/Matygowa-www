@@ -166,7 +166,13 @@ async function Surroundings({ block, ctx }: Props<'surroundings'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <Media media={block.map} fallback={`${ctx.t.placeholder}: mapa okolicy`} />
+      {block.map ? (
+        <Media media={block.map} />
+      ) : (
+        // ilustracja G7 z wątku wizualnego, dopóki redakcja nie wgra własnej mapy
+        // eslint-disable-next-line @next/next/no-img-element -- SVG z public/
+        <img src="/ilustracje/G7_mapa_okolicy.svg" alt={ctx.locale === 'pl' ? 'Mapa okolicy Matygowej Osady' : 'Map of the area around Matygowa Osada'} loading="lazy" style={{ inlineSize: '100%', blockSize: 'auto' }} />
+      )}
       <div className="mo-cards">
         {attractions.map((a) => (
           <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">

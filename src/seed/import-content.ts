@@ -85,6 +85,8 @@ async function main() {
     const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
       hero: vShot ? img(`V${vShot}_`) : undefined,
+      // seria zdjęć: kadr domu i wspólne wnętrza CGI (domy są urządzone podobnie), do podmiany po sesji foto
+      gallery: [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_'].map(img)].filter(Boolean),
       name: u.name?.[l] ?? peak.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',
@@ -116,9 +118,11 @@ async function main() {
     }))
   }
 
+  let offerIndex = 0
   for (const o of read('offers.json') as Any[]) {
     const [from, to] = String(o.valid ?? '').split('/')
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], validFrom: from || undefined, validTo: to || undefined }))
+    const cover = img(['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5])
+    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined }))
   }
 
   // strona główna: bloki w kolejności szkieletu
@@ -143,7 +147,7 @@ async function main() {
       case 'surroundings':
         return { blockType: 'surroundings', ...base, body: md(b.body?.[l]), limit: b.featured_attractions ?? 6 }
       case 'nature':
-        return { blockType: 'story', ...base, body: md(b.body?.[l]) }
+        return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('K3_'), imagePosition: 'end' }
       case 'testimonials':
         return { blockType: 'testimonials', ...base, eyebrow: b.rating_line?.[l] }
       case 'offers_news':
@@ -194,6 +198,17 @@ async function main() {
       else id = (await payload.create({ collection: 'testimonials', locale, data })).id
     }
     payload.logger.info(`testimonials: ${t.author}`)
+  }
+
+  // Regulamin, polityka prywatności i cookies (wspólne z silnikiem IceColdRes); SEO z seo-pages.json poniżej ma pierwszeństwo
+  for (const d of read('documents.json') as Any[]) {
+    await upsert('pages', d.slug, (l) => ({
+      title: d.title?.[l],
+      kind: 'document',
+      intro: d.intro?.[l],
+      layout: [{ blockType: 'richText', body: md(d.body?.[l]) }],
+      seo: { title: d.seo?.title?.[l], description: d.seo?.description?.[l] },
+    }))
   }
 
   // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)

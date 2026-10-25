@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 1080 800" role="img" aria-label="Rzut poglądowy domku, układ z salonem na piętrze: parter">
+<style>.bryla{fill:var(--color-atrament);stroke:var(--color-atrament);stroke-width:24;stroke-linejoin:miter}.pokoj{fill:var(--color-tlo)}.pokoj.skos{fill:var(--color-tlo-2)}.stopnie{stroke:var(--color-linia-mocna);stroke-width:1.5;vector-effect:non-scaling-stroke}.sauna-deski{stroke:var(--color-bursztyn);stroke-width:1;opacity:.6;vector-effect:non-scaling-stroke}.nazwa{font:500 19px var(--font-ui,sans-serif);letter-spacing:.12em;text-transform:uppercase;fill:var(--color-atrament);paint-order:stroke;stroke:var(--color-tlo);stroke-width:8px;stroke-linejoin:round}.dopisek{font:500 18px var(--font-ui,sans-serif);letter-spacing:.06em;font-variant-numeric:tabular-nums;fill:var(--color-wyciszony)}.pokoj-g:hover .pokoj,.pokoj-g:focus .pokoj{fill:var(--color-tlo-2)}</style>
+<polygon class="bryla" points="128,0 872,0 872,308 1000,308 1000,610 667,610 667,714 333,714 333,610 0,610 0,308 128,308"/>
+<g id="r-sauna" class="pokoj-g" data-nazwa="Sauna">
+<rect class="pokoj" x="132" y="4" width="173" height="134"/>
+<line class="sauna-deski" x1="132" y1="22" x2="306" y2="22"/>
+<line class="sauna-deski" x1="132" y1="40" x2="306" y2="40"/>
+<line class="sauna-deski" x1="132" y1="58" x2="306" y2="58"/>
+<line class="sauna-deski" x1="132" y1="76" x2="306" y2="76"/>
+<line class="sauna-deski" x1="132" y1="94" x2="306" y2="94"/>
+<line class="sauna-deski" x1="132" y1="112" x2="306" y2="112"/>
+<text class="nazwa" x="219" y="80" text-anchor="middle">Sauna</text>
+</g>
+<g id="r-lazienka" class="pokoj-g" data-nazwa="Łazienka">
+<rect class="pokoj" x="132" y="148" width="244" height="156"/>
+<text class="nazwa" x="254" y="234" text-anchor="middle">Łazienka</text>
+</g>
+<g id="r-wejscie" class="pokoj-g" data-nazwa="Wejście">
+<rect class="pokoj" x="314" y="4" width="205" height="134"/>
+<text class="nazwa" x="417" y="80" text-anchor="middle">Wejście</text>
+</g>
+<g id="r-hol" class="pokoj-g" data-nazwa="Hol">
+<rect class="pokoj" x="386" y="148" width="134" height="156"/>
+<text class="nazwa" x="453" y="234" text-anchor="middle">Hol</text>
+</g>
+<g id="r-schody" class="pokoj-g" data-nazwa="Schody">
+<rect class="pokoj" x="528" y="4" width="339" height="134"/>
+<line class="stopnie" x1="557" y1="4" x2="557" y2="138"/>
+<line class="stopnie" x1="585" y1="4" x2="585" y2="138"/>
+<line class="stopnie" x1="613" y1="4" x2="613" y2="138"/>
+<line class="stopnie" x1="642" y1="4" x2="642" y2="138"/>
+<line class="stopnie" x1="670" y1="4" x2="670" y2="138"/>
+<line class="stopnie" x1="698" y1="4" x2="698" y2="138"/>
+<line class="stopnie" x1="726" y1="4" x2="726" y2="138"/>
+<line class="stopnie" x1="754" y1="4" x2="754" y2="138"/>
+<line class="stopnie" x1="783" y1="4" x2="783" y2="138"/>
+<line class="stopnie" x1="811" y1="4" x2="811" y2="138"/>
+<line class="stopnie" x1="839" y1="4" x2="839" y2="138"/>
+<text class="nazwa" x="698" y="80" text-anchor="middle">Schody</text>
+</g>
+<g id="r-lazienka-2" class="pokoj-g" data-nazwa="Łazienka">
+<rect class="pokoj" x="528" y="148" width="193" height="156"/>
+<text class="nazwa" x="625" y="234" text-anchor="middle">Łazienka</text>
+</g>
+<g id="r-schody-2" class="pokoj-g" data-nazwa="schody-2">
+<rect class="pokoj" x="730" y="148" width="137" height="156"/>
+<line class="stopnie" x1="730" y1="179" x2="868" y2="179"/>
+<line class="stopnie" x1="730" y1="210" x2="868" y2="210"/>
+<line class="stopnie" x1="730" y1="241" x2="868" y2="241"/>
+<line class="stopnie" x1="730" y1="272" x2="868" y2="272"/>
+</g>
+<g id="r-sypialnia-1" class="pokoj-g" data-nazwa="Sypialnia">
+<rect class="pokoj" x="4" y="312" width="324" height="293"/>
+<text class="nazwa" x="166" y="453" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="166" y="481" text-anchor="middle">12 m²</text>
+</g>
+<g id="r-korytarz" class="pokoj-g" data-nazwa="korytarz">
+<rect class="pokoj" x="338" y="312" width="325" height="88"/>
+</g>
+<g id="r-sypialnia-2" class="pokoj-g" data-nazwa="Sypialnia">
+<rect class="pokoj" x="338" y="410" width="325" height="300"/>
+<text class="nazwa" x="500" y="554" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="500" y="582" text-anchor="middle">13,3 m²</text>
+</g>
+<g id="r-sypialnia-3" class="pokoj-g" data-nazwa="Sypialnia">
+<rect class="pokoj" x="672" y="312" width="324" height="293"/>
+<text class="nazwa" x="834" y="453" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="834" y="481" text-anchor="middle">12 m²</text>
+</g>
+</svg>

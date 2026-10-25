@@ -16,7 +16,12 @@ export interface EngineSettings {
   hotresUrl?: string | null
   /** adres obiektu w IceColdRes (na teście „booking”: icecoldres.audiowizard.pl/pl/booking) */
   slug?: string | null
+  /** ceny i wyniki wyszukiwania na stronie (Ustawienia → Rezerwacje); bez nich pasek od razu otwiera silnik */
+  showPrices?: boolean | null
 }
+
+/** Parametry kampanii przekazywane do silnika (trafiają do rezerwacji jako jej źródło). */
+export const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id'] as const
 
 /**
  * Adres silnika rezerwacji z wypełnionymi danymi (kontrakt IceColdRes, pkt 6). Do uruchomienia
@@ -33,7 +38,7 @@ export function bookingUrl(settings: EngineSettings | null, locale: Locale, q: B
       ages: q.ages?.length ? q.ages.join(',') : undefined,
       unit: q.unit,
       offer: q.offer,
-      ...utm,
+      ...Object.fromEntries(Object.entries(utm).filter(([k]) => (UTM_KEYS as readonly string[]).includes(k))),
     }
     for (const [k, v] of Object.entries(params)) if (v) url.searchParams.set(k, v)
     return url.toString()
@@ -49,5 +54,26 @@ export function formatPrice(grosze: number, locale: Locale) {
 }
 
 /** Do komponentu w przeglądarce trafiają tylko pola silnika, nie całe ustawienia. */
-export const engineSettings = (s: EngineSettings | null | undefined): EngineSettings | null =>
-  s ? { bookingEngine: s.bookingEngine, icecoldresUrl: s.icecoldresUrl, hotresUrl: s.hotresUrl, slug: process.env.ICECOLDRES_SLUG ?? 'booking' } : null
+export const engineSettings = (s: (EngineSettings & { showPrices?: boolean | null }) | null | undefined): EngineSettings | null =>
+  s
+    ? {
+        bookingEngine: s.bookingEngine,
+        icecoldresUrl: s.icecoldresUrl,
+        hotresUrl: s.hotresUrl,
+        slug: process.env.ICECOLDRES_SLUG ?? 'booking',
+        showPrices: s.showPrices !== false,
+      }
+    : null
+
+/** Domeny silników rezerwacji, do których linki dostają UTM i zdarzenie booking_click. */
+export function engineHosts(s: EngineSettings | null | undefined) {
+  const hosts = new Set(['booking.matygowaosada.pl', 'booking.hotres.pl'])
+  for (const url of [s?.icecoldresUrl, s?.hotresUrl]) {
+    try {
+      if (url) hosts.add(new URL(url).hostname)
+    } catch {
+      // błędny adres w panelu: pomijamy
+    }
+  }
+  return [...hosts]
+}

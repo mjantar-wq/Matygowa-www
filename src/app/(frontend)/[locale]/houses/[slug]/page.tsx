@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation'
 import { BookingBar } from '@/components/BookingBar'
 import { engineSettings } from '@/lib/booking'
 import { Media } from '@/components/Media'
-import { PeaksPanorama } from '@/components/PeaksPanorama'
+import Link from 'next/link'
 import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
+import { href } from '@/i18n/routes'
 import { findBySlug, findMany } from '@/lib/cms'
 import { getProperty, getPromotions } from '@/lib/icecoldres'
 import { buildMetadata, pageContext, type SlugParams } from '@/lib/page'
@@ -35,7 +36,7 @@ export default async function UnitPage({ params }: SlugParams) {
     unit.bedrooms ? `${unit.bedrooms} ${ctx.locale === 'pl' ? 'sypialnie' : 'bedrooms'}` : null,
     unit.bathrooms ? `${unit.bathrooms} ${ctx.locale === 'pl' ? (unit.bathrooms > 4 ? 'łazienek' : 'łazienki') : 'bathrooms'}${unit.separateWc ? ' + WC' : ''}` : null,
     unit.livingRoom ? (ctx.locale === 'pl' ? (unit.livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : unit.livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null,
-    unit.maxGuests ? t.house.guests(type?.maxOccupancy ?? unit.maxGuests) : null,
+    unit.maxGuests ? t.house.guests(unit.maxGuests) : null,
   ].filter(Boolean)
 
   return (
@@ -70,12 +71,18 @@ export default async function UnitPage({ params }: SlugParams) {
         <div className="mo-cards">
           {unit.gallery?.length ? unit.gallery.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null)) : <Placeholder label={t.placeholder} />}
         </div>
-        {unit.plans?.length ? (
-          <>
-            <h3 className="mo-h3">{t.house.plan}</h3>
-            {unit.plans.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null))}
-          </>
-        ) : null}
+      </section>
+
+      <section className="mo-section mo-container">
+        <h2 className="mo-h2">{t.house.plan}</h2>
+        <div className="mo-cards">
+          {unit.plans?.length
+            ? unit.plans.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null))
+            : planIllustrations(unit).map((src) => (
+                // eslint-disable-next-line @next/next/no-img-element -- rzuty G3 (SVG) z public/
+                <img key={src} src={src} alt={`${t.house.plan}: ${unit.name}`} loading="lazy" style={{ inlineSize: '100%', blockSize: 'auto' }} />
+              ))}
+        </div>
       </section>
 
       {amenities.length ? (
@@ -99,8 +106,29 @@ export default async function UnitPage({ params }: SlugParams) {
 
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{t.house.others}</h2>
-        <PeaksPanorama units={all.filter((u) => u.id !== unit.id)} ctx={ctx} />
+        <div className="mo-cards">
+          {all
+            .filter((u) => u.id !== unit.id && u.kind === unit.kind)
+            .concat(all.filter((u) => u.id !== unit.id && u.kind !== unit.kind))
+            .slice(0, 4)
+            .map((u) => (
+              <Link key={u.id} href={href(ctx.locale, 'houses', u.slug)} className="mo-card">
+                <div className="mo-card__media"><Media media={u.hero} /></div>
+                <h3 className="mo-h3">{u.name}</h3>
+                <p className="mo-card__meta">
+                  {t.house.kind[u.kind]}
+                  {u.status === 'comingSoon' ? ` · ${t.house.comingSoon}` : ''}
+                </p>
+              </Link>
+            ))}
+        </div>
       </section>
     </article>
   )
+}
+
+/** Rzuty G3 z wątku wizualnego (parter i piętro), dopóki w panelu nie ma własnych planów domu. */
+function planIllustrations(unit: Unit): string[] {
+  const variant = unit.kind === 'apartment' ? 'apartament' : unit.livingRoom === 'upper' ? 'salon-pietro' : 'salon-parter'
+  return ['parter', 'pietro'].map((floor) => `/ilustracje/G3_rzut_${variant}_${floor}.svg`)
 }

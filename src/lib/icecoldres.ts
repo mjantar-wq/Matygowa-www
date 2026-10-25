@@ -13,6 +13,7 @@ export interface PublicUnitType {
   id: string
   code?: string
   name: string
+  content?: { en?: { name?: string } }
   kind: string
   stdOccupancy: number
   maxOccupancy: number
@@ -47,6 +48,9 @@ export interface Promotion {
   bookTo: string | null
   bookableNow: boolean
   unitTypeIds: string[] | null
+  arrivalDays?: number[] | null
+  excludedWeekdays?: number[] | null
+  excludedPeriods?: { from: string; to: string }[] | null
 }
 
 export interface Service {
@@ -87,4 +91,55 @@ export async function getPromotions(): Promise<Promotion[]> {
 
 export async function getServices(): Promise<Service[]> {
   return (await get<Service[]>('/services', 3600)) ?? []
+}
+
+/** Wynik wyszukiwania dla jednego domu (GET /search): wolne sztuki i cena każdej oferty strony. */
+export interface SearchOffer {
+  offerId: string
+  name: string
+  available: boolean
+  total?: number
+  deposit?: number
+  items?: { nights: number; total: number; promotion: { id: string; display: { badge?: string; en?: { badge?: string | null } } | null } | null }[]
+  unavailable?: { index: number; reasons: { code: string }[] }[]
+}
+export interface SearchResult {
+  unitTypeId: string
+  free: number
+  offers: SearchOffer[]
+}
+
+export interface StayQuery {
+  arrival: string
+  departure: string
+  adults: number
+  children: number
+  ages: number[]
+}
+
+/** Dostępność i ceny zmieniają się z każdą rezerwacją, więc bufor tylko 45 s (kontrakt: 30–60 s). */
+const LIVE = 45
+
+export async function searchStay(q: StayQuery): Promise<SearchResult[] | null> {
+  const params = new URLSearchParams({ arrival: q.arrival, departure: q.departure, adults: String(q.adults), childCount: String(q.children) })
+  if (q.ages.length) params.set('children', q.ages.join(','))
+  const data = await get<{ results: SearchResult[] }>(`/search?${params}`, LIVE)
+  return data?.results ?? null
+}
+
+export interface CalendarDay {
+  free: number
+  open: boolean
+  cta: boolean
+  ctd: boolean
+  minStay: number
+  maxStay: number | null
+}
+
+export async function getCalendar(from: string, days: number) {
+  return get<{ from: string; today: string; types: { unitTypeId: string; days: CalendarDay[] }[] }>(`/calendar?from=${from}&days=${days}`, LIVE)
+}
+
+export async function getPricesFromDays(from: string, days: number) {
+  return get<{ from: string; types: (PriceFrom & { days: (number | null)[] })[] }>(`/prices-from?from=${from}&days=${days}`, 600)
 }

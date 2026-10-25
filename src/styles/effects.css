@@ -24,6 +24,9 @@
 /* Hero: kadry nastrojów nałożone na siebie, widać ten, który pasuje do <html data-pora data-sezon> */
 .mo-hero__slide { position: absolute; inset: 0; display: none; }
 .mo-hero__slide > * { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; }
+/* Letnia noc bez własnego zdjęcia: dzienny letni kadr przyciemniony i ochłodzony, z granatowym niebem u góry. */
+.mo-hero__slide.is-nocny > img { filter: brightness(0.78) saturate(0.5) contrast(1.08); }
+.mo-hero__slide.is-nocny::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(28 48 112), rgb(52 74 128) 55%, rgb(24 38 84)); mix-blend-mode: multiply; pointer-events: none; }
 .mo-hero__slide video { opacity: 0; transition: opacity var(--ruch-wolny) var(--ease-mgla); }
 .mo-hero__slide[data-playing] video { opacity: 1; }
 :root[data-pora="dzien"][data-sezon="zima"] .mo-hero__slide.is-dzien-zima,

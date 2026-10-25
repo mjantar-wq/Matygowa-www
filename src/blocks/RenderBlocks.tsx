@@ -31,9 +31,9 @@ function Heading({ eyebrow, heading, level = 2 }: { eyebrow?: string | null; hea
   )
 }
 
-function Section({ block, children, className = '', scene = true }: { block: { id?: string | null; anchor?: string | null; blockType: string }; children: React.ReactNode; className?: string; scene?: boolean | string }) {
+function Section({ block, children, className = '', scene = true, sceneLine }: { block: { id?: string | null; anchor?: string | null; blockType: string }; children: React.ReactNode; className?: string; scene?: boolean | string; sceneLine?: number }) {
   return (
-    <section id={block.anchor || undefined} data-block={block.blockType} data-scene={typeof scene === 'string' ? scene : scene ? sceneId(block.id) : undefined} className={`mo-section ${className}`}>
+    <section id={block.anchor || undefined} data-block={block.blockType} data-scene={typeof scene === 'string' ? scene : scene ? sceneId(block.id) : undefined} data-scene-line={sceneLine} className={`mo-section ${className}`}>
       <div className="mo-container">{children}</div>
     </section>
   )
@@ -120,9 +120,10 @@ function Day({ block, ctx }: Props<'dayInSettlement'>) {
 }
 
 function HouseInside({ block, ctx }: Props<'houseInside'>) {
-  // tytuł rozdziału stoi na tej samej scenie co pierwsze pomieszczenie, więc tło nie zmienia się między nimi
+  // tytuł rozdziału stoi na tej samej scenie co pierwsze pomieszczenie, więc tło nie zmienia się między nimi;
+  // tło kolejnego pomieszczenia zaczyna się zmieniać, gdy jego opis wchodzi w dolną ćwiartkę ekranu
   return (
-    <Section block={block} scene={block.rooms?.length ? sceneId(block.id, 0) : true}>
+    <Section block={block} scene={block.rooms?.length ? sceneId(block.id, 0) : true} sceneLine={0.75}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       <div className="mo-cards">

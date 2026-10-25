@@ -7,6 +7,7 @@ Uruchom: python3 scripts/ilustracje/mapa_osady.py
 """
 import json, math
 from pathlib import Path
+from tokeny import z_zapasem
 
 ROOT = Path(__file__).resolve().parents[2]
 W, H = 1400, 800
@@ -100,7 +101,7 @@ L.append('<rect class="etykieta-tlo" x="830" y="20" width="230" height="46" rx="
 L.append('</g></svg>')
 
 out = ROOT / "public/ilustracje/G1_mapa_osady.svg"; out.parent.mkdir(parents=True, exist_ok=True)
-out.write_text("\n".join(L))
+out.write_text(z_zapasem("\n".join(L)))
 (ROOT / "public/ilustracje/G1_mapa_osady.json").write_text(json.dumps({
     "zrodlo": "Nazwy domków 2026.jpg (dron)",
     "domy": [{"id": f"b-dom-{s}", "nazwa": n, "szczytM": h, "x": x, "y": y} for s, n, h, x, y, *_ in DOMY],

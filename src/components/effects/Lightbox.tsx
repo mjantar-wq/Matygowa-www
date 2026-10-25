@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Dictionary } from '@/i18n/dictionaries'
 
-export type LightboxItem = { url: string; alt?: string | null; width?: number | null; height?: number | null; focusX?: number | null; focusY?: number | null }
+export type LightboxItem = { url: string; alt?: string | null; width?: number | null; height?: number | null; focusX?: number | null; focusY?: number | null; credit?: string | null }
 
 /**
  * Galeria zdjęć z powiększeniem: klik (albo Enter) otwiera zdjęcie na pełnym ekranie, strzałki, przyciski
@@ -78,6 +78,7 @@ export function Lightbox({ items, t }: { items: LightboxItem[]; t: Dictionary['e
             <img key={current.url} src={current.url} alt={current.alt ?? ''} width={current.width ?? undefined} height={current.height ?? undefined} />
             <figcaption className="mo-lightbox__caption">
               {current.alt ? <span>{current.alt}</span> : null}
+              {current.credit ? <span className="mo-lightbox__credit">{current.credit}</span> : null}
               <span className="mo-lightbox__count" aria-live="polite">
                 {index + 1} / {count}
               </span>

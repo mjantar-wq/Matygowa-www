@@ -228,3 +228,19 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 .mo-lista li span { display: block; }
 .mo-lista li span::first-letter { text-transform: uppercase; }
 @media (max-width: 599px) { .mo-lista { grid-template-columns: 1fr; } .mo-lista li { min-block-size: 2.75rem; } }
+
+/* Okolica: atrakcja jako zdjęcie z podpisem licencji i opis rozszerzony obok; co druga odwrócona */
+.mo-atrakcje { display: grid; gap: var(--space-10); }
+.mo-atrakcja { display: grid; gap: var(--space-4) var(--rynna); align-items: start; scroll-margin-block-start: calc(var(--naglowek-wys, 4rem) + var(--space-4)); }
+.mo-atrakcja__zdjecie img { inline-size: 100%; block-size: auto; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+.mo-atrakcja__tekst { display: grid; gap: var(--space-3); align-content: start; }
+.mo-atrakcja__tekst > * { margin: 0; }
+.mo-atrakcja__tekst :is(h1, h2) a { color: inherit; text-decoration: none; }
+.mo-atrakcja__tekst :is(h1, h2) a:hover { color: var(--color-bursztyn-tekst); }
+.mo-atrakcja__galeria { grid-column: 1 / -1; }
+.mo-atrakcje__wiecej { margin-block: var(--space-6) calc(-1 * var(--space-6)); }
+@media (min-width: 1024px) {
+  .mo-atrakcja:has(.mo-atrakcja__zdjecie) { grid-template-columns: 7fr 5fr; }
+  .mo-atrakcje > .mo-atrakcja:nth-of-type(even):has(.mo-atrakcja__zdjecie) { grid-template-columns: 5fr 7fr; }
+  .mo-atrakcje > .mo-atrakcja:nth-of-type(even) .mo-atrakcja__zdjecie { order: 1; }
+}

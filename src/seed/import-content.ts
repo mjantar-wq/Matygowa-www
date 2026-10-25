@@ -18,6 +18,11 @@ type Loc = (typeof LOCALES)[number]
 
 const read = (file: string) => JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'))
 
+// Import partiami: IMPORT_ONLY=attractions (albo np. units,offers) wgrywa nowe pliki z manifestu i tylko te kolekcje.
+// „pages” to strony, opinie, dokumenty, aktualności i ustawienia. Bez zmiennej import obejmuje wszystko.
+const only = new Set((process.env.IMPORT_ONLY ?? '').split(',').map((k) => k.trim()).filter(Boolean))
+const want = (key: 'units' | 'attractions' | 'offers' | 'pages') => !only.size || only.has(key)
+
 async function main() {
   const payload = await getPayload({ config })
   const editorConfig = await editorConfigFactory.default({ config: payload.config })
@@ -85,7 +90,7 @@ async function main() {
   const units: Any[] = read('units.json')
   // własne zdjęcia domków z sesji (Łomnica, Lodowy, Wołoszyn); pozostałe domy mają kadr domu i wspólne wnętrza
   const unitPhotos: Record<string, { hero: string; gallery: string[] }> = fs.existsSync(path.join(DIR, 'unit-photos.json')) ? read('unit-photos.json') : {}
-  for (const u of units) {
+  for (const u of want('units') ? units : []) {
     const peak = peaks.find((p) => p.slug === u.peak) ?? {}
     const slug = u.icecoldres_code || u.peak
     const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski-wierch', 'giewont', 'ciemniak'].indexOf(slug) + 1
@@ -115,28 +120,43 @@ async function main() {
     }))
   }
 
-  for (const a of read('attractions.json') as Any[]) {
+  // Atrakcje: ta sama lista dla sekcji na głównej (featured, krótki opis "summary") i strony Okolica
+  // (opis rozszerzony "body", zdjęcia "image" i "gallery" jako nazwy plików z content/media, z podpisem licencji w manifeście).
+  // "retired": true zdejmuje wpis ze strony (szkic), np. dawne zbiorcze „Termy”, zastąpione konkretnymi obiektami.
+  for (const a of want('attractions') ? (read('attractions.json') as Any[]) : []) {
     await upsert('attractions', a.slug, (l) => ({
       name: a.name?.[l],
       seasons: a.season,
       category: a.category,
       description: md(a.body?.[l]),
       summary: a.summary?.[l],
+      place: a.place?.[l],
+      url: a.url,
+      lat: a.lat,
+      lng: a.lng,
+      image: a.image ? media.get(a.image) : undefined,
+      gallery: (a.gallery ?? []).map((f: string) => media.get(f)).filter(Boolean),
       distanceKm: a.distance_km,
       driveMinutes: a.drive_min,
-      mapId: a.map_svg_id,
+      mapId: a.map_svg_id ?? null,
       featured: !!a.featured,
+      ...(a.retired ? { _status: 'draft' } : {}),
     }))
   }
 
   let offerIndex = 0
-  for (const o of read('offers.json') as Any[]) {
+  for (const o of want('offers') ? (read('offers.json') as Any[]) : []) {
     const [from, to] = String(o.valid ?? '').split('/')
     // "image" w offers.json (prefiks pliku z content/media) wygrywa z domyślną rotacją okładek
     const fallback = ['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5]
     const cover = (o.image ? img(o.image) : undefined) ?? img(fallback)
     // active: false zostaje szkicem (niewidoczna); kolejność jak w offers.json
     await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined, order: offerIndex, icecoldresPromotionId: o.icecoldres_promotion_id || undefined, _status: o.active === false ? 'draft' : 'published' }))
+  }
+
+  if (!want('pages')) {
+    payload.logger.info(`Import częściowy zakończony (${[...only].join(', ')})`)
+    process.exit(0)
   }
 
   // strona główna: bloki w kolejności szkieletu

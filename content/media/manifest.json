@@ -254,16 +254,16 @@
    "source": "a9m05017.jpg"
   },
   {
-   "file": "V1_hawran_okno_3x2_foto.webp",
+   "file": "V1_hawran_salon_3x2_foto.webp",
    "shot": "V1",
    "width": 1600,
    "height": 1067,
    "placeholder": false,
    "alt": {
-    "pl": "Dom Hawrań, wnętrze z widokiem za oknem",
-    "en": "Havran House, the interior and the view outside"
+    "pl": "Domek Hawrań, salon z narożnym oknem na Tatry",
+    "en": "Hawrań cottage, living room with a corner window onto the Tatras"
    },
-   "source": "main_hawran_A7V08135-HDR.jpg"
+   "source": "a7v08909-hdr.jpg"
   },
   {
    "file": "V2_gerlach_okno_3x2_foto.webp",
@@ -272,8 +272,8 @@
    "height": 1067,
    "placeholder": false,
    "alt": {
-    "pl": "Dom Gerlach, wnętrze z widokiem za oknem",
-    "en": "Gerlach House, the interior and the view outside"
+    "pl": "Domek Gerlach, wnętrze z widokiem za oknem",
+    "en": "Gerlach cottage, the interior and the view outside"
    },
    "source": "main_gerlach_A7V08035-HDR.jpg"
   },
@@ -284,8 +284,8 @@
    "height": 1067,
    "placeholder": false,
    "alt": {
-    "pl": "Dom Świnica, wnętrze z widokiem za oknem",
-    "en": "Świnica House, the interior and the view outside"
+    "pl": "Domek Świnica, wnętrze z widokiem za oknem",
+    "en": "Świnica cottage, the interior and the view outside"
    },
    "source": "main_swinica_A7V08030-HDR.jpg"
   },
@@ -296,8 +296,8 @@
    "height": 1067,
    "placeholder": false,
    "alt": {
-    "pl": "Dom Wołoszyn, wnętrze z widokiem za oknem",
-    "en": "Wołoszyn House, the interior and the view outside"
+    "pl": "Domek Wołoszyn, wnętrze z widokiem za oknem",
+    "en": "Wołoszyn cottage, the interior and the view outside"
    },
    "source": "main_woloszyn_A7V02195-HDR.jpg"
   },
@@ -308,8 +308,8 @@
    "height": 1024,
    "placeholder": false,
    "alt": {
-    "pl": "Dom Łomnica, balkon z widokiem na Tatry",
-    "en": "Łomnica House, the balcony facing the Tatras"
+    "pl": "Domek Łomnica, balkon z widokiem na Tatry",
+    "en": "Łomnica cottage, the balcony facing the Tatras"
    },
    "source": "main_lomnica_bez_samochodu.jpg"
   },
@@ -320,8 +320,8 @@
    "height": 1067,
    "placeholder": false,
    "alt": {
-    "pl": "Dom Lodowy, wnętrze z widokiem za oknem",
-    "en": "Lodowy House, the interior and the view outside"
+    "pl": "Domek Lodowy, wnętrze z widokiem za oknem",
+    "en": "Lodowy cottage, the interior and the view outside"
    },
    "source": "main_lodowy_A7V02190-HDR.jpg"
   },

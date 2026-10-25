@@ -56,18 +56,19 @@ ZDJECIA = [
      "Bania pod okapem domu, wokół śnieg", "The hot tub under the eaves, snow all around"),
     ("B6_kawa_taras_3x2", f"{PF}/zima/a9m05017.jpg", .5,
      "Krzesła na tarasie w zimowym słońcu", "Chairs on the terrace in the winter sun"),
-    ("V1_hawran_okno_3x2", f"{UP}/Zdjecia glowne domku/hawran/main_hawran_A7V08135-HDR.jpg", .5,
-     "Dom Hawrań, wnętrze z widokiem za oknem", "Havran House, the interior and the view outside"),
+    # wybór Michała (25.10): zdjęcie 7 z arkusza kandydatów; widać Łomnicę, Lodowy i Gerlach, Hawrań jest tuż za lewą krawędzią
+    ("V1_hawran_salon_3x2", f"{PF}/zima/a7v08909-hdr.jpg", .5,
+     "Domek Hawrań, salon z narożnym oknem na Tatry", "Hawrań cottage, living room with a corner window onto the Tatras"),
     ("V2_gerlach_okno_3x2", f"{UP}/Zdjecia glowne domku/gerlach/main_gerlach_A7V08035-HDR.jpg", .5,
-     "Dom Gerlach, wnętrze z widokiem za oknem", "Gerlach House, the interior and the view outside"),
+     "Domek Gerlach, wnętrze z widokiem za oknem", "Gerlach cottage, the interior and the view outside"),
     ("V3_swinica_okno_3x2", f"{UP}/Zdjecia glowne domku/swinica/main_swinica_A7V08030-HDR.jpg", .5,
-     "Dom Świnica, wnętrze z widokiem za oknem", "Świnica House, the interior and the view outside"),
+     "Domek Świnica, wnętrze z widokiem za oknem", "Świnica cottage, the interior and the view outside"),
     ("V4_woloszyn_okno_3x2", f"{UP}/Zdjecia glowne domku/woloszyn/main_woloszyn_A7V02195-HDR.jpg", .5,
-     "Dom Wołoszyn, wnętrze z widokiem za oknem", "Wołoszyn House, the interior and the view outside"),
+     "Domek Wołoszyn, wnętrze z widokiem za oknem", "Wołoszyn cottage, the interior and the view outside"),
     ("V5_lomnica_okno_3x2", f"{UP}/Zdjecia glowne domku/lomnica/main_lomnica_bez_samochodu.jpg", .5,
-     "Dom Łomnica, balkon z widokiem na Tatry", "Łomnica House, the balcony facing the Tatras"),
+     "Domek Łomnica, balkon z widokiem na Tatry", "Łomnica cottage, the balcony facing the Tatras"),
     ("V6_lodowy_okno_3x2", f"{UP}/Zdjecia glowne domku/lodowy/main_lodowy_A7V02190-HDR.jpg", .5,
-     "Dom Lodowy, wnętrze z widokiem za oknem", "Lodowy House, the interior and the view outside"),
+     "Domek Lodowy, wnętrze z widokiem za oknem", "Lodowy cottage, the interior and the view outside"),
 ]
 # Pętle z prawdziwych ujęć z drona: powolny najazd, 12 s, bez dźwięku (zastępują pętle CGI).
 WIDEO = [("K2_hero_osada_swit_16x9", (1920, 1080)), ("K2_hero_osada_swit_9x16", (1080, 1920))]

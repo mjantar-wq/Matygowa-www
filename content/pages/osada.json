@@ -68,6 +68,14 @@
         "en": "Highland life today"
       },
       "image": "O_goralszczyzna_",
+      "image_credit": {
+        "source": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/w/index.php?curid=7710138",
+        "file": "https://upload.wikimedia.org/wikipedia/commons/3/35/Chocho%C5%82%C3%B3w.jpg",
+        "author": "Aotearoa",
+        "license": "CC BY 3.0",
+        "credit_required": true
+      },
       "lead": {
         "pl": "Podhale to nie skansen. To ludzie, którzy wciąż budują z drewna, grają na skrzypcach i robią ser tak, jak ich dziadkowie, i robią to dziś, na co dzień.",
         "en": "Podhale is not an open-air museum. It is people who still build in wood, play the fiddle and make cheese the way their grandparents did, and do it today, every day."
@@ -272,15 +280,17 @@
             "en": "We only recommend people we know: local craftspeople, mountain guides, musicians and farmers. You will find the list in our guest guide."
           },
           "image": {
-            "source": "własne",
-            "file": "O_ludzie_chleb",
-            "credit_required": false
+            "source": "Wikimedia Commons",
+            "url": "https://commons.wikimedia.org/w/index.php?curid=28698983",
+            "author": "Barbara Maliszewska",
+            "license": "CC BY-SA 3.0",
+            "credit_required": true
           },
           "image_alt": {
-            "pl": "Bochenek chleba na kuchennej desce w domku",
-            "en": "A loaf of bread on a chopping board in the cottage kitchen"
+            "pl": "Izba regionalna i pracownia rzeźbiarska w Chochołowie",
+            "en": "Regional chamber and woodcarving workshop in Chochołów"
           },
-          "note": "Zdjęcie robocze (chleb), docelowo zdjęcie gospodarzy albo partnerów. Lista partnerów lokalnych do uzupełnienia przez Michała (nazwy, kontakty, zgoda na publikację)."
+          "note": "Docelowo zdjęcie gospodarzy albo partnerów. Lista partnerów lokalnych do uzupełnienia przez Michała (nazwy, kontakty, zgoda na publikację)."
         }
       ]
     }

@@ -1,21 +1,5 @@
 [
   {
-    "slug": "kasprowy-wierch",
-    "name": {
-      "pl": "Kolejka na Kasprowy Wierch",
-      "en": "Kasprowy Wierch cable car"
-    },
-    "season": [
-      "summer",
-      "winter"
-    ],
-    "category": "views",
-    "body": {
-      "pl": "Wjazd z Kuźnic prosto w Tatry. Zimą narty, latem szlaki i widok na obie strony granicy.",
-      "en": "From Kuźnice straight up into the Tatras. Skiing in winter, trails and views across both sides of the border in summer."
-    }
-  },
-  {
     "slug": "termy-bukovina",
     "map_svg_id": "a-termy-bukovina",
     "name": {
@@ -75,6 +59,89 @@
     "body": {
       "pl": "Kotelnica, Kaniówka i Bania to jeden z największych terenów narciarskich w Polsce, ze wspólnym karnetem. Szerokie, dośnieżane i oświetlone trasy, z których widać Tatry. Kaniówka jest najłagodniejsza i najlepsza dla dzieci.",
       "en": "Kotelnica, Kaniówka and Bania form one of the largest ski areas in Poland, with a shared pass. Wide, snow-made, floodlit runs with views of the Tatras. Kaniówka is the gentlest and best for children."
+    }
+  },
+  {
+    "slug": "morskie-oko",
+    "map_svg_id": "a-morskie-oko",
+    "name": {
+      "pl": "Morskie Oko",
+      "en": "Morskie Oko lake"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "trails",
+    "featured": true,
+    "distance_km": 14,
+    "drive_min": 20,
+    "distance_note": "Dojazd do parkingu Palenica Białczańska wg OSRM, 25.10.2026; dalej pieszo.",
+    "body": {
+      "pl": "Największe jezioro w Tatrach, pod ścianami Mięguszowieckich Szczytów i Rysów. Samochodem jedziecie tylko na parking na Palenicy Białczańskiej, dalej prowadzi asfaltowa droga przez las, około dwóch godzin spacerem. Parking warto zarezerwować wcześniej.",
+      "en": "The largest lake in the Tatras, beneath the walls of the Mięguszowieckie peaks and Rysy. You can drive only as far as the Palenica Białczańska car park; from there an asphalt road leads through the forest, about two hours on foot. It is worth booking the car park in advance."
+    }
+  },
+  {
+    "slug": "kasprowy-wierch",
+    "map_svg_id": "a-kasprowy-wierch",
+    "name": {
+      "pl": "Kolej na Kasprowy Wierch",
+      "en": "Kasprowy Wierch cable car"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "featured": true,
+    "distance_km": 16,
+    "drive_min": 33,
+    "distance_note": "Do dolnej stacji w Kuźnicach wg OSRM, 25.10.2026.",
+    "body": {
+      "pl": "Kolej z Kuźnic wjeżdża na Kasprowy Wierch (1987 m), na granicę ze Słowacją. Zimą narty w Kotle Gąsienicowym i Goryczkowym, latem szlaki granią i widok na obie strony Tatr. Bilety najlepiej kupić online.",
+      "en": "The cable car from Kuźnice climbs to Kasprowy Wierch (1,987 m), right on the Slovak border. Skiing in the Gąsienicowa and Goryczkowa bowls in winter, ridge trails and views over both sides of the Tatras in summer. Tickets are best bought online."
+    }
+  },
+  {
+    "slug": "gubalowka",
+    "map_svg_id": "a-gubalowka",
+    "name": {
+      "pl": "Kolej na Gubałówkę",
+      "en": "Gubałówka funicular"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "featured": true,
+    "distance_km": 16,
+    "drive_min": 30,
+    "distance_note": "Do dolnej stacji w Zakopanem wg OSRM, 25.10.2026.",
+    "body": {
+      "pl": "Kolej linowo-terenowa z centrum Zakopanego wjeżdża na Gubałówkę w kilka minut. Na górze promenada z panoramą Tatr od Giewontu po Tatry Wysokie, a zimą stoki.",
+      "en": "A funicular from the centre of Zakopane takes you up Gubałówka in a few minutes. At the top, a promenade with a Tatra panorama from Giewont to the High Tatras, and ski slopes in winter."
+    }
+  },
+  {
+    "slug": "szymoszkowa",
+    "map_svg_id": "a-szymoszkowa",
+    "name": {
+      "pl": "Wyciągi na Polanie Szymoszkowej",
+      "en": "Polana Szymoszkowa ski lifts"
+    },
+    "season": [
+      "winter"
+    ],
+    "category": "ski",
+    "featured": true,
+    "distance_km": 17,
+    "drive_min": 32,
+    "distance_note": "Wg OSRM, 25.10.2026.",
+    "body": {
+      "pl": "Stacja narciarska na grzbiecie Gubałówki, nad Zakopanem. Szerokie, przygotowane trasy z widokiem na Giewont i całe Tatry, dobre na rodzinny dzień na nartach.",
+      "en": "A ski area on the Gubałówka ridge above Zakopane. Wide, groomed runs facing Giewont and the whole Tatra range, good for a family day on the slopes."
     }
   },
   {

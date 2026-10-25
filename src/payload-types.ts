@@ -1213,7 +1213,7 @@ export interface Offer {
 export interface User {
   id: number;
   name?: string | null;
-  role: 'admin' | 'editor';
+  role: 'owner' | 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;

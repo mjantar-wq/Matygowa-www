@@ -26,7 +26,7 @@ UKLADY = {
         "domy": ["swinica", "gerlach", "hawran"],
         "parter": (parter(22.6, 77.4), [
             ("sauna", "Sauna", 12.8, 0, 31.1, 15.7, None, "sauna"),
-            ("narciarnia", "Narciarnia", 31.1, 0, 51.9, 9.1, None, None),
+            ("narciarnia", "Narciarnia", 31.1, 0, 51.9, 9.1, "wejście z zewnątrz", None),  # wg Michała: dostęp tylko z zewnątrz, obok wejścia
             ("lazienka", "Łazienka", 12.8, 15.7, 31.1, 30.8, None, None),
             ("wejscie", "Wejście", 31.1, 9.1, 51.9, 30.8, None, None),
             ("schody", "Schody", 51.9, 0, 87.2, 17.5, None, "schody"),

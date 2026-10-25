@@ -199,8 +199,8 @@
         "en": "Inside the house"
       },
       "body": {
-        "pl": "Każdy dom ma 120 m² na dwóch poziomach i jest urządzony tak samo. Różni się tylko widokiem.",
-        "en": "Every house has 120 m² over two floors and is furnished the same way. Only the view is different."
+        "pl": "Każdy dom ma 120 m² na dwóch poziomach, w jednym z dwóch układów. Hawrań, Gerlach i Świnica mają salon na parterze. Wołoszyn, Łomnica i Lodowy mają salon na piętrze i dodatkową łazienkę przy sypialni na górze.",
+        "en": "Every house has 120 m² over two floors, in one of two layouts. Hawrań, Gerlach and Świnica have the living room on the ground floor. Wołoszyn, Łomnica and Lodowy have the living room upstairs and an extra en-suite bathroom in the upstairs bedroom."
       },
       "rooms": [
         {
@@ -243,8 +243,8 @@
             "en": "Bathrooms and sauna"
           },
           "body": {
-            "pl": "Dwie łazienki, osobne WC i prywatna sauna. Na tarasie bania z gorącą wodą.",
-            "en": "Two bathrooms, a separate WC and a private sauna. On the terrace, an outdoor hot tub."
+            "pl": "Dwie łazienki i osobne WC, a w domach z salonem na piętrze także trzecia, prywatna łazienka przy sypialni. Do tego prywatna sauna. Na tarasie bania z gorącą wodą.",
+            "en": "Two bathrooms and a separate WC, plus a third, en-suite bathroom in the houses with an upstairs living room. And a private sauna. On the terrace, an outdoor hot tub."
           }
         }
       ],

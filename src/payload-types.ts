@@ -585,6 +585,9 @@ export interface Unit {
   area?: number | null;
   bedrooms?: number | null;
   maxGuests?: number | null;
+  bathrooms?: number | null;
+  separateWc?: boolean | null;
+  ensuiteUpstairs?: boolean | null;
   livingRoom?: ('ground' | 'upper') | null;
   seo?: {
     title?: string | null;
@@ -1200,6 +1203,9 @@ export interface UnitsSelect<T extends boolean = true> {
   area?: T;
   bedrooms?: T;
   maxGuests?: T;
+  bathrooms?: T;
+  separateWc?: T;
+  ensuiteUpstairs?: T;
   livingRoom?: T;
   seo?:
     | T

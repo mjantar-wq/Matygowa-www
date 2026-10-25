@@ -33,6 +33,8 @@ export default async function UnitPage({ params }: SlugParams) {
   const facts = [
     unit.area ? `${unit.area} m²` : null,
     unit.bedrooms ? `${unit.bedrooms} ${ctx.locale === 'pl' ? 'sypialnie' : 'bedrooms'}` : null,
+    unit.bathrooms ? `${unit.bathrooms} ${ctx.locale === 'pl' ? (unit.bathrooms > 4 ? 'łazienek' : 'łazienki') : 'bathrooms'}${unit.separateWc ? ' + WC' : ''}` : null,
+    unit.livingRoom ? (ctx.locale === 'pl' ? (unit.livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : unit.livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null,
     unit.maxGuests ? t.house.guests(type?.maxOccupancy ?? unit.maxGuests) : null,
   ].filter(Boolean)
 

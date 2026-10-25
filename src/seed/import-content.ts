@@ -85,7 +85,7 @@ async function main() {
     const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
       hero: vShot ? img(`V${vShot}_`) : undefined,
-      name: peak.name?.[l] ?? u.name?.[l],
+      name: u.name?.[l] ?? peak.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',
       order: u.sort ?? 0,
@@ -96,6 +96,9 @@ async function main() {
       area: u.facts?.area_m2,
       bedrooms: u.facts?.bedrooms,
       maxGuests: u.facts?.max_guests,
+      bathrooms: u.facts?.bathrooms,
+      separateWc: !!u.facts?.separate_wc,
+      ensuiteUpstairs: !!u.facts?.ensuite_upstairs,
       livingRoom: u.facts?.living_room === 'upper' || u.facts?.living_room === 'first' ? 'upper' : u.facts?.living_room ? 'ground' : undefined,
       seo: { title: u.seo?.title?.[l], description: u.seo?.description?.[l] },
     }))

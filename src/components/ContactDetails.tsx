@@ -32,7 +32,7 @@ export function ContactDetails({ ctx }: { ctx: PageContext }) {
           <ul className="mo-kontakt__social">
             {s.social.map((x) => (
               <li key={x.id ?? x.url}>
-                <a className="mo-btn mo-btn--obrys mo-btn--maly" href={x.url} rel="noopener" target="_blank">
+                <a className="mo-btn mo-btn--glowny mo-btn--maly" href={x.url} rel="noopener" target="_blank">
                   {ICONS[x.label.toLowerCase()] ? <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">{ICONS[x.label.toLowerCase()]}</svg> : null}
                   <span>{x.label.toLowerCase() === 'facebook' ? 'Facebook' : x.label.toLowerCase() === 'instagram' ? 'Instagram' : x.label}</span>
                 </a>

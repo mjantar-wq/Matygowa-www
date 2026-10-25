@@ -39,7 +39,7 @@ export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContex
             ) : (
               <span />
             )}
-            <span className="mo-btn mo-btn--obrys">{see}</span>
+            <span className="mo-btn mo-btn--glowny">{see}</span>
           </span>
         </span>
       </Link>

@@ -77,11 +77,11 @@ export function ConsentBanner({ t, policyHref }: Props) {
       ) : null}
       <div className="mo-consent__actions">
         <button type="button" className="mo-btn mo-btn--glowny mo-btn--maly" onClick={() => save({ analytics: true, marketing: true })}>{t.acceptAll}</button>
-        <button type="button" className="mo-btn mo-btn--obrys mo-btn--maly" onClick={() => save({ analytics: false, marketing: false })}>{t.rejectAll}</button>
+        <button type="button" className="mo-btn mo-btn--glowny mo-btn--maly" onClick={() => save({ analytics: false, marketing: false })}>{t.rejectAll}</button>
         {details ? (
-          <button type="button" className="mo-btn mo-btn--obrys mo-btn--maly" onClick={() => save({ analytics, marketing })}>{t.save}</button>
+          <button type="button" className="mo-btn mo-btn--glowny mo-btn--maly" onClick={() => save({ analytics, marketing })}>{t.save}</button>
         ) : (
-          <button type="button" className="mo-btn mo-btn--obrys mo-btn--maly" onClick={() => setDetails(true)}>{t.settings}</button>
+          <button type="button" className="mo-btn mo-btn--glowny mo-btn--maly" onClick={() => setDetails(true)}>{t.settings}</button>
         )}
       </div>
     </section>

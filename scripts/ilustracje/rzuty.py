@@ -70,11 +70,39 @@ UKLADY = {
     },
 }
 
+# Apartamenty w siódmym budynku (bliźniak, projekt wnętrz MD Studio 04.2026): cztery lokale, po dwa
+# w każdym segmencie, parter i piętro; klatka schodowa na oba piętra. Siatka 0–100 na szerokość segmentu.
+APARTAMENT = {
+    "parter": ([(0, 0), (47.2, 0), (47.2, 13.8), (100, 13.8), (100, 99.2), (47.2, 99.2), (47.2, 117), (0, 117)], [
+        ("sypialnia-1", "Sypialnia", 0, 0, 47.2, 37.4, "14,1 m²", None),
+        ("sypialnia-2", "Sypialnia", 47.2, 13.8, 100, 45.5, "14,4 m²", None),
+        ("salon", "Salon z kuchnią", 0, 37.4, 47.2, 117, "i kominkiem · 35,7 m²", None),
+        ("hol", "Hol", 47.2, 45.5, 61, 71.5, None, None),
+        ("lazienka", "Łazienka", 61, 45.5, 80.5, 71.5, "4,7 m²", None),
+        ("sauna", "Sauna", 80.5, 45.5, 100, 71.5, None, "sauna"),
+        ("klatka", "Klatka", 47.2, 71.5, 61, 99.2, None, "skos"),
+        ("pralnia", "Pralnia", 61, 71.5, 75, 99.2, None, None),
+        ("schody", "", 75, 71.5, 100, 99.2, None, "schody"),
+    ]),
+    "pietro": ([(0, 15.4), (100, 15.4), (100, 102.4), (0, 102.4)], [
+        ("sypialnia-1", "Sypialnia", 0, 15.4, 45.5, 39, "11,7 m²", None),
+        ("sypialnia-2", "Sypialnia", 45.5, 15.4, 74.8, 39, "9,8 m²", None),
+        ("sauna", "Sauna", 74.8, 15.4, 100, 39, None, "sauna"),
+        ("salon", "Salon z kuchnią", 0, 39, 45.5, 102.4, "i kominkiem · 26,4 m²", None),
+        ("hol", "Hol", 45.5, 39, 63.4, 71.5, None, None),
+        ("lazienka", "Łazienka", 63.4, 39, 100, 71.5, "6,5 m²", None),
+        ("klatka", "Klatka", 45.5, 71.5, 61, 102.4, None, "skos"),
+        ("schody", "", 61, 71.5, 100, 102.4, None, "schody"),
+    ]),
+}
+
 def svg(uklad, pietro, bryla, pokoje):
-    pad = 4  # wspólny kadr dla wszystkich rzutów, żeby piętra miały tę samą skalę na stronie
-    vb = -pad * S, -pad * S, (100 + 2 * pad) * S, (72 + 2 * pad) * S
+    pad = 4  # wspólny kadr dla rzutów jednego budynku, żeby piętra miały tę samą skalę na stronie
+    vb = -pad * S, -pad * S, (100 + 2 * pad) * S, ((117 if uklad == "apartament" else 72) + 2 * pad) * S
     pts = " ".join(f"{x * S:.0f},{y * S:.0f}" for x, y in bryla)
-    tytul = f"Rzut poglądowy domku, układ z salonem na {'parterze' if uklad == 'salon-parter' else 'piętrze'}: {'parter' if pietro == 'parter' else 'piętro'}"
+    kondygnacja = "parter" if pietro == "parter" else "piętro"
+    tytul = (f"Rzut poglądowy apartamentu na {'parterze' if pietro == 'parter' else 'piętrze'}" if uklad == "apartament" else
+             f"Rzut poglądowy domku, układ z salonem na {'parterze' if uklad == 'salon-parter' else 'piętrze'}: {kondygnacja}")
     L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb[0]:.0f} {vb[1]:.0f} {vb[2]:.0f} {vb[3]:.0f}" role="img" aria-label="{tytul}">',
          '<style>'
          '.bryla{fill:var(--color-atrament);stroke:var(--color-atrament);stroke-width:%d;stroke-linejoin:miter}' % (ZEWN * S * 2) +
@@ -114,3 +142,7 @@ for uklad, u in UKLADY.items():
         f = out / f"G3_rzut_{uklad}_{pietro}.svg"
         f.write_text(svg(uklad, pietro, *u[pietro]))
         print(f.name, "dla", ", ".join(u["domy"]))
+for pietro, (bryla, pokoje) in APARTAMENT.items():
+    f = out / f"G3_rzut_apartament_{pietro}.svg"
+    f.write_text(svg("apartament", pietro, bryla, pokoje))
+    print(f.name)

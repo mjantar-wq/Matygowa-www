@@ -13,8 +13,9 @@
       "en": "Snow, slopes a few minutes away and the hot tub in the evening. A house for the whole family, self-catering, from 1,300 PLN per night, minimum 5 nights."
     },
     "icecoldres_link": null,
-    "note": "Cena i daty do potwierdzenia w IceColdRes (sezon ferie-2027).",
-    "image": "N1_ferie_stok_narciarze"
+    "featured": true,
+    "image": "N1_ferie_stok_narciarze",
+    "note": "Cena i daty do potwierdzenia w IceColdRes (sezon ferie-2027). featured = karta na stronie głównej."
   },
   {
     "slug": "standard",
@@ -43,8 +44,10 @@
       "pl": "Święta przy jednym stole, z choinką przy kominku i Tatrami za oknem. 2300 zł za dobę, minimum 5 nocy.",
       "en": "Christmas around one table, with a tree by the fire and the Tatras outside. 2,300 PLN per night, minimum 5 nights."
     },
-    "active": false,
-    "note": "Wygaśnie przed startem strony; zostawione jako wzór na kolejny rok."
+    "active": true,
+    "featured": true,
+    "image": "N2_swieta_choinka",
+    "note": "Cena do potwierdzenia przez Michała. Zdjęcie: choinka przy kominku w salonie (N2_swieta_choinka). Po 27.12.2026 ustawić active = false. featured = karta na stronie głównej."
   },
   {
     "slug": "zlota-jesien",

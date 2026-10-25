@@ -11,30 +11,26 @@ const body: Field = { name: 'body', label: 'Tekst', type: 'richText', localized:
 const image: Field = { name: 'image', label: 'Zdjęcie', type: 'upload', relationTo: 'media' }
 const anchor: Field = { name: 'anchor', label: 'Kotwica (#)', type: 'text', admin: { position: 'sidebar' } }
 
-// Scena: tło przypięte pod stroną główną (koncepcja po M1). Wariant wybierają przełączniki lato/zima i dzień/noc;
-// brakujący wariant bierze najbliższy (zima-dzień jest podstawą). Pionowe kadry 9x16 dla telefonów.
-const SCENE_VARIANTS = [
-  ['winterDay', 'Zima, dzień'],
-  ['winterNight', 'Zima, noc'],
-  ['summerDay', 'Lato, dzień'],
-  ['summerNight', 'Lato, noc'],
-] as const
-const sceneMedia = (suffix: '' | 'Portrait'): Field[] =>
-  SCENE_VARIANTS.map(([v, label]) => ({
-    name: `${v}${suffix}`,
-    label: suffix ? `${label} (pion 9x16)` : label,
-    type: 'upload',
-    relationTo: 'media',
-    admin: { width: '25%' },
-  }))
+// Scena: tło przypięte pod stroną główną (koncepcja po M1). Wiersze jak `variants` w hero:
+// pora i sezon opcjonalne, najbliższy wariant wybiera assignSlots (src/lib/ambience.ts).
+const moodSelect: Field = {
+  type: 'row',
+  fields: [
+    { name: 'pora', label: 'Pora dnia', type: 'select', options: [{ label: 'Dzień', value: 'dzien' }, { label: 'Noc', value: 'noc' }], admin: { width: '50%' } },
+    { name: 'sezon', label: 'Pora roku', type: 'select', options: [{ label: 'Zima', value: 'zima' }, { label: 'Lato', value: 'lato' }], admin: { width: '50%' } },
+  ],
+}
 const scene: Field = {
   name: 'scene',
-  label: 'Scena w tle (zdjęcie lub film)',
-  type: 'group',
-  admin: { description: 'Tło, które przenika się, gdy sekcja jest na środku ekranu. Puste warianty biorą najbliższy, a pusta scena zostawia poprzednią.' },
+  label: 'Scena w tle',
+  type: 'array',
+  maxRows: 4,
+  admin: { initCollapsed: true, description: 'Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.' },
   fields: [
-    { type: 'row', fields: sceneMedia('') },
-    { type: 'row', fields: sceneMedia('Portrait') },
+    moodSelect,
+    { ...image, label: 'Kadr' },
+    { name: 'video', label: 'Film', type: 'upload', relationTo: 'media' },
+    { name: 'videoPortrait', label: 'Film pionowy (9:16)', type: 'upload', relationTo: 'media' },
   ],
 }
 const textVariants: Field = {
@@ -42,18 +38,8 @@ const textVariants: Field = {
   label: 'Warianty tekstu (lato, noc)',
   type: 'array',
   maxRows: 3,
-  admin: { initCollapsed: true, description: 'Podstawowy tekst sekcji to zima, dzień. Tu wpisz nagłówek i krótki tekst na inne pory.' },
-  fields: [
-    {
-      name: 'variant',
-      label: 'Pora',
-      type: 'select',
-      required: true,
-      options: SCENE_VARIANTS.filter(([v]) => v !== 'winterDay').map(([value, label]) => ({ value, label })),
-    },
-    { name: 'heading', label: 'Nagłówek', type: 'text', localized: true },
-    { name: 'text', label: 'Tekst', type: 'textarea', localized: true },
-  ],
+  admin: { initCollapsed: true, description: 'Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.' },
+  fields: [moodSelect, { name: 'heading', label: 'Nagłówek', type: 'text', localized: true }, { name: 'text', label: 'Tekst', type: 'textarea', localized: true }],
 }
 
 const block = (slug: string, label: string, fields: Field[]): Block => ({
@@ -120,6 +106,7 @@ export const DayBlock = block('dayInSettlement', 'Dzień w osadzie', [
       { name: 'text', label: 'Tekst (zima)', type: 'textarea', localized: true },
       { name: 'summerText', label: 'Tekst (lato)', type: 'textarea', localized: true },
       image,
+      scene,
     ],
   },
 ])
@@ -132,7 +119,7 @@ export const HouseInsideBlock = block('houseInside', 'Dom od środka', [
     name: 'rooms',
     label: 'Pomieszczenia',
     type: 'array',
-    fields: [{ name: 'title', label: 'Nazwa', type: 'text', localized: true }, { name: 'text', label: 'Opis', type: 'textarea', localized: true }, image],
+    fields: [{ name: 'title', label: 'Nazwa', type: 'text', localized: true }, { name: 'text', label: 'Opis', type: 'textarea', localized: true }, image, scene],
   },
   { name: 'plan', label: 'Plan', type: 'upload', relationTo: 'media' },
 ])
@@ -145,7 +132,7 @@ export const RitualsBlock = block('rituals', 'Rytuały (sauna i bania)', [
     name: 'steps',
     label: 'Etapy (jedno słowo na etap)',
     type: 'array',
-    fields: [{ name: 'word', label: 'Słowo', type: 'text', localized: true }, { name: 'text', label: 'Tekst', type: 'textarea', localized: true }, image],
+    fields: [{ name: 'word', label: 'Słowo', type: 'text', localized: true }, { name: 'text', label: 'Tekst', type: 'textarea', localized: true }, image, scene],
   },
   { name: 'showPrices', label: 'Ceny z IceColdRes', type: 'checkbox', defaultValue: true },
 ])

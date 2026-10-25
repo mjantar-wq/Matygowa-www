@@ -11,8 +11,19 @@
         "en": "What time is check-in and check-out?"
       },
       "a": {
-        "pl": "Dom czeka na Was od 16:00, wyjazd do 11:00. Kod do drzwi wysyłamy mailem w dniu przyjazdu, po opłaceniu pobytu. Późniejszy wyjazd uzgodnijcie z nami wcześniej.",
-        "en": "Your house is ready from 4 pm, check-out is by 11 am. We email the door code on arrival day, once the stay is paid. If you need to leave later, let us know in advance."
+        "pl": "Dom czeka na Was od {checkin}, wyjazd do {checkout}. Kod do drzwi wysyłamy mailem w dniu przyjazdu, po opłaceniu pobytu. Późniejszy wyjazd uzgodnijcie z nami wcześniej.",
+        "en": "Your house is ready from {checkin}, check-out is by {checkout}. We email the door code on arrival day, once the stay is paid. If you need to leave later, let us know in advance."
+      },
+      "dynamic": {
+        "source": "icecoldres",
+        "placeholders": {
+          "checkin": "property.checkInFrom",
+          "checkout": "property.checkOutBy"
+        },
+        "fallback": {
+          "checkin": "16:00",
+          "checkout": "11:00"
+        }
       }
     },
     {

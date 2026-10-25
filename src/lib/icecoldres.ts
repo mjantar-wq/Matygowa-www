@@ -23,7 +23,8 @@ export interface PublicUnitType {
 }
 
 export interface PublicProperty {
-  property: { name: string; currency: string; today: string }
+  // checkInFrom/checkOutBy: potrzeba strony zgłoszona IceColdRes (godziny z ustawień obiektu), do tego czasu domyślne 16:00 i 11:00
+  property: { name: string; currency: string; today: string; checkInFrom?: string; checkOutBy?: string }
   unitTypes: PublicUnitType[]
   bookingsEnabled: boolean
   eur: number | null

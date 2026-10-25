@@ -522,6 +522,30 @@
    "source": "a7v09961.jpg"
   },
   {
+   "file": "K12_hero_tatry_zima_16x9_foto.webp",
+   "shot": "K12",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Ośnieżone Tatry nad poranną mgłą, na dole dachy osady",
+    "en": "The snow-covered Tatras above the morning mist, with the settlement roofs below"
+   },
+   "source": "DJI_20260121180502_0393_D.jpg"
+  },
+  {
+   "file": "K13_hero_tatry_lato_16x9_foto.webp",
+   "shot": "K13",
+   "width": 1434,
+   "height": 807,
+   "placeholder": false,
+   "alt": {
+    "pl": "Tatry latem w wieczornym świetle, na dole łąki i świerkowe lasy",
+    "en": "The Tatras in summer evening light, with meadows and spruce forests below"
+   },
+   "source": "widoki-02.jpg"
+  },
+  {
    "file": "K1_panorama_tatry_21x9_foto.webp",
    "shot": "K1",
    "width": 2048,

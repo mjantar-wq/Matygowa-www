@@ -240,7 +240,7 @@ async function main() {
       // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
       if (s.id === 'goralszczyzna' && s.items?.some((it: Any) => it.id)) {
         return [
-          { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), imagePosition: 'end' },
+          { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), image: s.image ? img(s.image) : undefined, imagePosition: 'end' },
           ...s.items.map((it: Any, j: number) => ({
             blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
             body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),

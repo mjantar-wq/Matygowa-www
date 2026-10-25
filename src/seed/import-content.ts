@@ -249,7 +249,7 @@ async function main() {
           // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
           ...(s.glossary?.words?.length ? [{
             blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
-            body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- ***${w.word}*** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
+            body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
             image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
           }] : []),
         ]

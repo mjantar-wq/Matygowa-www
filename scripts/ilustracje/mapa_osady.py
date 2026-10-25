@@ -92,14 +92,19 @@ def naklejka(x, y, rot=-5):
             '<text class="naklejka-tekst en" x="0" y="3" text-anchor="middle">Opening 2027</text></g>')
 
 def piwnica():
-    """Opis piwnicy wzdłuż dłuższego boku skrzydła od strony rogu działki (siłownia i świetlica, też od 2027)."""
+    """Opis piwnicy (siłownia i świetlica, też od 2027) jako pozioma karta obok budynku od strony rogu działki.
+    Tekst bez obrotu i w dużym stopniu, żeby był ostry również po zmniejszeniu mapy na telefonie."""
     cx, cy, l, w, rot = APT
-    return (f'<g class="piwnica" transform="translate({cx} {cy}) rotate({rot}) translate(0 {-w/2 - 26})">'
-            f'<path class="piwnica-linia" d="M{-l/2 + 8},4 L{l/2 - 8},4"/>'
-            '<text class="piwnica-tekst pl" x="0" y="-16" text-anchor="middle">W piwnicy: siłownia</text>'
-            '<text class="piwnica-tekst pl" x="0" y="-2" text-anchor="middle">i świetlica dla dzieci · od 2027</text>'
-            '<text class="piwnica-tekst en" x="0" y="-16" text-anchor="middle">Basement: gym</text>'
-            '<text class="piwnica-tekst en" x="0" y="-2" text-anchor="middle">and kids’ playroom · from 2027</text></g>')
+    r = math.radians(rot); ux, uy, nx, ny = math.cos(r), math.sin(r), math.sin(r), -math.cos(r)
+    ax, ay = cx + nx * (w / 2 + 2), cy + ny * (w / 2 + 2)   # punkt na ścianie od strony rogu działki
+    x0, y0, kw, kh = 1086, ay - 34, 292, 68
+    return ('<g class="piwnica">'
+            f'<path class="piwnica-linia" d="M{ax:.0f},{ay:.0f} L{x0},{ay:.0f}"/><circle class="piwnica-punkt" cx="{ax:.0f}" cy="{ay:.0f}" r="4"/>'
+            f'<rect class="piwnica-tlo" x="{x0}" y="{y0:.0f}" width="{kw}" height="{kh}" rx="10"/>'
+            f'<text class="piwnica-tekst piwnica-tytul pl" x="{x0 + 16}" y="{y0 + 28:.0f}">W piwnicy: siłownia</text>'
+            f'<text class="piwnica-tekst pl" x="{x0 + 16}" y="{y0 + 52:.0f}">i świetlica dla dzieci · od 2027</text>'
+            f'<text class="piwnica-tekst piwnica-tytul en" x="{x0 + 16}" y="{y0 + 28:.0f}">Basement: gym</text>'
+            f'<text class="piwnica-tekst en" x="{x0 + 16}" y="{y0 + 52:.0f}">and kids’ playroom · from 2027</text></g>')
 
 def plac_zabaw(cx, cy, w, h):
     """Plac zabaw w rzucie z góry: miękka nawierzchnia z drewnianym obrzeżem, wieża z daszkiem i zjeżdżalnią,
@@ -160,7 +165,9 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.plac-krzew{fill:var(--color-swierk);opacity:.45}'
      '.naklejka-tlo{fill:var(--color-bursztyn);stroke:var(--color-tlo);stroke-width:2}.naklejka-cien{fill:var(--color-atrament);opacity:.18}'
      '.naklejka-tekst{font:700 12px var(--font-ui,sans-serif);letter-spacing:.14em;text-transform:uppercase;fill:#1a1208}'
-     '.piwnica-tekst{font:500 11px var(--font-ui,sans-serif);letter-spacing:.04em;fill:var(--color-atrament-2);paint-order:stroke;stroke:var(--color-tlo-2);stroke-width:4px;stroke-linejoin:round}.piwnica-linia{fill:none;stroke:var(--color-bursztyn);stroke-width:1.5;stroke-dasharray:1 4;stroke-linecap:round;vector-effect:non-scaling-stroke}'
+     '.piwnica-tlo{fill:var(--color-tlo);stroke:var(--color-bursztyn);stroke-width:2}.piwnica-punkt{fill:var(--color-bursztyn)}'
+     '.piwnica-tekst{font:500 17px var(--font-ui,sans-serif);letter-spacing:.01em;fill:var(--color-atrament)}.piwnica-tytul{font-weight:700;font-size:19px}'
+     '.piwnica-linia{fill:none;stroke:var(--color-bursztyn);stroke-width:2;stroke-linecap:round;vector-effect:non-scaling-stroke}'
      '.en{display:none}:root[lang="en"] .naklejka .pl,:root[lang="en"] .piwnica .pl{display:none}:root[lang="en"] .naklejka .en,:root[lang="en"] .piwnica .en{display:inline}'
      '.nazwa{font:700 15px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-atrament)}'
      '.opis{font:500 12px var(--font-ui,sans-serif);letter-spacing:.06em;fill:var(--color-wyciszony)}'

@@ -2,6 +2,18 @@
  "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
   {
+   "file": "N1_ferie_stok_narciarze_3x2_foto.webp",
+   "shot": "N1",
+   "width": 2400,
+   "height": 1600,
+   "placeholder": false,
+   "alt": {
+    "pl": "Narciarze na szerokim, łagodnym stoku wśród świerków, w tle ośnieżone góry",
+    "en": "Skiers on a wide, gentle slope among spruce trees, snowy mountains behind"
+   },
+   "source": "Unsplash, Clemens van Lay, https://unsplash.com/photos/_tuKn-iHayg (Oberallgäu, licencja Unsplash: użycie komercyjne bez obowiązku podpisu). Do podmiany na zdjęcie z Białki lub Kotelnicy, gdy będzie własne."
+  },
+  {
    "file": "K2_hero_osada_swit_16x9_foto.webp",
    "shot": "K2",
    "width": 2400,

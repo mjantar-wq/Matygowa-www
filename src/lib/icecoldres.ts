@@ -106,7 +106,8 @@ export const promoInSeason = (season: string | null | undefined, sezon: string |
 
 /** Wszystkie promocje z cennika IceColdRes, także przyszłe i nieaktywne (lista do wyboru w panelu). */
 export async function getAllPromotions(): Promise<{ today: string; promotions: Promotion[] }> {
-  const data = await get<{ today?: string; promotions: Promotion[] }>('/promotions', 300, ['pricing'])
+  // raz na godzinę (Michał, 25.10.2026); zmiany w IceColdRes i tak odświeża od razu webhook z tematem pricing
+  const data = await get<{ today?: string; promotions: Promotion[] }>('/promotions', 3600, ['pricing'])
   return { today: data?.today ?? new Date().toISOString().slice(0, 10), promotions: data?.promotions ?? [] }
 }
 

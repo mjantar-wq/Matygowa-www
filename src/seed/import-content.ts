@@ -85,6 +85,7 @@ async function main() {
     const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
       hero: vShot ? img(`V${vShot}_`) : undefined,
+      gallery: [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_', 'B1_bania_alpenglow', 'B2_bania_noc_3x2'].map(img)].filter(Boolean),
       name: peak.name?.[l] ?? u.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',

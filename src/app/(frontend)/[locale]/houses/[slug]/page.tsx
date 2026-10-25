@@ -4,6 +4,7 @@ import { BookingBar } from '@/components/BookingBar'
 import { engineSettings } from '@/lib/booking'
 import { Media } from '@/components/Media'
 import { PeaksPanorama } from '@/components/PeaksPanorama'
+import { PhotoGallery } from '@/components/PhotoGallery'
 import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
 import { findBySlug, findMany } from '@/lib/cms'
@@ -65,9 +66,7 @@ export default async function UnitPage({ params }: SlugParams) {
 
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{t.house.gallery}</h2>
-        <div className="mo-cards">
-          {unit.gallery?.length ? unit.gallery.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null)) : <Placeholder label={t.placeholder} />}
-        </div>
+        {unit.gallery?.length ? <PhotoGallery media={unit.gallery} ctx={ctx} /> : <Placeholder label={t.placeholder} />}
         {unit.plans?.length ? (
           <>
             <h3 className="mo-h3">{t.house.plan}</h3>

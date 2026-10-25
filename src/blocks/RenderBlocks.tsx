@@ -5,6 +5,7 @@ import { Media } from '@/components/Media'
 import { RichText } from '@/components/RichText'
 import { PeaksPanorama } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
+import { PhotoGallery } from '@/components/PhotoGallery'
 import { HeroStage, type HeroImage, type HeroSlide } from '@/components/effects/HeroStage'
 import { ScrollSteps } from '@/components/effects/ScrollSteps'
 import { assignSlots } from '@/lib/ambience'
@@ -295,13 +296,11 @@ function BookingInvite({ block, ctx }: Props<'bookingInvite'>) {
   )
 }
 
-function Gallery({ block }: Props<'gallery'>) {
+function Gallery({ block, ctx }: Props<'gallery'>) {
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <div className="mo-cards">
-        {block.images?.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null))}
-      </div>
+      <PhotoGallery media={block.images} ctx={ctx} />
     </Section>
   )
 }

@@ -6,8 +6,12 @@ import { Media } from './Media'
 import { RichText } from './RichText'
 import { SvgHotspots } from './effects/SvgHotspots'
 
-/** Id szczytu w ilustracji G2: adres domu bez przedrostka (dom-hawran → p-hawran). */
-export const peakSvgId = (u: Unit) => `p-${u.slug.replace(/^(dom|apartament)-/, '')}`
+/** Id szczytu w ilustracji G2 z adresu domu (hawran → p-hawran, kominiarski → p-kominiarski-wierch). */
+const SVG_PEAK: Record<string, string> = { kominiarski: 'kominiarski-wierch' }
+export const peakSvgId = (u: Unit) => {
+  const slug = u.slug.replace(/^(dom|apartament)-/, '')
+  return `p-${SVG_PEAK[slug] ?? slug}`
+}
 
 /** Dymek szczytu: legenda albo ciekawostka z panelu i przejście do domu. */
 function PeakTip({ u, id, ctx }: { u: Unit; id: string; ctx: PageContext }) {

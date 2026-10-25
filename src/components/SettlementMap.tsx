@@ -13,7 +13,7 @@ export function SettlementMap({ units, ctx }: { units: Unit[]; ctx: PageContext 
   const houses = units.filter((u) => u.kind === 'house')
   const apartments = units.filter((u) => u.kind === 'apartment')
   const buildings = [
-    ...houses.map((u) => ({ svgId: `b-${u.slug}`, popoverId: `mapa-${u.slug}`, label: u.name, units: [u], soon: u.status === 'comingSoon' })),
+    ...houses.map((u) => ({ svgId: `b-dom-${u.slug.replace(/^dom-/, '')}`, popoverId: `mapa-${u.slug}`, label: u.name, units: [u], soon: u.status === 'comingSoon' })),
     ...(apartments.length ? [{ svgId: 'b-apartamenty', popoverId: 'mapa-apartamenty', label: t.apartmentsBuilding, units: apartments, soon: apartments.every((u) => u.status === 'comingSoon') }] : []),
   ]
   return (

@@ -1,5 +1,7 @@
 import { addDays, daysBetween, promoOn, type CalendarData } from '@/lib/availability'
 import { getCalendar, getPricesFromDays, getPromotions, getProperty, searchStay } from '@/lib/icecoldres'
+import { getUnitTiles } from '@/lib/unit-tiles'
+import { DEFAULT_LOCALE, isLocale } from '@/i18n/locales'
 
 /**
  * Pośrednik strony do publicznego API IceColdRes dla paska rezerwacji w przeglądarce (kontrakt:
@@ -7,7 +9,8 @@ import { getCalendar, getPricesFromDays, getPromotions, getProperty, searchStay 
  * od razu z kodem (`code` = slug domu w panelu), więc przeglądarka nie zna identyfikatorów IceColdRes.
  *
  * GET /api/booking/calendar?from=RRRR-MM-DD&days=1..93
- * GET /api/booking/search?arrival=&departure=&adults=&children=&ages=4,9
+ * GET /api/booking/search?arrival=&departure=&adults=&children=&ages=4,9&lang=pl
+ *   (każdy dom z opisem do kafelka: zdjęcia, metraż, wyposażenie)
  */
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 const CACHE = { 'Cache-Control': 'public, max-age=30, s-maxage=45' }
@@ -60,8 +63,11 @@ async function search(url: URL) {
   const ages = (q.get('ages') ?? '').split(',').filter(Boolean).map(Number)
   if (!DATE.test(arrival) || !DATE.test(departure) || departure <= arrival || adults === null || children === null) return bad('invalid_input')
   if (ages.length > children || ages.some((a) => !Number.isInteger(a) || a < 0 || a > 17)) return bad('invalid_input')
+  const lang = q.get('lang') ?? ''
+  const locale = isLocale(lang) ? lang : DEFAULT_LOCALE
   const [results, property] = await Promise.all([searchStay({ arrival, departure, adults, children, ages }), getProperty()])
   if (!results || !property) return unavailable()
+  const tiles = await getUnitTiles(locale, property.unitTypes)
   const nights = daysBetween(arrival, departure)
   return Response.json(
     {
@@ -78,7 +84,7 @@ async function search(url: URL) {
           .sort((a, b) => a.total - b.total)
         // pierwszy powód, dla którego dom nie pasuje (np. za dużo osób, za krótki pobyt)
         const reason = r.free < 1 ? 'occupied' : offers.length ? null : (r.offers.flatMap((o) => o.unavailable ?? []).flatMap((u) => u.reasons)[0]?.code ?? 'unknown')
-        return [{ code: type.code, name: type.name, nameEn: type.content?.en?.name ?? null, free: r.free, offers: r.free > 0 ? offers : [], reason }]
+        return [{ code: type.code, name: type.name, nameEn: type.content?.en?.name ?? null, free: r.free, offers: r.free > 0 ? offers : [], reason, unit: tiles[type.code] ?? null }]
       }),
     },
     { headers: CACHE },

@@ -14,6 +14,7 @@ import {
 } from '@/lib/availability'
 import { bookingUrl, formatPrice, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
+import type { UnitTile } from '@/lib/unit-tiles'
 
 const noSubscribe = () => () => {}
 
@@ -39,6 +40,7 @@ interface Result {
     badgeEn: string | null
   }[]
   reason: string | null
+  unit: UnitTile | null
 }
 type Search =
   | { status: 'idle' }
@@ -75,6 +77,9 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
   const [month, setMonth] = useState(() => today().slice(0, 7))
   const [chunks, setChunks] = useState<Record<string, CalendarData | null>>({})
   const [search, setSearch] = useState<Search>({ status: 'idle' })
+  // rozwinięty kafelek wyników i wybrane w nim zdjęcie (jak w silniku IceColdRes)
+  const [openTile, setOpenTile] = useState<string | null>(null)
+  const [shown, setShown] = useState(0)
   const root = useRef<HTMLDivElement>(null)
   const plural = new Intl.PluralRules(locale === 'pl' ? 'pl' : 'en')
   const nightsLabel = (n: number) =>
@@ -179,6 +184,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
       departure,
       adults: String(adults),
       children: String(children),
+      lang: locale,
     })
     if (q.ages.length) params.set('ages', q.ages.join(','))
     try {
@@ -188,6 +194,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
       // dom, z którego strony gość szuka, na początku listy
       data.results.sort((a, b) => Number(b.code === unit) - Number(a.code === unit))
       setSearch({ status: 'done', ...data })
+      setOpenTile(null)
       track('booking_search', { unit, arrival, nights, adults, children, results: data.results.filter((x) => x.offers.length).length })
     } catch {
       setSearch({ status: 'error' })
@@ -430,51 +437,183 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
               {available.length ? t.results : t.noResults} · {fmt(arrival)} – {fmt(departure)},{' '}
               {nightsLabel(search.nights)}
             </h3>
-            <ul className="mo-results__list">
-              {available.map((r) => (
-                <li key={r.code} className="mo-result">
-                  <a className="mo-result__name mo-h3" href={href(locale, 'houses', r.code)}>
-                    {name(r)}
-                  </a>
-                  <div className="mo-result__offers">
-                    {r.offers.map((o) => {
-                      const badge = locale === 'pl' ? o.badge : o.badgeEn || o.badge
-                      return (
-                        <div key={o.offerId} className="mo-result__offer">
-                          <p className="mo-body-s">
-                            {badge ? <span className="mo-badge">{badge}</span> : null}
-                            {r.offers.length > 1 ? <span> {o.name}</span> : null}
-                          </p>
-                          <p className="mo-price">
-                            {formatPrice(o.total, locale)} <small>{t.total}</small>
-                            <small className="mo-result__nightly">
-                              {' '}
-                              · {formatPrice(Math.round(o.total / search.nights), locale)}{' '}
-                              {t.perNight}
-                            </small>
-                          </p>
-                          <a
-                            className="mo-btn mo-btn--glowny"
-                            href={go({ unit: r.code, offer: o.offerId })}
-                            data-track="booking_results"
-                          >
-                            {t.book}
+            <ul className="mo-tiles">
+              {[...available, ...taken].map((r) => {
+                const off = !r.offers.length
+                const isOpen = openTile === r.code && !off
+                const u = r.unit
+                const best = r.offers[0]
+                const photo = u?.photos[isOpen ? Math.min(shown, u.photos.length - 1) : 0]
+                const toggle = () => {
+                  setOpenTile(isOpen ? null : r.code)
+                  setShown(0)
+                }
+                const tileId = `${uid}-${r.code}`
+                return (
+                  <li
+                    key={r.code}
+                    id={tileId}
+                    className="mo-tile"
+                    data-open={isOpen || undefined}
+                    data-off={off || undefined}
+                  >
+                    {photo ? (
+                      <button
+                        type="button"
+                        className="mo-tile__photo"
+                        onClick={off ? undefined : toggle}
+                        disabled={off}
+                        aria-expanded={off ? undefined : isOpen}
+                        aria-controls={tileId}
+                        aria-label={`${isOpen ? t.lessDetails : t.details}: ${name(r)}`}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element -- zdjęcia z biblioteki strony albo IceColdRes */}
+                        <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" style={{ objectPosition: photo.focus }} />
+                        {!isOpen && u && u.photos.length > 1 ? (
+                          <span className="mo-tile__count">{u.photos.length}</span>
+                        ) : null}
+                      </button>
+                    ) : null}
+                    <div className="mo-tile__body">
+                      <p className="mo-card__eyebrow">
+                        <span className="mo-label">{u ? t.kind[u.kind] : null}</span>
+                        {u?.elevation ? (
+                          <span className="mo-figure">
+                            {u.elevation.toLocaleString(locale === 'pl' ? 'pl-PL' : 'en-GB')} {t.elevationUnit}
+                          </span>
+                        ) : null}
+                        {off ? null : <span className="mo-tile__free">{t.free}</span>}
+                      </p>
+                      <h4 className="mo-tile__name">{name(r)}</h4>
+                      {off ? (
+                        <p className="mo-body-s mo-tile__text">{t.reasons[r.reason ?? ''] ?? t.unavailable}</p>
+                      ) : (
+                        <p className="mo-body-s mo-tile__text">
+                          {[u?.maxGuests ? `${t.upTo} ${u.maxGuests} ${t.people}` : null, u?.area ? `${u.area} m²` : null]
+                            .filter(Boolean)
+                            .join(' · ')}
+                        </p>
+                      )}
+                      {!off && u?.tagline ? <p className="mo-body-s mo-tile__tagline">{u.tagline}</p> : null}
+                      {isOpen && u ? (
+                        <div className="mo-tile__details">
+                          {u.photos.length > 1 ? (
+                            <ul className="mo-tile__thumbs">
+                              {u.photos.map((p, i) => (
+                                <li key={p.src}>
+                                  <button
+                                    type="button"
+                                    aria-pressed={i === shown}
+                                    aria-label={`${t.photoOf} ${i + 1}: ${name(r)}`}
+                                    onClick={() => setShown(i)}
+                                  >
+                                    {/* eslint-disable-next-line @next/next/no-img-element -- miniatura */}
+                                    <img src={p.src} alt="" loading="lazy" decoding="async" style={{ objectPosition: p.focus }} />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                          <dl className="mo-tile__facts">
+                            {u.area ? (
+                              <div>
+                                <dt>{t.facts.area}</dt>
+                                <dd>{u.area} m²</dd>
+                              </div>
+                            ) : null}
+                            {u.maxGuests ? (
+                              <div>
+                                <dt>{t.facts.guests}</dt>
+                                <dd>
+                                  {u.stdGuests && u.stdGuests < u.maxGuests ? `${u.stdGuests}–` : ''}
+                                  {u.maxGuests}
+                                </dd>
+                              </div>
+                            ) : null}
+                            {u.bedrooms ? (
+                              <div>
+                                <dt>{t.facts.bedrooms}</dt>
+                                <dd>{u.bedrooms}</dd>
+                              </div>
+                            ) : null}
+                            {u.bathrooms ? (
+                              <div>
+                                <dt>{t.facts.bathrooms}</dt>
+                                <dd>{u.bathrooms}</dd>
+                              </div>
+                            ) : null}
+                          </dl>
+                          {u.amenities.length ? (
+                            <p className="mo-body-s">
+                              <span className="mo-label">{t.facts.amenities}</span> {u.amenities.join(', ')}
+                            </p>
+                          ) : null}
+                          {r.offers.length > 1 ? (
+                            <ul className="mo-tile__offers">
+                              {r.offers.map((o) => {
+                                const badge = locale === 'pl' ? o.badge : o.badgeEn || o.badge
+                                return (
+                                  <li key={o.offerId}>
+                                    <span className="mo-body-s">
+                                      {o.name}
+                                      {badge ? <span className="mo-badge"> {badge}</span> : null}
+                                    </span>
+                                    <span className="mo-price">{formatPrice(o.total, locale)}</span>
+                                    <a
+                                      className="mo-btn mo-btn--obrys mo-btn--maly"
+                                      href={go({ unit: r.code, offer: o.offerId })}
+                                      data-track="booking_results"
+                                    >
+                                      {t.book}
+                                    </a>
+                                  </li>
+                                )
+                              })}
+                            </ul>
+                          ) : null}
+                          <a className="mo-link" href={href(locale, 'houses', u.slug)}>
+                            {t.seeUnit}
                           </a>
                         </div>
-                      )
-                    })}
-                  </div>
-                </li>
-              ))}
+                      ) : null}
+                      {best ? (
+                        <div className="mo-tile__foot">
+                          <div>
+                            {(locale === 'pl' ? best.badge : best.badgeEn || best.badge) ? (
+                              <span className="mo-badge">{locale === 'pl' ? best.badge : best.badgeEn || best.badge}</span>
+                            ) : null}
+                            <p className="mo-price">
+                              {formatPrice(best.total, locale)} <small>{t.total}</small>
+                            </p>
+                            <p className="mo-body-s mo-result__nightly">
+                              {formatPrice(Math.round(best.total / search.nights), locale)} {t.perNight}
+                            </p>
+                          </div>
+                          <div className="mo-tile__actions">
+                            <button
+                              type="button"
+                              className="mo-link mo-tile__toggle"
+                              aria-expanded={isOpen}
+                              aria-controls={tileId}
+                              onClick={toggle}
+                            >
+                              {isOpen ? t.lessDetails : t.details}
+                            </button>
+                            <a
+                              className="mo-btn mo-btn--glowny"
+                              href={go({ unit: r.code, offer: best.offerId })}
+                              data-track="booking_results"
+                            >
+                              {t.book}
+                            </a>
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
+                  </li>
+                )
+              })}
             </ul>
-            {taken.length ? (
-              <p className="mo-body-s mo-results__taken">
-                {t.others}:{' '}
-                {taken
-                  .map((r) => `${name(r)} (${t.reasons[r.reason ?? ''] ?? t.unavailable})`)
-                  .join(', ')}
-              </p>
-            ) : null}
             {!available.length ? (
               <a href={go()} data-track="booking_results" className="mo-link">
                 {t.goToEngine}

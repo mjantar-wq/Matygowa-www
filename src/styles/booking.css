@@ -46,3 +46,5 @@
 }
 .mo-result__offer > p:first-child:empty { visibility: hidden; }
 .mo-calendar__months[aria-busy] { opacity: 0.5; pointer-events: none; transition: opacity var(--ruch-szybki) var(--krzywa-mgla); }
+.mo-booking-error { margin-block-start: var(--space-3); color: var(--color-bursztyn-tekst); }
+.mo-field:has([aria-invalid]) { outline: 2px solid var(--color-bursztyn); outline-offset: -2px; }

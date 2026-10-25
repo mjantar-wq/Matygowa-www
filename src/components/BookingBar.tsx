@@ -48,6 +48,7 @@ type Search =
 
 const today = () => new Date().toISOString().slice(0, 10)
 const AGES = Array.from({ length: 18 }, (_, i) => i)
+const ADULTS = Array.from({ length: 12 }, (_, i) => i + 1)
 
 /**
  * Pasek rezerwacji (koncepcja S5): kalendarz z cenami „od” i plakietkami promocji, osoby i wiek dzieci,
@@ -58,8 +59,13 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
   const live = engine?.bookingEngine === 'icecoldres' && engine.showPrices !== false
   const [arrival, setArrival] = useState('')
   const [departure, setDeparture] = useState('')
-  const [adults, setAdults] = useState(2)
+  // bez domyślnej liczby osób: gość wybiera ją świadomie (Michał, 25.10.2026)
+  const [guests, setGuests] = useState<number | null>(null)
+  const [missingAdults, setMissingAdults] = useState(false)
+  const adultsRef = useRef<HTMLSelectElement>(null)
   const [children, setChildren] = useState(0)
+  // liczba osób razem z dziećmi; dorośli to reszta (co najmniej jeden)
+  const adults = guests === null ? null : Math.max(1, guests - children)
   const [ages, setAges] = useState<(number | null)[]>([])
   const [open, setOpen] = useState(false)
   const [month, setMonth] = useState(() => today().slice(0, 7))
@@ -132,7 +138,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
   const query = (extra: { unit?: string; offer?: string } = {}) => ({
     arrival: arrival || undefined,
     departure: departure || undefined,
-    adults,
+    adults: adults ?? undefined,
     children,
     ages: ages.filter((a): a is number => a !== null),
     unit: extra.unit ?? unit,
@@ -147,6 +153,12 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
 
   async function submit(e: React.FormEvent) {
     const nights = nightsBetween(arrival, departure)
+    if (adults === null) {
+      e.preventDefault()
+      setMissingAdults(true)
+      adultsRef.current?.focus()
+      return
+    }
     if (!live) {
       track('booking_click', { booking_location: 'booking_bar', unit, arrival: arrival || undefined, nights, adults, children })
       return
@@ -237,29 +249,46 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
           </span>
         </button>
         <label className="mo-field">
-          <span className="mo-label">{t.adults}</span>
-          <input
-            type="number"
-            min={1}
-            max={20}
-            value={adults}
-            onChange={(e) => setAdults(Math.max(1, Number(e.target.value)))}
-          />
+          <span className="mo-label">{t.guests}</span>
+          <select
+            ref={adultsRef}
+            value={guests ?? ''}
+            aria-invalid={missingAdults || undefined}
+            aria-describedby={missingAdults ? 'mo-brak-osob' : undefined}
+            onChange={(e) => {
+              const n = e.target.value === '' ? null : Number(e.target.value)
+              setGuests(n)
+              if (n !== null && children > n - 1) setChildCount(n - 1)
+              setMissingAdults(false)
+            }}
+          >
+            <option value="">--</option>
+            {ADULTS.map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>
         </label>
         <label className="mo-field">
-          <span className="mo-label">{t.children}</span>
+          <span className="mo-label">{t.childrenOf}</span>
           <input
             type="number"
             min={0}
-            max={10}
+            max={guests === null ? 10 : guests - 1}
             value={children}
-            onChange={(e) => setChildCount(Math.min(10, Math.max(0, Number(e.target.value))))}
+            onChange={(e) => setChildCount(Math.min(guests === null ? 10 : guests - 1, Math.max(0, Number(e.target.value))))}
           />
         </label>
         <button className="mo-btn mo-btn--glowny" type="submit">
           {t.check}
         </button>
       </form>
+      {missingAdults ? (
+        <p id="mo-brak-osob" className="mo-body-s mo-booking-error" role="alert">
+          {t.needAdults}
+        </p>
+      ) : null}
 
       {children > 0 ? (
         <div className="mo-booking-ages">

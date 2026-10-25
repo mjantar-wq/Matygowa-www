@@ -190,6 +190,25 @@ export const FaqBlock = block('faq', 'Pytania i odpowiedzi', [
 
 export const RichTextBlock = block('richText', 'Tekst', [heading, body])
 
+// Gospodarze (osobisty akcent w opisie Osady): bez osób z wypełnionym imieniem sekcja się nie wyświetla
+export const HostsBlock = block('hosts', 'Gospodarze', [
+  eyebrow,
+  heading,
+  { name: 'intro', label: 'Wstęp', type: 'textarea', localized: true },
+  {
+    name: 'people',
+    label: 'Osoby',
+    type: 'array',
+    maxRows: 6,
+    fields: [
+      { name: 'name', label: 'Imię', type: 'text' },
+      { name: 'role', label: 'Rola (np. gospodyni)', type: 'text', localized: true },
+      { name: 'photo', label: 'Zdjęcie', type: 'upload', relationTo: 'media' },
+      { name: 'text', label: 'Kilka słów', type: 'textarea', localized: true },
+    ],
+  },
+])
+
 export const ALL_BLOCKS = [
   HeroBlock,
   IntroBlock,
@@ -206,4 +225,5 @@ export const ALL_BLOCKS = [
   GalleryBlock,
   FaqBlock,
   RichTextBlock,
+  HostsBlock,
 ]

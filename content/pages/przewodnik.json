@@ -11,8 +11,19 @@
         "en": "What time is check-in and check-out?"
       },
       "a": {
-        "pl": "Dom czeka na Was od 16:00, wyjazd do 11:00. Kod do drzwi wysyłamy mailem w dniu przyjazdu, po opłaceniu pobytu. Późniejszy wyjazd uzgodnijcie z nami wcześniej.",
-        "en": "Your house is ready from 4 pm, check-out is by 11 am. We email the door code on arrival day, once the stay is paid. If you need to leave later, let us know in advance."
+        "pl": "Dom czeka na Was od {checkin}, wyjazd do {checkout}. Kod do drzwi wysyłamy mailem w dniu przyjazdu, po opłaceniu pobytu. Późniejszy wyjazd uzgodnijcie z nami wcześniej.",
+        "en": "Your house is ready from {checkin}, check-out is by {checkout}. We email the door code on arrival day, once the stay is paid. If you need to leave later, let us know in advance."
+      },
+      "dynamic": {
+        "source": "icecoldres",
+        "placeholders": {
+          "checkin": "property.checkInFrom",
+          "checkout": "property.checkOutBy"
+        },
+        "fallback": {
+          "checkin": "16:00",
+          "checkout": "11:00"
+        }
       }
     },
     {
@@ -21,9 +32,19 @@
         "en": "How do payment and cancellation work?"
       },
       "a": {
-        "pl": "Przy rezerwacji wpłacacie 50% wartości pobytu, resztę w terminie z potwierdzenia. Przy rezygnacji ponad 60 dni przed przyjazdem zwracamy całą wpłatę, później wpłata przepada. Na miejscu pobieramy zwrotną kaucję (od 1500 zł, gotówką lub BLIK).",
-        "en": "You pay 50% when booking and the rest by the date in your confirmation. If you cancel more than 60 days before arrival we refund the full deposit; after that it is non-refundable. On site we take a refundable security deposit (from 1,500 PLN, cash or BLIK)."
-      }
+        "pl": "Przy rezerwacji wpłacacie zaliczkę {deposit}, a resztę na {balance} dni przed przyjazdem. Rezygnacja jest bezpłatna do {freeCancellation} dni przed przyjazdem. Warunki mogą się różnić między ofertami, pełny opis: {terms}",
+        "en": "You pay a deposit of {deposit} when booking and the balance {balance} days before arrival. Cancellation is free up to {freeCancellation} days before arrival. Terms may differ between offers; full details: {terms}"
+      },
+      "dynamic": {
+        "source": "icecoldres",
+        "placeholders": [
+          "deposit",
+          "balance",
+          "freeCancellation",
+          "terms"
+        ]
+      },
+      "note": "Warunki zaliczki, dopłaty i rezygnacji są zmienne, więc tekst nie podaje liczb. Nazwy pól API do potwierdzenia z wątkiem IceColdRes."
     },
     {
       "q": {
@@ -31,8 +52,8 @@
         "en": "Can we bring our dog?"
       },
       "a": {
-        "pl": "Tak, psy i koty po wcześniejszym uzgodnieniu. Opłata to 100 zł za zwierzę za pobyt, plus zwrotna kaucja.",
-        "en": "Yes, dogs and cats by prior arrangement. The fee is 100 PLN per pet per stay, plus a refundable deposit."
+        "pl": "Tak, psy i koty po wcześniejszym uzgodnieniu. Opłata to 100 zł za zwierzę za pobyt, plus zwrotna kaucja 1000 zł. To jedyna sytuacja, w której pobieramy kaucję.",
+        "en": "Yes, dogs and cats by prior arrangement. The fee is 100 PLN per pet per stay, plus a refundable security deposit of 1,000 PLN. This is the only case in which we take a deposit."
       }
     },
     {
@@ -61,8 +82,8 @@
         "en": "What are the house rules?"
       },
       "a": {
-        "pl": "Cisza nocna od 23:00 do 8:00. W domach nie palimy. Imprezy i większe spotkania tylko po wcześniejszym uzgodnieniu. Kominek palimy samym drewnem, przy zamkniętych drzwiczkach i nigdy bez opieki.",
-        "en": "Quiet hours are 11 pm to 8 am. No smoking indoors. Parties or larger gatherings only by prior arrangement. The fireplace takes wood only, with the door closed, and is never left unattended."
+        "pl": "Cisza nocna od 23:00 do 8:00. W domach nie palimy. Imprezy są zakazane. Kominek palimy samym drewnem, przy zamkniętych drzwiczkach i nigdy bez opieki.",
+        "en": "Quiet hours are 11 pm to 8 am. No smoking indoors. Parties are not allowed. The fireplace takes wood only, with the door closed, and is never left unattended."
       }
     },
     {

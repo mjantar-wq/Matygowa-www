@@ -12,8 +12,8 @@
     "addressLocality": "Gliczarów Górny",
     "addressCountry": "PL"
   },
-  "checkinTime": "16:00",
-  "checkoutTime": "11:00",
+  "checkinTime": "{checkin}",
+  "checkoutTime": "{checkout}",
   "petsAllowed": true,
   "numberOfRooms": 6,
   "amenityFeature": [

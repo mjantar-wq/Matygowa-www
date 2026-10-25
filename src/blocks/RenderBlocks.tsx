@@ -14,7 +14,7 @@ import { findMany } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getPromotions, getServices } from '@/lib/icecoldres'
 import type { PageContext } from '@/lib/page'
-import type { Attraction, Media as MediaDoc, News, Page, Testimonial, Unit } from '@/payload-types'
+import type { Attraction, Media as MediaDoc, News, Offer, Page, Testimonial, Unit } from '@/payload-types'
 
 type Block = NonNullable<Page['layout']>[number]
 type Of<T extends Block['blockType']> = Extract<Block, { blockType: T }>
@@ -118,10 +118,10 @@ function Day({ block, ctx }: Props<'dayInSettlement'>) {
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <ol style={{ display: 'grid', gap: 'var(--space-8)' }}>
+      <ol style={{ display: 'grid', gap: 'var(--space-8)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))' }}>
         {block.scenes?.map((s) => (
-          <li key={s.id} data-pora={s.time} style={{ display: 'grid', gap: 'var(--space-4)' }}>
-            <Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} />
+          <li key={s.id} data-pora={s.time} style={{ display: 'grid', gap: 'var(--space-4)', alignContent: 'start' }}>
+            <div className="mo-card__media" style={{ aspectRatio: 'var(--proporcja-kadr)' }}><Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} /></div>
             <h3 className="mo-h3">{s.title}</h3>
             <p className="mo-prose" data-tylko={s.summerText ? 'zima' : undefined}>{s.text}</p>
             {s.summerText ? <p className="mo-prose" data-tylko="lato">{s.summerText}</p> : null}
@@ -187,7 +187,7 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <div className="mo-cards">
+      <div className="mo-cards" style={FIT}>
         {(['winter', 'summer'] as const).map((key) => (
           <article key={key} className="mo-card mo-season" data-sezon={key === 'winter' ? 'zima' : 'lato'}>
             <div className="mo-card__media"><Media media={block[key]?.image} fallback={ctx.t.attractions[key]} /></div>
@@ -206,7 +206,13 @@ async function Surroundings({ block, ctx }: Props<'surroundings'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <Media media={block.map} fallback={`${ctx.t.placeholder}: mapa okolicy`} />
+      {block.map ? (
+        <Media media={block.map} />
+      ) : (
+        // ilustracja G7 z wątku wizualnego, dopóki redakcja nie wgra własnej mapy
+        // eslint-disable-next-line @next/next/no-img-element -- SVG z public/
+        <img src="/ilustracje/G7_mapa_okolicy.svg" alt={ctx.locale === 'pl' ? 'Mapa okolicy Matygowej Osady' : 'Map of the area around Matygowa Osada'} loading="lazy" style={{ inlineSize: '100%', blockSize: 'auto' }} />
+      )}
       <div className="mo-cards">
         {attractions.map((a) => (
           <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">
@@ -259,13 +265,19 @@ async function Testimonials({ block, ctx }: Props<'testimonials'>) {
 }
 
 async function OffersNews({ block, ctx }: Props<'offersNews'>) {
-  const [promotions, news] = await Promise.all([getPromotions(), findMany<News>('news', ctx.locale, { limit: 1, sort: '-publishedAt' })])
+  const [promotions, news, offers] = await Promise.all([
+    getPromotions(),
+    findMany<News>('news', ctx.locale, { limit: 1, sort: '-publishedAt' }),
+    findMany<Offer>('offers', ctx.locale, { sort: 'order' }),
+  ])
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <div className="mo-cards">
+      <div className="mo-cards" style={FIT}>
         {promotions.map((p) => (
           <article key={p.id} className="mo-card">
+            {/* zdjęcie z oferty w panelu połączonej z promocją, inaczej z pierwszej oferty */}
+            <div className="mo-card__media"><Media media={(offers.find((o) => o.icecoldresPromotionId === String(p.id)) ?? offers[0])?.image} /></div>
             <p className="mo-label">{ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}</h3>
             <p>{ctx.locale === 'pl' ? p.description : p.en.description || p.description}</p>
@@ -328,6 +340,32 @@ function Text({ block }: Props<'richText'>) {
   )
 }
 
+function Hosts({ block }: Props<'hosts'>) {
+  const people = (block.people ?? []).filter((p) => p.name)
+  if (!people.length) return null
+  return (
+    <Section block={block}>
+      <Heading eyebrow={block.eyebrow} heading={block.heading} />
+      {block.intro ? <p className="mo-lede">{block.intro}</p> : null}
+      <div className="mo-cards">
+        {people.map((p) => (
+          <figure key={p.id} className="mo-card">
+            {p.photo ? <Media media={p.photo} /> : null}
+            <figcaption>
+              <h3 className="mo-h3">{p.name}</h3>
+              {p.role ? <p className="mo-card__meta">{p.role}</p> : null}
+              {p.text ? <p className="mo-prose">{p.text}</p> : null}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
+/** Siatka kart, w której 2–3 karty wypełniają cały rząd zamiast zostawiać puste kolumny. */
+const FIT: React.CSSProperties = { gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }
+
 const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode | Promise<React.ReactNode> } = {
   hero: Hero,
   intro: Intro,
@@ -344,6 +382,7 @@ const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode |
   gallery: Gallery,
   faq: Faq,
   richText: Text,
+  hosts: Hosts,
 }
 
 export function RenderBlocks({ blocks, ctx }: { blocks: Page['layout']; ctx: PageContext }) {

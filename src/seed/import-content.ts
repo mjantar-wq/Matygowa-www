@@ -23,7 +23,8 @@ async function main() {
   const editorConfig = await editorConfigFactory.default({ config: payload.config })
   const md = (text?: string | null) => (text ? convertMarkdownToLexical({ editorConfig, markdown: text }) : null)
 
-  // Materiały tymczasowe CGI (content/media, manifest wątku wizualnego): zawsze isPlaceholder = true.
+  // content/media/manifest.json: prawdziwe zdjęcia (*_foto, placeholder: false, alt PL/EN z manifestu)
+  // stoją przed CGI, więc byPrefix wybiera je pierwsze. CGI zawsze isPlaceholder = true.
   // Plik o tej samej nazwie nie jest wgrywany drugi raz.
   const media = new Map<string, number | string>()
   const manifestPath = path.join(DIR, 'media', 'manifest.json')
@@ -40,15 +41,18 @@ async function main() {
         /^[VW]\d/.test(stem) ? 'interiors' : null,
         /^B\d/.test(stem) ? 'rituals' : null,
       ].filter(Boolean)
+      const real = item.placeholder === false
       id = (
         await payload.create({
           collection: 'media',
           locale: 'pl',
           filePath: path.join(DIR, 'media', filename),
-          data: { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
+          data: real
+            ? { alt: item.alt.pl, isPlaceholder: false, series }
+            : { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
         } as never) as Any
       ).id
-      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: `Temporary visualisation: ${describe}` } })
+      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}` } })
     }
     media.set(filename, id)
   }
@@ -59,7 +63,7 @@ async function main() {
   }
   const img = (prefix: string) => byPrefix(prefix, '.webp')
   const video = (prefix: string) => byPrefix(prefix, '.mp4')
-  if (media.size) payload.logger.info(`media: ${media.size} plików tymczasowych`)
+  if (media.size) payload.logger.info(`media: ${media.size} plików`)
 
   /** Zapis wpisu w obu językach: najpierw PL (tworzy), potem EN (uzupełnia tłumaczenia). */
   async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any) {
@@ -85,8 +89,9 @@ async function main() {
     const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
       hero: vShot ? img(`V${vShot}_`) : undefined,
-      gallery: [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_', 'B1_bania_alpenglow', 'B2_bania_noc_3x2'].map(img)].filter(Boolean),
-      name: peak.name?.[l] ?? u.name?.[l],
+      // seria zdjęć: kadr domu i wspólne wnętrza CGI (domy są urządzone podobnie), do podmiany po sesji foto
+      gallery: [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_'].map(img)].filter(Boolean),
+      name: u.name?.[l] ?? peak.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',
       order: u.sort ?? 0,
@@ -97,6 +102,9 @@ async function main() {
       area: u.facts?.area_m2,
       bedrooms: u.facts?.bedrooms,
       maxGuests: u.facts?.max_guests,
+      bathrooms: u.facts?.bathrooms,
+      separateWc: !!u.facts?.separate_wc,
+      ensuiteUpstairs: !!u.facts?.ensuite_upstairs,
       livingRoom: u.facts?.living_room === 'upper' || u.facts?.living_room === 'first' ? 'upper' : u.facts?.living_room ? 'ground' : undefined,
       seo: { title: u.seo?.title?.[l], description: u.seo?.description?.[l] },
     }))
@@ -114,9 +122,11 @@ async function main() {
     }))
   }
 
+  let offerIndex = 0
   for (const o of read('offers.json') as Any[]) {
     const [from, to] = String(o.valid ?? '').split('/')
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], validFrom: from || undefined, validTo: to || undefined }))
+    const cover = img(['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5])
+    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined }))
   }
 
   // strona główna: bloki w kolejności szkieletu
@@ -135,13 +145,14 @@ async function main() {
       case 'house_inside':
         return { blockType: 'houseInside', ...base, body: md(b.body?.[l]), rooms: b.rooms?.map((r: Any, i: number) => ({ title: r.title?.[l], text: r.body?.[l], image: img(['W1_', 'W2_', 'W3_', 'W5_'][i] ?? 'W') })) }
       case 'rituals_teaser':
-        return { blockType: 'rituals', ...base, body: md(b.body?.[l]), showPrices: true }
+        // zapowiedź na stronie głównej: tekst ze zdjęciem bani (pełne kroki i ceny są na stronie Sauna i bania)
+        return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('B1_bania_alpenglow'), imagePosition: 'start' }
       case 'seasons':
         return { blockType: 'seasons', ...base, winter: { text: b.winter?.[l], image: img('K2_hero_osada_swit_16x9') }, summer: { text: b.summer?.[l], image: img('K2_hero_osada_lato') } }
       case 'surroundings':
         return { blockType: 'surroundings', ...base, body: md(b.body?.[l]), limit: b.featured_attractions ?? 6 }
       case 'nature':
-        return { blockType: 'story', ...base, body: md(b.body?.[l]) }
+        return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('K3_'), imagePosition: 'end' }
       case 'testimonials':
         return { blockType: 'testimonials', ...base, eyebrow: b.rating_line?.[l] }
       case 'offers_news':
@@ -165,7 +176,15 @@ async function main() {
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
-    osada.sections.map((s: Any, i: number) => ({ blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.body?.[l]), imagePosition: i % 2 ? 'start' : 'end' })),
+    osada.sections.map((s: Any, i: number) => {
+      // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
+      if (s.id === 'gospodarze') {
+        return { blockType: 'hosts', anchor: s.id, heading: s.heading?.[l], intro: s.personal_note?.[l] ?? undefined, people: (s.hosts ?? []).filter((h: Any) => h.name).map((h: Any) => ({ name: h.name, role: h.role?.[l], text: h.bio?.[l] })) }
+      }
+      const items = (s.items ?? []).map((it: Any) => `### ${it.heading?.[l]}\n\n*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`)
+      const text = [s.lead?.[l], s.body?.[l], ...items, s.signature?.[l] ? `*${s.signature[l]}*` : null].filter(Boolean).join('\n\n')
+      return { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(text), imagePosition: i % 2 ? 'start' : 'end' }
+    }),
   )
 
   const guide = read('pages/przewodnik.json')
@@ -186,10 +205,21 @@ async function main() {
     payload.logger.info(`testimonials: ${t.author}`)
   }
 
+  // Regulamin, polityka prywatności i cookies (wspólne z silnikiem IceColdRes); SEO z seo-pages.json poniżej ma pierwszeństwo
+  for (const d of read('documents.json') as Any[]) {
+    await upsert('pages', d.slug, (l) => ({
+      title: d.title?.[l],
+      kind: 'document',
+      intro: d.intro?.[l],
+      layout: [{ blockType: 'richText', body: md(d.body?.[l]) }],
+      seo: { title: d.seo?.title?.[l], description: d.seo?.description?.[l] },
+    }))
+  }
+
   // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)
   const seoPages: Any = read('seo-pages.json')
   const seoKeys: Record<string, string> = { home: 'home', domy: 'houses', rytualy: 'rituals', osada: 'settlement', okolica: 'surroundings', oferty: 'offers', aktualnosci: 'news', galeria: 'gallery', kontakt: 'contact', przewodnik: 'guide', regulamin: 'regulamin', prywatnosc: 'prywatnosc' }
-  const navTitles: Record<string, L> = { houses: { pl: 'Domy i apartamenty', en: 'Houses & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
+  const navTitles: Record<string, L> = { houses: { pl: 'Domki i apartamenty', en: 'Cottages & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
   for (const [key, entry] of Object.entries(seoPages) as [string, Any][]) {
     const slug = seoKeys[key]
     if (!slug) continue
@@ -212,7 +242,8 @@ async function main() {
     const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
     let id = found.docs[0]?.id
     for (const locale of LOCALES) {
-      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
+      const cover = img(({ 'apartamenty-wiosna-2027': 'V7_', 'ferie-2027': 'K9_' } as Record<string, string>)[n.slug] ?? 'K2_hero_osada_swit_16x9')
+      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, cover, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
       if (id) await payload.update({ collection: 'news', id, locale, data, draft: true } as never)
       else id = ((await payload.create({ collection: 'news', locale, data, draft: true } as never)) as Any).id
     }

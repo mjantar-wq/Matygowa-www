@@ -6,7 +6,7 @@ test.describe('Szkielet strony', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'pl')
     await expect(page.locator('h1').first()).toBeVisible()
     await expect(page.getByRole('button', { name: 'Sprawdź termin' }).first()).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Domy i apartamenty' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Domki i apartamenty' })).toBeVisible()
   })
 
   test('wersja EN i przełącznik języka zachowuje podstronę', async ({ page }) => {

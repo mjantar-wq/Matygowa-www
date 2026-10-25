@@ -12,7 +12,7 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <header className="mo-header">
       <div className="mo-container mo-header__inner">
-        <Link href={href(locale, 'home')} className="mo-logo">
+        <Link href={href(locale, 'home')} className="mo-logo" prefetch={false}>
           <span className="mo-sr">{t.siteName}</span>
         </Link>
         <button type="button" className="mo-menu-btn mo-btn mo-btn--obrys mo-btn--maly" popoverTarget="menu-glowne">
@@ -20,7 +20,7 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
         </button>
         <nav aria-label={t.menu} className="mo-nav" id="menu-glowne" popover="auto">
           {MAIN_NAV.map((key) => (
-            <Link key={key} href={href(locale, key)}>
+            <Link key={key} href={href(locale, key)} prefetch={false}>
               {t.nav[key]}
             </Link>
           ))}

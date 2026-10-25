@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 1080 1250" role="img" aria-label="Rzut poglądowy apartamentu na piętrze">
+<style>.bryla{fill:var(--color-atrament,#1c2321);stroke:var(--color-atrament,#1c2321);stroke-width:24;stroke-linejoin:miter}.pokoj{fill:var(--color-tlo,#f1f3f2)}.pokoj.skos{fill:var(--color-tlo-2,#e4e9e7)}.stopnie{stroke:var(--color-linia-mocna,#7f8b86);stroke-width:1.5;vector-effect:non-scaling-stroke}.sauna-deski{stroke:var(--color-bursztyn,#c47a2a);stroke-width:1;opacity:.6;vector-effect:non-scaling-stroke}.nazwa{font:500 19px var(--font-ui,sans-serif);letter-spacing:.12em;text-transform:uppercase;fill:var(--color-atrament,#1c2321);paint-order:stroke;stroke:var(--color-tlo,#f1f3f2);stroke-width:8px;stroke-linejoin:round}.dopisek{font:500 18px var(--font-ui,sans-serif);letter-spacing:.06em;font-variant-numeric:tabular-nums;fill:var(--color-wyciszony,#56625e)}.pokoj-g:hover .pokoj,.pokoj-g:focus .pokoj{fill:var(--color-tlo-2,#e4e9e7)}</style>
+<polygon class="bryla" points="0,154 1000,154 1000,1024 0,1024"/>
+<g id="r-sypialnia-1" class="pokoj-g" data-nazwa="Sypialnia">
+<rect class="pokoj" x="4" y="158" width="446" height="227"/>
+<text class="nazwa" x="228" y="266" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="228" y="294" text-anchor="middle">11,7 m²</text>
+</g>
+<g id="r-sypialnia-2" class="pokoj-g" data-nazwa="Sypialnia">
+<rect class="pokoj" x="460" y="158" width="284" height="227"/>
+<text class="nazwa" x="602" y="266" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="602" y="294" text-anchor="middle">9,8 m²</text>
+</g>
+<g id="r-sauna" class="pokoj-g" data-nazwa="Sauna">
+<rect class="pokoj" x="752" y="158" width="243" height="227"/>
+<line class="sauna-deski" x1="752" y1="176" x2="996" y2="176"/>
+<line class="sauna-deski" x1="752" y1="194" x2="996" y2="194"/>
+<line class="sauna-deski" x1="752" y1="212" x2="996" y2="212"/>
+<line class="sauna-deski" x1="752" y1="230" x2="996" y2="230"/>
+<line class="sauna-deski" x1="752" y1="248" x2="996" y2="248"/>
+<line class="sauna-deski" x1="752" y1="266" x2="996" y2="266"/>
+<line class="sauna-deski" x1="752" y1="284" x2="996" y2="284"/>
+<line class="sauna-deski" x1="752" y1="302" x2="996" y2="302"/>
+<line class="sauna-deski" x1="752" y1="320" x2="996" y2="320"/>
+<line class="sauna-deski" x1="752" y1="338" x2="996" y2="338"/>
+<line class="sauna-deski" x1="752" y1="356" x2="996" y2="356"/>
+<text class="nazwa" x="874" y="280" text-anchor="middle">Sauna</text>
+</g>
+<g id="r-salon" class="pokoj-g" data-nazwa="Salon z kuchnią">
+<rect class="pokoj" x="4" y="394" width="446" height="625"/>
+<text class="nazwa" x="228" y="701" text-anchor="middle">Salon z kuchnią</text>
+<text class="dopisek" x="228" y="729" text-anchor="middle">i kominkiem · 26,4 m²</text>
+</g>
+<g id="r-hol" class="pokoj-g" data-nazwa="Hol">
+<rect class="pokoj" x="460" y="394" width="170" height="316"/>
+<text class="nazwa" x="544" y="560" text-anchor="middle">Hol</text>
+</g>
+<g id="r-lazienka" class="pokoj-g" data-nazwa="Łazienka">
+<rect class="pokoj" x="638" y="394" width="357" height="316"/>
+<text class="nazwa" x="817" y="546" text-anchor="middle">Łazienka</text>
+<text class="dopisek" x="817" y="574" text-anchor="middle">6,5 m²</text>
+</g>
+<g id="r-klatka" class="pokoj-g" data-nazwa="Klatka">
+<rect class="pokoj" x="460" y="720" width="146" height="300"/>
+<text class="nazwa" x="532" y="878" text-anchor="middle">Klatka</text>
+</g>
+<g id="r-schody" class="pokoj-g" data-nazwa="Schody">
+<rect class="pokoj" x="614" y="720" width="381" height="300"/>
+<line class="stopnie" x1="644" y1="720" x2="644" y2="1020"/>
+<line class="stopnie" x1="673" y1="720" x2="673" y2="1020"/>
+<line class="stopnie" x1="702" y1="720" x2="702" y2="1020"/>
+<line class="stopnie" x1="732" y1="720" x2="732" y2="1020"/>
+<line class="stopnie" x1="761" y1="720" x2="761" y2="1020"/>
+<line class="stopnie" x1="790" y1="720" x2="790" y2="1020"/>
+<line class="stopnie" x1="820" y1="720" x2="820" y2="1020"/>
+<line class="stopnie" x1="849" y1="720" x2="849" y2="1020"/>
+<line class="stopnie" x1="878" y1="720" x2="878" y2="1020"/>
+<line class="stopnie" x1="908" y1="720" x2="908" y2="1020"/>
+<line class="stopnie" x1="937" y1="720" x2="937" y2="1020"/>
+<line class="stopnie" x1="966" y1="720" x2="966" y2="1020"/>
+<text class="nazwa" x="805" y="878" text-anchor="middle">Schody</text>
+</g>
+<rect class="pokoj" x="605" y="720" width="9" height="300"/>
+<rect class="pokoj" x="460" y="710" width="146" height="9"/>
+</svg>

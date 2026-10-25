@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
 import { fraunces, inter, rufina } from '@/app/fonts'
+import { Analytics } from '@/components/Analytics'
+import { ClickTracking } from '@/components/ClickTracking'
+import { ConsentBanner } from '@/components/ConsentBanner'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 import { AMBIENCE_INIT_SCRIPT } from '@/lib/ambience'
 import { dirOf } from '@/i18n/locales'
+import { href } from '@/i18n/routes'
+import { engineHosts } from '@/lib/booking'
 import { pageContext, type LocaleParams } from '@/lib/page'
 import '@/styles/globals.css'
 
@@ -28,10 +33,13 @@ export default async function LocaleLayout({ children, params }: LocaleParams & 
     <html lang={ctx.locale} dir={dirOf(ctx.locale)} data-sezon={seasonOf()} data-pora="dzien" suppressHydrationWarning className={`${fraunces.variable} ${inter.variable} ${rufina.variable}`}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: AMBIENCE_INIT_SCRIPT }} />
+        <Analytics gtmId={ctx.settings?.gtmId} />
         <a className="mo-skip mo-btn mo-btn--glowny" href="#tresc">{ctx.t.skipToContent}</a>
         <SiteHeader locale={ctx.locale} t={ctx.t} />
         <main id="tresc">{children}</main>
         <SiteFooter locale={ctx.locale} t={ctx.t} settings={ctx.settings} />
+        <ConsentBanner t={ctx.t.consent} policyHref={href(ctx.locale, 'documents', 'cookies')} />
+        <ClickTracking engineHosts={engineHosts(ctx.settings)} />
       </body>
     </html>
   )

@@ -106,6 +106,14 @@ export const Units: CollectionConfig = {
               ],
             },
             {
+              type: 'row',
+              fields: [
+                { name: 'bathrooms', label: 'Łazienki', type: 'number' },
+                { name: 'separateWc', label: 'Osobne WC', type: 'checkbox' },
+                { name: 'ensuiteUpstairs', label: 'Łazienka przy sypialni na piętrze', type: 'checkbox' },
+              ],
+            },
+            {
               name: 'livingRoom',
               label: 'Salon',
               type: 'select',

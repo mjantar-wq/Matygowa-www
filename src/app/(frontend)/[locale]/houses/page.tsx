@@ -15,7 +15,8 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 export default async function HousesPage({ params }: LocaleParams) {
   const ctx = await pageContext(params)
   const [units, prices] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: 'order' }), getPricesFrom()])
-  const priceOf = (u: Unit) => prices.find((p) => p.code === (u.icecoldresCode || u.slug))?.lowest?.nightly
+  // ceny „od” z IceColdRes (najtańsza oferta strony z promocją); wyłącznik w Ustawieniach → Rezerwacje
+  const priceOf = (u: Unit) => (ctx.settings?.showPrices === false ? null : prices.find((p) => p.code === (u.icecoldresCode || u.slug))?.lowest?.nightly)
   return (
     <CmsPage route="houses" ctx={ctx}>
       {(['house', 'apartment'] as const).map((kind) => {

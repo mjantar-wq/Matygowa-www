@@ -3,6 +3,7 @@ import type { Dictionary } from '@/i18n/dictionaries'
 import type { Locale } from '@/i18n/locales'
 import { href } from '@/i18n/routes'
 import type { Setting } from '@/payload-types'
+import { ConsentSettingsLink } from './ConsentBanner'
 
 export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Dictionary; settings: Setting | null }) {
   return (
@@ -17,9 +18,12 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
         <nav aria-label={t.menu}>
           <ul>
             {(['guide', 'contact', 'news'] as const).map((key) => (
-              <li key={key}><Link href={href(locale, key)}>{t.nav[key]}</Link></li>
+              <li key={key}><Link href={href(locale, key)} prefetch={false}>{t.nav[key]}</Link></li>
             ))}
-            <li><Link href={href(locale, 'documents', 'regulamin')}>{t.nav.documents}</Link></li>
+            {(['regulamin', 'prywatnosc', 'cookies'] as const).map((slug, i) => (
+              <li key={slug}><Link href={href(locale, 'documents', slug)} prefetch={false}>{[t.footer.terms, t.footer.privacy, t.footer.cookies][i]}</Link></li>
+            ))}
+            <li><ConsentSettingsLink label={t.footer.cookieSettings} /></li>
           </ul>
         </nav>
         {settings?.social?.length ? (

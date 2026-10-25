@@ -1,6 +1,330 @@
 {
- "rule": "Każdy plik z sufiksem _cgi jest tymczasowy: w CMS pole isPlaceholder = true, blokada publikacji na produkcji.",
+ "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
+  {
+   "file": "K2_hero_osada_swit_16x9_foto.webp",
+   "shot": "K2",
+   "width": 2400,
+   "height": 1350,
+   "placeholder": false,
+   "alt": {
+    "pl": "Matygowa Osada z lotu ptaka zimą, w tle Tatry nad poranną mgłą",
+    "en": "Matygowa Osada from the air in winter, the Tatras above the morning mist"
+   },
+   "source": "DJI_20260121180502_0393_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_swit_16x9_foto.mp4",
+   "shot": "K2",
+   "width": 1920,
+   "height": 1080,
+   "placeholder": false,
+   "alt": {
+    "pl": "Matygowa Osada z lotu ptaka zimą, w tle Tatry nad poranną mgłą",
+    "en": "Matygowa Osada from the air in winter, the Tatras above the morning mist"
+   },
+   "source": "DJI_20260121180502_0393_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_swit_9x16_foto.webp",
+   "shot": "K2",
+   "width": 1080,
+   "height": 1920,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domy osady wśród świerków, nad nimi ośnieżone Tatry",
+    "en": "The houses among spruces, the snowy Tatras above"
+   },
+   "source": "DJI_20260121180524_0394_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_swit_9x16_foto.mp4",
+   "shot": "K2",
+   "width": 1080,
+   "height": 1920,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domy osady wśród świerków, nad nimi ośnieżone Tatry",
+    "en": "The houses among spruces, the snowy Tatras above"
+   },
+   "source": "DJI_20260121180524_0394_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_lato_16x9_foto.webp",
+   "shot": "K2",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Drewniana elewacja domu z balkonem latem",
+    "en": "The wooden façade of a house with its balcony in summer"
+   },
+   "source": "a7v09961.jpg"
+  },
+  {
+   "file": "K1_panorama_tatry_21x9_foto.webp",
+   "shot": "K1",
+   "width": 2048,
+   "height": 878,
+   "placeholder": false,
+   "alt": {
+    "pl": "Panorama Tatr widziana z osady zimą",
+    "en": "The Tatras panorama seen from the settlement in winter"
+   },
+   "source": "a9m05010.jpg"
+  },
+  {
+   "file": "K3_dron_przelot_16x9_foto.webp",
+   "shot": "K3",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada we mgle i grań Tatr z drona",
+    "en": "The settlement in mist and the Tatra ridge from a drone"
+   },
+   "source": "dji_20260121180524_0394_d.jpg"
+  },
+  {
+   "file": "K4_osada_zmierzch_16x9_foto.webp",
+   "shot": "K4",
+   "width": 1918,
+   "height": 1079,
+   "placeholder": false,
+   "alt": {
+    "pl": "Gliczarów Górny o zmierzchu",
+    "en": "Gliczarów Górny at dusk"
+   },
+   "source": "widoki-05.jpg"
+  },
+  {
+   "file": "K6_dom_orbita_16x9_foto.webp",
+   "shot": "K6",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom z dużym przeszkleniem szczytu, za nim Tatry",
+    "en": "A house with a glazed gable, the Tatras behind it"
+   },
+   "source": "dji_20260121180313_0389_d.jpg"
+  },
+  {
+   "file": "K8_punkt_widokowy_16x9_foto.webp",
+   "shot": "K8",
+   "width": 1614,
+   "height": 908,
+   "placeholder": false,
+   "alt": {
+    "pl": "Punkt widokowy nad osadą z widokiem na Tatry",
+    "en": "Viewpoint above the settlement facing the Tatras"
+   },
+   "source": "widoki-01.jpg"
+  },
+  {
+   "file": "T1_swit_gran_16x9_foto.webp",
+   "shot": "T1",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na ośnieżone Tatry",
+    "en": "View from the balcony to the snowy Tatras"
+   },
+   "source": "dsc02011.jpg"
+  },
+  {
+   "file": "W1_salon_kominek_3x2_foto.webp",
+   "shot": "W1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z kominkiem i oknem na Tatry",
+    "en": "Living room with a fireplace and a window onto the Tatras"
+   },
+   "source": "a7v08874-hdr.jpg"
+  },
+  {
+   "file": "W2_kuchnia_stol_3x2_foto.webp",
+   "shot": "W2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Stół w jadalni nakryty dla ośmiu osób, za oknem śnieg",
+    "en": "Dining table set for eight, snow outside the window"
+   },
+   "source": "a7v08864-hdr.jpg"
+  },
+  {
+   "file": "W3_sypialnia_ranek_3x2_foto.webp",
+   "shot": "W3",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z oknem na zaśnieżony stok",
+    "en": "Bedroom with a window onto the snowy slope"
+   },
+   "source": "a7v08979-hdr.jpg"
+  },
+  {
+   "file": "W5_sauna_3x2_foto.webp",
+   "shot": "W5",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sauna w łazience domu, ławy z jasnego drewna",
+    "en": "The sauna in the house bathroom, benches of pale wood"
+   },
+   "source": "A7V08095-HDR.jpg"
+  },
+  {
+   "file": "W6_taras_wejscie_3x2_foto.webp",
+   "shot": "W6",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Zadaszony taras z widokiem na Tatry zimą",
+    "en": "Covered terrace with a view of the Tatras in winter"
+   },
+   "source": "a9m05021.jpg"
+  },
+  {
+   "file": "W7_detal_drewno_kawa_3x2_foto.webp",
+   "shot": "W7",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Świeży chleb na desce w kuchni",
+    "en": "Fresh bread on a board in the kitchen"
+   },
+   "source": "dsc01920.jpg"
+  },
+  {
+   "file": "B1_bania_alpenglow_3x2_foto.webp",
+   "shot": "B1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Bania na tarasie, w tle świerk i Tatry",
+    "en": "The hot tub on the terrace, a spruce and the Tatras behind"
+   },
+   "source": "a9m05004.jpg"
+  },
+  {
+   "file": "B1_bania_lato_3x2_foto.webp",
+   "shot": "B1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Bania na tarasie latem",
+    "en": "The hot tub on the terrace in summer"
+   },
+   "source": "a7v09923.jpg"
+  },
+  {
+   "file": "B5_sciezka_do_bani_3x2_foto.webp",
+   "shot": "B5",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Bania pod okapem domu, wokół śnieg",
+    "en": "The hot tub under the eaves, snow all around"
+   },
+   "source": "a9m05036.jpg"
+  },
+  {
+   "file": "B6_kawa_taras_3x2_foto.webp",
+   "shot": "B6",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Krzesła na tarasie w zimowym słońcu",
+    "en": "Chairs on the terrace in the winter sun"
+   },
+   "source": "a9m05017.jpg"
+  },
+  {
+   "file": "V1_hawran_okno_3x2_foto.webp",
+   "shot": "V1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom Hawrań, wnętrze z widokiem za oknem",
+    "en": "Havran House, the interior and the view outside"
+   },
+   "source": "main_hawran_A7V08135-HDR.jpg"
+  },
+  {
+   "file": "V2_gerlach_okno_3x2_foto.webp",
+   "shot": "V2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom Gerlach, wnętrze z widokiem za oknem",
+    "en": "Gerlach House, the interior and the view outside"
+   },
+   "source": "main_gerlach_A7V08035-HDR.jpg"
+  },
+  {
+   "file": "V3_swinica_okno_3x2_foto.webp",
+   "shot": "V3",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom Świnica, wnętrze z widokiem za oknem",
+    "en": "Świnica House, the interior and the view outside"
+   },
+   "source": "main_swinica_A7V08030-HDR.jpg"
+  },
+  {
+   "file": "V4_woloszyn_okno_3x2_foto.webp",
+   "shot": "V4",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom Wołoszyn, wnętrze z widokiem za oknem",
+    "en": "Wołoszyn House, the interior and the view outside"
+   },
+   "source": "main_woloszyn_A7V02195-HDR.jpg"
+  },
+  {
+   "file": "V5_lomnica_okno_3x2_foto.webp",
+   "shot": "V5",
+   "width": 1536,
+   "height": 1024,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom Łomnica, balkon z widokiem na Tatry",
+    "en": "Łomnica House, the balcony facing the Tatras"
+   },
+   "source": "main_lomnica_bez_samochodu.jpg"
+  },
+  {
+   "file": "V6_lodowy_okno_3x2_foto.webp",
+   "shot": "V6",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom Lodowy, wnętrze z widokiem za oknem",
+    "en": "Lodowy House, the interior and the view outside"
+   },
+   "source": "main_lodowy_A7V02190-HDR.jpg"
+  },
   {
    "file": "B1_bania_alpenglow_3x2_cgi.webp",
    "shot": "B1",

@@ -48,6 +48,8 @@ export interface Promotion {
   bookFrom: string | null
   bookTo: string | null
   bookableNow: boolean
+  /** sezon wyświetlania na stronie (IceColdRes); null albo brak: oba */
+  season?: 'summer' | 'winter' | null
   unitTypeIds: string[] | null
   arrivalDays?: number[] | null
   excludedWeekdays?: number[] | null
@@ -90,6 +92,16 @@ export async function getPricesFrom(): Promise<PriceFrom[]> {
   return data?.types ?? []
 }
 
+/** Sezon promocji w wartościach przełącznika strony (data-sezon na <html>); undefined: oba sezony. */
+export const promoSeason = (season?: string | null): 'lato' | 'zima' | undefined =>
+  season === 'summer' ? 'lato' : season === 'winter' ? 'zima' : undefined
+
+/** Czy promocję pokazać w sezonie strony (bez sezonu albo nieznany sezon strony: zawsze). */
+export const promoInSeason = (season: string | null | undefined, sezon: string | null) => {
+  const s = promoSeason(season)
+  return !s || !sezon || s === sezon
+}
+
 export async function getPromotions(): Promise<Promotion[]> {
   const data = await get<{ promotions: Promotion[] }>('/promotions', 300, ['pricing'])
   return data?.promotions ?? []
@@ -106,7 +118,7 @@ export interface SearchOffer {
   available: boolean
   total?: number
   deposit?: number
-  items?: { nights: number; total: number; promotion: { id: string; display: { badge?: string; en?: { badge?: string | null } } | null } | null }[]
+  items?: { nights: number; total: number; promotion: { id: string; display: { badge?: string; en?: { badge?: string | null }; season?: 'summer' | 'winter' | null } | null } | null }[]
   unavailable?: { index: number; reasons: { code: string }[] }[]
 }
 export interface SearchResult {

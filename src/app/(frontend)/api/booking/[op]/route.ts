@@ -1,5 +1,5 @@
 import { addDays, daysBetween, promoOn, type CalendarData } from '@/lib/availability'
-import { getCalendar, getPricesFromDays, getPromotions, getProperty, searchStay } from '@/lib/icecoldres'
+import { getCalendar, getPricesFromDays, getPromotions, getProperty, promoInSeason, searchStay } from '@/lib/icecoldres'
 import { getUnitTiles } from '@/lib/unit-tiles'
 import { DEFAULT_LOCALE, isLocale } from '@/i18n/locales'
 
@@ -8,9 +8,10 @@ import { DEFAULT_LOCALE, isLocale } from '@/i18n/locales'
  * docs/integracja-strony.md w IceColdRes). Odpowiedzi są buforowane 45 s, a domy przychodzą
  * od razu z kodem (`code` = slug domu w panelu), więc przeglądarka nie zna identyfikatorów IceColdRes.
  *
- * GET /api/booking/calendar?from=RRRR-MM-DD&days=1..93
- * GET /api/booking/search?arrival=&departure=&adults=&children=&ages=4,9&lang=pl
+ * GET /api/booking/calendar?from=RRRR-MM-DD&days=1..93&season=lato|zima
+ * GET /api/booking/search?arrival=&departure=&adults=&children=&ages=4,9&lang=pl&season=lato|zima
  *   (każdy dom z opisem do kafelka: zdjęcia, metraż, wyposażenie)
+ * `season` to pora roku z przełącznika strony: promocje innego sezonu nie dają plakietek (rabat w cenie zostaje).
  */
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 const CACHE = { 'Cache-Control': 'public, max-age=30, s-maxage=45' }
@@ -32,6 +33,8 @@ async function calendar(url: URL) {
   // IceColdRes przesuwa `from` na dziś, gdy pytamy o przeszłość; ceny liczymy od tego samego dnia
   const shift = prices ? daysBetween(prices.from, cal.from) : 0
   const lang = url.searchParams.get('lang') === 'pl' ? 'pl' : 'en'
+  const season = url.searchParams.get('season')
+  const shown = promotions.filter((p) => promoInSeason(p.season, season))
   const data: CalendarData = {
     from: cal.from,
     today: cal.today,
@@ -44,7 +47,7 @@ async function calendar(url: URL) {
           code,
           days: t.days.map((d, i) => {
             const date = addDays(cal.from, i)
-            const promo = promotions.find((p) => promoOn(p, date, t.unitTypeId))
+            const promo = shown.find((p) => promoOn(p, date, t.unitTypeId))
             return { ...d, price: price[i + shift] ?? null, promo: promo ? (lang === 'pl' ? promo.badge : promo.en.badge || promo.badge) : null }
           }),
         },
@@ -78,7 +81,7 @@ async function search(url: URL) {
         const offers = r.offers
           .filter((o) => o.available && o.total !== undefined)
           .map((o) => {
-            const promo = o.items?.find((i) => i.promotion?.display)?.promotion?.display
+            const promo = o.items?.find((i) => i.promotion?.display && promoInSeason(i.promotion.display.season, q.get('season')))?.promotion?.display
             return { offerId: o.offerId, name: o.name, total: o.total!, badge: promo?.badge ?? null, badgeEn: promo?.en?.badge ?? null }
           })
           .sort((a, b) => a.total - b.total)

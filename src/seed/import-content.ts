@@ -70,7 +70,7 @@ async function main() {
     const existing = await payload.find({ collection, where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = existing.docs[0]?.id
     for (const locale of LOCALES) {
-      let data = { ...build(locale), slug, _status: 'published' } as Any
+      let data = { _status: 'published', ...build(locale), slug } as Any
       if (id) {
         // bloki i listy są wspólne dla języków: bez ich id zapis EN utworzyłby nowe wiersze i skasował teksty PL
         const current = await payload.findByID({ collection, id, locale: 'pl', depth: 0, draft: true } as never)
@@ -135,7 +135,8 @@ async function main() {
     // "image" w offers.json (prefiks pliku z content/media) wygrywa z domyślną rotacją okładek
     const fallback = ['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5]
     const cover = (o.image ? img(o.image) : undefined) ?? img(fallback)
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined, icecoldresPromotionId: o.icecoldres_promotion_id || undefined }))
+    // active: false zostaje szkicem (niewidoczna); kolejność jak w offers.json
+    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined, order: offerIndex, icecoldresPromotionId: o.icecoldres_promotion_id || undefined, _status: o.active === false ? 'draft' : 'published' }))
   }
 
   // strona główna: bloki w kolejności szkieletu

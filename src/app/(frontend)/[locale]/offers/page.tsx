@@ -5,7 +5,7 @@ import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
 import { bookingUrl, engineSettings } from '@/lib/booking'
 import { findMany } from '@/lib/cms'
-import { getPromotions } from '@/lib/icecoldres'
+import { getPromotions, promoSeason } from '@/lib/icecoldres'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
 import type { Offer } from '@/payload-types'
 
@@ -29,7 +29,7 @@ export default async function OffersPage({ params }: LocaleParams) {
           {promotions.map((p) => {
             const extra = offers.find((o) => o.icecoldresPromotionId === p.id)
             return (
-              <article key={p.id} className="mo-card mo-card--poziom">
+              <article key={p.id} className="mo-card mo-card--poziom" data-sezon-promo={promoSeason(p.season)}>
                 <div className="mo-card__media"><Media media={extra?.image} /></div>
                 <p className="mo-card__eyebrow"><span className="mo-badge">{ctx.t.offers.onlyHere}</span></p>
                 <h2 className="mo-h3 mo-card__title">{pl ? p.badge : p.en.badge || p.badge}</h2>

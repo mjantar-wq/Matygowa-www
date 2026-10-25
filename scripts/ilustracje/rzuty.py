@@ -7,6 +7,7 @@ Pokoje są prostokątami w siatce 0–100 na szerokość budynku; ściany to cie
 Uruchom: python3 scripts/ilustracje/rzuty.py
 """
 from pathlib import Path
+from tokeny import z_zapasem
 
 ROOT = Path(__file__).resolve().parents[2]
 S = 10  # jednostka siatki w px viewBoxa
@@ -140,9 +141,9 @@ out = ROOT / "public/ilustracje"
 for uklad, u in UKLADY.items():
     for pietro in ("parter", "pietro"):
         f = out / f"G3_rzut_{uklad}_{pietro}.svg"
-        f.write_text(svg(uklad, pietro, *u[pietro]))
+        f.write_text(z_zapasem(svg(uklad, pietro, *u[pietro])))
         print(f.name, "dla", ", ".join(u["domy"]))
 for pietro, (bryla, pokoje) in APARTAMENT.items():
     f = out / f"G3_rzut_apartament_{pietro}.svg"
-    f.write_text(svg("apartament", pietro, bryla, pokoje))
+    f.write_text(z_zapasem(svg("apartament", pietro, bryla, pokoje)))
     print(f.name)

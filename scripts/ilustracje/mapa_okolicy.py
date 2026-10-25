@@ -11,6 +11,7 @@ import numpy as np
 import contourpy
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from tokeny import z_zapasem  # noqa: E402
 from dem import elev, SITE  # noqa: E402  (ten sam DEM i punkt osady co G2)
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -117,5 +118,5 @@ L.append(f'</g><g id="osada" class="osada" transform="translate({x:.0f} {y:.0f})
 L.append(f'<text class="atrybucja" x="{W - 16}" y="{H - 16}" text-anchor="end">Dane: © współtwórcy OpenStreetMap (ODbL), wysokości: Terrarium / SRTM</text></svg>')
 
 out = ROOT / "public/ilustracje/G7_mapa_okolicy.svg"
-out.write_text("\n".join(L))
+out.write_text(z_zapasem("\n".join(L)))
 print(out, W, H, f"{out.stat().st_size // 1024} kB")

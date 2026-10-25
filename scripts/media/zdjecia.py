@@ -23,7 +23,7 @@ ZDJECIA = [
     ("K2_hero_osada_swit_9x16", f"{UP}/Sesja zimowa/size_original/DJI_*0394_D.jpg", .5,
      "Domy osady wśród świerków, nad nimi ośnieżone Tatry", "The houses among spruces, the snowy Tatras above"),
     ("K2_hero_osada_lato_16x9", f"{PF}/lato/a7v09961.jpg", .5,
-     "Dom w osadzie latem, zielona łąka i Tatry w chmurach", "A house in the settlement in summer, green meadow and the Tatras in clouds"),
+     "Drewniana elewacja domu z balkonem latem", "The wooden façade of a house with its balcony in summer"),
     ("K1_panorama_tatry_21x9", f"{PF}/zima/a9m05010.jpg", .45,
      "Panorama Tatr widziana z osady zimą", "The Tatras panorama seen from the settlement in winter"),
     ("K3_dron_przelot_16x9", f"{PF}/zima/dji_*0394*.jpg", .5,

@@ -197,7 +197,7 @@ async function main() {
           { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), imagePosition: 'end' },
           ...s.items.map((it: Any, j: number) => ({
             blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
-            body: md(`*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`),
+            body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
             image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
           })),
         ]

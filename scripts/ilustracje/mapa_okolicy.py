@@ -33,6 +33,12 @@ if not OSM.exists():
 osm = json.loads(OSM.read_text())["elements"]
 
 # Atrakcje (slug jak w content/attractions.json) i miejscowości; dx, dy, kotwica etykiety dobrane ręcznie.
+# Angielskie podpisy atrakcji (poza polskim strona pokazuje te); nazwy własne zostają
+EN = {"Kolejka na Kasprowy": "Kasprowy cable car", "Spływ Dunajcem": "Dunajec rafting", "Park linowy i zagroda": "Rope park and farmstead",
+      "Jaskinia Bielska": "Belianska Cave", "Polana Szymoszkowa": "Szymoszkowa glade"}
+def tl(pl, en=None):
+    en = en or EN.get(pl)
+    return f'<tspan class="pl">{pl}</tspan><tspan class="en">{en}</tspan>' if en and en != pl else pl
 POI = [
     ("kasprowy-wierch", "Kolejka na Kasprowy", 49.27025, 19.98085, 12, -10, "start"),
     ("kotelnica", "Kotelnica Białczańska", 49.37623, 20.08090, -12, 4, "end"),
@@ -82,7 +88,7 @@ for e in osm:
 
 L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-labelledby="g7-tytul">',
      '<title id="g7-tytul">Mapa okolicy Matygowej Osady: Podhale, Tatry i atrakcje w pobliżu</title>',
-     '<style>'
+     '<style>svg .en{display:none}:root:not([lang="pl"]) svg .en{display:inline}:root:not([lang="pl"]) svg .pl{display:none}'
      '.teren{fill:var(--color-tlo)}.tatry{fill:var(--color-tlo-2)}'
      '.poz{fill:none;stroke:var(--color-poziomica);stroke-width:.8;opacity:.45;vector-effect:non-scaling-stroke}'
      '.poz-mocna{fill:none;stroke:var(--color-poziomica);stroke-width:1.2;opacity:.7;vector-effect:non-scaling-stroke}'
@@ -105,7 +111,7 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      f'<g id="warstwa-wody"><path class="rzeka" d="{" ".join(rzeki)}"/></g>',
      f'<g id="warstwa-granica"><path class="granica" d="{" ".join(granica)}"/></g>',
      f'<g id="warstwa-drogi"><path class="droga-boczna" d="{" ".join(drogi["boczna"])}"/><path class="droga-glowna" d="{" ".join(drogi["glowna"])}"/></g>',
-     '<text class="panstwo" x="%.0f" y="%.0f">Polska</text><text class="panstwo" x="%.0f" y="%.0f">Słowacja</text>' % (*xy(49.44, 19.92), *xy(49.20, 20.24)),
+     '<text class="panstwo" x="%.0f" y="%.0f">%s</text><text class="panstwo" x="%.0f" y="%.0f">%s</text>' % (*xy(49.44, 19.92), tl('Polska', 'Poland'), *xy(49.20, 20.24), tl('Słowacja', 'Slovakia')),
      '<g id="warstwa-miejscowosci">']
 for nazwa, la, lo, dx, dy, a in MIEJSCOWOSCI:
     x, y = xy(la, lo)
@@ -114,14 +120,14 @@ L.append('</g><g id="warstwa-atrakcje">')
 for slug, nazwa, la, lo, dx, dy, a in POI:
     x, y = xy(la, lo)
     km = 6371 * math.acos(min(1, math.sin(math.radians(SITE[0])) * math.sin(math.radians(la)) + math.cos(math.radians(SITE[0])) * math.cos(math.radians(la)) * math.cos(math.radians(lo - SITE[1]))))
-    L.append(f'<g id="a-{slug}" class="poi" data-km="{km:.1f}" transform="translate({x:.0f} {y:.0f})"><circle r="7"/><text x="{dx}" y="{dy + 5}" text-anchor="{a}">{nazwa}</text></g>')
+    L.append(f'<g id="a-{slug}" class="poi" data-km="{km:.1f}" transform="translate({x:.0f} {y:.0f})"><circle r="7"/><text x="{dx}" y="{dy + 5}" text-anchor="{a}">{tl(nazwa)}</text></g>')
 x, y = xy(*SITE)
 # Osada jako punkt centralny (wg Michała ma być lepiej widoczna): poświata, tarcza z sygnetem i podpis na plakietce w kolorze akcentu
 SYGNET = "".join(re.findall(r'd="([^"]+)"', (ROOT / "public/brand/sygnet.svg").read_text()))
 L.append(f'</g><g id="osada" class="osada" transform="translate({x:.0f} {y:.0f})"><circle class="poswiata" r="46"/><circle class="tarcza" r="30"/>'
          f'<path class="sygnet" transform="scale(0.5) translate(-43.12 -43.12)" d="{SYGNET}"/>'
          '<rect class="podpis-tlo" x="-122" y="-86" width="244" height="34" rx="17"/><text x="0" y="-63" text-anchor="middle">Matygowa Osada</text></g>')
-L.append(f'<text class="atrybucja" x="{W - 16}" y="{H - 16}" text-anchor="end">Dane: © współtwórcy OpenStreetMap (ODbL), wysokości: Terrarium / SRTM</text></svg>')
+L.append(f'<text class="atrybucja" x="{W - 16}" y="{H - 16}" text-anchor="end">' + tl('Dane: © współtwórcy OpenStreetMap (ODbL), wysokości: Terrarium / SRTM', 'Data: © OpenStreetMap contributors (ODbL), elevation: Terrarium / SRTM') + '</text></svg>')
 
 out = ROOT / "public/ilustracje/G7_mapa_okolicy.svg"
 out.write_text(z_zapasem("\n".join(L)))

@@ -169,7 +169,7 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.piwnica-tlo{fill:var(--color-tlo);stroke:var(--color-bursztyn);stroke-width:2}.piwnica-punkt{fill:var(--color-bursztyn)}'
      '.piwnica-tekst{font:500 17px var(--font-ui,sans-serif);letter-spacing:.01em;fill:var(--color-atrament)}'
      '.piwnica-linia{fill:none;stroke:var(--color-bursztyn);stroke-width:2;stroke-linecap:round;vector-effect:non-scaling-stroke}'
-     '.en{display:none}:root[lang="en"] .naklejka .pl,:root[lang="en"] .piwnica .pl{display:none}:root[lang="en"] .naklejka .en,:root[lang="en"] .piwnica .en{display:inline}'
+     '.en{display:none}:root:not([lang="pl"]) :is(.naklejka,.piwnica,.tl) .pl{display:none}:root:not([lang="pl"]) :is(.naklejka,.piwnica,.tl) .en{display:inline}'  # poza polskim podpisy angielskie
      '.nazwa{font:700 15px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-atrament)}'
      '.opis{font:500 12px var(--font-ui,sans-serif);letter-spacing:.06em;fill:var(--color-wyciszony)}'
      '.znacznik{fill:var(--color-bursztyn)}'
@@ -194,7 +194,7 @@ for slug, nazwa, wys, cx, cy, w, h in DOMY:
              f'{dach(cx, cy, w, h)}<circle class="znacznik" cx="{cx}" cy="{cy}" r="5"/>'
              f'<rect class="etykieta-tlo" x="{cx - 70}" y="{cy + h/2 + 8}" width="140" height="42" rx="2"/>'
              f'<text class="nazwa" x="{cx}" y="{cy + h/2 + 27}" text-anchor="middle">{nazwa}</text>'
-             f'<text class="opis" x="{cx}" y="{cy + h/2 + 44}" text-anchor="middle">{wys} m n.p.m.</text></g>')
+             f'<text class="opis tl" x="{cx}" y="{cy + h/2 + 44}" text-anchor="middle"><tspan class="pl">{wys} m n.p.m.</tspan><tspan class="en">{wys:,} m a.s.l.</tspan></text></g>')
 
 apts = ",".join(n for _, n, *_ in APARTAMENTY)
 
@@ -224,12 +224,12 @@ def nazwy_apartamentow(cx, cy, l, w, rot, p=12):
 L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" aria-label="Apartamenty: w górnej części Czerwone Wierchy i Kominiarski Wierch, w dolnej Giewont i Ciemniak, otwarcie wiosną 2027">')
 L.append(apartamenty_dach(*APT) + nazwy_apartamentow(*APT) + strefy_apartamentow(*APT) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
 L.append('<rect class="etykieta-tlo" x="830" y="4" width="230" height="44" rx="2"/>'
-         '<text class="nazwa" x="945" y="24" text-anchor="middle">Apartamenty</text>'
-         '<text class="opis" x="945" y="41" text-anchor="middle">4 apartamenty</text>' + naklejka(966, 86, -4) + piwnica() + '</g>')
+         '<text class="nazwa tl" x="945" y="24" text-anchor="middle"><tspan class="pl">Apartamenty</tspan><tspan class="en">Apartments</tspan></text>'
+         '<text class="opis tl" x="945" y="41" text-anchor="middle"><tspan class="pl">4 apartamenty</tspan><tspan class="en">4 apartments</tspan></text>' + naklejka(966, 86, -4) + piwnica() + '</g>')
 px, py, pw, ph = PLAC
 L.append(f'<g id="b-plac-zabaw" class="obiekt is-wkrotce" data-otwarcie="2027" aria-label="Plac zabaw dla dzieci, otwarcie 2027">{plac_zabaw(*PLAC)}'
          f'<rect class="etykieta-tlo" x="{px - 60}" y="{py + ph/2 + 8}" width="120" height="26" rx="2"/>'
-         f'<text class="opis" x="{px}" y="{py + ph/2 + 25}" text-anchor="middle">Plac zabaw</text>' + naklejka(px, py - ph/2 - 6, 4) + '</g>')
+         f'<text class="opis tl" x="{px}" y="{py + ph/2 + 25}" text-anchor="middle"><tspan class="pl">Plac zabaw</tspan><tspan class="en">Playground</tspan></text>' + naklejka(px, py - ph/2 - 6, 4) + '</g>')
 L.append('</g></svg>')
 
 out = ROOT / "public/ilustracje/G1_mapa_osady.svg"; out.parent.mkdir(parents=True, exist_ok=True)

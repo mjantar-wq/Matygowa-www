@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { arrivalInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
+import { arrivalInfo, departureInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
 import { bookingUrl } from '@/lib/booking'
 import { promoInSeason, promoSeason } from '@/lib/icecoldres'
 
@@ -10,20 +10,24 @@ vi.mock('@/lib/cms', () => ({
   ],
 }))
 
-const day = (o: Partial<DayInfo> = {}): DayInfo => ({ free: 1, open: true, cta: false, ctd: false, minStay: 2, maxStay: null, price: 95000, promo: null, ...o })
+const day = (o: Partial<DayInfo> = {}): DayInfo => ({ free: 1, open: true, cta: false, ctd: false, minStay: 2, maxStay: null, promo: null, ...o })
 // 1–7 grudnia; hawran zajęty 3.12, gerlach wolny, ale 4.12 bez wyjazdów
 const data: CalendarData = {
   from: '2026-12-01',
   today: '2026-12-01',
   types: [
     { code: 'hawran', days: [day(), day(), day({ free: 0 }), day(), day(), day(), day()] },
-    { code: 'gerlach', days: [day({ price: 120000 }), day({ cta: true }), day(), day({ ctd: true }), day(), day(), day({ promo: 'Zima −10%' })] },
+    { code: 'gerlach', days: [day({ minStay: 3 }), day({ cta: true }), day(), day({ ctd: true }), day(), day(), day({ promo: 'Zima −10%' })] },
   ],
 }
 
 describe('kalendarz dostępności', () => {
-  it('przyjazd: najniższa cena z wolnych domów, zakaz przyjazdu wyklucza dom', () => {
-    expect(arrivalInfo(data, '2026-12-01')).toMatchObject({ ok: true, price: 95000 })
+  it('przyjazd: najkrótszy min. pobyt z wolnych domów, zakaz przyjazdu wyklucza dom', () => {
+    expect(arrivalInfo(data, '2026-12-01')).toMatchObject({ ok: true, minStay: 2 })
+    expect(arrivalInfo(data, '2026-12-02', 'gerlach')).toMatchObject({ ok: false, reason: 'noArrival' })
+    expect(arrivalInfo(data, '2026-12-03', 'hawran')).toMatchObject({ ok: false, reason: 'occupied' })
+    expect(arrivalInfo(data, '2026-12-02', 'hawran')).toMatchObject({ ok: false, reason: 'minStay', minStay: 2 })
+    expect(arrivalInfo(data, '2026-11-30')).toMatchObject({ ok: false, reason: 'past' })
     expect(arrivalInfo(data, '2026-12-02', 'gerlach').ok).toBe(false)
     expect(arrivalInfo(data, '2026-12-03', 'hawran').ok).toBe(false)
     expect(arrivalInfo(data, '2026-12-02', 'hawran').ok).toBe(false) // noc 3.12 zajęta, min. 2 noce
@@ -37,6 +41,8 @@ describe('kalendarz dostępności', () => {
     expect(departureOk(data, '2026-12-01', '2026-12-05', 'hawran')).toBe(false) // noc 3.12 zajęta
     expect(departureOk(data, '2026-12-01', '2026-12-04', 'gerlach')).toBe(false) // 4.12 bez wyjazdów
     expect(departureOk(data, '2026-12-01', '2026-12-05', 'gerlach')).toBe(true)
+    expect(departureInfo(data, '2026-12-01', '2026-12-02')).toMatchObject({ ok: false, reason: 'minStay', minStay: 2 })
+    expect(departureInfo(data, '2026-12-01', '2026-12-04', 'gerlach')).toMatchObject({ ok: false, reason: 'noDeparture' })
   })
 
   it('siatka miesiąca od poniedziałku', () => {

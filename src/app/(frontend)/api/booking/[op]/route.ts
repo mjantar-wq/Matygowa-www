@@ -1,5 +1,5 @@
 import { addDays, daysBetween, promoOn, type CalendarData } from '@/lib/availability'
-import { getCalendar, getPricesFromDays, getPromotions, getProperty, promoInSeason, searchStay } from '@/lib/icecoldres'
+import { getCalendar, getPromotions, getProperty, promoInSeason, searchStay } from '@/lib/icecoldres'
 import { getUnitTiles } from '@/lib/unit-tiles'
 import { DEFAULT_LOCALE, isLocale } from '@/i18n/locales'
 
@@ -28,10 +28,8 @@ async function calendar(url: URL) {
   const from = url.searchParams.get('from') ?? ''
   const days = int(url.searchParams.get('days'), 1, 93, 62)
   if (!DATE.test(from) || days === null) return bad('invalid_input')
-  const [cal, prices, promotions, property] = await Promise.all([getCalendar(from, days), getPricesFromDays(from, days), getPromotions(), getProperty()])
+  const [cal, promotions, property] = await Promise.all([getCalendar(from, days), getPromotions(), getProperty()])
   if (!cal || !property) return unavailable()
-  // IceColdRes przesuwa `from` na dziś, gdy pytamy o przeszłość; ceny liczymy od tego samego dnia
-  const shift = prices ? daysBetween(prices.from, cal.from) : 0
   const lang = url.searchParams.get('lang') === 'pl' ? 'pl' : 'en'
   const season = url.searchParams.get('season')
   const shown = promotions.filter((p) => promoInSeason(p.season, season))
@@ -41,14 +39,14 @@ async function calendar(url: URL) {
     types: cal.types.flatMap((t) => {
       const code = property.unitTypes.find((u) => u.id === t.unitTypeId)?.code
       if (!code) return []
-      const price = prices?.types.find((p) => p.unitTypeId === t.unitTypeId)?.days ?? []
       return [
         {
           code,
           days: t.days.map((d, i) => {
             const date = addDays(cal.from, i)
             const promo = shown.find((p) => promoOn(p, date, t.unitTypeId))
-            return { ...d, price: price[i + shift] ?? null, promo: promo ? (lang === 'pl' ? promo.badge : promo.en.badge || promo.badge) : null }
+            // bez cen za noc, jak w kalendarzu IceColdRes (Michał, 25.10.2026)
+            return { ...d, promo: promo ? (lang === 'pl' ? promo.badge : promo.en.badge || promo.badge) : null }
           }),
         },
       ]

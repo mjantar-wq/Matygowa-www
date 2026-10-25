@@ -1,14 +1,19 @@
+import { Fragment } from 'react'
 import Link from 'next/link'
 import { BookingBar } from '@/components/BookingBar'
 import { Media } from '@/components/Media'
 import { RichText } from '@/components/RichText'
 import { PeaksPanorama } from '@/components/PeaksPanorama'
+import { SettlementMap } from '@/components/SettlementMap'
+import { HeroStage, type HeroImage, type HeroSlide } from '@/components/effects/HeroStage'
+import { ScrollSteps } from '@/components/effects/ScrollSteps'
+import { assignSlots } from '@/lib/ambience'
 import { href } from '@/i18n/routes'
 import { findMany } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getPromotions, getServices } from '@/lib/icecoldres'
 import type { PageContext } from '@/lib/page'
-import type { Attraction, News, Page, Testimonial, Unit } from '@/payload-types'
+import type { Attraction, Media as MediaDoc, News, Page, Testimonial, Unit } from '@/payload-types'
 
 type Block = NonNullable<Page['layout']>[number]
 type Of<T extends Block['blockType']> = Extract<Block, { blockType: T }>
@@ -32,16 +37,46 @@ function Section({ block, children, className = '' }: { block: { anchor?: string
   )
 }
 
+const asImage = (m?: MediaDoc | number | string | null): HeroImage | null =>
+  m && typeof m === 'object' && m.url ? { url: m.url, alt: m.alt, width: m.width, height: m.height, focusX: m.focusX, focusY: m.focusY } : null
+const asUrl = (m?: MediaDoc | number | string | null) => (m && typeof m === 'object' && m.url ? m.url : null)
+
+/** Hero: kadr główny i warianty nastrojów; który widać, decyduje przełącznik Dzień / Noc i Zima / Lato. */
+function heroSlides(block: Of<'hero'>): HeroSlide[] {
+  const variants = [
+    { pora: null, sezon: null, image: block.image, video: block.video, videoPortrait: block.videoPortrait },
+    ...(block.variants ?? []),
+  ]
+  const slots = assignSlots(variants)
+  return variants
+    .map((v, i) => ({ image: asImage(v.image) ?? asImage(block.image), video: asUrl(v.video), videoPortrait: asUrl(v.videoPortrait), slots: slots[i] }))
+    .filter((s, i) => i === 0 || s.slots.length)
+}
+
 function Hero({ block, ctx }: Props<'hero'>) {
+  const words = (block.headline ?? '').split(' ')
   return (
     <section className="mo-hero" data-block="hero" id={block.anchor || undefined}>
       <div className="mo-hero__media">
-        <Media media={block.image} priority />
+        <HeroStage slides={heroSlides(block)} t={ctx.t.effects} />
       </div>
       <div className="mo-container mo-hero__content">
-        <h1 className="mo-display-xl">{block.headline}</h1>
-        {block.subline ? <p className="mo-lede">{block.subline}</p> : null}
-        {block.showBookingBar !== false ? <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} /> : null}
+        <h1 className="mo-display-xl mo-hero__title">
+          <span className="mo-sr">{block.headline}</span>
+          {words.map((w, i) => (
+            <Fragment key={i}>
+              <span aria-hidden="true" style={{ '--i': i } as React.CSSProperties}>
+                {w}
+              </span>{' '}
+            </Fragment>
+          ))}
+        </h1>
+        {block.subline ? <p className="mo-lede mo-hero__lede">{block.subline}</p> : null}
+        {block.showBookingBar !== false ? (
+          <div className="mo-hero__booking">
+            <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
+          </div>
+        ) : null}
       </div>
     </section>
   )
@@ -73,7 +108,7 @@ async function Panorama({ block, ctx }: Props<'peaksPanorama'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       <PeaksPanorama units={units} image={block.image} ctx={ctx} />
-      {block.showMap ? <Media media={block.map} fallback={`${ctx.t.placeholder}: mapa osady`} /> : null}
+      {block.showMap ? block.map ? <Media media={block.map} /> : <SettlementMap units={units} ctx={ctx} /> : null}
     </Section>
   )
 }
@@ -87,7 +122,8 @@ function Day({ block, ctx }: Props<'dayInSettlement'>) {
           <li key={s.id} data-pora={s.time} style={{ display: 'grid', gap: 'var(--space-4)' }}>
             <Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} />
             <h3 className="mo-h3">{s.title}</h3>
-            <p className="mo-prose">{s.text}</p>
+            <p className="mo-prose" data-tylko={s.summerText ? 'zima' : undefined}>{s.text}</p>
+            {s.summerText ? <p className="mo-prose" data-tylko="lato">{s.summerText}</p> : null}
           </li>
         ))}
       </ol>
@@ -121,15 +157,18 @@ async function Rituals({ block, ctx }: Props<'rituals'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <ol className="mo-cards">
-        {block.steps?.map((s) => (
-          <li key={s.id} className="mo-card">
-            <div className="mo-card__media"><Media media={s.image} /></div>
-            <h3 className="mo-h3">{s.word}</h3>
-            <p>{s.text}</p>
-          </li>
-        ))}
-      </ol>
+      {block.steps?.length ? (
+        <ScrollSteps
+          label={block.heading ?? undefined}
+          media={block.steps.map((st) => <Media key={st.id} media={st.image} fallback={st.word ?? undefined} />)}
+          steps={block.steps.map((st) => (
+            <div key={st.id}>
+              <h3 className="mo-h3 mo-steps__word">{st.word}</h3>
+              <p className="mo-prose">{st.text}</p>
+            </div>
+          ))}
+        />
+      ) : null}
       {services.length ? (
         <ul>
           {services.map((s) => (
@@ -149,7 +188,7 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards">
         {(['winter', 'summer'] as const).map((key) => (
-          <article key={key} className="mo-card" data-sezon={key === 'winter' ? 'zima' : 'lato'}>
+          <article key={key} className="mo-card mo-season" data-sezon={key === 'winter' ? 'zima' : 'lato'}>
             <div className="mo-card__media"><Media media={block[key]?.image} fallback={ctx.t.attractions[key]} /></div>
             <h3 className="mo-h3">{block[key]?.title || ctx.t.attractions[key]}</h3>
             <p>{block[key]?.text}</p>

@@ -161,6 +161,20 @@ export interface Page {
             subline?: string | null;
             image?: (number | null) | Media;
             video?: (number | null) | Media;
+            videoPortrait?: (number | null) | Media;
+            /**
+             * Kadr i film dla innej pory dnia lub roku. Bez wariantu strona pokazuje najbliższy pasujący, a na końcu kadr główny.
+             */
+            variants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
             showBookingBar?: boolean | null;
             anchor?: string | null;
             id?: string | null;
@@ -958,6 +972,17 @@ export interface PagesSelect<T extends boolean = true> {
               subline?: T;
               image?: T;
               video?: T;
+              videoPortrait?: T;
+              variants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
               showBookingBar?: T;
               anchor?: T;
               id?: T;

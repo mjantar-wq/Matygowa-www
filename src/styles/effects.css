@@ -1,0 +1,142 @@
+/* Efekty i interakcje (etap 2: prototyp). Ruch tylko przy prefers-reduced-motion: no-preference;
+   bez niego wszystko jest widoczne i działa, tylko się nie rusza. */
+
+/* Przełączniki nastroju w nagłówku */
+.mo-ambience { display: inline-flex; flex-wrap: wrap; gap: var(--space-2); }
+.mo-ambience .mo-toggle { background: var(--color-tlo); }
+.mo-ambience .mo-toggle button { min-width: 56px; padding: 0 var(--space-3); }
+.mo-nav .mo-ambience { margin-block-start: var(--space-5); }
+/* Na tablecie i desktopie przełączniki pływają w prawym górnym rogu pod nagłówkiem (jak w Domku w Brzozach), na telefonie są w menu */
+.mo-header__inner > .mo-ambience { display: none; }
+@media (min-width: 768px) {
+  .mo-header__inner > .mo-ambience { display: inline-flex; position: fixed; inset-block-start: calc(var(--naglowek-wys) + var(--space-4)); inset-inline-end: var(--space-5); z-index: 20; box-shadow: var(--cien-wyskakujace, 0 8px 24px rgba(0, 0, 0, 0.18)); }
+  .mo-nav .mo-ambience { display: none; }
+}
+
+/* Zmiana nastroju przez View Transitions: przenikanie w tempie mgły */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--ruch-mgla); animation-timing-function: var(--ease-przejscie); }
+
+/* Treści tylko dla jednej pory roku */
+:root[data-sezon="zima"] [data-tylko="lato"], :root[data-sezon="lato"] [data-tylko="zima"] { display: none; }
+:root[data-pora="dzien"] [data-tylko="noc"], :root[data-pora="noc"] [data-tylko="dzien"] { display: none; }
+:root[data-sezon="lato"] .mo-season[data-sezon="lato"], :root[data-sezon="zima"] .mo-season[data-sezon="zima"] { order: -1; }
+
+/* Hero: kadry nastrojów nałożone na siebie, widać ten, który pasuje do <html data-pora data-sezon> */
+.mo-hero__slide { position: absolute; inset: 0; display: none; }
+.mo-hero__slide > * { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; }
+.mo-hero__slide video { opacity: 0; transition: opacity var(--ruch-wolny) var(--ease-mgla); }
+.mo-hero__slide[data-playing] video { opacity: 1; }
+:root[data-pora="dzien"][data-sezon="zima"] .mo-hero__slide.is-dzien-zima,
+:root[data-pora="dzien"][data-sezon="lato"] .mo-hero__slide.is-dzien-lato,
+:root[data-pora="noc"][data-sezon="zima"] .mo-hero__slide.is-noc-zima,
+:root[data-pora="noc"][data-sezon="lato"] .mo-hero__slide.is-noc-lato { display: block; }
+.mo-hero__pause { position: absolute; inset-block-end: var(--space-5); inset-inline-end: var(--margines); z-index: 2; color: var(--color-na-zdjeciu); border-color: currentColor; background: var(--color-zaslona); }
+.mo-hero__title > [aria-hidden] { display: inline-block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .mo-hero__title > [aria-hidden] { animation: mo-wejscie var(--ruch-wolny) var(--ease-mgla) both; animation-delay: calc(200ms + var(--i, 0) * 90ms); }
+  .mo-hero__lede { animation: mo-mgla var(--ruch-mgla) var(--ease-mgla) 700ms both; }
+  .mo-hero__booking { animation: mo-mgla var(--ruch-mgla) var(--ease-mgla) 1000ms both; }
+  .mo-hero__slide > img { animation: mo-zblizenie 14s var(--ease-mgla) both; }
+}
+@keyframes mo-wejscie { from { opacity: 0; transform: translateY(0.4em); filter: blur(6px); } }
+@keyframes mo-mgla { from { opacity: 0; transform: translateY(12px); } }
+@keyframes mo-zblizenie { from { transform: scale(1.06); } }
+
+/* Panorama: przewijana w bok poniżej 1024 px, znaczniki z dymkami */
+.mo-panorama { aspect-ratio: auto; overflow: visible; background: none; }
+.mo-panorama__scroller { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.mo-panorama__scroller:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: 2px; }
+.mo-panorama__stage { position: relative; aspect-ratio: 21 / 9; min-inline-size: 1100px; overflow: hidden; background: var(--color-tlo-2); }
+@media (min-width: 1024px) { .mo-panorama__stage { min-inline-size: 0; } }
+.mo-panorama__layer { position: absolute; inset: -6% 0; }
+.mo-panorama__layer > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
+:root[data-pora="noc"] .mo-panorama__layer img { filter: brightness(0.42) saturate(0.55) hue-rotate(195deg); }
+.mo-panorama__hint { margin-block-start: var(--space-3); font-size: var(--text-body-s); }
+@media (min-width: 1024px) { .mo-panorama__hint { display: none; } }
+button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2); cursor: pointer; scroll-snap-align: center; color: var(--color-na-zdjeciu); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55); }
+.mo-panorama__marker .mo-muted { color: inherit; opacity: 0.85; }
+.mo-panorama__marker::after { transition: transform var(--ruch-szybki) var(--ease-mgla), box-shadow var(--ruch-szybki) var(--ease-mgla); }
+.mo-panorama__marker:is(:hover, :focus-visible)::after { transform: scale(1.4); box-shadow: 0 0 0 6px rgba(196, 122, 42, 0.35); }
+.mo-panorama__marker:focus-visible { outline: 2px solid var(--color-na-zdjeciu); outline-offset: 2px; }
+.mo-panorama__marker[data-wkrotce]::after { background: transparent; box-shadow: 0 0 0 2px var(--color-bursztyn); }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-panorama__marker:not([data-wkrotce])::after { animation: mo-puls 3.2s var(--ease-mgla) infinite; animation-delay: calc(var(--n, 0) * 160ms); }
+  @supports (animation-timeline: view()) {
+    .mo-panorama__layer { animation: mo-paralaksa linear both; animation-timeline: view(); }
+  }
+}
+@keyframes mo-puls { 0%, 70%, 100% { box-shadow: 0 0 0 4px var(--color-tlo); } 35% { box-shadow: 0 0 0 9px rgba(196, 122, 42, 0.25); } }
+@keyframes mo-paralaksa { from { transform: translateY(-4%); } to { transform: translateY(4%); } }
+
+/* Ilustracje SVG (G1, G2) wstawiane do strony: kolory z tokenów, klikalne grupy, lista przycisków pod spodem */
+.mo-svg-scroll { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.mo-svg-scroll:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: 2px; }
+.mo-svg-host svg { display: block; inline-size: 100%; block-size: auto; }
+.mo-svg-host[data-state="idle"], .mo-svg-host[data-state="error"] { background: var(--color-tlo-2); }
+.mo-panorama__svg .mo-svg-host { min-inline-size: 1100px; }
+.mo-panorama__svg .mo-svg-host[data-state="idle"] { aspect-ratio: 3200 / 900; }
+.mo-map__stage .mo-svg-host[data-state="idle"] { aspect-ratio: 1400 / 800; }
+@media (min-width: 1024px) { .mo-panorama__svg .mo-svg-host { min-inline-size: 0; } }
+.mo-hotspot { cursor: pointer; }
+.mo-hotspot .accent, .mo-hotspot .znacznik { transition: transform var(--ruch-szybki) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
+.mo-hotspot:hover .accent, .mo-hotspot.is-lit .accent, .mo-hotspot:hover .znacznik, .mo-hotspot.is-lit .znacznik { transform: scale(1.6); }
+.mo-hotspot.is-lit .dach, .mo-hotspot:hover .dach { fill: var(--color-bursztyn); }
+:root[data-pora="noc"] .mo-hotspot:not(.is-wkrotce) .dach { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
+:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach:not(.is-wkrotce *) { fill: var(--color-powierzchnia); stroke: var(--color-atrament); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.mo-hotspots { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.mo-hotspots button { min-block-size: 2.75rem; padding: 0 var(--space-4); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: var(--color-powierzchnia); color: var(--color-atrament); font: 500 12px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+@media (max-width: 767px) { .mo-hotspots { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block-end: var(--space-2); } .mo-hotspots button { white-space: nowrap; } .mo-map__stage .mo-svg-host { min-inline-size: 640px; } }
+.mo-hotspots button:is(:hover, :focus-visible) { border-color: var(--color-bursztyn); }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-hotspot .accent { animation: mo-puls-svg 3.2s var(--ease-mgla) infinite; }
+  @supports (animation-timeline: view()) {
+    .mo-panorama__svg #warstwa-tatry { animation: mo-warstwa-1 linear both; animation-timeline: view(); }
+    .mo-panorama__svg #warstwa-podhale { animation: mo-warstwa-2 linear both; animation-timeline: view(); }
+    .mo-panorama__svg #warstwa-osada { animation: mo-warstwa-3 linear both; animation-timeline: view(); }
+  }
+}
+@keyframes mo-puls-svg { 0%, 70%, 100% { opacity: 1; } 35% { opacity: 0.55; } }
+@keyframes mo-warstwa-1 { from { transform: translateY(-10px); } to { transform: translateY(10px); } }
+@keyframes mo-warstwa-2 { from { transform: translateY(-24px); } to { transform: translateY(24px); } }
+@keyframes mo-warstwa-3 { from { transform: translateY(-44px); } to { transform: translateY(44px); } }
+
+/* Dymki (popover): na telefonie na środku ekranu, na szerszym przy elemencie (pozycję ustawia SvgHotspots) */
+.mo-popover:not(:popover-open) { display: none; }
+.mo-popover { position: fixed; margin: auto; inset: 0; block-size: fit-content; max-block-size: min(80svh, 32rem); overflow: auto; color: var(--color-atrament); padding-inline-end: var(--space-8); }
+.mo-popover::backdrop { background: var(--color-zaslona); }
+@media (min-width: 768px) { .mo-popover { margin: 0; } .mo-popover::backdrop { background: transparent; } }
+.mo-popover .mo-prose { font-size: var(--text-body-s); }
+.mo-section .mo-popover .mo-h3 { margin: 0; }
+.mo-popover__close { position: absolute; inset-block-start: var(--space-2); inset-inline-end: var(--space-2); inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: none; color: var(--color-wyciszony); font-size: 1.5rem; cursor: pointer; }
+.mo-popover__links { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-2); }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-popover:popover-open { animation: mo-mgla var(--ruch-sredni) var(--ease-mgla); }
+}
+
+/* Mapa osady */
+.mo-map { margin: var(--space-8) 0 0; }
+
+/* Opowieść o bani i saunie: sticky zdjęcia na szerokim ekranie, kroki przewijane obok */
+.mo-steps { display: grid; gap: var(--space-8); }
+.mo-steps__stage { display: none; }
+.mo-steps__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-9, 4rem); }
+.mo-steps__inline { margin-block-end: var(--space-5); aspect-ratio: 3 / 2; overflow: hidden; }
+.mo-steps__inline > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
+.mo-steps__word { font-family: var(--font-display); font-style: italic; }
+@media (min-width: 1024px) {
+  .mo-steps { grid-template-columns: 7fr 5fr; gap: var(--rynna); align-items: start; }
+  .mo-steps__stage { display: block; position: sticky; inset-block-start: calc(var(--naglowek-wys) + var(--space-6)); aspect-ratio: 3 / 2; overflow: hidden; background: var(--color-tlo-2); }
+  .mo-steps__frame { position: absolute; inset: 0; opacity: 0; transition: opacity var(--ruch-wolny) var(--ease-mgla); }
+  .mo-steps__frame[data-active] { opacity: 1; }
+  .mo-steps__frame > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
+  .mo-steps__inline { display: none; }
+  .mo-steps__step { min-block-size: 70svh; display: grid; align-content: center; opacity: 0.35; transition: opacity var(--ruch-sredni) var(--ease-mgla); }
+  .mo-steps__step[data-active] { opacity: 1; }
+}
+.mo-steps__steam { position: absolute; inset: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-steps__steam::before, .mo-steps__steam::after { content: ""; position: absolute; inset-block-end: -20%; inset-inline-start: 20%; inline-size: 45%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 255, 255, 0.22), transparent); filter: blur(18px); animation: mo-para 9s ease-in-out infinite; }
+  .mo-steps__steam::after { inset-inline-start: 45%; animation-delay: -4.5s; animation-duration: 11s; }
+}
+@keyframes mo-para { 0% { transform: translateY(0) scale(0.8); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(-90%) scale(1.3); opacity: 0; } }

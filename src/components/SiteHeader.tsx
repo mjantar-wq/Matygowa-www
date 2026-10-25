@@ -3,6 +3,7 @@ import type { Dictionary } from '@/i18n/dictionaries'
 import type { Locale } from '@/i18n/locales'
 import { href, type RouteKey } from '@/i18n/routes'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { AmbienceSwitch } from './effects/AmbienceSwitch'
 
 /** Osiem głównych sekcji menu (koncepcja: Szkielet strony). */
 export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'surroundings', 'offers', 'news', 'settlement', 'gallery', 'contact']
@@ -23,7 +24,9 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
               {t.nav[key]}
             </Link>
           ))}
+          <AmbienceSwitch t={t.effects} />
         </nav>
+        <AmbienceSwitch t={t.effects} />
         <LanguageSwitcher locale={locale} label={t.language} />
       </div>
     </header>

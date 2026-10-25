@@ -136,7 +136,7 @@ async function main() {
     const fallback = ['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5]
     const cover = (o.image ? img(o.image) : undefined) ?? img(fallback)
     // active: false zostaje szkicem (niewidoczna); kolejność jak w offers.json
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined, order: offerIndex, _status: o.active === false ? 'draft' : 'published' }))
+    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined, order: offerIndex, icecoldresPromotionId: o.icecoldres_promotion_id || undefined, _status: o.active === false ? 'draft' : 'published' }))
   }
 
   // strona główna: bloki w kolejności szkieletu

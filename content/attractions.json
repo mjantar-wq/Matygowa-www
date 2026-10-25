@@ -105,7 +105,7 @@
   },
   {
     "slug": "gubalowka",
-    "map_svg_id": null,
+    "map_svg_id": "a-gubalowka",
     "name": {
       "pl": "Kolej na Gubałówkę",
       "en": "Gubałówka funicular"
@@ -126,7 +126,7 @@
   },
   {
     "slug": "szymoszkowa",
-    "map_svg_id": null,
+    "map_svg_id": "a-szymoszkowa",
     "name": {
       "pl": "Wyciągi na Polanie Szymoszkowej",
       "en": "Polana Szymoszkowa ski lifts"

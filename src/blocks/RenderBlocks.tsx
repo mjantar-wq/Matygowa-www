@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import Link from 'next/link'
 import { BookingBar } from '@/components/BookingBar'
-import { Media } from '@/components/Media'
+import { Credit, Media } from '@/components/Media'
 import { RichText } from '@/components/RichText'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
@@ -239,7 +239,7 @@ const attractionSvgId = (slug: string) => `a-${({ 'stoki-bialka-bukowina': 'kote
 
 function Story({ block, immersive }: Props<'story'>) {
   // na stałym tle zdjęcie przejmuje scena
-  const media = immersive ? null : <Media media={block.image} />
+  const media = immersive ? null : <figure className="mo-zdjecie"><Media media={block.image} /><Credit media={block.image} /></figure>
   return (
     <Section block={block}>
       <div style={{ display: 'grid', gap: 'var(--space-7)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', alignItems: 'center' }}>

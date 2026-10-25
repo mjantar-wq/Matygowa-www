@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import type { Dictionary } from '@/i18n/dictionaries'
 import type { Scene } from '@/lib/scenes'
 import { HeroStage } from './HeroStage'
 
@@ -12,7 +11,7 @@ const SVG: Partial<Record<Scene['kind'], string>> = { panorama: '/ilustracje/G2_
  * scenę, a data-scene-focus wskazuje element ilustracji (szczyt w panoramie, atrakcję na mapie okolicy).
  * Sceny montują się dopiero, gdy są najwyżej o cztery przed aktywną, więc strona nie ładuje wszystkiego naraz.
  */
-export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effects'] }) {
+export function SceneStage({ scenes }: { scenes: Scene[] }) {
   const [active, setActive] = useState(scenes[0]?.id)
   const [focus, setFocus] = useState<Focus | undefined>()
   const [hover, setHover] = useState<string | undefined>()
@@ -93,7 +92,7 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
         if (i > reach + 3 && !on) return null
         return (
           <div key={s.id} className="mo-stage__scene" data-kind={s.kind} data-active={on || undefined}>
-            {s.kind === 'media' && s.slides ? <HeroStage slides={s.slides} t={t} active={on} eager={i === 0} controls={i === 0} /> : null}
+            {s.kind === 'media' && s.slides ? <HeroStage slides={s.slides} active={on} eager={i === 0} /> : null}
             {SVG[s.kind] ? <InlineSvg src={SVG[s.kind]!} focus={on ? shown : undefined} pan={s.kind === 'panorama'} /> : null}
           </div>
         )
@@ -164,10 +163,11 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
     const [xa, xb] = [cx(find(focus?.a)), cx(find(focus?.b))]
     const x = xa + (xb - xa) * (focus?.t ?? 0)
     // Szczyt staje na środku wolnej części ekranu, obok kart domków, żeby karta nie zasłaniała swojego szczytu.
-    // Przy skrajnych szczytach panorama może odsunąć się od lewej krawędzi (pod kartami).
+    // Przy skrajnych szczytach panorama może odsunąć się od lewej krawędzi aż do prawego brzegu kart.
     const cards = document.querySelector('.mo-peak-cards > [data-step]')?.getBoundingClientRect()
-    const anchor = cards && cards.right < innerWidth * 0.7 ? (cards.right + innerWidth) / 2 : innerWidth / 2
-    const shift = Math.min(Math.max(0, anchor - innerWidth / 2), Math.max(innerWidth - sr.width, anchor - x))
+    const beside = !!cards && cards.right < innerWidth * 0.7
+    const anchor = beside ? (cards.right + innerWidth) / 2 : innerWidth / 2
+    const shift = Math.min(beside ? cards.right : 0, Math.max(innerWidth - sr.width, anchor - x))
     el.style.setProperty('--przesun', `${shift}px`)
   }, [focus, ready, pan])
 

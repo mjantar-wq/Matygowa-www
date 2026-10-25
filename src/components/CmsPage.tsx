@@ -27,7 +27,7 @@ export async function CmsPage({ route, slug, ctx, fallback, children, required, 
     const media = await findMany<Media>('media', ctx.locale, { limit: 300, depth: 0 })
     return (
       <div className="mo-opowiesc" data-tlo="media">
-        <SceneStage scenes={buildScenes(blocks, media)} t={ctx.t.effects} />
+        <SceneStage scenes={buildScenes(blocks, media)} />
         <RenderBlocks blocks={blocks} ctx={ctx} immersive />
         {children}
         <BookingDock label={ctx.t.booking.check} close={ctx.t.effects.close}>

@@ -18,14 +18,17 @@ export const sceneId = (blockId: string | null | undefined, step?: number) => `s
 
 const asImage = (m?: MediaRef): HeroImage | null =>
   m && typeof m === 'object' && m.url ? { url: m.url, alt: m.alt, width: m.width, height: m.height, focusX: m.focusX, focusY: m.focusY } : null
-const asUrl = (m?: MediaRef) => (m && typeof m === 'object' && m.url ? m.url : null)
 
-/** Warianty → kadry z przypisanymi nastrojami; pomija warianty bez kadru i bez filmu. */
+/**
+ * Warianty → kadry z przypisanymi nastrojami; pomija warianty bez kadru.
+ * Filmy na razie pomijamy: zastępcze ujęcia drżały i źle się zapętlały, więc kadr dostaje wolny ruch kamery
+ * w CSS. Gdy będzie prawdziwe, stabilne ujęcie z płynną pętlą, wystarczy przywrócić tu `video` i `videoPortrait`.
+ */
 export function slidesOf(variants: Variant[]): HeroSlide[] {
-  const usable = variants.filter((v) => asImage(v.image) || asUrl(v.video))
+  const usable = variants.filter((v) => asImage(v.image))
   const slots = assignSlots(usable)
   return usable
-    .map((v, i) => ({ image: asImage(v.image), video: asUrl(v.video), videoPortrait: asUrl(v.videoPortrait), slots: slots[i] }))
+    .map((v, i): HeroSlide => ({ image: asImage(v.image), slots: slots[i] }))
     .filter((s) => s.slots.length)
 }
 

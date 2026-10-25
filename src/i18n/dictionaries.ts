@@ -9,7 +9,7 @@ const pl = {
   siteName: 'Matygowa Osada',
   nav: {
     home: 'Strona główna',
-    houses: 'Domy i apartamenty',
+    houses: 'Domki i apartamenty',
     rituals: 'Rytuały',
     surroundings: 'Okolica',
     offers: 'Oferty',
@@ -65,12 +65,12 @@ const pl = {
     } as Record<string, string>,
   },
   house: {
-    kind: { house: 'Dom', apartment: 'Apartament' },
+    kind: { house: 'Domek', apartment: 'Apartament' },
     comingSoon: 'Wkrótce',
     guests: (n: number) => `do ${n} osób`,
     peak: 'Szczyt',
     elevation: (m: number) => `${m.toLocaleString('pl-PL')} m n.p.m.`,
-    others: 'Pozostałe domy i apartamenty',
+    others: 'Pozostałe domki i apartamenty',
     amenities: 'Udogodnienia',
     availability: 'Dostępność i ceny',
     gallery: 'Galeria',

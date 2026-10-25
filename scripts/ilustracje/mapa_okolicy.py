@@ -43,6 +43,8 @@ POI = [
     ("splyw-dunajcem", "Spływ Dunajcem", 49.40522, 20.34027, 0, -16, "middle"),
     ("jaskinie-slowacja", "Jaskinia Bielska", 49.22876, 20.31147, 0, 24, "middle"),
     ("morskie-oko", "Morskie Oko", 49.19738, 20.07072, 12, 4, "start"),
+    ("gubalowka", "Gubałówka", 49.3015, 19.9384, 4, -10, "middle"),
+    ("szymoszkowa", "Polana Szymoszkowa", 49.2980, 19.9249, 0, 38, "middle"),
 ]
 MIEJSCOWOSCI = [
     ("Zakopane", 49.29691, 19.95048, 0, 26, "middle"), ("Poronin", 49.33965, 20.00556, -12, -8, "end"),

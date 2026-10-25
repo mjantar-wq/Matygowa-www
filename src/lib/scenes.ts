@@ -70,7 +70,7 @@ function defaults(pick: ReturnType<typeof libraryPicker>) {
       ['W5_', 'W21_'],
     ].map(([zima, l]) => [v(zima), lato(l)]),
     bania: [v('B1_bania_alpenglow'), v('B1_bania_lato', { sezon: 'lato' }), v('B2_bania_noc_3x2', { pora: 'noc' }), latoNoc('B1_bania_lato')],
-    nature: [lato('L29_'), latoNoc('L29_')],
+    nature: [lato('L30_'), latoNoc('L30_')],
     testimonials: [v('K8_punkt_widokowy'), v('T3_noc_gwiazdy', { pora: 'noc' }), latoNoc('K8_punkt_widokowy')],
     offersNews: [v('K6_dom_orbita'), v('K2_hero_osada_noc_16x9', { pora: 'noc' }), lato('L23_'), latoNoc('L23_')],
     bookingInvite: [v('T1_swit_gran'), v('T3_noc_gwiazdy', { pora: 'noc' }), lato('L25_'), latoNoc('L25_')],
@@ -94,7 +94,7 @@ export function buildScenes(blocks: NonNullable<Page['layout']>, media: Media[])
         add(sceneId(b.id), 'panorama')
         break
       case 'story': {
-        // zapowiedź bani dostaje też jej nocny i letni kadr, przyroda (zimowy przelot drona) letni las
+        // zapowiedź bani dostaje też jej nocny i letni kadr, przyroda (zimowy przelot drona) całą osadę latem
         const name = typeof b.image === 'object' ? (b.image?.filename ?? '') : ''
         add(sceneId(b.id), 'media', [...own(b), { image: b.image }, ...(name.startsWith('B') ? d.bania : name.startsWith('K3_') ? d.nature : [])])
         break

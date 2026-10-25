@@ -21917,13 +21917,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "place": {
-          "name": "place",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "seo_title": {
           "name": "seo_title",
           "type": "text",
@@ -21984,107 +21977,6 @@
           "tableTo": "attractions",
           "columnsFrom": [
             "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "attractions_rels": {
-      "name": "attractions_rels",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "order": {
-          "name": "order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "parent_id": {
-          "name": "parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "path": {
-          "name": "path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "media_id": {
-          "name": "media_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "attractions_rels_order_idx": {
-          "name": "attractions_rels_order_idx",
-          "columns": [
-            "order"
-          ],
-          "isUnique": false
-        },
-        "attractions_rels_parent_idx": {
-          "name": "attractions_rels_parent_idx",
-          "columns": [
-            "parent_id"
-          ],
-          "isUnique": false
-        },
-        "attractions_rels_path_idx": {
-          "name": "attractions_rels_path_idx",
-          "columns": [
-            "path"
-          ],
-          "isUnique": false
-        },
-        "attractions_rels_media_id_idx": {
-          "name": "attractions_rels_media_id_idx",
-          "columns": [
-            "media_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "attractions_rels_parent_fk": {
-          "name": "attractions_rels_parent_fk",
-          "tableFrom": "attractions_rels",
-          "tableTo": "attractions",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "attractions_rels_media_fk": {
-          "name": "attractions_rels_media_fk",
-          "tableFrom": "attractions_rels",
-          "tableTo": "media",
-          "columnsFrom": [
-            "media_id"
           ],
           "columnsTo": [
             "id"
@@ -22474,13 +22366,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "version_place": {
-          "name": "version_place",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "version_seo_title": {
           "name": "version_seo_title",
           "type": "text",
@@ -22553,107 +22438,6 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "_attractions_v_rels": {
-      "name": "_attractions_v_rels",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "order": {
-          "name": "order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "parent_id": {
-          "name": "parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "path": {
-          "name": "path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "media_id": {
-          "name": "media_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "_attractions_v_rels_order_idx": {
-          "name": "_attractions_v_rels_order_idx",
-          "columns": [
-            "order"
-          ],
-          "isUnique": false
-        },
-        "_attractions_v_rels_parent_idx": {
-          "name": "_attractions_v_rels_parent_idx",
-          "columns": [
-            "parent_id"
-          ],
-          "isUnique": false
-        },
-        "_attractions_v_rels_path_idx": {
-          "name": "_attractions_v_rels_path_idx",
-          "columns": [
-            "path"
-          ],
-          "isUnique": false
-        },
-        "_attractions_v_rels_media_id_idx": {
-          "name": "_attractions_v_rels_media_id_idx",
-          "columns": [
-            "media_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "_attractions_v_rels_parent_fk": {
-          "name": "_attractions_v_rels_parent_fk",
-          "tableFrom": "_attractions_v_rels",
-          "tableTo": "_attractions_v",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "_attractions_v_rels_media_fk": {
-          "name": "_attractions_v_rels_media_fk",
-          "tableFrom": "_attractions_v_rels",
-          "tableTo": "media",
-          "columnsFrom": [
-            "media_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "offers": {
       "name": "offers",
       "columns": {
@@ -22682,20 +22466,6 @@
         "image_id": {
           "name": "image_id",
           "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "valid_from": {
-          "name": "valid_from",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "valid_to": {
-          "name": "valid_to",
-          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -22832,20 +22602,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "summary": {
-          "name": "summary",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "content": {
-          "name": "content",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "seo_title": {
           "name": "seo_title",
           "type": "text",
@@ -22953,20 +22709,6 @@
         "version_image_id": {
           "name": "version_image_id",
           "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "version_valid_from": {
-          "name": "version_valid_from",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "version_valid_to": {
-          "name": "version_valid_to",
-          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -23188,20 +22930,6 @@
       "columns": {
         "version_title": {
           "name": "version_title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "version_summary": {
-          "name": "version_summary",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "version_content": {
-          "name": "version_content",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -25153,6 +24881,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "f7c5172f-4ae3-4923-ba71-152fed64c7b8",
+  "id": "0f7fa03c-ee03-4371-a1ae-e44c07b5c05e",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

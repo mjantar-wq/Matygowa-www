@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { CmsPage, getPage } from '@/components/CmsPage'
+import { ContactDetails } from '@/components/ContactDetails'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
 
 export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
@@ -9,5 +10,10 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 }
 
 export default async function ContactPage({ params }: LocaleParams) {
-  return <CmsPage route="contact" ctx={await pageContext(params)} />
+  const ctx = await pageContext(params)
+  return (
+    <CmsPage route="contact" ctx={ctx}>
+      <ContactDetails ctx={ctx} />
+    </CmsPage>
+  )
 }

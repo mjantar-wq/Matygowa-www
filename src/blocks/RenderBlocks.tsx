@@ -13,9 +13,10 @@ import { heroSlides, sceneId } from '@/lib/scenes'
 import { href } from '@/i18n/routes'
 import { findMany } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
-import { getPromotions, getServices, promoSeason } from '@/lib/icecoldres'
+import { getServices, promoSeason } from '@/lib/icecoldres'
+import { getPromoCards } from '@/lib/promo-cards'
 import type { PageContext } from '@/lib/page'
-import type { Attraction, News, Offer, Page, Testimonial, Unit } from '@/payload-types'
+import type { Attraction, News, Page, Testimonial, Unit } from '@/payload-types'
 
 type Block = NonNullable<Page['layout']>[number]
 type Of<T extends Block['blockType']> = Extract<Block, { blockType: T }>
@@ -308,19 +309,15 @@ function SourceMark({ source, rating }: { source?: Testimonial['source']; rating
 }
 
 async function OffersNews({ block, ctx }: Props<'offersNews'>) {
-  const [promotions, news, offers] = await Promise.all([
-    getPromotions(),
-    findMany<News>('news', ctx.locale, { limit: 1, sort: '-publishedAt' }),
-    findMany<Offer>('offers', ctx.locale, { sort: 'order' }),
-  ])
+  const [cards, news] = await Promise.all([getPromoCards(ctx.locale), findMany<News>('news', ctx.locale, { limit: 1, sort: '-publishedAt' })])
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
-        {promotions.map((p) => (
+        {cards.map(({ promotion: p, image }) => (
           <article key={p.id} className="mo-card" data-sezon-promo={promoSeason(p.season)}>
-            {/* zdjęcie z oferty w panelu połączonej z tą promocją (bez cudzego zdjęcia z innej oferty) */}
-            <div className="mo-card__media"><Media media={offers.find((o) => o.icecoldresPromotionId === p.id)?.image} /></div>
+            {/* zdjęcie z panelu, a bez niego prawdziwe zdjęcie domku */}
+            <div className="mo-card__media"><Media media={image} /></div>
             <p className="mo-label">{ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}</h3>
             <p>{ctx.locale === 'pl' ? p.description : p.en.description || p.description}</p>

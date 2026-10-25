@@ -14,22 +14,6 @@
    "source": "dsc01959.jpg"
   },
   {
-   "file": "O_drewno_willa_koliba_3x2_foto.webp",
-   "shot": "O",
-   "width": 1600,
-   "height": 1067,
-   "placeholder": false,
-   "alt": {
-    "pl": "Willa Koliba w Zakopanem jesienią",
-    "en": "Koliba villa in Zakopane in autumn"
-   },
-   "credit": {
-    "pl": "Fot. Aneta Pawska · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg",
-    "en": "Photo: Aneta Pawska · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg"
-   },
-   "source": "https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg"
-  },
-  {
    "file": "O_owce_oscypki_3x2_foto.webp",
    "shot": "O",
    "width": 1600,
@@ -520,6 +504,30 @@
     "en": "The wooden façade of a house with its balcony in summer"
    },
    "source": "a7v09961.jpg"
+  },
+  {
+   "file": "K12_hero_tatry_zima_16x9_foto.webp",
+   "shot": "K12",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Ośnieżone Tatry nad poranną mgłą, na dole dachy osady",
+    "en": "The snow-covered Tatras above the morning mist, with the settlement roofs below"
+   },
+   "source": "DJI_20260121180502_0393_D.jpg"
+  },
+  {
+   "file": "K13_hero_tatry_lato_16x9_foto.webp",
+   "shot": "K13",
+   "width": 1434,
+   "height": 807,
+   "placeholder": false,
+   "alt": {
+    "pl": "Tatry latem w wieczornym świetle, na dole łąki i świerkowe lasy",
+    "en": "The Tatras in summer evening light, with meadows and spruce forests below"
+   },
+   "source": "widoki-02.jpg"
   },
   {
    "file": "K1_panorama_tatry_21x9_foto.webp",
@@ -1474,6 +1482,54 @@
     "en": "Balcony view of forested hills"
    },
    "source": "a7v02349.webp"
+  },
+  {
+   "file": "O_historia_dom_lato_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Jeden z domków Matygowej Osady, drewniana elewacja i balkon pod szczytem dachu",
+    "en": "One of the Matygowa Osada cottages, timber facade and gable balcony"
+   },
+   "source": "a7v09961.jpg"
+  },
+  {
+   "file": "O_natura_osada_tatry_zima_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domki osady wśród świerków, w tle Tatry",
+    "en": "The settlement's cottages among spruces, the Tatras behind"
+   },
+   "source": "dji_20260121180502_0393_d.jpg"
+  },
+  {
+   "file": "O_drewno_krzeslo_serce_2x3_foto.webp",
+   "shot": "O",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Oparcie góralskiego krzesła z wyciętym sercem",
+    "en": "The back of a highland chair with a carved heart"
+   },
+   "source": "a7v09887.jpg"
+  },
+  {
+   "file": "O_slowniczek_plakaty_szczytow_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Plakaty tatrzańskich szczytów na ścianie domku",
+    "en": "Posters of Tatra peaks on a cottage wall"
+   },
+   "source": "a7v09800.jpg"
   },
   {
    "file": "A_morskie-oko_1.webp",

@@ -18,7 +18,7 @@ export function SettlementMap({ units, ctx }: { units: Unit[]; ctx: PageContext 
   const apartments = units.filter((u) => u.kind === 'apartment')
   const buildings = [
     ...houses.map((u) => ({ svgId: `b-dom-${u.slug.replace(/^dom-/, '')}`, popoverId: `mapa-${u.slug}`, unit: u })),
-    // bliźniak z apartamentami: każdy lokal ma na rysunku własną strefę b-apt-<slug> (góra: Czerwone Wierchy, Kominiarski Wierch; dół: Giewont, Ciemniak)
+    // bliźniak z apartamentami: każdy lokal ma na rysunku własną strefę b-apt-<slug> (jedna połowa: Czerwone Wierchy nad Giewontem, druga: Kominiarski Wierch nad Ciemniakiem, jak piętro i parter)
     ...apartments.map((u) => ({ svgId: `b-apt-${u.slug}`, popoverId: `mapa-${u.slug}`, unit: u })),
   ]
   // Klik w budynek na rysunku prowadzi od razu na kartę; przycisk z nazwą pod mapą otwiera okno z opisem.

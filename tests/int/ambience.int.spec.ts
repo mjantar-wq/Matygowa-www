@@ -28,6 +28,13 @@ describe('Domyślny nastrój (defaultAmbience)', () => {
     expect(at('2026-06-21T18:30:00Z')).toEqual({ pora: 'dzien', sezon: 'lato' })
     expect(at('2026-06-21T21:00:00Z')).toEqual({ pora: 'noc', sezon: 'lato' })
   })
+  it('lato od kalendarzowej wiosny do końca lata, zima jesienią i zimą', () => {
+    expect(at('2026-03-20T11:00:00Z').sezon).toBe('zima')
+    expect(at('2026-03-21T11:00:00Z').sezon).toBe('lato')
+    expect(at('2026-09-22T11:00:00Z').sezon).toBe('lato')
+    expect(at('2026-09-23T11:00:00Z').sezon).toBe('zima')
+    expect(at('2026-10-25T11:00:00Z').sezon).toBe('zima')
+  })
   it('skrypt przed malowaniem jest poprawnym JS', () => {
     expect(() => new Function(AMBIENCE_INIT_SCRIPT)).not.toThrow()
   })

@@ -472,6 +472,24 @@ export interface Page {
             blockName?: string | null;
             blockType: 'richText';
           }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            people?:
+              | {
+                  name?: string | null;
+                  role?: string | null;
+                  photo?: (number | null) | Media;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            anchor?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hosts';
+          }
       )[]
     | null;
   seo?: {
@@ -1159,6 +1177,25 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               heading?: T;
               body?: T;
+              anchor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        hosts?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              intro?: T;
+              people?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    photo?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;

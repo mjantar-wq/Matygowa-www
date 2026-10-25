@@ -12,13 +12,41 @@
         "en": "How we got here"
       },
       "body": {
-        "pl": "Kochamy góry, przestrzeń, ciszę i zapach świerków. Od ponad dziesięciu lat prowadziliśmy własne obiekty w innych częściach Polski, ale w czasie pandemii zrozumieliśmy, że chcemy czegoś innego: miejsca, do którego sami chcielibyśmy wracać, z rodziną, z przyjaciółmi albo po prostu na kilka cichych dni. Sprzedaliśmy część obiektów i wybraliśmy Gliczarów Górny. Matygowa Osada łączy naszą miłość do Tatr z doświadczeniem, które zebraliśmy przez lata.",
-        "en": "We love the mountains, open space, silence and the scent of spruce. For more than ten years we ran our own properties elsewhere in Poland, but during the pandemic we realised we wanted something different: a place we would want to come back to ourselves, with family, with friends, or simply for a few quiet days. We sold some of those properties and chose Gliczarów Górny. Matygowa Osada brings together our love of the Tatras and everything we have learned over the years."
+        "pl": "Zawsze ciągnęło nas w góry. Do przestrzeni, ciszy, zapachu świerków i powietrza, którym oddycha się inaczej niż w mieście. Przez ponad dziesięć lat prowadziliśmy własne obiekty w innych częściach Polski i nauczyliśmy się, że goście pamiętają nie metraż, tylko to, jak się u kogoś czuli. W czasie pandemii zadaliśmy sobie proste pytanie: gdzie sami chcielibyśmy wracać? Odpowiedź przyszła razem z widokiem z łąki w Gliczarowie Górnym. Sprzedaliśmy część obiektów i zaczęliśmy budować tutaj. Matygowa Osada to miejsce, które zrobiliśmy tak, jak zrobilibyśmy je dla siebie, dla rodziny i przyjaciół. Każdy dom znamy od fundamentów, każdy szczyt za oknem po imieniu. Cieszymy się, że możemy się nim z Wami dzielić.",
+        "en": "We have always been drawn to the mountains. To open space, silence, the scent of spruce and air that feels different from the city. For more than ten years we ran our own properties elsewhere in Poland, and we learned that guests do not remember the square metres; they remember how they felt. During the pandemic we asked ourselves a simple question: where would we want to keep coming back to? The answer came with the view from a meadow in Gliczarów Górny. We sold some of our properties and started building here. We made Matygowa Osada the way we would make it for ourselves, our family and our friends. We know every house down to its foundations and every peak outside the window by name. We are glad to share it with you."
       },
-      "hosts": {
-        "enabled": false,
-        "note": "Decyzja 8: imiona i zdjęcie gospodarzy, do decyzji Michała."
-      }
+      "signature": {
+        "pl": "Gospodarze Matygowej Osady",
+        "en": "Your hosts at Matygowa Osada"
+      },
+      "note": "Fakty z obecnej strony (O nas): miłość do gór, ciszy, świerków i czystego powietrza; ponad 10 lat własnych obiektów; pomysł w pandemii; miejsce, do którego sami chcieliby wracać; sprzedaż części obiektów i wybór Gliczarowa. DOPISANE, do sprawdzenia przez Michała: (1) goście pamiętają nie metraż, tylko jak się czuli; (2) odpowiedź przyszła z widokiem z łąki; (3) każdy dom znamy od fundamentów, każdy szczyt po imieniu; (4) cieszymy się, że możemy się dzielić."
+    },
+    {
+      "id": "gospodarze",
+      "enabled": false,
+      "heading": {
+        "pl": "Gospodarze",
+        "en": "Your hosts"
+      },
+      "photo": null,
+      "hosts": [
+        {
+          "name": null,
+          "role": {
+            "pl": null,
+            "en": null
+          },
+          "bio": {
+            "pl": null,
+            "en": null
+          }
+        }
+      ],
+      "personal_note": {
+        "pl": null,
+        "en": null
+      },
+      "note": "Do uzupełnienia przez Michała: imiona, zdjęcie, 2–3 zdania o każdym gospodarzu (co lubicie w okolicy, Wasz ulubiony szlak, szczyt albo rytuał). Sekcja włącza się w panelu, gdy pola są wypełnione. Podpis w sekcji historii zmieni się wtedy na imiona."
     },
     {
       "id": "natura",

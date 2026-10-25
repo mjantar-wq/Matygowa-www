@@ -290,6 +290,29 @@ function Text({ block }: Props<'richText'>) {
   )
 }
 
+function Hosts({ block }: Props<'hosts'>) {
+  const people = (block.people ?? []).filter((p) => p.name)
+  if (!people.length) return null
+  return (
+    <Section block={block}>
+      <Heading eyebrow={block.eyebrow} heading={block.heading} />
+      {block.intro ? <p className="mo-lede">{block.intro}</p> : null}
+      <div className="mo-cards">
+        {people.map((p) => (
+          <figure key={p.id} className="mo-card">
+            {p.photo ? <Media media={p.photo} /> : null}
+            <figcaption>
+              <h3 className="mo-h3">{p.name}</h3>
+              {p.role ? <p className="mo-card__meta">{p.role}</p> : null}
+              {p.text ? <p className="mo-prose">{p.text}</p> : null}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
 const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode | Promise<React.ReactNode> } = {
   hero: Hero,
   intro: Intro,
@@ -306,6 +329,7 @@ const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode |
   gallery: Gallery,
   faq: Faq,
   richText: Text,
+  hosts: Hosts,
 }
 
 export function RenderBlocks({ blocks, ctx }: { blocks: Page['layout']; ctx: PageContext }) {

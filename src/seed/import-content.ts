@@ -167,7 +167,15 @@ async function main() {
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
-    osada.sections.map((s: Any, i: number) => ({ blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.body?.[l]), imagePosition: i % 2 ? 'start' : 'end' })),
+    osada.sections.map((s: Any, i: number) => {
+      // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
+      if (s.id === 'gospodarze') {
+        return { blockType: 'hosts', anchor: s.id, heading: s.heading?.[l], intro: s.personal_note?.[l] ?? undefined, people: (s.hosts ?? []).filter((h: Any) => h.name).map((h: Any) => ({ name: h.name, role: h.role?.[l], text: h.bio?.[l] })) }
+      }
+      const items = (s.items ?? []).map((it: Any) => `### ${it.heading?.[l]}\n\n*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`)
+      const text = [s.lead?.[l], s.body?.[l], ...items, s.signature?.[l] ? `*${s.signature[l]}*` : null].filter(Boolean).join('\n\n')
+      return { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(text), imagePosition: i % 2 ? 'start' : 'end' }
+    }),
   )
 
   const guide = read('pages/przewodnik.json')

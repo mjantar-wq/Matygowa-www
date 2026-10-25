@@ -166,7 +166,13 @@ async function Surroundings({ block, ctx }: Props<'surroundings'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <Media media={block.map} fallback={`${ctx.t.placeholder}: mapa okolicy`} />
+      {block.map ? (
+        <Media media={block.map} />
+      ) : (
+        // ilustracja G7 z wątku wizualnego, dopóki redakcja nie wgra własnej mapy
+        // eslint-disable-next-line @next/next/no-img-element -- SVG z public/
+        <img src="/ilustracje/G7_mapa_okolicy.svg" alt={ctx.locale === 'pl' ? 'Mapa okolicy Matygowej Osady' : 'Map of the area around Matygowa Osada'} loading="lazy" style={{ inlineSize: '100%', blockSize: 'auto' }} />
+      )}
       <div className="mo-cards">
         {attractions.map((a) => (
           <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">
@@ -290,6 +296,29 @@ function Text({ block }: Props<'richText'>) {
   )
 }
 
+function Hosts({ block }: Props<'hosts'>) {
+  const people = (block.people ?? []).filter((p) => p.name)
+  if (!people.length) return null
+  return (
+    <Section block={block}>
+      <Heading eyebrow={block.eyebrow} heading={block.heading} />
+      {block.intro ? <p className="mo-lede">{block.intro}</p> : null}
+      <div className="mo-cards">
+        {people.map((p) => (
+          <figure key={p.id} className="mo-card">
+            {p.photo ? <Media media={p.photo} /> : null}
+            <figcaption>
+              <h3 className="mo-h3">{p.name}</h3>
+              {p.role ? <p className="mo-card__meta">{p.role}</p> : null}
+              {p.text ? <p className="mo-prose">{p.text}</p> : null}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
 const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode | Promise<React.ReactNode> } = {
   hero: Hero,
   intro: Intro,
@@ -306,6 +335,7 @@ const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode |
   gallery: Gallery,
   faq: Faq,
   richText: Text,
+  hosts: Hosts,
 }
 
 export function RenderBlocks({ blocks, ctx }: { blocks: Page['layout']; ctx: PageContext }) {

@@ -472,6 +472,24 @@ export interface Page {
             blockName?: string | null;
             blockType: 'richText';
           }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            people?:
+              | {
+                  name?: string | null;
+                  role?: string | null;
+                  photo?: (number | null) | Media;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            anchor?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hosts';
+          }
       )[]
     | null;
   seo?: {
@@ -585,6 +603,9 @@ export interface Unit {
   area?: number | null;
   bedrooms?: number | null;
   maxGuests?: number | null;
+  bathrooms?: number | null;
+  separateWc?: boolean | null;
+  ensuiteUpstairs?: boolean | null;
   livingRoom?: ('ground' | 'upper') | null;
   seo?: {
     title?: string | null;
@@ -1160,6 +1181,25 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        hosts?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              intro?: T;
+              people?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    photo?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              anchor?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   seo?:
     | T
@@ -1200,6 +1240,9 @@ export interface UnitsSelect<T extends boolean = true> {
   area?: T;
   bedrooms?: T;
   maxGuests?: T;
+  bathrooms?: T;
+  separateWc?: T;
+  ensuiteUpstairs?: T;
   livingRoom?: T;
   seo?:
     | T

@@ -85,7 +85,9 @@ async function main() {
     const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
       hero: vShot ? img(`V${vShot}_`) : undefined,
-      name: peak.name?.[l] ?? u.name?.[l],
+      // seria zdjęć: kadr domu i wspólne wnętrza CGI (domy są urządzone podobnie), do podmiany po sesji foto
+      gallery: [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_'].map(img)].filter(Boolean),
+      name: u.name?.[l] ?? peak.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',
       order: u.sort ?? 0,
@@ -96,6 +98,9 @@ async function main() {
       area: u.facts?.area_m2,
       bedrooms: u.facts?.bedrooms,
       maxGuests: u.facts?.max_guests,
+      bathrooms: u.facts?.bathrooms,
+      separateWc: !!u.facts?.separate_wc,
+      ensuiteUpstairs: !!u.facts?.ensuite_upstairs,
       livingRoom: u.facts?.living_room === 'upper' || u.facts?.living_room === 'first' ? 'upper' : u.facts?.living_room ? 'ground' : undefined,
       seo: { title: u.seo?.title?.[l], description: u.seo?.description?.[l] },
     }))
@@ -113,9 +118,11 @@ async function main() {
     }))
   }
 
+  let offerIndex = 0
   for (const o of read('offers.json') as Any[]) {
     const [from, to] = String(o.valid ?? '').split('/')
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], validFrom: from || undefined, validTo: to || undefined }))
+    const cover = img(['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5])
+    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined }))
   }
 
   // strona główna: bloki w kolejności szkieletu
@@ -140,7 +147,7 @@ async function main() {
       case 'surroundings':
         return { blockType: 'surroundings', ...base, body: md(b.body?.[l]), limit: b.featured_attractions ?? 6 }
       case 'nature':
-        return { blockType: 'story', ...base, body: md(b.body?.[l]) }
+        return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('K3_'), imagePosition: 'end' }
       case 'testimonials':
         return { blockType: 'testimonials', ...base, eyebrow: b.rating_line?.[l] }
       case 'offers_news':
@@ -164,7 +171,15 @@ async function main() {
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
-    osada.sections.map((s: Any, i: number) => ({ blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.body?.[l]), imagePosition: i % 2 ? 'start' : 'end' })),
+    osada.sections.map((s: Any, i: number) => {
+      // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
+      if (s.id === 'gospodarze') {
+        return { blockType: 'hosts', anchor: s.id, heading: s.heading?.[l], intro: s.personal_note?.[l] ?? undefined, people: (s.hosts ?? []).filter((h: Any) => h.name).map((h: Any) => ({ name: h.name, role: h.role?.[l], text: h.bio?.[l] })) }
+      }
+      const items = (s.items ?? []).map((it: Any) => `### ${it.heading?.[l]}\n\n*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`)
+      const text = [s.lead?.[l], s.body?.[l], ...items, s.signature?.[l] ? `*${s.signature[l]}*` : null].filter(Boolean).join('\n\n')
+      return { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(text), imagePosition: i % 2 ? 'start' : 'end' }
+    }),
   )
 
   const guide = read('pages/przewodnik.json')

@@ -1,6 +1,7 @@
 import * as migration_20261024_222614_initial from './20261024_222614_initial';
 import * as migration_20261024_223907_role_default from './20261024_223907_role_default';
 import * as migration_20261024_235001_pomiar_zgody from './20261024_235001_pomiar_zgody';
+import * as migration_20261025_002906_unit_bathrooms_hosts from './20261025_002906_unit_bathrooms_hosts';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20261024_235001_pomiar_zgody.up,
     down: migration_20261024_235001_pomiar_zgody.down,
-    name: '20261024_235001_pomiar_zgody'
+    name: '20261024_235001_pomiar_zgody',
+  },
+  {
+    up: migration_20261025_002906_unit_bathrooms_hosts.up,
+    down: migration_20261025_002906_unit_bathrooms_hosts.down,
+    name: '20261025_002906_unit_bathrooms_hosts'
   },
 ];

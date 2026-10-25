@@ -58,3 +58,4 @@ node_modules/
 /dist/
 .dev.vars
 __pycache__/
+/scripts/media/.okolica-cache

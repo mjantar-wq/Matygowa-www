@@ -237,7 +237,7 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 .mo-atrakcja__tekst > * { margin: 0; }
 .mo-atrakcja__tekst :is(h1, h2) a { color: inherit; text-decoration: none; }
 .mo-atrakcja__tekst :is(h1, h2) a:hover { color: var(--color-bursztyn-tekst); }
-.mo-atrakcja__galeria { grid-column: 1 / -1; }
+.mo-atrakcja__galeria { grid-column: 1 / -1; order: 2; }
 .mo-atrakcje__wiecej { margin-block: var(--space-6) calc(-1 * var(--space-6)); }
 @media (min-width: 1024px) {
   .mo-atrakcja:has(.mo-atrakcja__zdjecie) { grid-template-columns: 7fr 5fr; }

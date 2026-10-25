@@ -45,6 +45,7 @@ async function main() {
         /_noc_|gwiazdy/.test(stem) ? 'night' : null,
         /^[VW]\d/.test(stem) ? 'interiors' : null,
         /^B\d/.test(stem) ? 'rituals' : null,
+        /^A_/.test(stem) ? 'surroundings' : null,
       ].filter(Boolean)
       const real = item.placeholder === false
       id = (

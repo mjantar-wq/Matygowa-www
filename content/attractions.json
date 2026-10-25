@@ -147,7 +147,8 @@
     "body": {
       "pl": "Największe jezioro w Tatrach leży na wysokości 1395 m, pod ścianami Mięguszowieckich Szczytów i Rysów. Samochodem dojedziecie tylko do parkingu na Palenicy Białczańskiej, dwadzieścia minut od osady. Dalej prowadzi asfaltowa droga przez las, około dwóch godzin spokojnym spacerem w jedną stronę.\n\nNad wodą stoi schronisko, gdzie można się ogrzać i zjeść. Kto ma siły, w godzinę dojdzie wyżej, nad Czarny Staw pod Rysami, skąd jezioro widać z góry.\n\nParking warto zarezerwować wcześniej na stronie Tatrzańskiego Parku Narodowego. Najspokojniej jest o świcie i poza wakacjami; zimą droga bywa oblodzona, przydadzą się raczki.",
       "en": "The largest lake in the Tatras lies at 1,395 metres, beneath the walls of the Mięguszowieckie peaks and Rysy. You can drive only as far as the Palenica Białczańska car park, twenty minutes from the settlement. From there an asphalt road leads through the forest, about two hours at an easy pace each way.\n\nA mountain hut stands by the water, a place to warm up and eat. If you still have the energy, an hour more takes you up to Czarny Staw pod Rysami, with the lake seen from above.\n\nBook the car park in advance on the Tatra National Park website. It is quietest at dawn and outside the summer holidays; in winter the road can be icy, so bring microspikes."
-    }
+    },
+    "image": "A_morskie-oko_1.webp"
   },
   {
     "slug": "gubalowka",
@@ -177,7 +178,11 @@
     "body": {
       "pl": "Kolej linowo-terenowa rusza tuż obok Krupówek i w kilka minut wjeżdża na Gubałówkę. Na górze czeka promenada z panoramą Tatr od Giewontu po Tatry Wysokie, a przy dobrej pogodzie widać całe pasmo jak na dłoni.\n\nGrzbietem można przejść spacerem na Butorowy Wierch albo w stronę Polany Szymoszkowej. Zimą działają tu wyciągi i saneczkowe zjazdy, latem zjeżdżalnie i trasy na rower.\n\nNa Gubałówkę dobrze wjechać pod wieczór, gdy słońce oświetla Tatry od zachodu i jest mniej ludzi. Z osady to pół godziny samochodem do centrum Zakopanego.",
       "en": "The funicular starts right next to Krupówki and climbs Gubałówka in a few minutes. At the top a promenade looks out over the Tatras from Giewont to the High Tatras; on a clear day you see the whole range laid out before you.\n\nAlong the ridge you can walk to Butorowy Wierch or towards Polana Szymoszkowa. In winter there are ski lifts and sledging runs, in summer slides and cycling routes.\n\nRide up towards evening, when the low sun lights the Tatras from the west and the crowds thin out. It is half an hour by car from the settlement to the centre of Zakopane."
-    }
+    },
+    "image": "A_gubalowka_1.webp",
+    "gallery": [
+      "A_gubalowka_2.webp"
+    ]
   },
   {
     "slug": "kasprowy-wierch",
@@ -207,7 +212,11 @@
     "body": {
       "pl": "Kolej linowa z Kuźnic wjeżdża na Kasprowy Wierch (1987 m), na samą granicę ze Słowacją. Na górze stoi obserwatorium meteorologiczne, najwyżej położony budynek w Polsce, a widok sięga obu stron Tatr.\n\nZimą to narty w Kotle Gąsienicowym i Goryczkowym, z najdłuższymi zjazdami w polskich Tatrach. Latem kolej jest początkiem wędrówek granią, na Beskid i dalej w stronę Świnicy, albo spokojnego zejścia do Hali Gąsienicowej.\n\nBilety najlepiej kupić online z wyprzedzeniem, w sezonie kolejka do kas bywa długa. Na górze jest zwykle kilka stopni zimniej i mocniej wieje, więc weźcie ciepłą warstwę także latem.",
       "en": "The cable car from Kuźnice climbs to Kasprowy Wierch (1,987 m), right on the Slovak border. At the top stands a weather observatory, the highest building in Poland, and the view reaches both sides of the Tatras.\n\nIn winter it means skiing in the Gąsienicowa and Goryczkowa bowls, with the longest runs in the Polish Tatras. In summer it is the start of ridge walks towards Beskid and on to Świnica, or an easy descent to Hala Gąsienicowa.\n\nBuy tickets online well ahead; in season the queue at the ticket office can be long. It is usually several degrees colder and windier at the top, so bring a warm layer even in summer."
-    }
+    },
+    "image": "A_kasprowy-wierch_1.webp",
+    "gallery": [
+      "A_kasprowy-wierch_2.webp"
+    ]
   },
   {
     "slug": "szymoszkowa",

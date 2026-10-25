@@ -67,6 +67,7 @@
         "pl": "Góralszczyzna dziś",
         "en": "Highland life today"
       },
+      "image": "O_goralszczyzna_",
       "lead": {
         "pl": "Podhale to nie skansen. To ludzie, którzy wciąż budują z drewna, grają na skrzypcach i robią ser tak, jak ich dziadkowie, i robią to dziś, na co dzień.",
         "en": "Podhale is not an open-air museum. It is people who still build in wood, play the fiddle and make cheese the way their grandparents did, and do it today, every day."
@@ -270,8 +271,16 @@
             "pl": "Polecamy tylko tych, których znamy: rzemieślników, przewodników, muzyków i gospodarzy z okolicy. Listę znajdziecie w przewodniku gościa.",
             "en": "We only recommend people we know: local craftspeople, mountain guides, musicians and farmers. You will find the list in our guest guide."
           },
-          "image": null,
-          "note": "Lista partnerów lokalnych do uzupełnienia przez Michała (nazwy, kontakty, zgoda na publikację)."
+          "image": {
+            "source": "własne",
+            "file": "O_ludzie_chleb",
+            "credit_required": false
+          },
+          "image_alt": {
+            "pl": "Bochenek chleba na kuchennej desce w domku",
+            "en": "A loaf of bread on a chopping board in the cottage kitchen"
+          },
+          "note": "Zdjęcie robocze (chleb), docelowo zdjęcie gospodarzy albo partnerów. Lista partnerów lokalnych do uzupełnienia przez Michała (nazwy, kontakty, zgoda na publikację)."
         }
       ]
     }

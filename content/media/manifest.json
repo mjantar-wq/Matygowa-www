@@ -1625,6 +1625,30 @@
     "pl": "Fot. disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693",
     "en": "Photo: disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693"
    }
+  },
+  {
+   "file": "O_goralszczyzna_krzeslo_wzor_2x3_foto.webp",
+   "shot": "O",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Góralskie krzesło z sercem przy stoliku, na ścianie tapeta z ludowym wzorem",
+    "en": "A highland chair with a carved heart by a desk, folk-pattern wallpaper behind"
+   },
+   "source": "a7v09792.jpg"
+  },
+  {
+   "file": "O_ludzie_chleb_2x3_foto.webp",
+   "shot": "O",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Bochenek chleba na kuchennej desce w domku",
+    "en": "A loaf of bread on a chopping board in the cottage kitchen"
+   },
+   "source": "dsc01922.jpg"
   }
  ]
 }

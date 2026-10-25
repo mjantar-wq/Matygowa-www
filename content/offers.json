@@ -13,8 +13,9 @@
       "en": "Snow, slopes a few minutes away and the hot tub in the evening. A house for the whole family, self-catering, from 1,300 PLN per night, minimum 5 nights."
     },
     "icecoldres_link": null,
-    "note": "Cena i daty do potwierdzenia w IceColdRes (sezon ferie-2027).",
-    "image": "N1_ferie_stok_narciarze"
+    "icecoldres_promotion_id": "ferie-2027",
+    "image": "N1_ferie_stok_narciarze",
+    "note": "Cena i daty do potwierdzenia w IceColdRes (sezon ferie-2027)."
   },
   {
     "slug": "standard",
@@ -43,8 +44,10 @@
       "pl": "Święta przy jednym stole, z choinką przy kominku i Tatrami za oknem. 2300 zł za dobę, minimum 5 nocy.",
       "en": "Christmas around one table, with a tree by the fire and the Tatras outside. 2,300 PLN per night, minimum 5 nights."
     },
-    "active": false,
-    "note": "Wygaśnie przed startem strony; zostawione jako wzór na kolejny rok."
+    "active": true,
+    "icecoldres_promotion_id": "boze-narodzenie-2026",
+    "image": "N2_",
+    "note": "Cena do potwierdzenia przez Michała. Zdjęcie: N2_swieta_stol_zima (prawdziwe, zastawiony stół zimą); docelowo zdjęcie z choinką. Po 27.12.2026 ustawić active = false."
   },
   {
     "slug": "zlota-jesien",
@@ -57,7 +60,8 @@
       "pl": "Od czwartej nocy płacicie połowę. Czerwone Wierchy właśnie rdzewieją.",
       "en": "From the fourth night you pay half. The Red Peaks are just turning rust-red."
     },
-    "active": false,
-    "note": "Sezonowa, do wznowienia jesienią 2027 jako promocja w IceColdRes."
+    "active": true,
+    "icecoldres_promotion_id": "nowa-promocja",
+    "note": "Zdjęcie i opis dla promocji IceColdRes „Złota polska jesień” (id nowa-promocja)."
   }
 ]

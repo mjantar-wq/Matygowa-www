@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+<!-- Deseń Podhale i Tatry (Michał, 25.10.2026): kafel do maski CSS, kolor nadaje token. Tylko na dużych jednolitych tłach, nigdy na zdjęciach ani wideo. -->
+<g fill="none" stroke="#000" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <g transform="translate(120 120)">
+          <g id="petal">
+            <path d="M0,-7 C-8,-18 -7,-31 0,-39 C7,-31 8,-18 0,-7 Z"/>
+            <path d="M0,-12 C-2,-21 -2,-27 0,-32"/>
+          </g>
+          <use href="#petal" transform="rotate(45)"/>
+          <use href="#petal" transform="rotate(90)"/>
+          <use href="#petal" transform="rotate(135)"/>
+          <use href="#petal" transform="rotate(180)"/>
+          <use href="#petal" transform="rotate(225)"/>
+          <use href="#petal" transform="rotate(270)"/>
+          <use href="#petal" transform="rotate(315)"/>
+        </g>
+        <path d="M120 57 L183 120 L120 183 L57 120 Z"/>
+        <path d="M120 67 L173 120 M173 120 L120 173 M120 173 L67 120 M67 120 L120 67" stroke-dasharray="2 8"/>
+        <path d="M120 27 L127 39 L120 51 L113 39 Z"/>
+        <path d="M120 189 L127 201 L120 213 L113 201 Z"/>
+        <path d="M27 120 L39 113 L51 120 L39 127 Z"/>
+        <path d="M189 120 L201 113 L213 120 L201 127 Z"/>
+        <g transform="translate(20 20) rotate(-45)">
+          <path d="M0 0 L36 36"/>
+          <path d="M8 8 L8 0 M15 15 L15 5 M22 22 L22 12 M29 29 L29 19"/>
+          <path d="M8 8 L0 8 M15 15 L5 15 M22 22 L12 22 M29 29 L19 29"/>
+        </g>
+        <g transform="translate(220 20) scale(-1 1) rotate(-45)">
+          <path d="M0 0 L36 36"/>
+          <path d="M8 8 L8 0 M15 15 L15 5 M22 22 L22 12 M29 29 L29 19"/>
+          <path d="M8 8 L0 8 M15 15 L5 15 M22 22 L12 22 M29 29 L19 29"/>
+        </g>
+        <g transform="translate(20 220) scale(1 -1) rotate(-45)">
+          <path d="M0 0 L36 36"/>
+          <path d="M8 8 L8 0 M15 15 L15 5 M22 22 L22 12 M29 29 L29 19"/>
+          <path d="M8 8 L0 8 M15 15 L5 15 M22 22 L12 22 M29 29 L19 29"/>
+        </g>
+        <g transform="translate(220 220) scale(-1 -1) rotate(-45)">
+          <path d="M0 0 L36 36"/>
+          <path d="M8 8 L8 0 M15 15 L15 5 M22 22 L22 12 M29 29 L29 19"/>
+          <path d="M8 8 L0 8 M15 15 L5 15 M22 22 L12 22 M29 29 L19 29"/>
+        </g>
+        <g transform="translate(120 0) scale(.42)">
+          <path d="M0 -38 C-7 -25 -7 -12 0 0 C7 -12 7 -25 0 -38 Z"/>
+          <path d="M0 0 C-13 -7 -26 -7 -38 0 C-26 7 -13 7 0 0 Z"/>
+          <path d="M0 0 C-7 13 -7 26 0 38 C7 26 7 13 0 0 Z"/>
+          <path d="M0 0 C13 -7 26 -7 38 0 C26 7 13 7 0 0 Z"/>
+        </g>
+      </g>
+</svg>

@@ -23,7 +23,8 @@ async function main() {
   const editorConfig = await editorConfigFactory.default({ config: payload.config })
   const md = (text?: string | null) => (text ? convertMarkdownToLexical({ editorConfig, markdown: text }) : null)
 
-  // Materiały tymczasowe CGI (content/media, manifest wątku wizualnego): zawsze isPlaceholder = true.
+  // content/media/manifest.json: prawdziwe zdjęcia (*_foto, placeholder: false, alt PL/EN z manifestu)
+  // stoją przed CGI, więc byPrefix wybiera je pierwsze. CGI zawsze isPlaceholder = true.
   // Plik o tej samej nazwie nie jest wgrywany drugi raz.
   const media = new Map<string, number | string>()
   const manifestPath = path.join(DIR, 'media', 'manifest.json')
@@ -40,15 +41,18 @@ async function main() {
         /^[VW]\d/.test(stem) ? 'interiors' : null,
         /^B\d/.test(stem) ? 'rituals' : null,
       ].filter(Boolean)
+      const real = item.placeholder === false
       id = (
         await payload.create({
           collection: 'media',
           locale: 'pl',
           filePath: path.join(DIR, 'media', filename),
-          data: { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
+          data: real
+            ? { alt: item.alt.pl, isPlaceholder: false, series }
+            : { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
         } as never) as Any
       ).id
-      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: `Temporary visualisation: ${describe}` } })
+      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}` } })
     }
     media.set(filename, id)
   }
@@ -59,7 +63,7 @@ async function main() {
   }
   const img = (prefix: string) => byPrefix(prefix, '.webp')
   const video = (prefix: string) => byPrefix(prefix, '.mp4')
-  if (media.size) payload.logger.info(`media: ${media.size} plików tymczasowych`)
+  if (media.size) payload.logger.info(`media: ${media.size} plików`)
 
   /** Zapis wpisu w obu językach: najpierw PL (tworzy), potem EN (uzupełnia tłumaczenia). */
   async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any) {

@@ -207,6 +207,12 @@ async function main() {
             body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
             image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
           })),
+          // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
+          ...(s.glossary?.words?.length ? [{
+            blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
+            body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- ***${w.word}*** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
+            image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
+          }] : []),
         ]
       }
       // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
@@ -215,7 +221,7 @@ async function main() {
       }
       const items = (s.items ?? []).map((it: Any) => `### ${it.heading?.[l]}\n\n*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`)
       const text = [s.lead?.[l], s.body?.[l], ...items, s.signature?.[l] ? `*${s.signature[l]}*` : null].filter(Boolean).join('\n\n')
-      return { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(text), imagePosition: i % 2 ? 'start' : 'end' }
+      return { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(text), image: s.image ? img(s.image) : undefined, imagePosition: i % 2 ? 'start' : 'end' }
     }),
   )
 

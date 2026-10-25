@@ -19,6 +19,7 @@
         "pl": "Gospodarze Matygowej Osady",
         "en": "Your hosts at Matygowa Osada"
       },
+      "image": "O_historia_",
       "note": "Fakty z obecnej strony (O nas): miłość do gór, ciszy, świerków i czystego powietrza; ponad 10 lat własnych obiektów; pomysł w pandemii; miejsce, do którego sami chcieliby wracać; sprzedaż części obiektów i wybór Gliczarowa. DOPISANE, do sprawdzenia przez Michała: (1) goście pamiętają nie metraż, tylko jak się czuli; (2) odpowiedź przyszła z widokiem z łąki; (3) każdy dom znamy od fundamentów, każdy szczyt po imieniu; (4) cieszymy się, że możemy się dzielić."
     },
     {
@@ -54,6 +55,7 @@
         "pl": "W zgodzie z naturą",
         "en": "In harmony with nature"
       },
+      "image": "O_natura_",
       "body": {
         "pl": "Osadę budowaliśmy z myślą o tym, co wokół. Kolektory słoneczne i pompy ciepła dają około 90% energii, której potrzebujemy, a ścieki oczyszcza nasza własna ekologiczna oczyszczalnia. Wierzymy, że prawdziwy luksus to komfort w zgodzie z naturą.",
         "en": "We built the settlement with its surroundings in mind. Solar collectors and heat pumps provide about 90% of the energy we need, and our own ecological treatment plant cleans the wastewater. We believe true luxury is comfort in harmony with nature."
@@ -69,6 +71,107 @@
         "pl": "Podhale to nie skansen. To ludzie, którzy wciąż budują z drewna, grają na skrzypcach i robią ser tak, jak ich dziadkowie, i robią to dziś, na co dzień.",
         "en": "Podhale is not an open-air museum. It is people who still build in wood, play the fiddle and make cheese the way their grandparents did, and do it today, every day."
       },
+      "glossary": {
+        "heading": {
+          "pl": "Słowa, które tu usłyszycie",
+          "en": "Words you will hear here"
+        },
+        "lead": {
+          "pl": "Górale mówią gwarą, a niektóre jej słowa trafiły nawet na mapy i do nazw naszych domów. Oto kilka, które przydadzą się w czasie pobytu: przy bacówce, na szlaku i przy stole.",
+          "en": "Highlanders speak their own dialect, and some of its words have made it onto maps and into the names of our houses. Here are a few that will come in handy during your stay: at the shepherd's hut, on the trail and at the table."
+        },
+        "image": "O_slowniczek_",
+        "words": [
+          {
+            "word": "wierch",
+            "meaning": {
+              "pl": "szczyt, wierzchołek",
+              "en": "peak, summit"
+            },
+            "context": {
+              "pl": "Stąd Czerwone Wierchy i Kominiarski Wierch, od których nazwy mają nasze apartamenty.",
+              "en": "Hence Czerwone Wierchy and Kominiarski Wierch, which gave our apartments their names."
+            }
+          },
+          {
+            "word": "baca",
+            "meaning": {
+              "pl": "główny pasterz na hali",
+              "en": "head shepherd"
+            },
+            "context": {
+              "pl": "To u niego kupicie prawdziwy oscypek, od maja do września.",
+              "en": "He is the one to buy real oscypek from, May to September."
+            }
+          },
+          {
+            "word": "Wołosi",
+            "meaning": {
+              "pl": "wędrowni pasterze z Karpat",
+              "en": "wandering Carpathian shepherds"
+            },
+            "context": {
+              "pl": "Przynieśli tu owce i pasterski język. Od nich nazwę ma grań Wołoszyna i nasz Domek Wołoszyn.",
+              "en": "They brought sheep and shepherding words here. The Wołoszyn ridge, and our Wołoszyn cottage, are named after them."
+            }
+          },
+          {
+            "word": "nuta",
+            "meaning": {
+              "pl": "melodia góralska",
+              "en": "a highland tune"
+            },
+            "context": {
+              "pl": "Każda ma swoją nazwę i swojego muzyka, który ją gra najlepiej.",
+              "en": "Each one has its own name and its own fiddler who plays it best."
+            }
+          },
+          {
+            "word": "gazda",
+            "meaning": {
+              "pl": "gospodarz",
+              "en": "the master of the house"
+            },
+            "context": {
+              "pl": "Tak mówi się o kimś, kto dba o dom i gości. Staramy się na to słowo zasłużyć.",
+              "en": "The word for someone who looks after the house and its guests. We try to live up to it."
+            }
+          },
+          {
+            "word": "zrąb",
+            "meaning": {
+              "pl": "ściana z bali łączonych na zamki",
+              "en": "a wall of logs locked at the corners"
+            },
+            "context": {
+              "pl": "Tak budowano góralskie chałupy i tak buduje się je do dziś.",
+              "en": "This is how highland cottages were built, and still are."
+            }
+          },
+          {
+            "word": "gont",
+            "meaning": {
+              "pl": "ręcznie łupana drewniana dachówka",
+              "en": "a hand-split wooden roof tile"
+            },
+            "context": {
+              "pl": "Zobaczycie go na dachach kaplic i starych chałup w okolicy.",
+              "en": "You will see it on the roofs of chapels and old cottages nearby."
+            }
+          },
+          {
+            "word": "parzenica",
+            "meaning": {
+              "pl": "haftowany ornament na góralskich portkach",
+              "en": "embroidered ornament on highland trousers"
+            },
+            "context": {
+              "pl": "Jej wzór wraca na naszej stronie i na przyciskach.",
+              "en": "Its pattern returns across our website and on its buttons."
+            }
+          }
+        ]
+      },
       "items": [
         {
           "id": "drewno",
@@ -77,19 +180,17 @@
             "en": "Timber and shingle"
           },
           "body": {
-            "pl": "Na Podhalu ciesielka to wciąż zawód, nie hobby. Ściany stawia się na zrąb, z bali łączonych na zamki, a dachy kryje gontem, czyli ręcznie łupanymi drewnianymi dachówkami. Pod koniec XIX wieku Stanisław Witkiewicz zamienił tę góralską chałupę w styl zakopiański, a pierwszą willą w tym stylu była zakopiańska Koliba.",
-            "en": "In Podhale carpentry is still a trade, not a hobby. Walls are raised from logs locked together at the corners, and roofs are laid with shingle, hand-split wooden tiles. At the end of the 19th century Stanisław Witkiewicz turned the highland cottage into the Zakopane style, and the first villa built in it was Koliba in Zakopane."
+            "pl": "Na Podhalu ciesielka to wciąż zawód, nie hobby. Ściany stawia się na zrąb, z bali łączonych na zamki, a dachy kryje gontem, czyli ręcznie łupanymi drewnianymi dachówkami. Pod koniec XIX wieku Stanisław Witkiewicz zamienił tę góralską chałupę w styl zakopiański, a pierwszą willą w tym stylu była zakopiańska Koliba. Ten sam ciesielski gest znajdziecie u nas przy stole: oparcia góralskich krzeseł mają wycięte serce.",
+            "en": "In Podhale carpentry is still a trade, not a hobby. Walls are raised from logs locked together at the corners, and roofs are laid with shingle, hand-split wooden tiles. At the end of the 19th century Stanisław Witkiewicz turned the highland cottage into the Zakopane style, and the first villa built in it was Koliba in Zakopane. You will find the same carpenter's touch at our table: the backs of the highland chairs have a carved heart."
           },
           "image": {
-            "source": "Wikimedia Commons",
-            "url": "https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg",
-            "author": "Aneta Pawska",
-            "license": "CC BY 3.0",
-            "credit_required": true
+            "source": "własne",
+            "file": "O_drewno_krzeslo_serce",
+            "credit_required": false
           },
           "image_alt": {
-            "pl": "Willa Koliba w Zakopanem jesienią",
-            "en": "Koliba villa in Zakopane in autumn"
+            "pl": "Oparcie góralskiego krzesła z wyciętym sercem",
+            "en": "The back of a highland chair with a carved heart"
           }
         },
         {

@@ -1,7 +1,7 @@
 /**
  * Lista e-maili w polityce Cloudflare Access bramki /panel („Redakcja”) idzie za kontami panelu:
  * nowe konto dopisuje swój e-mail, usunięte konto go wykreśla, zmiana e-maila podmienia wpis.
- * Wpisy dodane ręcznie w Cloudflare (np. prywatny e-mail właściciela) zostają nietknięte.
+ * Wpisy dodane ręcznie w Cloudflare zostają nietknięte; adresów z CF_ACCESS_KEEP_EMAILS synchronizacja nigdy nie wykreśla.
  *
  * Konfiguracja Workera: CF_ACCESS_ACCOUNT_ID i CF_ACCESS_POLICY_ID (vars; CF_ACCESS_APP_ID tylko dla polityki
  * przypisanej do jednej aplikacji, a nie wielokrotnego użytku), CF_ACCESS_API_TOKEN (sekret,
@@ -17,7 +17,10 @@ export async function syncAccessEmail(add: string | null, remove: string | null)
   const policyId = process.env.CF_ACCESS_POLICY_ID
   const token = process.env.CF_ACCESS_API_TOKEN
   if (!account || !policyId || !token) return
-  const [a, r] = [norm(add), norm(remove)]
+  const keep = (process.env.CF_ACCESS_KEEP_EMAILS ?? '').split(',').map(norm).filter(Boolean)
+  const [a, r0] = [norm(add), norm(remove)]
+  // adresy z listy stałej (właściciel) zostają w bramce, nawet gdy ktoś usunie konto panelu o tym samym e-mailu
+  const r = keep.includes(r0) ? '' : r0
   if (a === r) return
 
   const app = process.env.CF_ACCESS_APP_ID

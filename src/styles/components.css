@@ -127,7 +127,7 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-skip { position: absolute; inset-inline-start: var(--space-2); inset-block-start: -100px; }
 .mo-skip:focus { inset-block-start: var(--space-2); z-index: 100; }
 .mo-header { position: sticky; inset-block-start: env(safe-area-inset-top, 0px); z-index: 10; background: var(--color-tlo); border-block-end: 1px solid var(--color-linia); }
-.mo-header::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: 0.3; -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; } /* deseń w nagłówku, bardzo delikatny (wg Michała) */
+.mo-header::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: calc(var(--wzor-podhale-krycie) * 0.7); -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; } /* deseń w nagłówku, bardzo delikatny (wg Michała) */
 .mo-header__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-block-size: var(--naglowek-wys); }
 .mo-nav { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); font: var(--text-body-s--font-weight) var(--text-body-s)/var(--text-body-s--line-height) var(--font-ui); }
 .mo-nav a { color: var(--color-atrament-2); text-decoration: none; display: inline-flex; align-items: center; min-block-size: var(--przycisk-maly); }
@@ -137,9 +137,9 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-footer a { color: inherit; }
 /* Deseń Podhale i Tatry (od Michała) na dużych jednolitych tłach: leży pod całą stroną w kolorze linii.
    Zdjęcia, filmy, karty, pola i stopka mają własne kryjące tło, więc deseń nigdy nie wchodzi na zdjęcia ani wideo. */
-:root { --wzor-podhale: url("/ilustracje/G6_wzor_podhale_tatry.svg"); --wzor-podhale-kafel: 240px; }
+:root { --wzor-podhale: url("/ilustracje/G6_wzor_podhale_tatry.svg"); --wzor-podhale-kafel: 240px; --wzor-podhale-krycie: 0.3; }
 @media (max-width: 767px) { :root { --wzor-podhale-kafel: 180px; } }
-body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: 0.55; -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; }
+body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: var(--wzor-podhale-krycie); -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; }
 /* Rozeta G6 na górnej krawędzi stopki, w kolorze linii */
 .mo-footer { position: relative; }
 .mo-footer::before { content: ""; position: absolute; top: 0; left: 50%; translate: -50% -50%; inline-size: 64px; block-size: 64px; border-radius: 50%; background: var(--color-tlo-2); }

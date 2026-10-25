@@ -11,6 +11,7 @@ import { RichText } from '@/components/RichText'
 import { href } from '@/i18n/routes'
 import { findBySlug, findMany } from '@/lib/cms'
 import { getProperty, getPromotions } from '@/lib/icecoldres'
+import { peakName, peakViewAlt } from '@/lib/peak'
 import { buildMetadata, pageContext, type SlugParams } from '@/lib/page'
 import type { Unit } from '@/payload-types'
 
@@ -45,7 +46,7 @@ export default async function UnitPage({ params }: SlugParams) {
   return (
     <article>
       <section className="mo-hero">
-        <div className="mo-hero__media"><Media media={unit.hero} priority /></div>
+        <div className="mo-hero__media"><Media media={unit.hero} priority alt={peakViewAlt(unit, ctx.locale)} /></div>
         <div className="mo-container mo-hero__content">
           {unit.status === 'comingSoon' ? <p className="mo-label" style={{ color: 'inherit' }}>{t.house.comingSoon}</p> : null}
           <h1 className="mo-display-xl">{unit.name}</h1>
@@ -61,7 +62,7 @@ export default async function UnitPage({ params }: SlugParams) {
       </section>
 
       <section className="mo-section mo-container">
-        <h2 className="mo-h2">{t.house.peak}: {unit.name}</h2>
+        <h2 className="mo-h2">{t.house.peak}: {peakName(unit, 'nom', ctx.locale) || unit.name}</h2>
         <RichText data={unit.peak?.story} />
         {!unit.peak?.story ? <Placeholder label={t.placeholder} note="Historia szczytu" /> : null}
       </section>
@@ -112,7 +113,7 @@ export default async function UnitPage({ params }: SlugParams) {
             .slice(0, Math.max(others.filter((u) => u.kind === unit.kind).length, 4))
             .map((u) => (
               <Link key={u.id} href={href(ctx.locale, 'houses', u.slug)} className="mo-card">
-                <div className="mo-card__media"><Media media={u.hero} /></div>
+                <div className="mo-card__media"><Media media={u.hero} alt={peakViewAlt(u, ctx.locale)} /></div>
                 <h3 className="mo-h3">{u.name}</h3>
                 <p className="mo-card__meta">
                   {t.house.kind[u.kind]}

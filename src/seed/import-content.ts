@@ -98,7 +98,7 @@ async function main() {
       icecoldresCode: u.icecoldres_code,
       tagline: u.lead?.[l],
       story: md(u.story?.[l]),
-      peak: { elevation: peak.elevation_m, range: peak.range?.[l], story: md(peak.story?.[l]) },
+      peak: { name: peak.name?.[l], nameCases: peak.name_cases_pl, elevation: peak.elevation_m, range: peak.range?.[l], story: md(peak.story?.[l]) },
       area: u.facts?.area_m2,
       bedrooms: u.facts?.bedrooms,
       maxGuests: u.facts?.max_guests,
@@ -118,6 +118,8 @@ async function main() {
       description: md(a.body?.[l]),
       summary: a.summary?.[l],
       distanceKm: a.distance_km,
+      driveMinutes: a.drive_min,
+      mapId: a.map_svg_id,
       featured: !!a.featured,
     }))
   }

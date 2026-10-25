@@ -83,14 +83,19 @@ async function main() {
 
   const peaks: Any[] = read('peaks.json')
   const units: Any[] = read('units.json')
+  // własne zdjęcia domków z sesji (Łomnica, Lodowy, Wołoszyn); pozostałe domy mają kadr domu i wspólne wnętrza
+  const unitPhotos: Record<string, { hero: string; gallery: string[] }> = fs.existsSync(path.join(DIR, 'unit-photos.json')) ? read('unit-photos.json') : {}
   for (const u of units) {
     const peak = peaks.find((p) => p.slug === u.peak) ?? {}
     const slug = u.icecoldres_code || u.peak
     const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski-wierch', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
-      hero: vShot ? img(`V${vShot}_`) : undefined,
-      // seria zdjęć: kadr domu i wspólne wnętrza CGI (domy są urządzone podobnie), do podmiany po sesji foto
-      gallery: [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_'].map(img)].filter(Boolean),
+      hero: unitPhotos[slug] ? media.get(unitPhotos[slug].hero) : vShot ? img(`V${vShot}_`) : undefined,
+      // seria zdjęć: własna sesja domku albo kadr domu i wspólne wnętrza (domy są urządzone podobnie)
+      gallery: (unitPhotos[slug]
+        ? [unitPhotos[slug].hero, ...unitPhotos[slug].gallery].map((f) => media.get(f))
+        : [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_'].map(img)]
+      ).filter(Boolean),
       name: u.name?.[l] ?? peak.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',
@@ -181,9 +186,10 @@ async function main() {
 
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
-    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any, i: number) => ({ word: s.word?.[l], text: s.body?.[l], image: img(['B1_', 'B2_', 'B3_', 'B5_'][i] ?? 'B') })), showPrices: true },
-    { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), imagePosition: 'end' },
-    { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), imagePosition: 'start' },
+    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any, i: number) => ({ word: s.word?.[l], text: s.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][i] ?? 'B') })), showPrices: true },
+    // same prawdziwe zdjęcia sauny i bani, bez wygenerowanych ludzi (wg Michała)
+    { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), image: img('W51_sauna_lawy'), imagePosition: 'end' },
+    { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), image: img('B1_bania_lato'), imagePosition: 'start' },
     { blockType: 'richText', body: md(rytualy.rules?.[l]) },
   ], (l) => rytualy.lead?.[l])
 

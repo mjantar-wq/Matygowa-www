@@ -231,8 +231,9 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 /* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić. Karty bez podsiatki,
    inaczej przerwa między krokami rozciąga każdą kartę na kilka ekranów. */
 .mo-opowiesc :is(.mo-cards, .mo-peak-cards, ol):has(> [data-step]) { display: grid !important; grid-template-columns: minmax(0, var(--plyta-szer)) !important; grid-template-rows: none; gap: 55svh !important; list-style: none; padding: 0; margin-block-start: 30svh; }
-/* Domki bliżej siebie: panorama przechodzi płynnie od szczytu do szczytu, bez długiej przerwy */
+/* Domki, pory dnia i pomieszczenia bliżej siebie: scena przechodzi płynnie, bez długiej przerwy */
 .mo-opowiesc .mo-peak-cards:has(> [data-step]) { gap: 18svh !important; }
+.mo-opowiesc :is([data-block="dayInSettlement"], [data-block="houseInside"]) :is(.mo-cards, ol):has(> [data-step]) { gap: 28svh !important; margin-block-start: 18svh; }
 .mo-opowiesc .mo-cards > .mo-card { grid-row: auto; grid-template-rows: none; row-gap: var(--space-2); align-content: start; }
 .mo-opowiesc .mo-cards:not(:has(> [data-step])) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), var(--plyta-szer))); row-gap: var(--space-5); }
 .mo-opowiesc :is([data-step], [data-block="seasons"] .mo-card) > .mo-card__media { display: none; }

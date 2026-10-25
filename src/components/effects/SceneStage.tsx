@@ -10,7 +10,7 @@ const SVG: Partial<Record<Scene['kind'], string>> = { panorama: '/ilustracje/G2_
 /**
  * Przypięta scena pod całą stroną główną. Rozdział albo krok na środku ekranu (atrybut data-scene) wybiera
  * scenę, a data-scene-focus wskazuje element ilustracji (szczyt w panoramie, atrakcję na mapie okolicy).
- * Sceny montują się dopiero, gdy są najwyżej o dwie przed aktywną, więc strona nie ładuje wszystkiego naraz.
+ * Sceny montują się dopiero, gdy są najwyżej o cztery przed aktywną, więc strona nie ładuje wszystkiego naraz.
  */
 export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effects'] }) {
   const [active, setActive] = useState(scenes[0]?.id)
@@ -90,7 +90,7 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
     <div className="mo-stage" aria-hidden="true" data-kind={activeKind}>
       {scenes.map((s, i) => {
         const on = s.id === active
-        if (i > reach + 1 && !on) return null
+        if (i > reach + 3 && !on) return null
         return (
           <div key={s.id} className="mo-stage__scene" data-kind={s.kind} data-active={on || undefined}>
             {s.kind === 'media' && s.slides ? <HeroStage slides={s.slides} t={t} active={on} eager={i === 0} controls={i === 0} /> : null}

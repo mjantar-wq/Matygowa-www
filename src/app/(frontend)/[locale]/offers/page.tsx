@@ -45,7 +45,7 @@ export default async function OffersPage({ params }: LocaleParams) {
           {offers
             .filter((o) => !o.icecoldresPromotionId || !promotions.some((p) => p.id === o.icecoldresPromotionId))
             .map((o) => (
-              <article key={o.id} className="mo-card mo-card--poziom">
+              <article key={o.id} id={o.slug ?? undefined} className="mo-card mo-card--poziom">
                 <div className="mo-card__media"><Media media={o.image} /></div>
                 <p className="mo-card__eyebrow"><span className="mo-label">{ctx.t.nav.offers}</span></p>
                 <h2 className="mo-h3 mo-card__title">{o.title}</h2>

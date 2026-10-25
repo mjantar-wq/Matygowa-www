@@ -320,6 +320,15 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
+        {/* oferty sezonowe wyróżnione w panelu (np. święta, ferie): zdjęcie, tytuł, zajawka, link do opisu na stronie ofert */}
+        {offers.filter((o) => o.featured).map((o) => (
+          <Link key={o.id} href={`${href(ctx.locale, 'offers')}#${o.slug}`} className="mo-card">
+            <div className="mo-card__media"><Media media={o.image} /></div>
+            <p className="mo-label">{ctx.t.nav.offers}</p>
+            <h3 className="mo-h3 mo-card__title">{o.title}</h3>
+            <p>{o.summary}</p>
+          </Link>
+        ))}
         {promotions.map((p) => (
           <article key={p.id} className="mo-card">
             {/* zdjęcie z oferty w panelu połączonej z promocją, inaczej z pierwszej oferty */}

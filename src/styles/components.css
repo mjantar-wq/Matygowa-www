@@ -84,6 +84,7 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-cards > .mo-card { grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
 .mo-card > * { margin-block: 0; }
 .mo-card__media { overflow: hidden; aspect-ratio: var(--proporcja-dom); background: var(--color-tlo-2); margin-bottom: var(--space-5); border-radius: var(--radius-0); max-width: 100%; }
+.mo-card[id] { scroll-margin-block-start: calc(var(--naglowek-wys) + var(--space-4)); }
 .mo-card--poziom .mo-card__media { aspect-ratio: var(--proporcja-atrakcja); }
 .mo-card__media > * { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform var(--ruch-wolny) var(--krzywa-mgla); }
 .mo-card:hover .mo-card__media > * { transform: scale(1.03); }

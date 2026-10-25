@@ -1180,6 +1180,7 @@ export interface Offer {
    */
   slug: string;
   order?: number | null;
+  featured?: boolean | null;
   image?: (number | null) | Media;
   summary?: string | null;
   content?: {
@@ -2138,6 +2139,7 @@ export interface OffersSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   order?: T;
+  featured?: T;
   image?: T;
   summary?: T;
   content?: T;

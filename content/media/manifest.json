@@ -2,6 +2,18 @@
  "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
   {
+   "file": "N2_swieta_stol_zima_3x2_foto.webp",
+   "shot": "N2",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Świąteczny stół w salonie, za oknem zaśnieżony domek",
+    "en": "A festive table in the living room, a snowy cottage outside"
+   },
+   "source": "dsc01959.jpg"
+  },
+  {
    "file": "O_drewno_willa_koliba_3x2_foto.webp",
    "shot": "O",
    "width": 1600,

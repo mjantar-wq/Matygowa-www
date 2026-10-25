@@ -1033,6 +1033,13 @@ export interface Unit {
   gallery?: (number | Media)[] | null;
   plans?: (number | Media)[] | null;
   peak?: {
+    name?: string | null;
+    nameCases?: {
+      gen?: string | null;
+      acc?: string | null;
+      loc?: string | null;
+      inst?: string | null;
+    };
     elevation?: number | null;
     range?: string | null;
     story?: {
@@ -2029,6 +2036,15 @@ export interface UnitsSelect<T extends boolean = true> {
   peak?:
     | T
     | {
+        name?: T;
+        nameCases?:
+          | T
+          | {
+              gen?: T;
+              acc?: T;
+              loc?: T;
+              inst?: T;
+            };
         elevation?: T;
         range?: T;
         story?: T;

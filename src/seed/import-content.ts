@@ -185,6 +185,17 @@ async function main() {
     payload.logger.info(`testimonials: ${t.author}`)
   }
 
+  // Regulamin, polityka prywatności i cookies (wspólne z silnikiem IceColdRes); SEO z seo-pages.json poniżej ma pierwszeństwo
+  for (const d of read('documents.json') as Any[]) {
+    await upsert('pages', d.slug, (l) => ({
+      title: d.title?.[l],
+      kind: 'document',
+      intro: d.intro?.[l],
+      layout: [{ blockType: 'richText', body: md(d.body?.[l]) }],
+      seo: { title: d.seo?.title?.[l], description: d.seo?.description?.[l] },
+    }))
+  }
+
   // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)
   const seoPages: Any = read('seo-pages.json')
   const seoKeys: Record<string, string> = { home: 'home', domy: 'houses', rytualy: 'rituals', osada: 'settlement', okolica: 'surroundings', oferty: 'offers', aktualnosci: 'news', galeria: 'gallery', kontakt: 'contact', przewodnik: 'guide', regulamin: 'regulamin', prywatnosc: 'prywatnosc' }

@@ -183,3 +183,19 @@ body { background: var(--color-tlo); color: var(--color-atrament); font-family: 
 .mo-section :is(p, ul, ol, dl, div, form, figure):not(.mo-card *) + .mo-h3:not(.mo-card *) { margin-block-start: var(--space-7); }
 .mo-section .mo-lede:not(.mo-card *) + * { margin-block-start: var(--space-6); }
 .mo-section * + :is(.mo-cards, .mo-panorama, .mo-booking) { margin-block-start: var(--space-6); }
+
+/* Baner zgód (src/components/ConsentBanner.tsx) */
+.mo-consent { position: fixed; inset-inline: var(--space-4); inset-block-end: var(--space-4); z-index: 50; max-inline-size: 34rem; padding: var(--space-6); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); box-shadow: 0 12px 40px rgb(0 0 0 / 0.18); font: var(--text-body-s--font-weight) var(--text-body-s)/var(--text-body-s--line-height) var(--font-ui); }
+.mo-consent > * + * { margin-block-start: var(--space-4); }
+.mo-consent__options { display: grid; gap: var(--space-3); border: 0; padding: 0; margin-inline: 0; }
+.mo-consent__options label { display: flex; gap: var(--space-3); align-items: start; }
+.mo-consent__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.mo-linklike { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+
+/* Nagłówki i listy w tekstach z panelu (dokumenty, opisy) */
+.mo-prose h2 { font: var(--text-h3--font-weight) var(--text-h3)/var(--text-h3--line-height) var(--font-display); color: var(--color-atrament); margin-block-start: var(--space-8); }
+.mo-prose h3 { font: 600 var(--text-body)/var(--text-body--line-height) var(--font-ui); color: var(--color-atrament); margin-block-start: var(--space-6); }
+.mo-prose :is(ul, ol) { padding-inline-start: 1.5em; }
+.mo-prose ul { list-style: disc; }
+.mo-prose ol { list-style: decimal; }
+.mo-prose li + li { margin-block-start: var(--space-2); }

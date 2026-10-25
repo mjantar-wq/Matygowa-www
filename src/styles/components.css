@@ -144,7 +144,9 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 @media (max-width: 767px) { :root { --wzor-podhale-kafel: 180px; } }
 body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: var(--wzor-podhale-krycie); -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; }
 /* Rozeta G6 na górnej krawędzi stopki, w kolorze linii */
-.mo-footer { position: relative; }
+.mo-footer { position: relative; isolation: isolate; }
+/* deseń w stopce taki jak w nagłówku (wg Michała); rozeta i treść leżą nad nim */
+.mo-footer__wzor { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: var(--wzor-naglowek-krycie); -webkit-mask: var(--wzor-podhale) 0 -38px / 150px 150px repeat; mask: var(--wzor-podhale) 0 -38px / 150px 150px repeat; }
 .mo-footer::before { content: ""; position: absolute; top: 0; left: 50%; translate: -50% -50%; inline-size: 64px; block-size: 64px; border-radius: 50%; background: var(--color-tlo-2); }
 .mo-footer::after { content: ""; position: absolute; top: 0; left: 50%; translate: -50% -50%; inline-size: 56px; block-size: 56px; background: var(--color-linia-mocna); -webkit-mask: url("/ilustracje/G6_rozeta_ozdobnik.svg") center / contain no-repeat; mask: url("/ilustracje/G6_rozeta_ozdobnik.svg") center / contain no-repeat; }
 

@@ -82,10 +82,10 @@ function Day({ block, ctx }: Props<'dayInSettlement'>) {
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <ol style={{ display: 'grid', gap: 'var(--space-8)' }}>
+      <ol style={{ display: 'grid', gap: 'var(--space-8)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))' }}>
         {block.scenes?.map((s) => (
-          <li key={s.id} data-pora={s.time} style={{ display: 'grid', gap: 'var(--space-4)' }}>
-            <div className="mo-card__media"><Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} /></div>
+          <li key={s.id} data-pora={s.time} style={{ display: 'grid', gap: 'var(--space-4)', alignContent: 'start' }}>
+            <div className="mo-card__media" style={{ aspectRatio: 'var(--proporcja-kadr)' }}><Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} /></div>
             <h3 className="mo-h3">{s.title}</h3>
             <p className="mo-prose">{s.text}</p>
           </li>

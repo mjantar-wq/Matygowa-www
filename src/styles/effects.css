@@ -343,3 +343,10 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 [data-source="airbnb"] .mo-review__logo { color: #ff5a5f; }
 .mo-opowiesc [data-block="testimonials"].mo-section > .mo-container > .mo-reviews { max-inline-size: none; }
 @media (max-width: 767px) { .mo-review { padding: var(--space-4); } .mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { font-size: 0.875rem; } }
+
+/* Mapa osady: okno domu z przycisku pod mapą (wygląd jak okno domu w wynikach wyszukiwania, booking.css) */
+.mo-unit-dialog__close-form { display: contents; }
+.mo-map-dialog .mo-unit-dialog__text .mo-btn { justify-self: start; }
+/* okno leży w sekcji opowieści, której reguły dziedziczenia koloru i cienia nie mogą go dotyczyć */
+.mo-opowiesc .mo-section .mo-map-dialog :is(p, h3, dt, dd, a, li, .mo-label) { text-shadow: none; }
+.mo-opowiesc .mo-section .mo-map-dialog a.mo-btn--glowny { color: var(--color-na-cta); }

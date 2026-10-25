@@ -71,6 +71,19 @@ test.describe('Efekty i interakcje', () => {
     await expect(page.locator('.mo-hero__pause')).toHaveCount(0)
   })
 
+  test('mapa osady: przycisk pod mapą otwiera okno domu z odnośnikiem do karty', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    const button = page.locator('.mo-map .mo-hotspots button').first()
+    await button.evaluate((el) => el.scrollIntoView({ block: 'center' }))
+    await button.click({ force: true })
+    const dialog = page.locator('dialog.mo-map-dialog[open]')
+    await expect(dialog).toBeVisible()
+    await expect(dialog.locator('a.mo-btn')).toHaveAttribute('href', /^\/(domy|en\/houses)\//)
+    await page.keyboard.press('Escape')
+    await expect(dialog).toHaveCount(0)
+  })
+
   test('strona główna: przypięty przycisk otwiera pasek rezerwacji, gdy hero zniknie z ekranu', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 })
     await page.goto('/')

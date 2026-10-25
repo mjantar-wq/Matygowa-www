@@ -3,6 +3,7 @@ import { CmsPage, getPage } from '@/components/CmsPage'
 import { Media } from '@/components/Media'
 import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
+import { bookingUrl, engineSettings } from '@/lib/booking'
 import { findMany } from '@/lib/cms'
 import { getPromotions } from '@/lib/icecoldres'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
@@ -19,6 +20,7 @@ export default async function OffersPage({ params }: LocaleParams) {
   const ctx = await pageContext(params)
   const [promotions, offers] = await Promise.all([getPromotions(), findMany<Offer>('offers', ctx.locale, { sort: 'order' })])
   const pl = ctx.locale === 'pl'
+  const engine = engineSettings(ctx.settings)
   return (
     <CmsPage route="offers" ctx={ctx}>
       <section className="mo-section mo-container">
@@ -32,7 +34,11 @@ export default async function OffersPage({ params }: LocaleParams) {
                 <p className="mo-card__eyebrow"><span className="mo-badge">{ctx.t.offers.onlyHere}</span></p>
                 <h2 className="mo-h3 mo-card__title">{pl ? p.badge : p.en.badge || p.badge}</h2>
                 <p className="mo-body-s mo-card__text">{pl ? p.description : p.en.description || p.description}</p>
-                <p className="mo-card__meta" />
+                <p className="mo-card__meta">
+                  <a href={bookingUrl(engine, ctx.locale, { offer: extra?.icecoldresOfferId || undefined })} data-track="offers" className="mo-btn mo-btn--obrys mo-btn--maly">
+                    {ctx.t.booking.book}
+                  </a>
+                </p>
               </article>
             )
           })}
@@ -44,7 +50,14 @@ export default async function OffersPage({ params }: LocaleParams) {
                 <p className="mo-card__eyebrow"><span className="mo-label">{ctx.t.nav.offers}</span></p>
                 <h2 className="mo-h3 mo-card__title">{o.title}</h2>
                 <div className="mo-body-s mo-card__text">{o.summary}</div>
-                <div className="mo-card__meta mo-prose"><RichText data={o.content} /></div>
+                <div className="mo-card__meta mo-prose">
+                  <RichText data={o.content} />
+                  {o.icecoldresOfferId ? (
+                    <a href={bookingUrl(engine, ctx.locale, { offer: o.icecoldresOfferId })} data-track="offers" className="mo-btn mo-btn--obrys mo-btn--maly">
+                      {ctx.t.booking.book}
+                    </a>
+                  ) : null}
+                </div>
               </article>
             ))}
         </div>

@@ -45,7 +45,7 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 
 ## Integracja z IceColdRes
 
-- API: `ICECOLDRES_API_URL` i `ICECOLDRES_SLUG` w `wrangler.jsonc` (`vars`). Test: `https://icecoldres.audiowizard.pl`, adres obiektu `booking` (silnik: https://icecoldres.audiowizard.pl/pl/booking).
+- API: `ICECOLDRES_API_URL` i `ICECOLDRES_SLUG` w `wrangler.jsonc` (`vars`). Test: `https://icecoldres.audiowizard.pl`, adres obiektu `booking` (silnik: https://icecoldres.audiowizard.pl/pl/booking i `/en/booking`).
 - Adresy (ustalenie Michała, źródło prawdy: sekcja domen w `docs/integracja-strony.md` w IceColdRes):
 
   | | Test | Produkcja |
@@ -56,6 +56,8 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
   | Panel IceColdRes | `icecoldres.audiowizard.pl/panel` | `icecoldres.matygowaosada.pl/panel` |
 
   Zmiana środowiska to `routes` i `vars` (`ICECOLDRES_API_URL`, `ICECOLDRES_SLUG`, `NEXT_PUBLIC_SITE_URL`) w `wrangler.jsonc` oraz adres silnika w Ustawieniach strony. Stary adres panelu `/admin` przekierowuje na `/panel`.
+- Pasek rezerwacji: przy silniku IceColdRes i włączonym „Pokazuj ceny i dostępność” kalendarz pokazuje ceny „od” i plakietki promocji strony, a „Sprawdź termin” wyświetla wolne domy z cenami na stronie. „Rezerwuj” otwiera silnik z `arrival`, `departure`, `adults`, `children`, `ages`, `unit`, `offer` i `utm_*` (zapamiętanymi z wejścia na stronę, na czas wizyty). Przeglądarka pyta pośrednika strony `/api/booking/calendar` i `/api/booking/search` (bufor 45 s), nie bezpośrednio IceColdRes. Przy Hotres pasek od razu przechodzi do Hotres.
+- Import treści (`pnpm seed`) ustawia silnik IceColdRes (import służy środowisku testowemu).
 - Webhook „treść zmieniona” (docs/integracja-strony.md w IceColdRes): w kolejnym kroku pod `POST /api/revalidate/icecoldres`.
 
 ## Do zrobienia przed produkcją

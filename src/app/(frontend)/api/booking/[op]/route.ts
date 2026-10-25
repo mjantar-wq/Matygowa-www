@@ -1,0 +1,94 @@
+import { addDays, daysBetween, promoOn, type CalendarData } from '@/lib/availability'
+import { getCalendar, getPricesFromDays, getPromotions, getProperty, searchStay } from '@/lib/icecoldres'
+
+/**
+ * Pośrednik strony do publicznego API IceColdRes dla paska rezerwacji w przeglądarce (kontrakt:
+ * docs/integracja-strony.md w IceColdRes). Odpowiedzi są buforowane 45 s, a domy przychodzą
+ * od razu z kodem (`code` = slug domu w panelu), więc przeglądarka nie zna identyfikatorów IceColdRes.
+ *
+ * GET /api/booking/calendar?from=RRRR-MM-DD&days=1..93
+ * GET /api/booking/search?arrival=&departure=&adults=&children=&ages=4,9
+ */
+const DATE = /^\d{4}-\d{2}-\d{2}$/
+const CACHE = { 'Cache-Control': 'public, max-age=30, s-maxage=45' }
+const bad = (error: string) => Response.json({ error }, { status: 400 })
+const unavailable = () => Response.json({ error: 'unavailable' }, { status: 503, headers: { 'Cache-Control': 'no-store' } })
+
+function int(v: string | null, min: number, max: number, fallback?: number) {
+  if (v === null || v === '') return fallback ?? null
+  const n = Number(v)
+  return Number.isInteger(n) && n >= min && n <= max ? n : null
+}
+
+async function calendar(url: URL) {
+  const from = url.searchParams.get('from') ?? ''
+  const days = int(url.searchParams.get('days'), 1, 93, 62)
+  if (!DATE.test(from) || days === null) return bad('invalid_input')
+  const [cal, prices, promotions, property] = await Promise.all([getCalendar(from, days), getPricesFromDays(from, days), getPromotions(), getProperty()])
+  if (!cal || !property) return unavailable()
+  // IceColdRes przesuwa `from` na dziś, gdy pytamy o przeszłość; ceny liczymy od tego samego dnia
+  const shift = prices ? daysBetween(prices.from, cal.from) : 0
+  const lang = url.searchParams.get('lang') === 'pl' ? 'pl' : 'en'
+  const data: CalendarData = {
+    from: cal.from,
+    today: cal.today,
+    types: cal.types.flatMap((t) => {
+      const code = property.unitTypes.find((u) => u.id === t.unitTypeId)?.code
+      if (!code) return []
+      const price = prices?.types.find((p) => p.unitTypeId === t.unitTypeId)?.days ?? []
+      return [
+        {
+          code,
+          days: t.days.map((d, i) => {
+            const date = addDays(cal.from, i)
+            const promo = promotions.find((p) => promoOn(p, date, t.unitTypeId))
+            return { ...d, price: price[i + shift] ?? null, promo: promo ? (lang === 'pl' ? promo.badge : promo.en.badge || promo.badge) : null }
+          }),
+        },
+      ]
+    }),
+  }
+  return Response.json(data, { headers: CACHE })
+}
+
+async function search(url: URL) {
+  const q = url.searchParams
+  const arrival = q.get('arrival') ?? ''
+  const departure = q.get('departure') ?? ''
+  const adults = int(q.get('adults'), 1, 20)
+  const children = int(q.get('children'), 0, 20, 0)
+  const ages = (q.get('ages') ?? '').split(',').filter(Boolean).map(Number)
+  if (!DATE.test(arrival) || !DATE.test(departure) || departure <= arrival || adults === null || children === null) return bad('invalid_input')
+  if (ages.length > children || ages.some((a) => !Number.isInteger(a) || a < 0 || a > 17)) return bad('invalid_input')
+  const [results, property] = await Promise.all([searchStay({ arrival, departure, adults, children, ages }), getProperty()])
+  if (!results || !property) return unavailable()
+  const nights = daysBetween(arrival, departure)
+  return Response.json(
+    {
+      nights,
+      results: results.flatMap((r) => {
+        const type = property.unitTypes.find((u) => u.id === r.unitTypeId)
+        if (!type?.code) return []
+        const offers = r.offers
+          .filter((o) => o.available && o.total !== undefined)
+          .map((o) => {
+            const promo = o.items?.find((i) => i.promotion?.display)?.promotion?.display
+            return { offerId: o.offerId, name: o.name, total: o.total!, badge: promo?.badge ?? null, badgeEn: promo?.en?.badge ?? null }
+          })
+          .sort((a, b) => a.total - b.total)
+        // pierwszy powód, dla którego dom nie pasuje (np. za dużo osób, za krótki pobyt)
+        const reason = r.free < 1 ? 'occupied' : offers.length ? null : (r.offers.flatMap((o) => o.unavailable ?? []).flatMap((u) => u.reasons)[0]?.code ?? 'unknown')
+        return [{ code: type.code, name: type.name, nameEn: type.content?.en?.name ?? null, free: r.free, offers: r.free > 0 ? offers : [], reason }]
+      }),
+    },
+    { headers: CACHE },
+  )
+}
+
+export async function GET(request: Request, ctx: { params: Promise<{ op: string }> }) {
+  const { op } = await ctx.params
+  const url = new URL(request.url)
+  if (op === 'calendar') return calendar(url)
+  if (op === 'search') return search(url)
+  return Response.json({ error: 'not_found' }, { status: 404 })
+}

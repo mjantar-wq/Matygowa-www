@@ -1,0 +1,50 @@
+/* Pasek rezerwacji: kalendarz z cenami „od”, wiek dzieci i wyniki z IceColdRes (S5). Tylko tokeny z tokens.css. */
+.mo-booking-wrap { position: relative; max-inline-size: 64rem; }
+.mo-booking-ages { display: flex; flex-wrap: wrap; border: 1px solid var(--color-linia); border-block-start: 0; background: var(--color-powierzchnia); }
+.mo-booking-ages .mo-field { flex: 1 1 10rem; }
+
+.mo-calendar { position: absolute; z-index: 20; inset-inline: 0; inset-block-start: calc(var(--pole-wys) + var(--space-2)); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); }
+.mo-calendar__head, .mo-calendar__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.mo-calendar__foot { margin-block-start: var(--space-5); }
+.mo-calendar__nav { inline-size: 2.75rem; block-size: 2.75rem; border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: none; color: inherit; cursor: pointer; }
+.mo-calendar__nav:disabled { opacity: 0.35; cursor: default; }
+[dir="rtl"] .mo-calendar__nav { transform: scaleX(-1); }
+.mo-calendar__months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-block-start: var(--space-4); }
+.mo-calendar__title { text-transform: capitalize; margin-block-end: var(--space-3); }
+.mo-calendar__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.mo-calendar__weekday { text-align: center; font: var(--text-label--font-weight) var(--text-label)/var(--text-label--line-height) var(--font-ui); color: var(--color-wyciszony); padding-block: var(--space-2); }
+.mo-calendar__day { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-block-size: 3rem; padding: 0; border: 0; border-radius: var(--radius-pole); background: none; color: inherit; cursor: pointer; font: var(--text-body-s--font-weight) var(--text-body-s)/1.2 var(--font-ui); font-variant-numeric: tabular-nums; }
+.mo-calendar__day small { font-size: 0.6875rem; color: var(--color-wyciszony); }
+.mo-calendar__day:hover:not(:disabled) { background: var(--color-tlo-2); }
+.mo-calendar__day:disabled { color: var(--color-linia-mocna); text-decoration: line-through; cursor: default; }
+.mo-calendar__day[data-range] { background: var(--color-tlo-2); border-radius: 0; }
+.mo-calendar__day[data-edge], .mo-calendar__day[data-edge]:hover { background: var(--color-cta); color: var(--color-na-cta); }
+.mo-calendar__day[data-edge] small { color: inherit; }
+.mo-calendar__day[data-promo]::after { content: ""; position: absolute; inset-block-start: 4px; inset-inline-end: 4px; inline-size: 6px; block-size: 6px; border-radius: var(--radius-kropka); background: var(--color-bursztyn); }
+.mo-calendar__day:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: -2px; }
+@media (max-width: 899px) { .mo-calendar { position: static; margin-block-start: var(--space-2); } }
+@media (max-width: 767px) {
+  .mo-calendar { padding: var(--space-4); }
+  .mo-calendar__months { grid-template-columns: minmax(0, 1fr); }
+  .mo-calendar__month + .mo-calendar__month { display: none; }
+}
+
+.mo-results:empty { display: none; }
+.mo-results { margin-block-start: var(--space-6); }
+.mo-results__list { list-style: none; padding: 0; margin: var(--space-5) 0 0; display: grid; gap: var(--space-4); }
+.mo-result { display: grid; grid-template-columns: minmax(8rem, 1fr) minmax(0, 3fr); align-items: center; gap: var(--space-3) var(--space-5); padding: var(--space-4) var(--space-5); background: var(--color-powierzchnia); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); }
+.mo-result__name { text-decoration: none; color: inherit; }
+.mo-result__offers { display: grid; gap: var(--space-3); }
+.mo-result__name:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.mo-result__offer { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: var(--space-3) var(--space-5); }
+.mo-result__nightly { white-space: nowrap; }
+.mo-results__taken { margin-block-start: var(--space-4); color: var(--color-wyciszony); }
+@media (max-width: 599px) {
+  .mo-result { grid-template-columns: minmax(0, 1fr); }
+  .mo-result__offer { grid-template-columns: minmax(0, 1fr) auto; }
+  .mo-result__offer > p:first-child:empty { display: none; }
+}
+.mo-result__offer > p:first-child:empty { visibility: hidden; }
+.mo-calendar__months[aria-busy] { opacity: 0.5; pointer-events: none; transition: opacity var(--ruch-szybki) var(--krzywa-mgla); }
+.mo-booking-error { margin-block-start: var(--space-3); color: var(--color-bursztyn-tekst); }
+.mo-field:has([aria-invalid]) { outline: 2px solid var(--color-bursztyn); outline-offset: -2px; }

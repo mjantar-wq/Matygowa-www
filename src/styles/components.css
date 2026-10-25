@@ -199,3 +199,8 @@ body { background: var(--color-tlo); color: var(--color-atrament); font-family: 
 .mo-prose ul { list-style: disc; }
 .mo-prose ol { list-style: decimal; }
 .mo-prose li + li { margin-block-start: var(--space-2); }
+
+/* Lista cech (udogodnienia): kolumny po 16rem, na telefonie dwie wąskie, bez punktorów */
+.mo-lista { columns: 2 16rem; column-gap: var(--rynna); margin-block: var(--space-5) 0; padding: 0; list-style: none; font: var(--text-body-s--font-weight) var(--text-body-s)/var(--text-body-s--line-height) var(--font-ui); }
+.mo-lista li { break-inside: avoid; padding-block: var(--space-1); }
+@media (max-width: 599px) { .mo-lista { columns: 2; } }

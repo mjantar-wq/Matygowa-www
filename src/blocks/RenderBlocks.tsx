@@ -232,7 +232,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
 }
 
 /** Atrakcja → element mapy okolicy G7, gdy adres atrakcji różni się od id na mapie. */
-const attractionSvgId = (slug: string) => `a-${({ 'stoki-bialka-bukowina': 'kotelnica' } as Record<string, string>)[slug] ?? slug}`
+const attractionSvgId = (slug: string) => `a-${({ 'stoki-bialka-bukowina': 'kotelnica', 'bialka-narty': 'kotelnica', 'terma-bania': 'termy' } as Record<string, string>)[slug] ?? slug}`
 
 function Story({ block, immersive }: Props<'story'>) {
   // na stałym tle zdjęcie przejmuje scena

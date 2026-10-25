@@ -186,7 +186,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
 .mo-stage__svg[data-pan] { display: block; }
 .mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 450ms var(--ease-mgla); }
-.mo-stage__svg .is-lit .accent { transform: scale(1.8); transform-box: fill-box; transform-origin: center; }
+.mo-stage__svg .is-lit .accent { transform: scale(2.6); transform-box: fill-box; transform-origin: center; fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
 .mo-stage__svg .is-lit :is(text, .peak-name) { fill: var(--color-bursztyn-tekst); }
 .mo-stage__svg .is-lit { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
 .mo-stage__svg .accent, .mo-stage__svg text { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); }
@@ -280,7 +280,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-attraction:is(:hover, :focus-within) .mo-h3 { color: var(--color-bursztyn-tekst); }
 @media (hover: none) { .mo-attraction__desc { grid-template-rows: 1fr; } }
 .mo-stage__svg .poi circle { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
-.mo-stage__svg .poi.is-lit circle { transform: scale(2); fill: var(--color-bursztyn); }
+.mo-stage__svg .poi.is-lit circle { transform: scale(2.6); fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
 .mo-stage__svg .poi.is-lit text { fill: var(--color-bursztyn-tekst); font-weight: 700; }
 
 /* Finał „Wybierzcie swój szczyt”: na środku ekranu, pasek rezerwacji w jednym rzędzie */
@@ -292,3 +292,21 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc [data-block="bookingInvite"] .mo-container > .mo-booking-wrap { margin-block-start: var(--space-6); }
 .mo-opowiesc .mo-booking-note { color: inherit; text-shadow: var(--cien); }
 @media (max-width: 1023px) { .mo-stage__scene[data-kind="map"] .mo-stage__svg svg { opacity: 0.4; } }
+
+/* Karty domków nad panoramą: podpis nad zdjęciem, w jasnej górnej części ekranu, a nie na tle szczytów i ich nazw */
+.mo-opowiesc .mo-peak-card { align-content: start; }
+.mo-opowiesc .mo-peak-card .mo-card__media { order: 1; margin: var(--space-3) 0 0; }
+@media (max-width: 767px) {
+  .mo-stage__svg[data-pan] svg { block-size: min(36svh, 22rem); }
+  .mo-opowiesc .mo-peak-card .mo-card__media { aspect-ratio: 16 / 9; }
+}
+
+/* Wyróżnienie szczytu i atrakcji: reszta przygasa, wybrany punkt jest większy, w kolorze akcentu i pulsuje */
+.mo-stage__svg :is(g[id^="p-"], .poi) { transition: opacity var(--ruch-sredni) var(--ease-mgla); }
+.mo-stage__svg.has-lit :is(g[id^="p-"], .poi):not(.is-lit) { opacity: 0.3; }
+.mo-stage__svg .is-lit .line { stroke: var(--color-bursztyn); stroke-width: 2.5; }
+.mo-stage__svg .is-lit :is(.peak-name, .poi text) { font-weight: 700; }
+@keyframes mo-puls { from { stroke-width: 0; stroke-opacity: 0.7; } to { stroke-width: 9; stroke-opacity: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-stage__svg .is-lit :is(.accent, circle) { animation: mo-puls 1.6s var(--ease-mgla) infinite; }
+}

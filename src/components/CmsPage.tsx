@@ -31,7 +31,7 @@ export async function CmsPage({ route, slug, ctx, fallback, children, required, 
         <RenderBlocks blocks={blocks} ctx={ctx} immersive />
         {children}
         <BookingDock label={ctx.t.booking.check} close={ctx.t.effects.close}>
-          <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
+          <BookingBar locale={ctx.locale} t={ctx.t.booking} fx={ctx.t.effects} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
         </BookingDock>
       </div>
     )

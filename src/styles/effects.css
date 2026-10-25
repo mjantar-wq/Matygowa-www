@@ -92,6 +92,11 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 :root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host :is(.dach, .dach-jasna, .dach-ciemna) { fill: var(--color-powierzchnia); stroke: var(--color-atrament); stroke-width: 1; vector-effect: non-scaling-stroke; }
 :root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach-jasna { fill: #fff; }
 :root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach-ciemna { fill: color-mix(in srgb, var(--color-powierzchnia) 85%, var(--color-atrament)); }
+/* latem w nocy dachy ciemne (blacha w mroku), żeby noc letnia wyraźnie różniła się od zimowej z białymi dachami; podświetlenie po najechaniu wygrywa */
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach { fill: #2c3330; }
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach-jasna { fill: #46504b; }
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach-ciemna { fill: #1d2321; }
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach-pol { fill: #39413d; }
 .mo-hotspots { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .mo-hotspots button { min-block-size: 2.75rem; padding: 0 var(--space-4); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: var(--color-powierzchnia); color: var(--color-atrament); font: 500 12px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
 @media (max-width: 767px) { .mo-hotspots { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block-end: var(--space-2); } .mo-hotspots button { white-space: nowrap; } .mo-map__stage .mo-svg-host { min-inline-size: 640px; } }
@@ -309,7 +314,9 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-stage__svg .poi.is-lit text { fill: var(--color-bursztyn-tekst); font-weight: 700; }
 
 /* Finał „Wybierzcie swój szczyt”: na środku ekranu, pasek rezerwacji w jednym rzędzie */
-.mo-opowiesc [data-block="bookingInvite"] { min-block-size: calc(100svh - var(--naglowek-wys)); display: grid; align-content: center; padding-block: var(--space-10); }
+/* Zaproszenie na końcu: bez pełnego ekranu i bez odstępu przed stopką, żeby razem ze stopką mieściło się na jednym ekranie (wg Michała) */
+.mo-opowiesc [data-block="bookingInvite"] { display: grid; align-content: center; padding-block: var(--space-9) var(--space-8); }
+body:has(.mo-opowiesc) .mo-footer { margin-block-start: 0; padding-block: var(--space-7); }
 .mo-opowiesc [data-block="bookingInvite"] .mo-h2 { font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem); }
 /* tekst i pasek w jednej szerokości */
 .mo-opowiesc [data-block="bookingInvite"].mo-section > .mo-container > * { max-inline-size: 56rem; }

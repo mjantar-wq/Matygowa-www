@@ -80,9 +80,13 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-hotspot { cursor: pointer; }
 .mo-hotspot .accent, .mo-hotspot .znacznik { transition: transform var(--ruch-szybki) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
 .mo-hotspot:hover .accent, .mo-hotspot.is-lit .accent, .mo-hotspot:hover .znacznik, .mo-hotspot.is-lit .znacznik { transform: scale(1.6); }
-.mo-hotspot.is-lit .dach, .mo-hotspot:hover .dach { fill: var(--color-bursztyn); }
+.mo-hotspot.is-lit :is(.dach, .dach-jasna, .dach-ciemna), .mo-hotspot:hover :is(.dach, .dach-jasna, .dach-ciemna) { fill: var(--color-bursztyn); }
+.mo-hotspot.is-lit .dach-jasna, .mo-hotspot:hover .dach-jasna { fill: color-mix(in srgb, var(--color-bursztyn) 75%, #fff); }
 :root[data-pora="noc"] .mo-hotspot:not(.is-wkrotce) .dach { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
-:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach:not(.is-wkrotce *) { fill: var(--color-powierzchnia); stroke: var(--color-atrament); stroke-width: 1; vector-effect: non-scaling-stroke; }
+/* zimą w dzień dachy pod śniegiem: połacie od światła najjaśniejsze */
+:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host :is(.dach, .dach-jasna, .dach-ciemna) { fill: var(--color-powierzchnia); stroke: var(--color-atrament); stroke-width: 1; vector-effect: non-scaling-stroke; }
+:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach-jasna { fill: #fff; }
+:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach-ciemna { fill: color-mix(in srgb, var(--color-powierzchnia) 85%, var(--color-atrament)); }
 .mo-hotspots { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .mo-hotspots button { min-block-size: 2.75rem; padding: 0 var(--space-4); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: var(--color-powierzchnia); color: var(--color-atrament); font: 500 12px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
 @media (max-width: 767px) { .mo-hotspots { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block-end: var(--space-2); } .mo-hotspots button { white-space: nowrap; } .mo-map__stage .mo-svg-host { min-inline-size: 640px; } }

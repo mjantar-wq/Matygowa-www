@@ -21,20 +21,65 @@ DOMY = [
     ("gerlach", "Gerlach", 2655, 681, 572, 116, 116),
     ("hawran", "Hawrań", 2152, 934, 572, 116, 116),
 ]
-# Budynek z apartamentami (otwarcie wiosną 2027): obrys z rzutu dachu i linie kalenic.
-APT_OBRYS = "M816,170 L874,116 L940,136 L962,186 L1010,226 L1002,292 L956,304 L918,270 L862,208 L818,194 Z"
-APT_KALENICE = "M845,165 L905,150 L935,175 M905,150 L898,128 M935,175 L975,240 L962,282 M975,240 L1000,258"
+# Budynek z apartamentami (otwarcie wiosną 2027): dwa skrzydła z dachem dwuspadowym, odrysowane ze zdjęcia z drona.
+# (środek x, y, długość wzdłuż kalenicy, szerokość, obrót w stopniach)
+APT_SKRZYDLA = [(942, 242, 150, 74, 35), (872, 162, 136, 68, -22)]  # najpierw skrzydło południowo-wschodnie, na nim północno-zachodnie
+APT_ZNACZNIK = (905, 200)
 APARTAMENTY = [("czerwone-wierchy", "Czerwone Wierchy"), ("giewont", "Giewont"), ("kominiarski", "Kominiarski Wierch"), ("ciemniak", "Ciemniak")]  # Ciemniak: nazwa wstępna, bez podpisu na zdjęciu (content/README.md)
+# Plac zabaw (otwarcie 2027): na lewo od apartamentów
+PLAC = (700, 196, 116, 76)
 
 def dach(cx, cy, w, h, rot=0):
-    """Dach czterospadowy w rzucie: obrys i kalenica z czterema narożnymi grzbietami."""
-    k = min(w, h) / 2 * 0.8
-    pts = [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2)]
-    r1, r2 = (-(w / 2 - k), 0), ((w / 2 - k), 0)
-    if h > w: r1, r2 = (0, -(h / 2 - k)), (0, (h / 2 - k))
-    ridge = f"M{pts[0][0]},{pts[0][1]} L{r1[0]},{r1[1]} L{pts[3][0]},{pts[3][1]} M{r1[0]},{r1[1]} L{r2[0]},{r2[1]} M{pts[1][0]},{pts[1][1]} L{r2[0]},{r2[1]} L{pts[2][0]},{pts[2][1]}"
-    return (f'<g transform="translate({cx} {cy}) rotate({rot})"><rect class="dach" x="{-w/2}" y="{-h/2}" width="{w}" height="{h}"/>'
-            f'<path class="kalenica" d="{ridge}"/></g>')
+    """Dach domku jak na zdjęciu z drona: kopertowy korpus i boczny szczyt po lewej.
+    Połacie od światła (góra, lewo) jaśniejsze, od cienia ciemniejsze, żeby bryła czytała się jak model."""
+    a, b = w / 2 * 0.86, h / 2          # pół szerokości korpusu, pół wysokości
+    e, t = w / 2 - a + w * 0.07, h * 0.24  # wysunięcie i pół szerokości bocznego szczytu
+    n, s_, l, p = f"{-a},{-b} {a},{-b}", f"{a},{b} {-a},{b}", -a, a
+    sciany = [
+        ("dach-jasna", f"M{-a},{-b} L{a},{-b} L0,0 Z"),          # połać północna
+        ("dach-ciemna", f"M{a},{-b} L{a},{b} L0,0 Z"),            # wschodnia
+        ("dach", f"M{a},{b} L{-a},{b} L0,0 Z"),                   # południowa
+        ("dach-jasna", f"M{-a},{b} L{-a},{-b} L0,0 Z"),           # zachodnia
+        ("dach-jasna", f"M{-a - e},{-t} L{-a},{-t} L{-t * 0.2},{-t * 0.15} L{-t * 0.2},0 L{-a - e},0 Z"),  # boczny szczyt, połać od światła
+        ("dach", f"M{-a - e},0 L{-t * 0.2},0 L{-t * 0.2},{t * 0.15} L{-a},{t} L{-a - e},{t} Z"),             # boczny szczyt, połać w cieniu
+    ]
+    g = "".join(f'<path class="{k}" d="{d}"/>' for k, d in sciany)
+    g += f'<path class="kalenica" d="M{-a},{-b} L{a},{b} M{a},{-b} L{-a},{b} M{-a - e},0 L0,0"/>'
+    return f'<g transform="translate({cx} {cy}) rotate({rot})">{g}</g>'
+
+def dach_dwuspadowy(cx, cy, l, w, rot):
+    """Skrzydło z dachem dwuspadowym: kalenica wzdłuż dłuższego boku, połać od światła jaśniejsza."""
+    return (f'<g transform="translate({cx} {cy}) rotate({rot})">'
+            f'<rect class="dach-jasna" x="{-l/2}" y="{-w/2}" width="{l}" height="{w/2}"/>'
+            f'<rect class="dach" x="{-l/2}" y="0" width="{l}" height="{w/2}"/>'
+            f'<path class="kalenica" d="M{-l/2},0 L{l/2},0"/></g>')
+
+def naklejka(x, y, rot=-5):
+    """Plakietka „Otwarcie 2027” / „Opening 2027”: wersja językowa z atrybutu lang strony (SVG wstawiany w treść)."""
+    return (f'<g class="naklejka" transform="translate({x} {y}) rotate({rot})">'
+            '<rect class="naklejka-cien" x="-66" y="-14" width="132" height="30" rx="15"/>'
+            '<rect class="naklejka-tlo" x="-68" y="-17" width="136" height="30" rx="15"/>'
+            '<text class="naklejka-tekst pl" x="0" y="3" text-anchor="middle">Otwarcie 2027</text>'
+            '<text class="naklejka-tekst en" x="0" y="3" text-anchor="middle">Opening 2027</text></g>')
+
+def piwnica():
+    """Opis piwnicy wzdłuż dłuższego boku skrzydła od strony rogu działki (siłownia i świetlica, też od 2027)."""
+    cx, cy, l, w, rot = APT_SKRZYDLA[0]
+    return (f'<g class="piwnica" transform="translate({cx} {cy}) rotate({rot}) translate(46 {-w/2 - 6})">'
+            f'<path class="piwnica-linia" d="M{-l/2 + 20},4 L{l/2 - 52},4"/>'
+            '<text class="piwnica-tekst pl" x="0" y="-16" text-anchor="middle">W piwnicy: siłownia</text>'
+            '<text class="piwnica-tekst pl" x="0" y="-2" text-anchor="middle">i świetlica dla dzieci · od 2027</text>'
+            '<text class="piwnica-tekst en" x="0" y="-16" text-anchor="middle">Basement: gym</text>'
+            '<text class="piwnica-tekst en" x="0" y="-2" text-anchor="middle">and kids’ playroom · from 2027</text></g>')
+
+def plac_zabaw(cx, cy, w, h):
+    """Plac zabaw w rzucie: ogrodzone pole z piaskiem, huśtawka, zjeżdżalnia i piaskownica jako proste znaki."""
+    x0, y0 = cx - w / 2, cy - h / 2
+    return (f'<rect class="plac" x="{x0}" y="{y0}" width="{w}" height="{h}" rx="10"/>'
+            f'<rect class="plac-obrys" x="{x0}" y="{y0}" width="{w}" height="{h}" rx="10"/>'
+            f'<path class="plac-znak" d="M{x0+16},{y0+18} L{x0+44},{y0+18} M{x0+18},{y0+12} L{x0+18},{y0+24} M{x0+42},{y0+12} L{x0+42},{y0+24} M{x0+26},{y0+18} L{x0+26},{y0+30} M{x0+34},{y0+18} L{x0+34},{y0+30} M{x0+23},{y0+30} L{x0+29},{y0+30} M{x0+31},{y0+30} L{x0+37},{y0+30}"/>'
+            f'<path class="plac-znak" d="M{x0+62},{y0+16} L{x0+74},{y0+16} L{x0+74},{y0+28} L{x0+62},{y0+28} Z M{x0+74},{y0+20} L{x0+102},{y0+48} M{x0+74},{y0+26} L{x0+98},{y0+50}"/>'
+            f'<circle class="plac-piasek" cx="{x0+30}" cy="{y0+54}" r="12"/>')
 
 def drzewa(seed, x0, y0, x1, y1, n):
     """Świerki jako kropki: deterministyczny rozrzut, żeby kolejne przebiegi dawały ten sam plik."""
@@ -56,7 +101,7 @@ def poziomice():
     return "".join(out)
 
 L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-labelledby="g1-tytul">',
-     '<title id="g1-tytul">Mapa Matygowej Osady: sześć domków i budynek z apartamentami otwierany wiosną 2027</title>',
+     '<title id="g1-tytul">Mapa Matygowej Osady: sześć domków oraz budynek z apartamentami i plac zabaw otwierane w 2027</title>',
      '<style>'
      '.teren{fill:var(--color-tlo)}.dzialka{fill:var(--color-tlo-2)}'
      '.poziomice path{fill:none;stroke:var(--color-poziomica);stroke-width:1;opacity:.45;vector-effect:non-scaling-stroke}'
@@ -64,9 +109,15 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.ogrodzenie{fill:none;stroke:var(--color-wyciszony);stroke-width:1;stroke-dasharray:2 5;vector-effect:non-scaling-stroke}'
      '.las circle{fill:var(--color-swierk);opacity:.28}'
      '.stozek{fill:var(--color-bursztyn);opacity:.08}'
-     '.dach{fill:var(--color-atrament)}.kalenica{fill:none;stroke:var(--color-tlo-2);stroke-width:1;opacity:.55;vector-effect:non-scaling-stroke}'
-     '.is-wkrotce .dach{fill:var(--color-tlo);stroke:var(--color-atrament);stroke-width:1.5;stroke-dasharray:6 5;vector-effect:non-scaling-stroke}'
-     '.is-wkrotce .kalenica{stroke:var(--color-atrament);opacity:.35}'
+     '.dach{fill:var(--color-atrament)}.dach-jasna{fill:color-mix(in srgb,var(--color-atrament) 78%,var(--color-tlo))}.dach-ciemna{fill:color-mix(in srgb,var(--color-atrament) 92%,#000)}'
+     '.kalenica{fill:none;stroke:var(--color-tlo-2);stroke-width:1;opacity:.35;vector-effect:non-scaling-stroke}'
+     '.is-wkrotce{opacity:.92}'
+     '.plac{fill:color-mix(in srgb,var(--color-bursztyn) 18%,var(--color-tlo))}.plac-obrys{fill:none;stroke:var(--color-wyciszony);stroke-width:1;stroke-dasharray:2 4;vector-effect:non-scaling-stroke}'
+     '.plac-znak{fill:none;stroke:var(--color-atrament);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.plac-piasek{fill:color-mix(in srgb,var(--color-bursztyn) 40%,var(--color-tlo));stroke:var(--color-atrament);stroke-width:1.2}'
+     '.naklejka-tlo{fill:var(--color-bursztyn);stroke:var(--color-tlo);stroke-width:2}.naklejka-cien{fill:var(--color-atrament);opacity:.18}'
+     '.naklejka-tekst{font:700 12px var(--font-ui,sans-serif);letter-spacing:.14em;text-transform:uppercase;fill:#1a1208}'
+     '.piwnica-tekst{font:500 11px var(--font-ui,sans-serif);letter-spacing:.04em;fill:var(--color-atrament-2);paint-order:stroke;stroke:var(--color-tlo-2);stroke-width:4px;stroke-linejoin:round}.piwnica-linia{fill:none;stroke:var(--color-bursztyn);stroke-width:1.5;stroke-dasharray:1 4;stroke-linecap:round;vector-effect:non-scaling-stroke}'
+     '.en{display:none}:root[lang="en"] .naklejka .pl,:root[lang="en"] .piwnica .pl{display:none}:root[lang="en"] .naklejka .en,:root[lang="en"] .piwnica .en{display:inline}'
      '.nazwa{font:700 15px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-atrament)}'
      '.opis{font:500 12px var(--font-ui,sans-serif);letter-spacing:.06em;fill:var(--color-wyciszony)}'
      '.znacznik{fill:var(--color-bursztyn)}'
@@ -94,10 +145,14 @@ for slug, nazwa, wys, cx, cy, w, h in DOMY:
 
 apts = ",".join(n for _, n in APARTAMENTY)
 L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" tabindex="0" role="button" aria-label="Apartamenty Czerwone Wierchy, Giewont, Kominiarski Wierch i Ciemniak, otwarcie wiosną 2027">')
-L.append(f'<path class="dach" d="{APT_OBRYS}"/><path class="kalenica" d="{APT_KALENICE}"/><circle class="znacznik" cx="915" cy="210" r="5"/>')
-L.append('<rect class="etykieta-tlo" x="830" y="20" width="230" height="46" rx="2"/>'
-         '<text class="nazwa" x="945" y="40" text-anchor="middle">Apartamenty</text>'
-         '<text class="opis" x="945" y="58" text-anchor="middle">wiosna 2027 · 4 apartamenty</text></g>')
+L.append("".join(dach_dwuspadowy(*sk) for sk in APT_SKRZYDLA) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
+L.append('<rect class="etykieta-tlo" x="830" y="14" width="230" height="46" rx="2"/>'
+         '<text class="nazwa" x="945" y="34" text-anchor="middle">Apartamenty</text>'
+         '<text class="opis" x="945" y="52" text-anchor="middle">4 apartamenty</text>' + naklejka(905, 86) + piwnica() + '</g>')
+px, py, pw, ph = PLAC
+L.append(f'<g id="b-plac-zabaw" class="obiekt is-wkrotce" data-otwarcie="2027" aria-label="Plac zabaw dla dzieci, otwarcie 2027">{plac_zabaw(*PLAC)}'
+         f'<rect class="etykieta-tlo" x="{px - 60}" y="{py + ph/2 + 8}" width="120" height="26" rx="2"/>'
+         f'<text class="opis" x="{px}" y="{py + ph/2 + 25}" text-anchor="middle">Plac zabaw</text>' + naklejka(px, py - ph/2 - 6, 4) + '</g>')
 L.append('</g></svg>')
 
 out = ROOT / "public/ilustracje/G1_mapa_osady.svg"; out.parent.mkdir(parents=True, exist_ok=True)
@@ -105,6 +160,7 @@ out.write_text(z_zapasem("\n".join(L)))
 (ROOT / "public/ilustracje/G1_mapa_osady.json").write_text(json.dumps({
     "zrodlo": "Nazwy domków 2026.jpg (dron)",
     "domy": [{"id": f"b-dom-{s}", "nazwa": n, "szczytM": h, "x": x, "y": y} for s, n, h, x, y, *_ in DOMY],
+    "plac": {"id": "b-plac-zabaw", "otwarcie": "2027"},
     "apartamenty": {"id": "b-apartamenty", "otwarcie": "2027-04", "lokale": [{"slug": s, "nazwa": n} for s, n in APARTAMENTY]},
 }, ensure_ascii=False, indent=1))
 print(out)

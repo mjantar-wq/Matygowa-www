@@ -44,6 +44,10 @@
    "y": 572
   }
  ],
+ "plac": {
+  "id": "b-plac-zabaw",
+  "otwarcie": "2027"
+ },
  "apartamenty": {
   "id": "b-apartamenty",
   "otwarcie": "2027-04",

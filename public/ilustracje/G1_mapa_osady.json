@@ -54,19 +54,23 @@
   "lokale": [
    {
     "slug": "czerwone-wierchy",
-    "nazwa": "Czerwone Wierchy"
-   },
-   {
-    "slug": "giewont",
-    "nazwa": "Giewont"
+    "nazwa": "Czerwone Wierchy",
+    "czesc": "gora"
    },
    {
     "slug": "kominiarski",
-    "nazwa": "Kominiarski Wierch"
+    "nazwa": "Kominiarski Wierch",
+    "czesc": "gora"
+   },
+   {
+    "slug": "giewont",
+    "nazwa": "Giewont",
+    "czesc": "dol"
    },
    {
     "slug": "ciemniak",
-    "nazwa": "Ciemniak"
+    "nazwa": "Ciemniak",
+    "czesc": "dol"
    }
   ]
  }

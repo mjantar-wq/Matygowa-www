@@ -25,7 +25,9 @@ DOMY = [
 # (środek x, y, długość wzdłuż kalenicy, szerokość, obrót w stopniach)
 APT = (905, 184, 212, 94, 47.6)
 APT_ZNACZNIK = APT[:2]
-APARTAMENTY = [("czerwone-wierchy", "Czerwone Wierchy"), ("giewont", "Giewont"), ("kominiarski", "Kominiarski Wierch"), ("ciemniak", "Ciemniak")]  # Ciemniak: nazwa wstępna, bez podpisu na zdjęciu (content/README.md)
+# Cztery apartamenty w jednej bryle typu bliźniak (Michał, 25.10.2026): w górnej części na mapie
+# Czerwone Wierchy i Kominiarski Wierch, w dolnej Giewont i Ciemniak.
+APARTAMENTY = [("czerwone-wierchy", "Czerwone Wierchy", "gora"), ("kominiarski", "Kominiarski Wierch", "gora"), ("giewont", "Giewont", "dol"), ("ciemniak", "Ciemniak", "dol")]
 # Plac zabaw (otwarcie 2027): na lewo od apartamentów
 PLAC = (650, 192, 128, 84)
 
@@ -182,8 +184,8 @@ for slug, nazwa, wys, cx, cy, w, h in DOMY:
              f'<text class="nazwa" x="{cx}" y="{cy + h/2 + 27}" text-anchor="middle">{nazwa}</text>'
              f'<text class="opis" x="{cx}" y="{cy + h/2 + 44}" text-anchor="middle">{wys} m n.p.m.</text></g>')
 
-apts = ",".join(n for _, n in APARTAMENTY)
-L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" tabindex="0" role="button" aria-label="Apartamenty Czerwone Wierchy, Giewont, Kominiarski Wierch i Ciemniak, otwarcie wiosną 2027">')
+apts = ",".join(n for _, n, _ in APARTAMENTY)
+L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" tabindex="0" role="button" aria-label="Apartamenty: w górnej części Czerwone Wierchy i Kominiarski Wierch, w dolnej Giewont i Ciemniak, otwarcie wiosną 2027">')
 L.append(apartamenty_dach(*APT) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
 L.append('<rect class="etykieta-tlo" x="830" y="4" width="230" height="44" rx="2"/>'
          '<text class="nazwa" x="945" y="24" text-anchor="middle">Apartamenty</text>'
@@ -200,6 +202,6 @@ out.write_text(z_zapasem("\n".join(L)))
     "zrodlo": "Nazwy domków 2026.jpg (dron)",
     "domy": [{"id": f"b-dom-{s}", "nazwa": n, "szczytM": h, "x": x, "y": y} for s, n, h, x, y, *_ in DOMY],
     "plac": {"id": "b-plac-zabaw", "otwarcie": "2027"},
-    "apartamenty": {"id": "b-apartamenty", "otwarcie": "2027-04", "lokale": [{"slug": s, "nazwa": n} for s, n in APARTAMENTY]},
+    "apartamenty": {"id": "b-apartamenty", "otwarcie": "2027-04", "lokale": [{"slug": s, "nazwa": n, "czesc": c} for s, n, c in APARTAMENTY]},
 }, ensure_ascii=False, indent=1))
 print(out)

@@ -74,6 +74,11 @@ test.describe('Efekty i interakcje', () => {
     await expect(page.locator('.mo-dock')).toHaveAttribute('data-shown')
     await open.click()
     await expect(page.locator('.mo-dock__dialog .mo-booking')).toBeVisible()
+    // długie wyniki przewijają się wewnątrz okna, a jego dół mieści się na ekranie
+    const body = await page.locator('.mo-dock__body').boundingBox()
+    expect(body!.y + body!.height).toBeLessThanOrEqual(800)
+    expect(await page.locator('.mo-dock__body').evaluate((el) => getComputedStyle(el).overflowY)).toBe('auto')
+    await expect(page.locator('.mo-dock__close')).toBeVisible()
     await page.keyboard.press('Escape')
     await expect(page.locator('.mo-dock__dialog')).not.toBeVisible()
   })

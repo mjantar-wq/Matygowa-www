@@ -96,3 +96,7 @@
 .mo-calendar__months[aria-busy] { opacity: 0.5; pointer-events: none; transition: opacity var(--ruch-szybki) var(--krzywa-mgla); }
 .mo-booking-error { margin-block-start: var(--space-3); color: var(--color-bursztyn-tekst); }
 .mo-field:has([aria-invalid]) { outline: 2px solid var(--color-bursztyn); outline-offset: -2px; }
+
+/* promocje z sezonem (IceColdRes: lato/zima) widać tylko przy tej porze roku przełącznika strony */
+html[data-sezon="zima"] [data-sezon-promo="lato"],
+html[data-sezon="lato"] [data-sezon-promo="zima"] { display: none; }

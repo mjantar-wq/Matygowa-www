@@ -13,7 +13,7 @@ import { heroSlides, sceneId } from '@/lib/scenes'
 import { href } from '@/i18n/routes'
 import { findMany } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
-import { getPromotions, getServices } from '@/lib/icecoldres'
+import { getPromotions, getServices, promoSeason } from '@/lib/icecoldres'
 import type { PageContext } from '@/lib/page'
 import type { Attraction, News, Offer, Page, Testimonial, Unit } from '@/payload-types'
 
@@ -321,7 +321,7 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
         {promotions.map((p) => (
-          <article key={p.id} className="mo-card">
+          <article key={p.id} className="mo-card" data-sezon-promo={promoSeason(p.season)}>
             {/* zdjęcie z oferty w panelu połączonej z promocją, inaczej z pierwszej oferty */}
             <div className="mo-card__media"><Media media={(offers.find((o) => o.icecoldresPromotionId === String(p.id)) ?? offers[0])?.image} /></div>
             <p className="mo-label">{ctx.t.offers.onlyHere}</p>

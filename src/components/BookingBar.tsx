@@ -14,6 +14,7 @@ import {
 import { bookingUrl, formatPrice, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
 import { UnitResults, type Result } from './UnitResults'
+import { useAmbience } from './effects/ambience'
 
 const noSubscribe = () => () => {}
 
@@ -69,15 +70,21 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
     `${n} ${t.nightForms[plural.select(n) as keyof typeof t.nightForms] ?? t.nightForms.other}`
 
   // dostępność dwóch widocznych miesięcy (pośrednik strony buforuje ją 45 s)
+  // promocje strony mają sezon (lato/zima/oba), więc plakietki w kalendarzu zależą od przełącznika pory roku
+  const { sezon } = useAmbience()
+  const chunkKey = `${sezon}:${month}`
   const requested = useRef(new Set<string>())
   useEffect(() => {
-    if (!live || !open || requested.current.has(month)) return
-    requested.current.add(month)
-    fetch(`/api/booking/calendar?from=${month}-01&days=62&lang=${locale}`)
+    if (!live || !open || requested.current.has(chunkKey)) return
+    requested.current.add(chunkKey)
+    fetch(`/api/booking/calendar?from=${month}-01&days=62&lang=${locale}&season=${sezon}`)
       .then((r): Promise<CalendarData | null> | null => (r.ok ? r.json() : null))
       .catch((): null => null)
-      .then((data) => setChunks((c) => ({ ...c, [month]: data })))
-  }, [live, open, month, locale])
+      .then((data) => setChunks((c) => ({ ...c, [chunkKey]: data })))
+  }, [live, open, month, locale, sezon, chunkKey])
+  const seasonChunks = Object.entries(chunks)
+    .filter(([k]) => k.startsWith(`${sezon}:`))
+    .map(([, c]) => c)
 
   // otwarty kalendarz ma być cały na ekranie (Michał, 25.10.2026): przewijamy stronę albo okno, w którym stoi pasek
   useEffect(() => {
@@ -112,13 +119,13 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
   }, [open])
 
   const chunkFor = (date: string) =>
-    Object.values(chunks).find((c): c is CalendarData =>
+    seasonChunks.find((c): c is CalendarData =>
       Boolean(c && date >= c.from && daysBetween(c.from, date) < (c.types[0]?.days.length ?? 0)),
     )
 
   function dayState(date: string): { ok: boolean; price: number | null; promo: string | null } {
     // „dziś” obiektu (strefa IceColdRes) może być dniem później niż w przeglądarce
-    const first = Object.values(chunks).find((c) => c)
+    const first = seasonChunks.find((c) => c)
     if (date < today() || (first && date < first.today))
       return { ok: false, price: null, promo: null }
     const data = chunkFor(date) ?? chunkFor(arrival)
@@ -184,6 +191,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       adults: String(adults),
       children: String(children),
       lang: locale,
+      season: sezon,
     })
     if (q.ages.length) params.set('ages', q.ages.join(','))
     try {
@@ -357,7 +365,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
           </div>
           <div
             className="mo-calendar__months"
-            aria-busy={live && !chunks[month] ? true : undefined}
+            aria-busy={live && !chunks[chunkKey] ? true : undefined}
           >
             {[month, nextMonth(month)].map((m) => (
               <div key={m} className="mo-calendar__month">

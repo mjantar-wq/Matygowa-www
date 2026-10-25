@@ -21,9 +21,20 @@
         "en": "How do payment and cancellation work?"
       },
       "a": {
-        "pl": "Przy rezerwacji wpłacacie 50% wartości pobytu, resztę w terminie z potwierdzenia. Przy rezygnacji ponad 60 dni przed przyjazdem zwracamy całą wpłatę, później wpłata przepada.",
-        "en": "You pay 50% when booking and the rest by the date in your confirmation. If you cancel more than 60 days before arrival we refund the full advance payment; after that it is non-refundable."
-      }
+        "pl": "Warunki zależą od wybranej oferty. Przy każdej ofercie pokazujemy wysokość zaliczki, termin dopłaty i zasady bezpłatnej rezygnacji, a pełne warunki znajdziecie też w potwierdzeniu rezerwacji.",
+        "en": "Terms depend on the offer you choose. Each offer shows the deposit amount, the balance due date and the free cancellation terms, and you will find the full terms in your booking confirmation."
+      },
+      "dynamic": {
+        "source": "icecoldres",
+        "fields": [
+          "offers[].cancellationPolicy",
+          "offers[].en.cancellationPolicy",
+          "payment.depositPercent",
+          "payment.balanceDue"
+        ],
+        "render": "pod tekstem lista ofert z warunkami pobranymi z IceColdRes w języku strony"
+      },
+      "note": "Warunki zaliczki, dopłaty i rezygnacji są zmienne, więc tekst nie podaje liczb. Nazwy pól API do potwierdzenia z wątkiem IceColdRes."
     },
     {
       "q": {

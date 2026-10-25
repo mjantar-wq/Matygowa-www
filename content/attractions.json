@@ -63,7 +63,7 @@
   },
   {
     "slug": "morskie-oko",
-    "map_svg_id": null,
+    "map_svg_id": "a-morskie-oko",
     "name": {
       "pl": "Morskie Oko",
       "en": "Morskie Oko lake"
@@ -84,7 +84,7 @@
   },
   {
     "slug": "kasprowy-wierch",
-    "map_svg_id": null,
+    "map_svg_id": "a-kasprowy-wierch",
     "name": {
       "pl": "Kolej na Kasprowy Wierch",
       "en": "Kasprowy Wierch cable car"

@@ -63,7 +63,7 @@ function Hero({ block, ctx, immersive }: Props<'hero'>) {
         {block.subline ? <p className="mo-lede mo-hero__lede">{block.subline}</p> : null}
         {block.showBookingBar !== false ? (
           <div className="mo-hero__booking">
-            <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
+            <BookingBar locale={ctx.locale} t={ctx.t.booking} fx={ctx.t.effects} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
           </div>
         ) : null}
       </div>
@@ -346,7 +346,7 @@ function BookingInvite({ block, ctx }: Props<'bookingInvite'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
+      <BookingBar locale={ctx.locale} t={ctx.t.booking} fx={ctx.t.effects} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
     </Section>
   )
 }

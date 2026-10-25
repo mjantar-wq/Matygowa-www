@@ -99,7 +99,7 @@ export default async function UnitPage({ params }: SlugParams) {
               {ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}
             </p>
           ))}
-          <BookingBar locale={ctx.locale} t={t.booking} engine={engineSettings(ctx.settings)} unit={code} slogan={ctx.settings?.priceSlogan} />
+          <BookingBar locale={ctx.locale} t={t.booking} fx={t.effects} engine={engineSettings(ctx.settings)} unit={code} slogan={ctx.settings?.priceSlogan} />
         </section>
       ) : null}
 

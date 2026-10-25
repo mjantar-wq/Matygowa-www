@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-type Target = { svgId: string; popoverId: string; label: string }
+/**
+ * `href`: klik w rysunek przenosi od razu pod ten adres (bez dymka).
+ * `modal`: element `popoverId` to <dialog> (okno z opisem), otwierany przyciskiem pod rysunkiem.
+ */
+type Target = { svgId: string; popoverId: string; label: string; href?: string; modal?: boolean }
 
 /**
  * Ilustracja SVG (G1 mapa, G2 panorama) wczytywana dopiero przy zbliżeniu do sekcji i wstawiana do strony,
@@ -59,9 +63,11 @@ export function SvgHotspots({ src, targets, className, scrollLabel }: { src: str
       const node = el.querySelector<SVGGraphicsElement>(`#${CSS.escape(t.svgId)}`)
       if (!node) return () => {}
       node.classList.add('mo-hotspot')
-      const open = () => {
+      const open = (): void => {
+        if (t.href) return void location.assign(t.href)
         const pop = document.getElementById(t.popoverId)
         if (!pop) return
+        if (pop instanceof HTMLDialogElement) return void showDialog(pop)
         pop.showPopover?.()
         place(pop, node)
       }
@@ -81,9 +87,11 @@ export function SvgHotspots({ src, targets, className, scrollLabel }: { src: str
           <li key={t.svgId}>
             <button
               type="button"
-              popoverTarget={t.popoverId}
+              popoverTarget={t.modal ? undefined : t.popoverId}
+              aria-haspopup={t.modal ? 'dialog' : undefined}
               onClick={() => {
                 const pop = document.getElementById(t.popoverId)
+                if (pop instanceof HTMLDialogElement) return showDialog(pop)
                 const node = host.current?.querySelector<SVGGraphicsElement>(`#${CSS.escape(t.svgId)}`)
                 if (pop && node) requestAnimationFrame(() => place(pop, node))
               }}
@@ -99,6 +107,17 @@ export function SvgHotspots({ src, targets, className, scrollLabel }: { src: str
       </ul>
     </div>
   )
+}
+
+/** Okno modalne z opisem; klik w tło je zamyka (przycisk × i Esc działają natywnie). */
+function showDialog(d: HTMLDialogElement) {
+  if (!d.dataset.ready) {
+    d.dataset.ready = '1'
+    d.addEventListener('click', (e) => {
+      if (e.target === d) d.close()
+    })
+  }
+  d.showModal()
 }
 
 /** Na szerokim ekranie dymek staje przy elemencie rysunku; na telefonie zostaje na środku (styl popovera). */

@@ -243,6 +243,10 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc .mo-section > .mo-container > * + * { margin-block-start: var(--space-3); }
 .mo-opowiesc .mo-section > .mo-container > header { margin-block-end: 0; }
 .mo-opowiesc .mo-section > .mo-container > header :is(.mo-h1, .mo-h2) { margin-block-end: 0; }
+/* Nadtytuł rozdziału (np. „Gliczarów Górny”) większy i tuż nad tytułem */
+.mo-opowiesc .mo-section > .mo-container > header > .mo-label { font-size: clamp(0.9375rem, 0.8rem + 0.35vw, 1.125rem); letter-spacing: 0.14em; }
+/* „Gliczarów Górny” nad pierwszym rozdziałem: wyraźny tytuł miejsca */
+.mo-opowiesc [data-block="intro"] > .mo-container > header > .mo-label { font-size: clamp(1.375rem, 1rem + 1.4vw, 2.125rem); font-weight: 600; letter-spacing: 0.12em; line-height: 1.15; }
 
 /* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić. Karty bez podsiatki,
    inaczej przerwa między krokami rozciąga każdą kartę na kilka ekranów. */
@@ -350,3 +354,10 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 [data-source="airbnb"] .mo-review__logo { color: #ff5a5f; }
 .mo-opowiesc [data-block="testimonials"].mo-section > .mo-container > .mo-reviews { max-inline-size: none; }
 @media (max-width: 767px) { .mo-review { padding: var(--space-4); } .mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { font-size: 0.875rem; } }
+
+/* Mapa osady: okno domu z przycisku pod mapą (wygląd jak okno domu w wynikach wyszukiwania, booking.css) */
+.mo-unit-dialog__close-form { display: contents; }
+.mo-map-dialog .mo-unit-dialog__text .mo-btn { justify-self: start; }
+/* okno leży w sekcji opowieści, której reguły dziedziczenia koloru i cienia nie mogą go dotyczyć */
+.mo-opowiesc .mo-section .mo-map-dialog :is(p, h3, dt, dd, a, li, .mo-label) { text-shadow: none; }
+.mo-opowiesc .mo-section .mo-map-dialog a.mo-btn--glowny { color: var(--color-na-cta); }

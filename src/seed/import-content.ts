@@ -158,7 +158,7 @@ async function main() {
       case 'nature':
         return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('K3_'), imagePosition: 'end' }
       case 'testimonials':
-        return { blockType: 'testimonials', ...base, eyebrow: b.rating_line?.[l] }
+        return { blockType: 'testimonials', ...base, eyebrow: b.rating_line?.[l] ?? null }
       case 'offers_news':
         return { blockType: 'offersNews', ...base }
       case 'booking_invite':

@@ -15,9 +15,20 @@
     "distance_km": 4.3,
     "drive_min": 9,
     "distance_note": "Trasa drogowa wg OpenStreetMap (OSRM), 25.10.2026.",
-    "body": {
+    "place": {
+      "pl": "Bukowina Tatrzańska",
+      "en": "Bukowina Tatrzańska"
+    },
+    "url": "https://www.termybukovina.pl",
+    "lat": 49.3252,
+    "lng": 20.0942,
+    "summary": {
       "pl": "Dwadzieścia basenów z wodą termalną o temperaturze 30–38°C, czerpaną z głębokości 2400 m, i osiem saun. Z basenów zewnętrznych patrzycie prosto na Tatry, także zimą, w parze nad wodą.",
       "en": "Twenty pools of 30–38°C thermal water drawn from 2,400 metres below ground, and eight saunas. From the outdoor pools you look straight at the Tatras, in winter too, through the steam rising off the water."
+    },
+    "body": {
+      "pl": "Najbliższe termy, dziesięć minut drogi od osady. Woda termalna o temperaturze 30–38°C płynie z głębokości 2400 m, w dwudziestu basenach wewnątrz i na zewnątrz. Do tego osiem saun, od łagodnej ziołowej po fińską.\n\nNajpiękniej jest zimą o zmierzchu: siedzicie w ciepłej wodzie na zewnątrz, nad taflą unosi się para, a przed Wami ciemnieje grań Tatr. Na deszczowy dzień i po całym dniu na nartach to najprostszy plan.\n\nWarto przyjechać rano albo pod wieczór, w weekendy i ferie w środku dnia bywa tłoczno. Bilety i godziny otwarcia sprawdzicie na stronie obiektu.",
+      "en": "The nearest thermal baths, ten minutes from the settlement. Thermal water at 30–38°C rises from 2,400 metres below ground into twenty indoor and outdoor pools, with eight saunas, from gentle herbal to Finnish.\n\nIt is at its most beautiful on a winter evening: you sit in the warm outdoor water, steam drifting over the surface, as the Tatra ridge darkens in front of you. On a rainy day, or after a full day on skis, it is the simplest plan there is.\n\nCome in the morning or towards evening; at weekends and in the school holidays midday can be busy. Tickets and opening hours are on the official website."
     }
   },
   {
@@ -36,9 +47,18 @@
     "distance_km": 11.6,
     "drive_min": 20,
     "distance_note": "Trasa drogowa wg OpenStreetMap (OSRM), 25.10.2026.",
-    "body": {
+    "place": {
+      "pl": "Białka Tatrzańska",
+      "en": "Białka Tatrzańska"
+    },
+    "url": "https://www.termabania.pl",
+    "summary": {
       "pl": "Woda geotermalna do 38°C, strefa zjeżdżalni dla dzieci i strefa relaksu ze światem saun dla dorosłych. Leży tuż przy stoku Kotelnicy, więc po nartach wystarczy przejść kilka kroków.",
       "en": "Geothermal water up to 38°C, a slide zone for children and a relaxation area with a world of saunas for adults. It sits right next to the Kotelnica slopes, so after skiing it is only a few steps away."
+    },
+    "body": {
+      "pl": "Terma Bania stoi tuż przy dolnej stacji Kotelnicy, więc z nart do ciepłej wody idzie się kilka kroków. Woda geotermalna ma do 38°C, baseny są w środku i pod gołym niebem.\n\nStrefa rekreacji ze zjeżdżalniami jest dla rodzin, a w osobnej strefie relaksu dorośli mają świat saun i spokój. Dzięki temu jeden wyjazd pasuje i dzieciom, i Wam.\n\nDobry plan na cały dzień w Białce: rano stok, po południu termy, wieczorem kolacja w jednej z karczm we wsi.",
+      "en": "Terma Bania stands right by the Kotelnica base station, so from the slopes to the warm water is only a few steps. Geothermal water reaches 38°C, with pools indoors and under the open sky.\n\nThe recreation zone with slides is for families, while a separate relaxation zone gives adults a world of saunas and quiet. One trip suits the children and you alike.\n\nA good plan for a whole day in Białka: the slopes in the morning, the thermal pools in the afternoon, dinner in one of the village inns in the evening."
     }
   },
   {
@@ -56,92 +76,17 @@
     "distance_km": 12,
     "drive_min": 20,
     "distance_note": "Dolna stacja Kotelnicy obok Termy Bania; trasa wg OSRM do Termy Bania, 25.10.2026.",
-    "body": {
+    "place": {
+      "pl": "Białka Tatrzańska",
+      "en": "Białka Tatrzańska"
+    },
+    "summary": {
       "pl": "Kotelnica, Kaniówka i Bania to jeden z największych terenów narciarskich w Polsce, ze wspólnym karnetem. Szerokie, dośnieżane i oświetlone trasy, z których widać Tatry. Kaniówka jest najłagodniejsza i najlepsza dla dzieci.",
       "en": "Kotelnica, Kaniówka and Bania form one of the largest ski areas in Poland, with a shared pass. Wide, snow-made, floodlit runs with views of the Tatras. Kaniówka is the gentlest and best for children."
-    }
-  },
-  {
-    "slug": "morskie-oko",
-    "map_svg_id": "a-morskie-oko",
-    "name": {
-      "pl": "Morskie Oko",
-      "en": "Morskie Oko lake"
     },
-    "season": [
-      "summer",
-      "winter"
-    ],
-    "category": "trails",
-    "featured": true,
-    "distance_km": 14,
-    "drive_min": 20,
-    "distance_note": "Dojazd do parkingu Palenica Białczańska wg OSRM, 25.10.2026; dalej pieszo.",
     "body": {
-      "pl": "Największe jezioro w Tatrach, pod ścianami Mięguszowieckich Szczytów i Rysów. Samochodem jedziecie tylko na parking na Palenicy Białczańskiej, dalej prowadzi asfaltowa droga przez las, około dwóch godzin spacerem. Parking warto zarezerwować wcześniej.",
-      "en": "The largest lake in the Tatras, beneath the walls of the Mięguszowieckie peaks and Rysy. You can drive only as far as the Palenica Białczańska car park; from there an asphalt road leads through the forest, about two hours on foot. It is worth booking the car park in advance."
-    }
-  },
-  {
-    "slug": "kasprowy-wierch",
-    "map_svg_id": "a-kasprowy-wierch",
-    "name": {
-      "pl": "Kolej na Kasprowy Wierch",
-      "en": "Kasprowy Wierch cable car"
-    },
-    "season": [
-      "summer",
-      "winter"
-    ],
-    "category": "views",
-    "featured": true,
-    "distance_km": 16,
-    "drive_min": 33,
-    "distance_note": "Do dolnej stacji w Kuźnicach wg OSRM, 25.10.2026.",
-    "body": {
-      "pl": "Kolej z Kuźnic wjeżdża na Kasprowy Wierch (1987 m), na granicę ze Słowacją. Zimą narty w Kotle Gąsienicowym i Goryczkowym, latem szlaki granią i widok na obie strony Tatr. Bilety najlepiej kupić online.",
-      "en": "The cable car from Kuźnice climbs to Kasprowy Wierch (1,987 m), right on the Slovak border. Skiing in the Gąsienicowa and Goryczkowa bowls in winter, ridge trails and views over both sides of the Tatras in summer. Tickets are best bought online."
-    }
-  },
-  {
-    "slug": "gubalowka",
-    "map_svg_id": "a-gubalowka",
-    "name": {
-      "pl": "Kolej na Gubałówkę",
-      "en": "Gubałówka funicular"
-    },
-    "season": [
-      "summer",
-      "winter"
-    ],
-    "category": "views",
-    "featured": true,
-    "distance_km": 16,
-    "drive_min": 30,
-    "distance_note": "Do dolnej stacji w Zakopanem wg OSRM, 25.10.2026.",
-    "body": {
-      "pl": "Kolej linowo-terenowa z centrum Zakopanego wjeżdża na Gubałówkę w kilka minut. Na górze promenada z panoramą Tatr od Giewontu po Tatry Wysokie, a zimą stoki.",
-      "en": "A funicular from the centre of Zakopane takes you up Gubałówka in a few minutes. At the top, a promenade with a Tatra panorama from Giewont to the High Tatras, and ski slopes in winter."
-    }
-  },
-  {
-    "slug": "szymoszkowa",
-    "map_svg_id": "a-szymoszkowa",
-    "name": {
-      "pl": "Wyciągi na Polanie Szymoszkowej",
-      "en": "Polana Szymoszkowa ski lifts"
-    },
-    "season": [
-      "winter"
-    ],
-    "category": "ski",
-    "featured": true,
-    "distance_km": 17,
-    "drive_min": 32,
-    "distance_note": "Wg OSRM, 25.10.2026.",
-    "body": {
-      "pl": "Stacja narciarska na grzbiecie Gubałówki, nad Zakopanem. Szerokie, przygotowane trasy z widokiem na Giewont i całe Tatry, dobre na rodzinny dzień na nartach.",
-      "en": "A ski area on the Gubałówka ridge above Zakopane. Wide, groomed runs facing Giewont and the whole Tatra range, good for a family day on the slopes."
+      "pl": "Kotelnica, Kaniówka i Bania leżą obok siebie po obu stronach Białki i tworzą jeden z największych terenów narciarskich w Polsce, ze wspólnym karnetem. Trasy są szerokie, dośnieżane i oświetlone, więc jeździ się także wieczorem.\n\nKotelnica ma najdłuższe i najbardziej urozmaicone zjazdy, a z jej grzbietu widać całe Tatry. Kaniówka jest najłagodniejsza, dobra na pierwsze dni i dla dzieci; są tu też szkółki narciarskie.\n\nZ osady to około dwudziestu minut samochodem. W ferie i weekendy warto być na parkingu przed dziewiątą.",
+      "en": "Kotelnica, Kaniówka and Bania lie side by side on both banks of the Białka river and form one of the largest ski areas in Poland, with a shared lift pass. The runs are wide, snow-made and floodlit, so you can ski into the evening.\n\nKotelnica has the longest and most varied runs, with the whole Tatra range in view from its ridge. Kaniówka is the gentlest, good for the first days and for children, and has ski schools.\n\nIt is about twenty minutes by car from the settlement. In the holidays and at weekends, aim to be in the car park before nine."
     }
   },
   {
@@ -160,9 +105,146 @@
     "distance_km": 12.8,
     "drive_min": 19,
     "distance_note": "Małe Ciche 93, trasa wg OSRM, 25.10.2026.",
+    "place": {
+      "pl": "Małe Ciche, Polana Zgorzelisko",
+      "en": "Małe Ciche, Polana Zgorzelisko"
+    },
+    "url": "https://skywalk-poronin.pl",
+    "summary": {
+      "pl": "Drewniana ścieżka bez schodów prowadzi na szklany taras na Polanie Zgorzelisko koło Poronina. Z góry panorama 360°: od Tatr Wysokich po doliny i wsie Podhala.",
+      "en": "A step-free wooden walkway leads up to a glass terrace on Polana Zgorzelisko near Poronin. From the top, a 360° panorama from the High Tatras to the valleys and villages of Podhale."
+    },
     "body": {
-      "pl": "Szklany taras zawieszony nad Podhalem, w Małem Cichem koło Poronina. Pod stopami przepaść, przed Wami panorama 360°: od Tatr Wysokich po doliny i wsie Podhala.",
-      "en": "A glass terrace suspended above Podhale, in Małe Ciche near Poronin. A drop beneath your feet and a 360° panorama ahead, from the High Tatras to the valleys and villages of Podhale."
+      "pl": "SkyWalk Serce Poronina stoi na Polanie Zgorzelisko w Małem Cichem, dwadzieścia minut od osady. Drewniana ścieżka ma 854 metry i łagodne nachylenie, bez schodów, więc wejdziecie z wózkiem i z dziadkami.\n\nNa szczycie czeka szklany taras z panoramą 360°: Tatry Wysokie i Bielskie, Giewont, a w dole doliny i wsie Podhala. Dla odważniejszych jest druga droga w górę, po siatkach, a na dół można zjechać zjeżdżalnią.\n\nOtwarte cały rok, ostatnie wejście godzinę przed zamknięciem. Najpiękniej jest przy czystym niebie rano albo przed zachodem słońca.",
+      "en": "SkyWalk Heart of Poronin stands on Polana Zgorzelisko in Małe Ciche, twenty minutes from the settlement. The wooden walkway is 854 metres long with a gentle gradient and no steps, so you can bring a pushchair and the grandparents.\n\nAt the top a glass terrace opens onto a 360° panorama: the High and Belianske Tatras, Giewont, and the valleys and villages of Podhale below. For the bolder there is a second way up, over climbing nets, and a slide back down.\n\nOpen all year, with last entry an hour before closing. It is at its best under a clear sky in the morning or before sunset."
+    }
+  },
+  {
+    "slug": "morskie-oko",
+    "map_svg_id": "a-morskie-oko",
+    "name": {
+      "pl": "Morskie Oko",
+      "en": "Morskie Oko lake"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "trails",
+    "featured": true,
+    "distance_km": 14,
+    "drive_min": 20,
+    "distance_note": "Dojazd do parkingu Palenica Białczańska wg OSRM, 25.10.2026; dalej pieszo.",
+    "place": {
+      "pl": "Tatrzański Park Narodowy, parking Palenica Białczańska",
+      "en": "Tatra National Park, Palenica Białczańska car park"
+    },
+    "url": "https://tpn.pl",
+    "summary": {
+      "pl": "Największe jezioro w Tatrach, pod ścianami Mięguszowieckich Szczytów i Rysów. Samochodem jedziecie tylko na parking na Palenicy Białczańskiej, dalej prowadzi asfaltowa droga przez las, około dwóch godzin spacerem. Parking warto zarezerwować wcześniej.",
+      "en": "The largest lake in the Tatras, beneath the walls of the Mięguszowieckie peaks and Rysy. You can drive only as far as the Palenica Białczańska car park; from there an asphalt road leads through the forest, about two hours on foot. It is worth booking the car park in advance."
+    },
+    "body": {
+      "pl": "Największe jezioro w Tatrach leży na wysokości 1395 m, pod ścianami Mięguszowieckich Szczytów i Rysów. Samochodem dojedziecie tylko do parkingu na Palenicy Białczańskiej, dwadzieścia minut od osady. Dalej prowadzi asfaltowa droga przez las, około dwóch godzin spokojnym spacerem w jedną stronę.\n\nNad wodą stoi schronisko, gdzie można się ogrzać i zjeść. Kto ma siły, w godzinę dojdzie wyżej, nad Czarny Staw pod Rysami, skąd jezioro widać z góry.\n\nParking warto zarezerwować wcześniej na stronie Tatrzańskiego Parku Narodowego. Najspokojniej jest o świcie i poza wakacjami; zimą droga bywa oblodzona, przydadzą się raczki.",
+      "en": "The largest lake in the Tatras lies at 1,395 metres, beneath the walls of the Mięguszowieckie peaks and Rysy. You can drive only as far as the Palenica Białczańska car park, twenty minutes from the settlement. From there an asphalt road leads through the forest, about two hours at an easy pace each way.\n\nA mountain hut stands by the water, a place to warm up and eat. If you still have the energy, an hour more takes you up to Czarny Staw pod Rysami, with the lake seen from above.\n\nBook the car park in advance on the Tatra National Park website. It is quietest at dawn and outside the summer holidays; in winter the road can be icy, so bring microspikes."
+    },
+    "image": "A_morskie-oko_1.webp"
+  },
+  {
+    "slug": "gubalowka",
+    "map_svg_id": "a-gubalowka",
+    "name": {
+      "pl": "Kolej na Gubałówkę",
+      "en": "Gubałówka funicular"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "featured": true,
+    "distance_km": 16,
+    "drive_min": 30,
+    "distance_note": "Do dolnej stacji w Zakopanem wg OSRM, 25.10.2026.",
+    "place": {
+      "pl": "Zakopane, dolna stacja przy Krupówkach",
+      "en": "Zakopane, lower station by Krupówki"
+    },
+    "url": "https://www.pkl.pl",
+    "summary": {
+      "pl": "Kolej linowo-terenowa z centrum Zakopanego wjeżdża na Gubałówkę w kilka minut. Na górze promenada z panoramą Tatr od Giewontu po Tatry Wysokie, a zimą stoki.",
+      "en": "A funicular from the centre of Zakopane takes you up Gubałówka in a few minutes. At the top, a promenade with a Tatra panorama from Giewont to the High Tatras, and ski slopes in winter."
+    },
+    "body": {
+      "pl": "Kolej linowo-terenowa rusza tuż obok Krupówek i w kilka minut wjeżdża na Gubałówkę. Na górze czeka promenada z panoramą Tatr od Giewontu po Tatry Wysokie, a przy dobrej pogodzie widać całe pasmo jak na dłoni.\n\nGrzbietem można przejść spacerem na Butorowy Wierch albo w stronę Polany Szymoszkowej. Zimą działają tu wyciągi i saneczkowe zjazdy, latem zjeżdżalnie i trasy na rower.\n\nNa Gubałówkę dobrze wjechać pod wieczór, gdy słońce oświetla Tatry od zachodu i jest mniej ludzi. Z osady to pół godziny samochodem do centrum Zakopanego.",
+      "en": "The funicular starts right next to Krupówki and climbs Gubałówka in a few minutes. At the top a promenade looks out over the Tatras from Giewont to the High Tatras; on a clear day you see the whole range laid out before you.\n\nAlong the ridge you can walk to Butorowy Wierch or towards Polana Szymoszkowa. In winter there are ski lifts and sledging runs, in summer slides and cycling routes.\n\nRide up towards evening, when the low sun lights the Tatras from the west and the crowds thin out. It is half an hour by car from the settlement to the centre of Zakopane."
+    },
+    "image": "A_gubalowka_1.webp",
+    "gallery": [
+      "A_gubalowka_2.webp"
+    ]
+  },
+  {
+    "slug": "kasprowy-wierch",
+    "map_svg_id": "a-kasprowy-wierch",
+    "name": {
+      "pl": "Kolej na Kasprowy Wierch",
+      "en": "Kasprowy Wierch cable car"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "featured": true,
+    "distance_km": 16,
+    "drive_min": 33,
+    "distance_note": "Do dolnej stacji w Kuźnicach wg OSRM, 25.10.2026.",
+    "place": {
+      "pl": "Zakopane, dolna stacja w Kuźnicach",
+      "en": "Zakopane, lower station in Kuźnice"
+    },
+    "url": "https://www.pkl.pl",
+    "summary": {
+      "pl": "Kolej z Kuźnic wjeżdża na Kasprowy Wierch (1987 m), na granicę ze Słowacją. Zimą narty w Kotle Gąsienicowym i Goryczkowym, latem szlaki granią i widok na obie strony Tatr. Bilety najlepiej kupić online.",
+      "en": "The cable car from Kuźnice climbs to Kasprowy Wierch (1,987 m), right on the Slovak border. Skiing in the Gąsienicowa and Goryczkowa bowls in winter, ridge trails and views over both sides of the Tatras in summer. Tickets are best bought online."
+    },
+    "body": {
+      "pl": "Kolej linowa z Kuźnic wjeżdża na Kasprowy Wierch (1987 m), na samą granicę ze Słowacją. Na górze stoi obserwatorium meteorologiczne, najwyżej położony budynek w Polsce, a widok sięga obu stron Tatr.\n\nZimą to narty w Kotle Gąsienicowym i Goryczkowym, z najdłuższymi zjazdami w polskich Tatrach. Latem kolej jest początkiem wędrówek granią, na Beskid i dalej w stronę Świnicy, albo spokojnego zejścia do Hali Gąsienicowej.\n\nBilety najlepiej kupić online z wyprzedzeniem, w sezonie kolejka do kas bywa długa. Na górze jest zwykle kilka stopni zimniej i mocniej wieje, więc weźcie ciepłą warstwę także latem.",
+      "en": "The cable car from Kuźnice climbs to Kasprowy Wierch (1,987 m), right on the Slovak border. At the top stands a weather observatory, the highest building in Poland, and the view reaches both sides of the Tatras.\n\nIn winter it means skiing in the Gąsienicowa and Goryczkowa bowls, with the longest runs in the Polish Tatras. In summer it is the start of ridge walks towards Beskid and on to Świnica, or an easy descent to Hala Gąsienicowa.\n\nBuy tickets online well ahead; in season the queue at the ticket office can be long. It is usually several degrees colder and windier at the top, so bring a warm layer even in summer."
+    },
+    "image": "A_kasprowy-wierch_1.webp",
+    "gallery": [
+      "A_kasprowy-wierch_2.webp"
+    ]
+  },
+  {
+    "slug": "szymoszkowa",
+    "map_svg_id": "a-szymoszkowa",
+    "name": {
+      "pl": "Wyciągi na Polanie Szymoszkowej",
+      "en": "Polana Szymoszkowa ski lifts"
+    },
+    "season": [
+      "winter"
+    ],
+    "category": "ski",
+    "featured": true,
+    "distance_km": 17,
+    "drive_min": 32,
+    "distance_note": "Wg OSRM, 25.10.2026.",
+    "place": {
+      "pl": "Zakopane, Polana Szymoszkowa",
+      "en": "Zakopane, Polana Szymoszkowa"
+    },
+    "url": "https://www.szymoszkowa.pl",
+    "summary": {
+      "pl": "Stacja narciarska na grzbiecie Gubałówki, nad Zakopanem. Szerokie, przygotowane trasy z widokiem na Giewont i całe Tatry, dobre na rodzinny dzień na nartach.",
+      "en": "A ski area on the Gubałówka ridge above Zakopane. Wide, groomed runs facing Giewont and the whole Tatra range, good for a family day on the slopes."
+    },
+    "body": {
+      "pl": "Stacja narciarska na grzbiecie Gubałówki, nad Zakopanem, z trasami zwróconymi prosto na Giewont i całe Tatry. Stoki są szerokie i starannie przygotowane, a ruch spokojniejszy niż na dużych stacjach.\n\nTo dobre miejsce na rodzinny dzień na nartach: są łagodne trasy dla zaczynających, szkółka i wypożyczalnia, a obok można odpocząć z widokiem na góry.\n\nWieczorem trasy są oświetlone. Grzbietem łatwo połączyć narty ze spacerem na Gubałówkę.",
+      "en": "A ski area on the Gubałówka ridge above Zakopane, with runs facing straight at Giewont and the whole Tatra range. The slopes are wide and carefully groomed, and it is calmer than the big resorts.\n\nIt is a good place for a family day on skis: gentle runs for beginners, a ski school and rental, and somewhere to rest with a view of the mountains.\n\nThe runs are floodlit in the evening, and the ridge makes it easy to combine skiing with a walk to Gubałówka."
     }
   },
   {
@@ -180,44 +262,54 @@
     "distance_km": 35.5,
     "drive_min": 53,
     "distance_note": "Do przystani flisackiej w Sromowcach Wyżnych-Kątach, trasa wg OSRM, 25.10.2026.",
-    "body": {
+    "place": {
+      "pl": "Sromowce Wyżne-Kąty, Pieniny",
+      "en": "Sromowce Wyżne-Kąty, Pieniny"
+    },
+    "url": "https://flisacy.com.pl",
+    "summary": {
       "pl": "Drewniane tratwy i flisacy w góralskich strojach prowadzą Was przełomem Dunajca w Pienińskim Parku Narodowym, z Kątów do Szczawnicy. Spokojna woda, wapienne ściany Trzech Koron nad głową. Spływy odbywają się od wiosny do jesieni.",
       "en": "Wooden rafts steered by raftsmen in highland dress take you through the Dunajec gorge in the Pieniny National Park, from Kąty to Szczawnica. Calm water, with the limestone walls of the Three Crowns above you. Rafting runs from spring to autumn."
-    }
-  },
-  {
-    "slug": "stoki-bialka-bukowina",
-    "name": {
-      "pl": "Stoki w Białce i Bukowinie Tatrzańskiej",
-      "en": "Ski slopes in Białka and Bukowina Tatrzańska"
     },
-    "season": [
-      "winter"
-    ],
-    "category": "ski",
     "body": {
-      "pl": "Najbliższe wyciągi są kilka minut samochodem. Duże stacje w Białce i Bukowinie na cały dzień.",
-      "en": "The nearest lifts are a few minutes' drive away, with the big resorts in Białka and Bukowina for a full day out."
+      "pl": "Drewniane tratwy i flisacy w góralskich strojach prowadzą Was przełomem Dunajca w Pienińskim Parku Narodowym, z przystani w Sromowcach Wyżnych-Kątach do Szczawnicy albo dalej do Krościenka. Rzeka wije się między wapiennymi ścianami, nad głową Trzy Korony i Sokolica.\n\nSpływ trwa dwie, trzy godziny, a flisacy po drodze opowiadają o Pieninach z góralskim humorem. Woda jest spokojna, płyną dzieci i starsi.\n\nSpływy odbywają się od kwietnia do października. Z osady to niecała godzina drogi przez Nowy Targ. Do przystani wraca się busem albo rowerem drogą wzdłuż Dunajca.",
+      "en": "Wooden rafts steered by raftsmen in highland dress take you through the Dunajec gorge in the Pieniny National Park, from the pier in Sromowce Wyżne-Kąty to Szczawnica or on to Krościenko. The river winds between limestone walls, with the Three Crowns and Sokolica overhead.\n\nThe trip takes two to three hours, and the raftsmen tell stories of the Pieniny along the way with highland humour. The water is calm, so children and older guests come along too.\n\nRafting runs from April to October. It is under an hour from the settlement via Nowy Targ. You return to the pier by minibus, or by bike along the riverside path."
     }
   },
   {
-    "slug": "termy",
+    "slug": "bielska-jaskinia",
+    "map_svg_id": "a-jaskinie-slowacja",
     "name": {
-      "pl": "Termy",
-      "en": "Thermal pools"
+      "pl": "Bielska Jaskinia",
+      "en": "Belianska Cave"
     },
     "season": [
       "summer",
       "winter"
     ],
-    "category": "thermal",
+    "category": "family",
+    "distance_km": 34,
+    "drive_min": 40,
+    "distance_note": "Parking pod jaskinią w Tatrzańskiej Kotlinie, trasa wg OSRM, 25.10.2026.",
+    "place": {
+      "pl": "Tatranská Kotlina, Słowacja",
+      "en": "Tatranská Kotlina, Slovakia"
+    },
+    "url": "https://www.ssj.sk",
+    "lat": 49.2288,
+    "lng": 20.3115,
+    "summary": {
+      "pl": "Najbliższa udostępniona jaskinia po słowackiej stronie Tatr, w Tatrzańskiej Kotlinie, 40 minut od osady. Szata naciekowa, podziemne jeziorka i stała temperatura około 5°C.",
+      "en": "The nearest show cave on the Slovak side of the Tatras, in Tatranská Kotlina, 40 minutes from the settlement. Dripstone formations, underground pools and a steady temperature of about 5°C."
+    },
     "body": {
-      "pl": "Kilka kompleksów termalnych w promieniu 3–15 km. Dobre na deszczowy dzień i na zmęczone nogi.",
-      "en": "Several thermal spas within 3–15 km. Good for a rainy day and for tired legs."
+      "pl": "Bielska Jaskinia leży w Tatrach Bielskich nad Tatrzańską Kotliną, czterdzieści minut od osady przez przejście na Łysej Polanie. To jedna z najstarszych udostępnionych jaskiń w Europie i jedna z pierwszych oświetlonych elektrycznie.\n\nTrasa prowadzi przez sale pełne stalaktytów, stalagmitów i kaskad nacieków, obok małych podziemnych jeziorek. Zwiedzanie z przewodnikiem trwa około godziny, po drodze jest sporo schodów.\n\nOd parkingu do wejścia idzie się leśną ścieżką około dwudziestu minut pod górę. W środku przez cały rok jest około 5°C, więc weźcie kurtkę także latem. Godziny wejść sprawdzicie na stronie Słowackiego Zarządu Jaskiń.",
+      "en": "Belianska Cave lies in the Belianske Tatras above Tatranská Kotlina, forty minutes from the settlement via the Łysa Polana crossing. It is one of the oldest show caves in Europe and among the first to be lit by electricity.\n\nThe route leads through halls full of stalactites, stalagmites and cascades of flowstone, past small underground pools. The guided tour takes about an hour, with plenty of steps along the way.\n\nFrom the car park to the entrance is a forest path of about twenty minutes uphill. Inside it is about 5°C all year, so bring a jacket even in summer. Tour times are on the Slovak Caves Administration website."
     }
   },
   {
     "slug": "murzasichle",
+    "map_svg_id": "a-murzasichle",
     "name": {
       "pl": "Park linowy i Zagroda Korkoszów w Murzasichlu",
       "en": "Rope park and Korkoszów Farmstead, Murzasichle"
@@ -226,9 +318,17 @@
       "summer"
     ],
     "category": "family",
+    "place": {
+      "pl": "Murzasichle",
+      "en": "Murzasichle"
+    },
+    "summary": {
+      "pl": "Park linowy dla dzieci i dorosłych oraz dawna góralska zagroda, na skraju Tatr między Poroninem a Zakopanem.",
+      "en": "A rope park for children and adults and a traditional highland farmstead, at the edge of the Tatras between Poronin and Zakopane."
+    },
     "body": {
-      "pl": "Park linowy dla dzieci i dorosłych oraz dawna góralska zagroda.",
-      "en": "A rope park for children and adults, and a traditional highland farmstead."
+      "pl": "Murzasichle to wieś na skraju Tatr, między Poroninem a Zakopanem. Na rodzinne popołudnie jest tu park linowy z trasami dla dzieci i dorosłych, na różnych wysokościach.\n\nZagroda Korkoszów to dawne góralskie gospodarstwo, w którym zobaczycie, jak żyło się na Podhalu.\n\nDobry plan na lato, gdy dzieci potrzebują ruchu, a Wy chcecie zostać blisko gór.",
+      "en": "Murzasichle is a village at the edge of the Tatras, between Poronin and Zakopane. For a family afternoon there is a rope park with courses for children and adults, at different heights.\n\nKorkoszów Farmstead is an old highland homestead showing how life was once lived in Podhale.\n\nA good summer plan when the children need to move and you want to stay close to the mountains."
     }
   },
   {
@@ -242,25 +342,17 @@
       "winter"
     ],
     "category": "views",
-    "body": {
-      "pl": "Starty z Zakopanego i Kościeliska, Tatry z góry.",
-      "en": "Take-offs from Zakopane and Kościelisko: the Tatras from above."
-    }
-  },
-  {
-    "slug": "jaskinie-slowacja",
-    "name": {
-      "pl": "Jaskinie na Słowacji",
-      "en": "Caves in Slovakia"
+    "place": {
+      "pl": "Starty w Zakopanem i Kościelisku",
+      "en": "Take-offs in Zakopane and Kościelisko"
     },
-    "season": [
-      "summer",
-      "winter"
-    ],
-    "category": "family",
+    "summary": {
+      "pl": "Lot balonem nad Podhalem, z Tatrami na wyciągnięcie ręki. Starty o świcie z Zakopanego i Kościeliska.",
+      "en": "A balloon flight over Podhale, with the Tatras close enough to touch. Dawn take-offs from Zakopane and Kościelisko."
+    },
     "body": {
-      "pl": "Jednodniowa wycieczka za granicę, 13 km do Słowacji.",
-      "en": "A day trip across the border, 13 km to Slovakia."
+      "pl": "Lot balonem to Tatry z perspektywy, której nie da żaden szczyt: cała grań od Tatr Zachodnich po Wysokie, a pod Wami Podhale w porannej mgle. Starty są zwykle o świcie, kiedy powietrze jest najspokojniejsze, z łąk w Zakopanem i Kościelisku.\n\nLot trwa około godziny, a cała wyprawa z przygotowaniem i powrotem kilka godzin. Miejsce lądowania zależy od wiatru, dlatego operator odwozi Was z powrotem na start.\n\nTermin zależy od pogody, więc najlepiej zarezerwować go na początku pobytu i mieć zapasowy dzień.",
+      "en": "A balloon flight shows the Tatras from a perspective no summit can: the whole ridge from the Western to the High Tatras, with Podhale beneath you in the morning mist. Take-offs are usually at dawn, when the air is calmest, from meadows in Zakopane and Kościelisko.\n\nThe flight lasts about an hour, the whole outing with preparation and return a few hours. Where you land depends on the wind, so the operator drives you back to the start.\n\nFlights depend on the weather, so book at the start of your stay and keep a spare day."
     }
   },
   {
@@ -273,9 +365,58 @@
       "summer"
     ],
     "category": "trails",
+    "place": {
+      "pl": "Start pod osadą, Gliczarów Górny",
+      "en": "Starting below the settlement, Gliczarów Górny"
+    },
+    "summary": {
+      "pl": "Gliczarów Górny to start i meta tras pieszych i rowerowych po Pogórzu Gliczarowskim, do Bukowiny i dalej na Słowację.",
+      "en": "Gliczarów Górny is the start and finish of walking and cycling routes across the Gliczarów foothills, to Bukowina and on into Slovakia."
+    },
     "body": {
-      "pl": "Gliczarów Górny to start i meta tras rowerowych po Pogórzu Gliczarowskim i na Słowację.",
-      "en": "Gliczarów Górny is the start and finish of cycle routes across the Gliczarów foothills and into Slovakia."
+      "pl": "Osada leży na Pogórzu Gliczarowskim, wśród łąk i grzbietów z widokiem na Tatry, więc wiele tras zaczyna się tuż za furtką. Spokojne drogi prowadzą grzbietem do Bukowiny Tatrzańskiej i na Głodówkę, skąd widać całą panoramę Tatr Wysokich i Bielskich.\n\nNa rowerze dojedziecie do trasy Velo Dunajec, poprowadzonej wzdłuż rzeki w stronę Nowego Targu, albo przez Łysą Polanę na Słowację. Kto woli wysokie góry, w kilkanaście minut samochodem jest przy szlakach Tatrzańskiego Parku Narodowego.\n\nMapy tras i wskazówki na dany dzień chętnie podpowiemy na miejscu.",
+      "en": "The settlement sits in the Gliczarów foothills, among meadows and ridges facing the Tatras, so many routes start right outside the gate. Quiet roads follow the ridge to Bukowina Tatrzańska and to Głodówka, with a full panorama of the High and Belianske Tatras.\n\nBy bike you can reach the Velo Dunajec route along the river towards Nowy Targ, or cross into Slovakia via Łysa Polana. If you prefer the high mountains, the Tatra National Park trails are a short drive away.\n\nWe are happy to suggest maps and routes for the day when you are here."
     }
+  },
+  {
+    "slug": "termy",
+    "name": {
+      "pl": "Termy",
+      "en": "Thermal pools"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "thermal",
+    "retired": true,
+    "note": "Zastąpione konkretnymi obiektami (25.10.2026); import zdejmuje wpis ze strony."
+  },
+  {
+    "slug": "stoki-bialka-bukowina",
+    "name": {
+      "pl": "Stoki w Białce i Bukowinie Tatrzańskiej",
+      "en": "Ski slopes in Białka and Bukowina Tatrzańska"
+    },
+    "season": [
+      "winter"
+    ],
+    "category": "ski",
+    "retired": true,
+    "note": "Zastąpione konkretnymi obiektami (25.10.2026); import zdejmuje wpis ze strony."
+  },
+  {
+    "slug": "jaskinie-slowacja",
+    "name": {
+      "pl": "Jaskinie na Słowacji",
+      "en": "Caves in Slovakia"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "family",
+    "retired": true,
+    "note": "Zastąpione konkretnymi obiektami (25.10.2026); import zdejmuje wpis ze strony."
   }
 ]

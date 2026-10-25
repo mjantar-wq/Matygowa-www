@@ -36,15 +36,15 @@ export function Media({ media, className, priority, fallback, alt }: Props) {
  * Podpis autorski pod zdjęciem z licencji CC (podpis z panelu), np. „Fot. Jan Kowalski · CC BY 4.0 · Wikimedia Commons https://…”.
  * Adres na końcu podpisu zamienia ostatni człon w link do źródła. Dla CGI nic nie pokazuje (tam podpis to notatka redakcyjna).
  */
-export function Credit({ media }: { media?: MediaDoc | string | number | null }) {
+export function Credit({ media, as: Tag = 'figcaption' }: { media?: MediaDoc | string | number | null; as?: 'figcaption' | 'p' }) {
   if (!media || typeof media !== 'object' || media.isPlaceholder || !media.caption) return null
   const [, text, url] = media.caption.match(/^(.*?)\s*(https?:\/\/\S+)?$/) ?? []
   const parts = (text ?? '').split(' · ')
   const last = parts.pop()
   return (
-    <figcaption className="mo-credit">
+    <Tag className="mo-credit">
       {parts.length ? `${parts.join(' · ')} · ` : null}
       {url ? <a href={url} rel="noopener license" target="_blank">{last}</a> : last}
-    </figcaption>
+    </Tag>
   )
 }

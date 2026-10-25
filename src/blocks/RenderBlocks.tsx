@@ -209,7 +209,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
         // Lista nazw: najechanie albo fokus podświetla atrakcję na mapie (SceneStage) i rozwija jej opis
         <ul className="mo-attractions">
           {attractions.map((a) => (
-            <li key={a.id} className="mo-attraction" data-scene-focus={a.mapId || attractionSvgId(a.slug)}>
+            <li key={a.id} className="mo-attraction" data-scene-focus={a.mapId || undefined}>
               <Link href={href(ctx.locale, 'surroundings', a.slug)} className="mo-attraction__name">
                 <span className="mo-h3">{a.name}</span>
                 {a.distanceKm != null ? <span className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</span> : null}
@@ -234,9 +234,6 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
     </Section>
   )
 }
-
-/** Atrakcja → element mapy okolicy G7, gdy w panelu nie ma własnego id na mapie. */
-const attractionSvgId = (slug: string) => `a-${({ 'stoki-bialka-bukowina': 'kotelnica', 'bialka-narty': 'kotelnica', 'terma-bania': 'termy' } as Record<string, string>)[slug] ?? slug}`
 
 function Story({ block, immersive }: Props<'story'>) {
   // na stałym tle zdjęcie przejmuje scena

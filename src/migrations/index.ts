@@ -8,6 +8,7 @@ import * as migration_20261025_092914_nazwy_szczytow_mapa_atrakcji from './20261
 import * as migration_20261025_094500_wlasciciel from './20261025_094500_wlasciciel';
 import * as migration_20261025_113356_opinie_z_google from './20261025_113356_opinie_z_google';
 import * as migration_20261025_153818_oferty_tylko_zdjecie from './20261025_153818_oferty_tylko_zdjecie';
+import * as migration_20261025_182700_okolica_galeria from './20261025_182700_okolica_galeria';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20261025_153818_oferty_tylko_zdjecie.up,
     down: migration_20261025_153818_oferty_tylko_zdjecie.down,
-    name: '20261025_153818_oferty_tylko_zdjecie'
+    name: '20261025_153818_oferty_tylko_zdjecie',
+  },
+  {
+    up: migration_20261025_182700_okolica_galeria.up,
+    down: migration_20261025_182700_okolica_galeria.down,
+    name: '20261025_182700_okolica_galeria'
   },
 ];

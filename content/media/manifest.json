@@ -1530,6 +1530,101 @@
     "en": "Posters of Tatra peaks on a cottage wall"
    },
    "source": "a7v09800.jpg"
+  },
+  {
+   "file": "A_morskie-oko_1.webp",
+   "shot": "A_morskie-oko_1",
+   "width": 1024,
+   "height": 683,
+   "placeholder": false,
+   "alt": {
+    "pl": "Morskie Oko o świcie, nad taflą ściany Mięguszowieckich Szczytów",
+    "en": "Morskie Oko at dawn, the Mięguszowieckie walls above the water"
+   },
+   "source": "https://www.flickr.com/photos/66885349@N03/37504444722",
+   "author": "Gael Varoquaux",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "credit": {
+    "pl": "Fot. Gael Varoquaux · CC BY 2.0 · Flickr https://www.flickr.com/photos/66885349@N03/37504444722",
+    "en": "Photo: Gael Varoquaux · CC BY 2.0 · Flickr https://www.flickr.com/photos/66885349@N03/37504444722"
+   }
+  },
+  {
+   "file": "A_gubalowka_1.webp",
+   "shot": "A_gubalowka_1",
+   "width": 1022,
+   "height": 681,
+   "placeholder": false,
+   "alt": {
+    "pl": "Panorama Tatr z Gubałówki latem",
+    "en": "The Tatras panorama from Gubałówka in summer"
+   },
+   "source": "https://www.flickr.com/photos/22178197@N00/9686214805",
+   "author": "Kamil Porembiński",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+   "credit": {
+    "pl": "Fot. Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686214805",
+    "en": "Photo: Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686214805"
+   }
+  },
+  {
+   "file": "A_gubalowka_2.webp",
+   "shot": "A_gubalowka_2",
+   "width": 1022,
+   "height": 681,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łąki na Gubałówce, w dole Zakopane, w tle Tatry",
+    "en": "Meadows on Gubałówka, Zakopane below, the Tatras behind"
+   },
+   "source": "https://www.flickr.com/photos/22178197@N00/9686128195",
+   "author": "Kamil Porembiński",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+   "credit": {
+    "pl": "Fot. Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686128195",
+    "en": "Photo: Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686128195"
+   }
+  },
+  {
+   "file": "A_kasprowy-wierch_1.webp",
+   "shot": "A_kasprowy-wierch_1",
+   "width": 1022,
+   "height": 681,
+   "placeholder": false,
+   "alt": {
+    "pl": "Szczyt Kasprowego Wierchu z obserwatorium i górną stacją kolei",
+    "en": "The summit of Kasprowy Wierch with the observatory and the top station"
+   },
+   "source": "https://www.flickr.com/photos/22178197@N00/9694498926",
+   "author": "Kamil Porembiński",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+   "credit": {
+    "pl": "Fot. Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9694498926",
+    "en": "Photo: Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9694498926"
+   }
+  },
+  {
+   "file": "A_kasprowy-wierch_2.webp",
+   "shot": "A_kasprowy-wierch_2",
+   "width": 1024,
+   "height": 683,
+   "placeholder": false,
+   "alt": {
+    "pl": "Zbocza Kasprowego Wierchu latem, na grzbiecie obserwatorium",
+    "en": "The slopes of Kasprowy Wierch in summer, the observatory on the ridge"
+   },
+   "source": "https://www.flickr.com/photos/29779572@N07/2786311693",
+   "author": "disordered design",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0/",
+   "credit": {
+    "pl": "Fot. disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693",
+    "en": "Photo: disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693"
+   }
   }
  ]
 }

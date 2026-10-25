@@ -1131,6 +1131,10 @@ export interface Attraction {
    */
   slug: string;
   image?: (number | null) | Media;
+  gallery?: (number | Media)[] | null;
+  /**
+   * Dwa, trzy zdania do sekcji „Blisko wszystkiego” na stronie głównej.
+   */
   summary?: string | null;
   description?: {
     root: {
@@ -1147,6 +1151,7 @@ export interface Attraction {
     };
     [k: string]: unknown;
   } | null;
+  place?: string | null;
   distanceKm?: number | null;
   driveMinutes?: number | null;
   category?: ('trails' | 'ski' | 'thermal' | 'family' | 'views' | 'bike' | 'culture') | null;
@@ -1155,9 +1160,12 @@ export interface Attraction {
   lat?: number | null;
   lng?: number | null;
   /**
-   * Puste: a-<adres atrakcji>
+   * Puste: bez punktu na mapie (np. szlaki, lot balonem).
    */
   mapId?: string | null;
+  /**
+   * Strona Okolica pokazuje wszystkie atrakcje; główna tylko zaznaczone, z krótkim opisem.
+   */
   featured?: boolean | null;
   seo?: {
     title?: string | null;
@@ -2098,8 +2106,10 @@ export interface AttractionsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   image?: T;
+  gallery?: T;
   summary?: T;
   description?: T;
+  place?: T;
   distanceKm?: T;
   driveMinutes?: T;
   category?: T;

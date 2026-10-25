@@ -992,6 +992,10 @@ export interface Testimonial {
   rating?: number | null;
   date?: string | null;
   unit?: (number | null) | Unit;
+  /**
+   * Opinie z tym polem pobiera automatycznie raz na dobę zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.
+   */
+  externalId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2163,6 +2167,7 @@ export interface TestimonialsSelect<T extends boolean = true> {
   rating?: T;
   date?: T;
   unit?: T;
+  externalId?: T;
   updatedAt?: T;
   createdAt?: T;
 }

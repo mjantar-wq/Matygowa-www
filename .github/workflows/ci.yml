@@ -60,6 +60,13 @@ jobs:
           cache: pnpm
       - if: steps.zakres.outputs.kod != 'false'
         run: pnpm install --frozen-lockfile
+      # pamięć podręczna kompilacji Next skraca budowanie przy kolejnych PR
+      - if: steps.zakres.outputs.kod != 'false'
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
       - if: steps.zakres.outputs.kod != 'false'
         run: pnpm typecheck
       - if: steps.zakres.outputs.kod != 'false'

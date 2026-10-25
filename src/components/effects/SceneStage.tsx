@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Scene } from '@/lib/scenes'
 import { HeroStage } from './HeroStage'
+import { motionAllowed } from './ambience'
 
 const SVG: Partial<Record<Scene['kind'], string>> = { panorama: '/ilustracje/G2_panorama.svg', map: '/ilustracje/G7_mapa_okolicy.svg' }
 
@@ -125,6 +126,10 @@ function focusAt(section: Element, mid: number): Focus | undefined {
 function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: boolean }) {
   const host = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
+  const target = useRef(0)
+  const shift = useRef(0)
+  const raf = useRef(0)
+  useEffect(() => () => cancelAnimationFrame(raf.current), [])
 
   useEffect(() => {
     let cancelled = false
@@ -154,11 +159,13 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
       el.classList.toggle('has-lit', !!lit)
     }
     if (!pan) return
-    // Środki obu szczytów względem rysunku, przesunięcie pośrodku wg postępu → szczyt na środku ekranu.
+    // Środek szczytu to punkt zaczepienia jego grupy (translate) w jednostkach rysunku, a nie obrys na ekranie:
+    // obrys zmienia się przy wyróżnieniu (powiększony znacznik, pogrubiony napis, poświata), co trzęsło panoramą.
     const sr = svg.getBoundingClientRect()
+    const scale = sr.width / (svg.viewBox.baseVal?.width || sr.width)
     const cx = (n: SVGGraphicsElement | null) => {
-      const r = n?.getBoundingClientRect()
-      return r ? r.left + r.width / 2 - sr.left : sr.width / 2
+      const m = n?.transform.baseVal.consolidate()?.matrix
+      return m ? m.e * scale : sr.width / 2
     }
     const [xa, xb] = [cx(find(focus?.a)), cx(find(focus?.b))]
     const x = xa + (xb - xa) * (focus?.t ?? 0)
@@ -167,8 +174,25 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
     const cards = document.querySelector('.mo-peak-cards > [data-step]')?.getBoundingClientRect()
     const beside = !!cards && cards.right < innerWidth * 0.7
     const anchor = beside ? (cards.right + innerWidth) / 2 : innerWidth / 2
-    const shift = Math.min(beside ? cards.right : 0, Math.max(innerWidth - sr.width, anchor - x))
-    el.style.setProperty('--przesun', `${shift}px`)
+    target.current = Math.min(beside ? cards.right : 0, Math.max(innerWidth - sr.width, anchor - x))
+    if (!motionAllowed()) {
+      shift.current = target.current
+      svg.style.transform = `translate3d(${shift.current}px, 0, 0)`
+      return
+    }
+    // Przesunięcie dochodzi do celu płynnie w rytmie klatek (wygładzanie wykładnicze), zamiast restartować
+    // przejście CSS przy każdym zdarzeniu przewijania.
+    if (raf.current) return
+    let last = performance.now()
+    const step = (now: number) => {
+      const k = 1 - Math.exp(-(now - last) / 140)
+      last = now
+      shift.current += (target.current - shift.current) * k
+      if (Math.abs(target.current - shift.current) < 0.3) shift.current = target.current
+      svg.style.transform = `translate3d(${shift.current.toFixed(2)}px, 0, 0)`
+      raf.current = shift.current === target.current ? 0 : requestAnimationFrame(step)
+    }
+    raf.current = requestAnimationFrame(step)
   }, [focus, ready, pan])
 
   return <div ref={host} className="mo-stage__svg" data-pan={pan || undefined} />

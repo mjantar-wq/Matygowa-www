@@ -191,7 +191,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
 .mo-stage__svg[data-pan] { display: block; }
-.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 450ms var(--ease-mgla);
+.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; will-change: transform;
   /* lewy brzeg rysunku wtapia się w tło, gdy panorama odsuwa się spod kart */
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8rem); mask-image: linear-gradient(90deg, transparent, #000 8rem); }
 .mo-stage__svg .is-lit .accent { transform: scale(2.6); transform-box: fill-box; transform-origin: center; fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
@@ -277,7 +277,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-dock__body { --dock-max: calc(100dvh - var(--dock-gora) - var(--space-5)); position: relative; max-block-size: var(--dock-max); min-block-size: min(var(--dock-max), 36rem); overflow-y: auto; overscroll-behavior: contain; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }
 .mo-dock__close { position: absolute; inset-block-start: var(--space-1); inset-inline-end: var(--space-1); z-index: 1; inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: var(--color-tlo); color: inherit; font-size: 1.5rem; cursor: pointer; }
 @media (max-width: 767px) { .mo-dock__dialog { --dock-gora: var(--space-5); } }
-@media (prefers-reduced-motion: reduce) { .mo-dock__open, .mo-stage__svg[data-pan] svg { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .mo-dock__open { transition: none; } }
 
 /* Okolica: nazwy atrakcji blisko siebie, opis rozwija się po najechaniu (na dotyku jest zawsze widoczny) */
 .mo-attractions { list-style: none; padding: 0; margin-block: var(--space-6) 0; display: grid; gap: var(--space-2); max-inline-size: var(--plyta-szer); }

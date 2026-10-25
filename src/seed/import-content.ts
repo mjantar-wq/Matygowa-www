@@ -54,11 +54,15 @@ async function main() {
           locale: 'pl',
           filePath: path.join(DIR, 'media', filename),
           data: real
-            ? { alt: item.alt.pl, isPlaceholder: false, series, caption: item.credit?.pl }
+            ? { alt: item.alt.pl, isPlaceholder: false, series, caption: item.credit?.pl, rights: item.rights }
             : { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
         } as never) as Any
       ).id
       await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}`, ...(real && item.credit ? { caption: item.credit.en } : {}) } })
+    } else if (item.rights && found.docs[0]?.rights !== item.rights) {
+      // zgoda obiektu przyszła po wgraniu pliku: manifest zmienia prawa i podpis bez ponownego wgrywania
+      await payload.update({ collection: 'media', id, locale: 'pl', data: { rights: item.rights, caption: item.credit?.pl } })
+      if (item.credit?.en) await payload.update({ collection: 'media', id, locale: 'en', data: { caption: item.credit.en } })
     }
     media.set(filename, id)
   }

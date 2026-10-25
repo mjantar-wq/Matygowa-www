@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { href } from '@/i18n/routes'
 import type { PageContext } from '@/lib/page'
 import type { Attraction } from '@/payload-types'
-import { Credit, Media } from './Media'
+import { cleared, Credit, Media } from './Media'
 import { PhotoGallery } from './PhotoGallery'
 import { RichText } from './RichText'
 
@@ -25,7 +25,7 @@ export function AttractionEntry({ a, ctx, heading: H = 'h2', link }: { a: Attrac
   const title = H === 'h1' ? 'mo-h1' : 'mo-h2'
   return (
     <article id={a.slug} className="mo-atrakcja">
-      {a.image ? (
+      {a.image && cleared(a.image) ? (
         <figure className="mo-zdjecie mo-atrakcja__zdjecie">
           <Media media={a.image} priority={H === 'h1'} />
           <Credit media={a.image} />
@@ -41,7 +41,7 @@ export function AttractionEntry({ a, ctx, heading: H = 'h2', link }: { a: Attrac
           </p>
         ) : null}
       </div>
-      {a.gallery?.length ? (
+      {a.gallery?.some(cleared) ? (
         <div className="mo-atrakcja__galeria">
           <PhotoGallery media={a.gallery} ctx={ctx} />
           {/* licencje CC wymagają podpisu przy zdjęciu: miniatury mają go w powiększeniu i zbiorczo tutaj */}

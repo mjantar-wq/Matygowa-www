@@ -1537,6 +1537,7 @@
    "width": 1024,
    "height": 683,
    "placeholder": false,
+   "rights": "free",
    "alt": {
     "pl": "Morskie Oko o świcie, nad taflą ściany Mięguszowieckich Szczytów",
     "en": "Morskie Oko at dawn, the Mięguszowieckie walls above the water"
@@ -1556,6 +1557,7 @@
    "width": 1022,
    "height": 681,
    "placeholder": false,
+   "rights": "free",
    "alt": {
     "pl": "Panorama Tatr z Gubałówki latem",
     "en": "The Tatras panorama from Gubałówka in summer"
@@ -1575,6 +1577,7 @@
    "width": 1022,
    "height": 681,
    "placeholder": false,
+   "rights": "free",
    "alt": {
     "pl": "Łąki na Gubałówce, w dole Zakopane, w tle Tatry",
     "en": "Meadows on Gubałówka, Zakopane below, the Tatras behind"
@@ -1594,6 +1597,7 @@
    "width": 1022,
    "height": 681,
    "placeholder": false,
+   "rights": "free",
    "alt": {
     "pl": "Szczyt Kasprowego Wierchu z obserwatorium i górną stacją kolei",
     "en": "The summit of Kasprowy Wierch with the observatory and the top station"
@@ -1613,6 +1617,7 @@
    "width": 1024,
    "height": 683,
    "placeholder": false,
+   "rights": "free",
    "alt": {
     "pl": "Zbocza Kasprowego Wierchu latem, na grzbiecie obserwatorium",
     "en": "The slopes of Kasprowy Wierch in summer, the observatory on the ridge"
@@ -1624,6 +1629,258 @@
    "credit": {
     "pl": "Fot. disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693",
     "en": "Photo: disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693"
+   }
+  },
+  {
+   "file": "A_termy-bukovina_1.webp",
+   "shot": "A_termy-bukovina_1",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Baseny zewnętrzne i zjeżdżalnie Term Bukovina, w tle Tatry",
+    "en": "The outdoor pools and slides of Termy Bukovina, the Tatras behind"
+   },
+   "source": "https://www.termybukovina.pl",
+   "author": "Termy Bukovina",
+   "credit": {
+    "pl": "Fot. Termy Bukovina · termybukovina.pl https://www.termybukovina.pl",
+    "en": "Photo: Termy Bukovina · termybukovina.pl https://www.termybukovina.pl"
+   }
+  },
+  {
+   "file": "A_termy-bukovina_2.webp",
+   "shot": "A_termy-bukovina_2",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Termy Bukovina wśród lasów, na horyzoncie Tatry",
+    "en": "Termy Bukovina among the forests, the Tatras on the horizon"
+   },
+   "source": "https://www.termybukovina.pl",
+   "author": "Termy Bukovina",
+   "credit": {
+    "pl": "Fot. Termy Bukovina · termybukovina.pl https://www.termybukovina.pl",
+    "en": "Photo: Termy Bukovina · termybukovina.pl https://www.termybukovina.pl"
+   }
+  },
+  {
+   "file": "A_terma-bania_1.webp",
+   "shot": "A_terma-bania_1",
+   "width": 1470,
+   "height": 980,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Terma Bania z lotu ptaka, baseny pod gołym niebem przy stoku",
+    "en": "Terma Bania from the air, open-air pools by the slopes"
+   },
+   "source": "https://www.termabania.pl",
+   "author": "Terma Bania",
+   "credit": {
+    "pl": "Fot. Terma Bania · termabania.pl https://www.termabania.pl",
+    "en": "Photo: Terma Bania · termabania.pl https://www.termabania.pl"
+   }
+  },
+  {
+   "file": "A_terma-bania_2.webp",
+   "shot": "A_terma-bania_2",
+   "width": 1470,
+   "height": 980,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Basen zewnętrzny przed przeszkloną halą Termy Bania",
+    "en": "The outdoor pool in front of the glazed hall of Terma Bania"
+   },
+   "source": "https://www.termabania.pl",
+   "author": "Terma Bania",
+   "credit": {
+    "pl": "Fot. Terma Bania · termabania.pl https://www.termabania.pl",
+    "en": "Photo: Terma Bania · termabania.pl https://www.termabania.pl"
+   }
+  },
+  {
+   "file": "A_bialka-narty_1.webp",
+   "shot": "A_bialka-narty_1",
+   "width": 1470,
+   "height": 980,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Oświetlone stoki w Białce Tatrzańskiej zimą o zmierzchu",
+    "en": "Floodlit ski slopes in Białka Tatrzańska on a winter evening"
+   },
+   "source": "https://www.termabania.pl",
+   "author": "Terma Bania",
+   "credit": {
+    "pl": "Fot. Terma Bania · termabania.pl https://www.termabania.pl",
+    "en": "Photo: Terma Bania · termabania.pl https://www.termabania.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_1.webp",
+   "shot": "A_skywalk-poronin_1",
+   "width": 1434,
+   "height": 956,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Taras widokowy SkyWalk nad lasem, w tle Tatry",
+    "en": "The SkyWalk viewing deck above the forest, the Tatras behind"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_2.webp",
+   "shot": "A_skywalk-poronin_2",
+   "width": 810,
+   "height": 540,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "SkyWalk na Polanie Zgorzelisko z lotu ptaka, za nim panorama Tatr",
+    "en": "SkyWalk on Polana Zgorzelisko from the air, the Tatra panorama behind"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_3.webp",
+   "shot": "A_skywalk-poronin_3",
+   "width": 1434,
+   "height": 956,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Drewniana ścieżka SkyWalk i wieża z lotu ptaka",
+    "en": "The wooden SkyWalk path and tower from the air"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_szymoszkowa_1.webp",
+   "shot": "A_szymoszkowa_1",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Kolej krzesełkowa na Polanie Szymoszkowej zimą, w tle Tatry",
+    "en": "The chairlift on Polana Szymoszkowa in winter, the Tatras behind"
+   },
+   "source": "https://szymoszkowa.pl",
+   "author": "Polana Szymoszkowa",
+   "credit": {
+    "pl": "Fot. Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl",
+    "en": "Photo: Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl"
+   }
+  },
+  {
+   "file": "A_szymoszkowa_2.webp",
+   "shot": "A_szymoszkowa_2",
+   "width": 800,
+   "height": 533,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Polana Szymoszkowa latem z lotu ptaka, na horyzoncie Tatry",
+    "en": "Polana Szymoszkowa in summer from the air, the Tatras on the horizon"
+   },
+   "source": "https://szymoszkowa.pl",
+   "author": "Polana Szymoszkowa",
+   "credit": {
+    "pl": "Fot. Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl",
+    "en": "Photo: Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_1.webp",
+   "shot": "A_splyw-dunajcem_1",
+   "width": 900,
+   "height": 600,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Tratwa flisacka na Dunajcu jesienią, nad nią Trzy Korony",
+    "en": "A raft on the Dunajec in autumn, the Three Crowns above"
+   },
+   "source": "https://flisacy.pl",
+   "author": "Flisacy Pienińscy",
+   "credit": {
+    "pl": "Fot. Flisacy Pienińscy · flisacy.pl https://flisacy.pl",
+    "en": "Photo: Flisacy Pienińscy · flisacy.pl https://flisacy.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_2.webp",
+   "shot": "A_splyw-dunajcem_2",
+   "width": 900,
+   "height": 600,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Dunajec pod Trzema Koronami w słoneczny dzień",
+    "en": "The Dunajec beneath the Three Crowns on a sunny day"
+   },
+   "source": "https://flisacy.pl",
+   "author": "Flisacy Pienińscy",
+   "credit": {
+    "pl": "Fot. Flisacy Pienińscy · flisacy.pl https://flisacy.pl",
+    "en": "Photo: Flisacy Pienińscy · flisacy.pl https://flisacy.pl"
+   }
+  },
+  {
+   "file": "A_bielska-jaskinia_1.webp",
+   "shot": "A_bielska-jaskinia_1",
+   "width": 600,
+   "height": 400,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Nacieki w Bielskiej Jaskini",
+    "en": "Dripstone formations in Belianska Cave"
+   },
+   "source": "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+   "author": "Správa slovenských jaskýň",
+   "credit": {
+    "pl": "Fot. Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+    "en": "Photo: Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna"
+   }
+  },
+  {
+   "file": "A_bielska-jaskinia_2.webp",
+   "shot": "A_bielska-jaskinia_2",
+   "width": 600,
+   "height": 400,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Ściana nacieków w Bielskiej Jaskini",
+    "en": "A wall of flowstone in Belianska Cave"
+   },
+   "source": "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+   "author": "Správa slovenských jaskýň",
+   "credit": {
+    "pl": "Fot. Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+    "en": "Photo: Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna"
    }
   }
  ]

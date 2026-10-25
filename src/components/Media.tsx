@@ -6,8 +6,11 @@ type Props = { media?: MediaDoc | string | number | null; className?: string; pr
  * Zdjęcie albo film z biblioteki. Bez pliku pokazuje zastępnik, żeby szkielet był kompletny.
  * Punkt ostrości z panelu ustawia kadrowanie (object-position) na telefonie.
  */
+/** Zdjęcie bez zgody właściciela (prawa „Czeka na zgodę”) widać tylko na stronie testowej, nie na produkcji. */
+export const cleared = (media?: MediaDoc | string | number | null) => !(typeof media === 'object' && media?.rights === 'pending' && process.env.SITE_INDEXABLE === 'true')
+
 export function Media({ media, className, priority, fallback, alt }: Props) {
-  if (!media || typeof media !== 'object' || !media.url) {
+  if (!media || typeof media !== 'object' || !media.url || !cleared(media)) {
     return <div className={`mo-placeholder ${className ?? ''}`} aria-hidden="true">{fallback}</div>
   }
   const position = `${media.focusX ?? 50}% ${media.focusY ?? 50}%`
@@ -37,7 +40,7 @@ export function Media({ media, className, priority, fallback, alt }: Props) {
  * Adres na końcu podpisu zamienia ostatni człon w link do źródła. Dla CGI nic nie pokazuje (tam podpis to notatka redakcyjna).
  */
 export function Credit({ media, as: Tag = 'figcaption' }: { media?: MediaDoc | string | number | null; as?: 'figcaption' | 'p' }) {
-  if (!media || typeof media !== 'object' || media.isPlaceholder || !media.caption) return null
+  if (!media || typeof media !== 'object' || media.isPlaceholder || !media.caption || !cleared(media)) return null
   const [, text, url] = media.caption.match(/^(.*?)\s*(https?:\/\/\S+)?$/) ?? []
   const parts = (text ?? '').split(' · ')
   const last = parts.pop()

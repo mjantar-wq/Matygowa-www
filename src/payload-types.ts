@@ -966,6 +966,10 @@ export interface Media {
    * Zaznacz dla obrazów wygenerowanych do czasu sesji zdjęciowej. Lista filtrowana po tym polu pokazuje, co jeszcze trzeba podmienić.
    */
   isPlaceholder?: boolean | null;
+  /**
+   * Dla zdjęć spoza własnej sesji. „Czeka na zgodę” nie pokaże się na produkcji.
+   */
+  rights?: ('free' | 'granted' | 'pending') | null;
   series?: ('winter' | 'summer' | 'day' | 'night' | 'interiors' | 'rituals' | 'surroundings')[] | null;
   focusX?: number | null;
   focusY?: number | null;
@@ -2175,6 +2179,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   isPlaceholder?: T;
+  rights?: T;
   series?: T;
   focusX?: T;
   focusY?: T;

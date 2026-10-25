@@ -17,4 +17,8 @@ describe('podpis webhooka IceColdRes', () => {
     expect(await verify(null, body, secret, now)).toBe(false)
     expect(await verify(sign(now), body, 'inny', now)).toBe(false)
   })
+  it('ten sam podpis co IceColdRes (wektor z apps/api/test/site-webhook.test.ts)', async () => {
+    const v1 = 'd53e5d70b3a71d018bcdd46dcc93901f36a7d2574dc71f783ca7b7a3483e33d5'
+    expect(await verify(`t=1700000000,v1=${v1}`, '{}', 'sekret', 1_700_000_000)).toBe(true)
+  })
 })

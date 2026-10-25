@@ -448,7 +448,6 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
                         className="mo-calendar__day"
                         data-range={inRange || undefined}
                         data-edge={edge || undefined}
-                        data-promo={s.promo ? true : undefined}
                         data-soft={s.soft || undefined}
                         aria-disabled={!s.ok || undefined}
                         aria-pressed={edge}

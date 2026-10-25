@@ -36,7 +36,6 @@
 .mo-calendar__hint { margin-block-start: var(--space-4); color: var(--color-wyciszony); }
 .mo-calendar__day[data-range] { background: var(--color-tlo-2); border-radius: 0; }
 .mo-calendar__day[data-edge], .mo-calendar__day[data-edge]:hover { background: var(--color-cta); color: var(--color-na-cta); }
-.mo-calendar__day[data-promo]::after { content: ""; position: absolute; inset-block-start: 4px; inset-inline-end: 4px; inline-size: 6px; block-size: 6px; border-radius: var(--radius-kropka); background: var(--color-bursztyn); }
 .mo-calendar__day:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: -2px; }
 @media (max-width: 899px) { .mo-calendar { position: relative; inset: auto; margin-block-start: var(--space-2); } }
 @media (max-width: 767px) {

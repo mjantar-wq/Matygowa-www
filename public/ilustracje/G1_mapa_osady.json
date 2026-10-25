@@ -53,24 +53,32 @@
   "otwarcie": "2027-04",
   "lokale": [
    {
+    "id": "b-apt-czerwone-wierchy",
     "slug": "czerwone-wierchy",
     "nazwa": "Czerwone Wierchy",
-    "czesc": "gora"
+    "czesc": "gora",
+    "strona": "lewa"
    },
    {
-    "slug": "kominiarski",
+    "id": "b-apt-kominiarski-wierch",
+    "slug": "kominiarski-wierch",
     "nazwa": "Kominiarski Wierch",
-    "czesc": "gora"
+    "czesc": "gora",
+    "strona": "prawa"
    },
    {
+    "id": "b-apt-giewont",
     "slug": "giewont",
     "nazwa": "Giewont",
-    "czesc": "dol"
+    "czesc": "dol",
+    "strona": "lewa"
    },
    {
+    "id": "b-apt-ciemniak",
     "slug": "ciemniak",
     "nazwa": "Ciemniak",
-    "czesc": "dol"
+    "czesc": "dol",
+    "strona": "prawa"
    }
   ]
  }

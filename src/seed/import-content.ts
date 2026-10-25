@@ -219,7 +219,7 @@ async function main() {
   // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)
   const seoPages: Any = read('seo-pages.json')
   const seoKeys: Record<string, string> = { home: 'home', domy: 'houses', rytualy: 'rituals', osada: 'settlement', okolica: 'surroundings', oferty: 'offers', aktualnosci: 'news', galeria: 'gallery', kontakt: 'contact', przewodnik: 'guide', regulamin: 'regulamin', prywatnosc: 'prywatnosc' }
-  const navTitles: Record<string, L> = { houses: { pl: 'Domy i apartamenty', en: 'Houses & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
+  const navTitles: Record<string, L> = { houses: { pl: 'Domki i apartamenty', en: 'Cottages & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
   for (const [key, entry] of Object.entries(seoPages) as [string, Any][]) {
     const slug = seoKeys[key]
     if (!slug) continue

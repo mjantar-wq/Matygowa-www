@@ -30,7 +30,6 @@
 :root[data-pora="dzien"][data-sezon="lato"] .mo-hero__slide.is-dzien-lato,
 :root[data-pora="noc"][data-sezon="zima"] .mo-hero__slide.is-noc-zima,
 :root[data-pora="noc"][data-sezon="lato"] .mo-hero__slide.is-noc-lato { display: block; }
-.mo-hero__pause { position: absolute; inset-block-start: var(--space-9, 6rem); inset-inline-end: var(--margines); z-index: 2; color: var(--color-na-zdjeciu); border-color: currentColor; background: var(--color-zaslona); }
 .mo-hero__title > [aria-hidden] { display: inline-block; }
 
 @media (prefers-reduced-motion: no-preference) {

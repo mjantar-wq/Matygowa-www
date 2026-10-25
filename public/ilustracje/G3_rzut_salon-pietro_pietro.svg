@@ -37,4 +37,6 @@
 <text class="nazwa" x="500" y="516" text-anchor="middle">Salon z kuchnią</text>
 <text class="dopisek" x="500" y="544" text-anchor="middle">i jadalnią</text>
 </g>
+<rect class="pokoj" x="726" y="323" width="141" height="9"/>
+<rect class="pokoj" x="717" y="4" width="9" height="124"/>
 </svg>

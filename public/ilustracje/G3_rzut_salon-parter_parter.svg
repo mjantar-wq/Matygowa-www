@@ -14,7 +14,8 @@
 </g>
 <g id="r-narciarnia" class="pokoj-g" data-nazwa="Narciarnia">
 <rect class="pokoj" x="316" y="4" width="199" height="82"/>
-<text class="nazwa" x="415" y="54" text-anchor="middle">Narciarnia</text>
+<text class="nazwa" x="415" y="40" text-anchor="middle">Narciarnia</text>
+<text class="dopisek" x="415" y="68" text-anchor="middle">wejście z zewnątrz</text>
 </g>
 <g id="r-lazienka" class="pokoj-g" data-nazwa="Łazienka">
 <rect class="pokoj" x="132" y="162" width="174" height="142"/>
@@ -57,4 +58,5 @@
 <text class="nazwa" x="613" y="453" text-anchor="middle">Salon z kuchnią</text>
 <text class="dopisek" x="613" y="481" text-anchor="middle">i jadalnią</text>
 </g>
+<rect class="pokoj" x="514" y="95" width="9" height="75"/>
 </svg>

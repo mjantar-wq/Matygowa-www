@@ -58,14 +58,17 @@ def krzyz(c, b, rot):
 
 def dach(cx, cy, w, h, rot=0):
     """Dach domku jak na zdjęciu z drona: dwa dachy dwuspadowe na krzyż nad kwadratowym korpusem
-    i niższe skrzydło z dachem dwuspadowym po lewej (zachodniej) stronie."""
-    b = min(w, h) / 2 * 0.86; e, t = b * 0.44, b * 0.5  # pół boku korpusu, wysunięcie i pół szerokości skrzydła
-    x0 = e / 2                                         # korpus przesunięty w prawo, skrzydło wystaje w lewo
-    g = [polac([(-b - e, -t), (-b, -t), (-b, 0), (-b - e, 0)], (0, -1), rot),
-         polac([(-b - e, 0), (-b, 0), (-b, t), (-b - e, t)], (0, 1), rot)]
+    i małe daszki balkonów na każdym boku (wg Michała domki mają balkony ze wszystkich stron)."""
+    b = min(w, h) / 2 * 0.86; e, t = b * 0.16, b * 0.3  # pół boku korpusu, wysunięcie i pół szerokości balkonu
+    g, k = [], f"M0,{-b} L0,{b} M{-b},0 L{b},0 M{-b},{-b} L{b},{b} M{b},{-b} L{-b},{b}"
+    for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+        P = lambda u, v: (u * dx - v * dy, u * dy + v * dx)   # u na zewnątrz od ściany, v wzdłuż ściany
+        g += [polac([P(b, -t), P(b + e, -t), P(b + e, 0), P(b, 0)], (dy, -dx), rot),
+              polac([P(b, 0), P(b + e, 0), P(b + e, t), P(b, t)], (-dy, dx), rot)]
+        k += f" M{b * dx},{b * dy} L{(b + e) * dx},{(b + e) * dy}"
     g += krzyz(0, b, rot)
-    g.append(f'<path class="kalenica" d="M0,{-b} L0,{b} M{-b},0 L{b},0 M{-b},{-b} L{b},{b} M{b},{-b} L{-b},{b} M{-b - e},0 L{-b},0"/>')
-    return f'<g transform="translate({cx + x0} {cy}) rotate({rot})">{"".join(g)}</g>'
+    g.append(f'<path class="kalenica" d="{k}"/>')
+    return f'<g transform="translate({cx} {cy}) rotate({rot})">{"".join(g)}</g>'
 
 def apartamenty_dach(cx, cy, l, w, rot, p=12):
     """Budynek z apartamentami jako jedna bryła: długi dach dwuspadowy wzdłuż osi i dwa poprzeczne
@@ -97,14 +100,12 @@ def piwnica():
     cx, cy, l, w, rot = APT
     r = math.radians(rot); ux, uy, nx, ny = math.cos(r), math.sin(r), math.sin(r), -math.cos(r)
     ax, ay = cx + nx * (w / 2 + 2), cy + ny * (w / 2 + 2)   # punkt na ścianie od strony rogu działki
-    x0, y0, kw, kh = 1086, ay - 34, 292, 68
+    x0, y0, kw, kh = 1004, ay - 22, 384, 44   # wg Michała jedna linia i jeden stopień pisma; „od 2027” mówi już plakietka budynku
     return ('<g class="piwnica">'
             f'<path class="piwnica-linia" d="M{ax:.0f},{ay:.0f} L{x0},{ay:.0f}"/><circle class="piwnica-punkt" cx="{ax:.0f}" cy="{ay:.0f}" r="4"/>'
             f'<rect class="piwnica-tlo" x="{x0}" y="{y0:.0f}" width="{kw}" height="{kh}" rx="10"/>'
-            f'<text class="piwnica-tekst piwnica-tytul pl" x="{x0 + 16}" y="{y0 + 28:.0f}">W piwnicy: siłownia</text>'
-            f'<text class="piwnica-tekst pl" x="{x0 + 16}" y="{y0 + 52:.0f}">i świetlica dla dzieci · od 2027</text>'
-            f'<text class="piwnica-tekst piwnica-tytul en" x="{x0 + 16}" y="{y0 + 28:.0f}">Basement: gym</text>'
-            f'<text class="piwnica-tekst en" x="{x0 + 16}" y="{y0 + 52:.0f}">and kids’ playroom · from 2027</text></g>')
+            f'<text class="piwnica-tekst pl" x="{x0 + 16}" y="{y0 + 28:.0f}">W piwnicy: siłownia i świetlica dla dzieci</text>'
+            f'<text class="piwnica-tekst en" x="{x0 + 16}" y="{y0 + 28:.0f}">Basement: gym and kids’ playroom</text></g>')
 
 def plac_zabaw(cx, cy, w, h):
     """Plac zabaw w rzucie z góry: miękka nawierzchnia z drewnianym obrzeżem, wieża z daszkiem i zjeżdżalnią,
@@ -166,7 +167,7 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.naklejka-tlo{fill:var(--color-bursztyn);stroke:var(--color-tlo);stroke-width:2}.naklejka-cien{fill:var(--color-atrament);opacity:.18}'
      '.naklejka-tekst{font:700 12px var(--font-ui,sans-serif);letter-spacing:.14em;text-transform:uppercase;fill:#1a1208}'
      '.piwnica-tlo{fill:var(--color-tlo);stroke:var(--color-bursztyn);stroke-width:2}.piwnica-punkt{fill:var(--color-bursztyn)}'
-     '.piwnica-tekst{font:500 17px var(--font-ui,sans-serif);letter-spacing:.01em;fill:var(--color-atrament)}.piwnica-tytul{font-weight:700;font-size:19px}'
+     '.piwnica-tekst{font:500 17px var(--font-ui,sans-serif);letter-spacing:.01em;fill:var(--color-atrament)}'
      '.piwnica-linia{fill:none;stroke:var(--color-bursztyn);stroke-width:2;stroke-linecap:round;vector-effect:non-scaling-stroke}'
      '.en{display:none}:root[lang="en"] .naklejka .pl,:root[lang="en"] .piwnica .pl{display:none}:root[lang="en"] .naklejka .en,:root[lang="en"] .piwnica .en{display:inline}'
      '.nazwa{font:700 15px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-atrament)}'
@@ -210,7 +211,7 @@ L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-
 L.append(apartamenty_dach(*APT) + strefy_apartamentow(*APT) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
 L.append('<rect class="etykieta-tlo" x="830" y="4" width="230" height="44" rx="2"/>'
          '<text class="nazwa" x="945" y="24" text-anchor="middle">Apartamenty</text>'
-         '<text class="opis" x="945" y="41" text-anchor="middle">4 apartamenty</text>' + naklejka(1000, 64, -4) + piwnica() + '</g>')
+         '<text class="opis" x="945" y="41" text-anchor="middle">4 apartamenty</text>' + naklejka(962, 94, -4) + piwnica() + '</g>')
 px, py, pw, ph = PLAC
 L.append(f'<g id="b-plac-zabaw" class="obiekt is-wkrotce" data-otwarcie="2027" aria-label="Plac zabaw dla dzieci, otwarcie 2027">{plac_zabaw(*PLAC)}'
          f'<rect class="etykieta-tlo" x="{px - 60}" y="{py + ph/2 + 8}" width="120" height="26" rx="2"/>'

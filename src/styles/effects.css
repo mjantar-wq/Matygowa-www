@@ -190,7 +190,10 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
 .mo-stage__svg[data-pan] { display: block; }
-.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; will-change: transform;
+/* Pas „trawy” pod panoramą (wg Michała grań wyżej w kadrze): kolor najbliższej warstwy rysunku, czyli poziomica 0,35 i 0,7 na tle-2 */
+.mo-stage__svg[data-pan] { --panorama-trawa: 9svh; }
+.mo-stage__svg[data-pan]::after { content: ""; position: absolute; inset: auto 0 0; block-size: calc(var(--panorama-trawa) + 2px); background: color-mix(in srgb, var(--color-poziomica) 80.5%, var(--color-tlo-2)); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8rem); mask-image: linear-gradient(90deg, transparent, #000 8rem); }
+.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: var(--panorama-trawa); inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; will-change: transform;
   /* lewy brzeg rysunku wtapia się w tło, gdy panorama odsuwa się spod kart */
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8rem); mask-image: linear-gradient(90deg, transparent, #000 8rem); }
 .mo-stage__svg .is-lit .accent { transform: scale(2.6); transform-box: fill-box; transform-origin: center; fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
@@ -306,6 +309,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc .mo-peak-card { align-content: start; }
 .mo-opowiesc .mo-peak-card .mo-card__media { order: 1; margin: var(--space-3) 0 0; }
 @media (max-width: 767px) {
+  .mo-stage__svg[data-pan] { --panorama-trawa: 7svh; }
   .mo-stage__svg[data-pan] svg { block-size: min(36svh, 22rem); }
   .mo-opowiesc .mo-peak-card .mo-card__media { aspect-ratio: 16 / 9; }
 }

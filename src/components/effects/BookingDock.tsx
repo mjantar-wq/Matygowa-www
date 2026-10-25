@@ -31,12 +31,11 @@ export function BookingDock({ label, close, children }: { label: string; close: 
         {label}
       </button>
       <dialog ref={dialog} className="mo-dock__dialog" aria-label={label} onClick={(e) => e.target === e.currentTarget && dialog.current?.close()}>
-        <div className="mo-dock__body">
-          <button type="button" className="mo-dock__close" onClick={() => dialog.current?.close()} aria-label={close}>
-            ×
-          </button>
-          {children}
-        </div>
+        {/* zamykanie poza przewijaną treścią, więc zostaje na miejscu przy długich wynikach */}
+        <button type="button" className="mo-dock__close" onClick={() => dialog.current?.close()} aria-label={close}>
+          ×
+        </button>
+        <div className="mo-dock__body">{children}</div>
       </dialog>
     </div>
   )

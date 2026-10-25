@@ -111,7 +111,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 @media (min-width: 768px) { .mo-popover { margin: 0; } .mo-popover::backdrop { background: transparent; } }
 .mo-popover .mo-prose { font-size: var(--text-body-s); }
 .mo-section .mo-popover .mo-h3 { margin: 0; }
-.mo-popover__close { position: absolute; inset-block-start: var(--space-2); inset-inline-end: var(--space-2); inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: none; color: var(--color-wyciszony); font-size: 1.5rem; cursor: pointer; }
+.mo-popover__close { position: absolute; inset-block-start: var(--space-2); inset-inline-end: var(--space-2); z-index: 1; inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: var(--color-tlo); color: var(--color-wyciszony); font-size: 1.5rem; cursor: pointer; }
 .mo-popover__links { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-2); }
 @media (prefers-reduced-motion: no-preference) {
   .mo-popover:popover-open { animation: mo-mgla var(--ruch-sredni) var(--ease-mgla); }
@@ -266,12 +266,13 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-dock__open { position: fixed; z-index: 9; inset-block-end: calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); inset-inline-end: var(--margines); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); opacity: 0; translate: 0 var(--space-4); pointer-events: none; transition: opacity var(--ruch-sredni) var(--ease-mgla), translate var(--ruch-sredni) var(--ease-mgla); }
 .mo-dock[data-shown] .mo-dock__open { opacity: 1; translate: none; pointer-events: auto; }
 @media (max-width: 767px) { .mo-dock__open { inset-inline: var(--margines); } }
-/* overflow widoczny: kalendarz z cenami wychodzi pod polami */
-.mo-dock__dialog { inline-size: min(100% - 2 * var(--margines), 64rem); max-inline-size: none; margin: 12svh auto auto; padding: 0; border: 0; background: none; overflow: visible; color: var(--color-atrament); }
+/* Okno przewija się samo (wyniki z rozwiniętym kafelkiem bywają wyższe niż ekran); minimalna wysokość
+   mieści kalendarz z cenami (ok. 26rem pod polami), który przesuwa się razem z treścią */
+.mo-dock__dialog { --dock-gora: 12svh; inline-size: min(100% - 2 * var(--margines), 64rem); max-inline-size: none; max-block-size: none; margin: var(--dock-gora) auto auto; padding: 0; border: 0; background: none; overflow: visible; color: var(--color-atrament); }
 .mo-dock__dialog::backdrop { background: var(--color-zaslona); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
-.mo-dock__body { position: relative; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }
-.mo-dock__close { position: absolute; inset-block-start: var(--space-1); inset-inline-end: var(--space-1); inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: none; color: inherit; font-size: 1.5rem; cursor: pointer; }
-@media (max-width: 767px) { .mo-dock__dialog { margin-block-start: var(--space-5); } }
+.mo-dock__body { --dock-max: calc(100dvh - var(--dock-gora) - var(--space-5)); position: relative; max-block-size: var(--dock-max); min-block-size: min(var(--dock-max), 36rem); overflow-y: auto; overscroll-behavior: contain; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }
+.mo-dock__close { position: absolute; inset-block-start: var(--space-1); inset-inline-end: var(--space-1); z-index: 1; inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: var(--color-tlo); color: inherit; font-size: 1.5rem; cursor: pointer; }
+@media (max-width: 767px) { .mo-dock__dialog { --dock-gora: var(--space-5); } }
 @media (prefers-reduced-motion: reduce) { .mo-dock__open, .mo-stage__svg[data-pan] svg { transition: none; } }
 
 /* Okolica: nazwy atrakcji blisko siebie, opis rozwija się po najechaniu (na dotyku jest zawsze widoczny) */

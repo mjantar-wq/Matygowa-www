@@ -164,7 +164,16 @@ async function main() {
         return null
     }
   }
-  await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => homeBlock(b, l)).filter(Boolean))
+  // scena w tle i warianty tekstu (koncepcja po M1): w home.json opcjonalnie
+  // "scene": { "winterDay": "K2_…", "summerNightPortrait": "…" } (prefiks nazwy pliku; „….mp4” to film) i
+  // "variants": { "summerDay": { "heading": {pl,en}, "text": {pl,en} }, … }
+  const withScene = (b: Any, block: Any | null, l: Loc): Any | null => {
+    if (!block) return null
+    const scene = Object.fromEntries(Object.entries(b.scene ?? {}).map(([k, name]) => [k, String(name).endsWith('.mp4') ? video(String(name).slice(0, -4)) : img(String(name))]).filter(([, id]) => id))
+    const textVariants = Object.entries(b.variants ?? {}).map(([variant, v]: [string, Any]) => ({ variant, heading: v.heading?.[l], text: v.text?.[l] }))
+    return { ...block, ...(Object.keys(scene).length ? { scene } : {}), ...(textVariants.length ? { textVariants } : {}) }
+  }
+  await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => withScene(b, homeBlock(b, l), l)).filter(Boolean))
 
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [

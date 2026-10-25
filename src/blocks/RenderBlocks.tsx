@@ -24,9 +24,27 @@ function Heading({ eyebrow, heading, level = 2 }: { eyebrow?: string | null; hea
   )
 }
 
-function Section({ block, children, className = '' }: { block: { anchor?: string | null; blockType: string }; children: React.ReactNode; className?: string }) {
+type SceneMedia = { url?: string | null; mimeType?: string | null } | number | null | undefined
+type SceneBlock = { scene?: Record<string, SceneMedia> | null; textVariants?: { variant: string; heading?: string | null; text?: string | null }[] | null }
+
+/**
+ * Dane sceny dla warstwy tła (komponent Scena z wątku efektów): adresy wariantów i warianty tekstu
+ * jako atrybuty sekcji, żeby przełączniki lato/zima i dzień/noc mogły je podmienić bez nowego zapytania.
+ */
+function sceneAttrs(block: SceneBlock) {
+  const scene = Object.fromEntries(
+    Object.entries(block.scene ?? {}).flatMap(([k, m]) => (m && typeof m === 'object' && m.url ? [[k, { url: m.url, video: m.mimeType?.startsWith('video/') ?? false }]] : [])),
+  )
+  const variants = (block.textVariants ?? []).filter((v) => v.heading || v.text).map(({ variant, heading, text }) => ({ variant, heading, text }))
+  return {
+    'data-scene': Object.keys(scene).length ? JSON.stringify(scene) : undefined,
+    'data-text-variants': variants.length ? JSON.stringify(variants) : undefined,
+  }
+}
+
+function Section({ block, children, className = '' }: { block: SceneBlock & { anchor?: string | null; blockType: string }; children: React.ReactNode; className?: string }) {
   return (
-    <section id={block.anchor || undefined} data-block={block.blockType} className={`mo-section ${className}`}>
+    <section id={block.anchor || undefined} data-block={block.blockType} className={`mo-section ${className}`} {...sceneAttrs(block)}>
       <div className="mo-container">{children}</div>
     </section>
   )
@@ -34,7 +52,7 @@ function Section({ block, children, className = '' }: { block: { anchor?: string
 
 function Hero({ block, ctx }: Props<'hero'>) {
   return (
-    <section className="mo-hero" data-block="hero" id={block.anchor || undefined}>
+    <section className="mo-hero" data-block="hero" id={block.anchor || undefined} {...sceneAttrs(block)}>
       <div className="mo-hero__media">
         <Media media={block.image} priority />
       </div>

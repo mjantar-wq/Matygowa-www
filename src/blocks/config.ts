@@ -11,10 +11,55 @@ const body: Field = { name: 'body', label: 'Tekst', type: 'richText', localized:
 const image: Field = { name: 'image', label: 'Zdjęcie', type: 'upload', relationTo: 'media' }
 const anchor: Field = { name: 'anchor', label: 'Kotwica (#)', type: 'text', admin: { position: 'sidebar' } }
 
+// Scena: tło przypięte pod stroną główną (koncepcja po M1). Wariant wybierają przełączniki lato/zima i dzień/noc;
+// brakujący wariant bierze najbliższy (zima-dzień jest podstawą). Pionowe kadry 9x16 dla telefonów.
+const SCENE_VARIANTS = [
+  ['winterDay', 'Zima, dzień'],
+  ['winterNight', 'Zima, noc'],
+  ['summerDay', 'Lato, dzień'],
+  ['summerNight', 'Lato, noc'],
+] as const
+const sceneMedia = (suffix: '' | 'Portrait'): Field[] =>
+  SCENE_VARIANTS.map(([v, label]) => ({
+    name: `${v}${suffix}`,
+    label: suffix ? `${label} (pion 9x16)` : label,
+    type: 'upload',
+    relationTo: 'media',
+    admin: { width: '25%' },
+  }))
+const scene: Field = {
+  name: 'scene',
+  label: 'Scena w tle (zdjęcie lub film)',
+  type: 'group',
+  admin: { description: 'Tło, które przenika się, gdy sekcja jest na środku ekranu. Puste warianty biorą najbliższy, a pusta scena zostawia poprzednią.' },
+  fields: [
+    { type: 'row', fields: sceneMedia('') },
+    { type: 'row', fields: sceneMedia('Portrait') },
+  ],
+}
+const textVariants: Field = {
+  name: 'textVariants',
+  label: 'Warianty tekstu (lato, noc)',
+  type: 'array',
+  maxRows: 3,
+  admin: { initCollapsed: true, description: 'Podstawowy tekst sekcji to zima, dzień. Tu wpisz nagłówek i krótki tekst na inne pory.' },
+  fields: [
+    {
+      name: 'variant',
+      label: 'Pora',
+      type: 'select',
+      required: true,
+      options: SCENE_VARIANTS.filter(([v]) => v !== 'winterDay').map(([value, label]) => ({ value, label })),
+    },
+    { name: 'heading', label: 'Nagłówek', type: 'text', localized: true },
+    { name: 'text', label: 'Tekst', type: 'textarea', localized: true },
+  ],
+}
+
 const block = (slug: string, label: string, fields: Field[]): Block => ({
   slug,
   labels: { singular: label, plural: label },
-  fields: [...fields, anchor],
+  fields: [...fields, scene, textVariants, anchor],
 })
 
 export const HeroBlock = block('hero', 'Hero (film i hasło)', [

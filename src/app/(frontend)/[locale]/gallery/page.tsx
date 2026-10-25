@@ -11,12 +11,12 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
   return buildMetadata(ctx.locale, 'gallery', { title: page?.title ?? ctx.t.nav.gallery, description: page?.intro, seo: page?.seo })
 }
 
-/** Galeria: bloki z panelu, a bez bloku „Seria zdjęć” wszystkie zdjęcia z biblioteki przypisane do serii. */
+/** Galeria: bloki z panelu, a bez bloku „Seria zdjęć” wszystkie prawdziwe zdjęcia z biblioteki przypisane do serii (bez CGI, wg Michała). */
 export default async function GalleryPage({ params }: LocaleParams) {
   const ctx = await pageContext(params)
   const page = await getPage('gallery', ctx)
   const hasGallery = page?.layout?.some((b) => b.blockType === 'gallery')
-  const media = hasGallery ? [] : await findMany<Media>('media', ctx.locale, { where: { series: { exists: true } }, limit: 120, sort: 'filename' })
+  const media = hasGallery ? [] : await findMany<Media>('media', ctx.locale, { where: { and: [{ series: { exists: true } }, { isPlaceholder: { not_equals: true } }] }, limit: 120, sort: 'filename' })
   return (
     <CmsPage route="gallery" ctx={ctx}>
       {media.length ? (

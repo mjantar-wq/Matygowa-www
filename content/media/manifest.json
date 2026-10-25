@@ -2,6 +2,366 @@
  "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
   {
+   "file": "W20_sypialnia_okno_laka_3x2_foto.webp",
+   "shot": "W20",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z przeszklonym narożnikiem na łąkę",
+    "en": "Bedroom with a glazed corner facing the meadow"
+   },
+   "source": "a7v02005.webp"
+  },
+  {
+   "file": "L20_taras_domu_lato_3x2_foto.webp",
+   "shot": "L20",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Taras domku pod okapem z modrzewia",
+    "en": "The cottage terrace under a larch-clad eave"
+   },
+   "source": "a7v02065.webp"
+  },
+  {
+   "file": "L21_laka_widok_osada_lato_3x2_foto.webp",
+   "shot": "L21",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łąka przed domkiem i widok na sąsiednie zbocza",
+    "en": "The meadow in front of the cottage with the neighbouring slopes"
+   },
+   "source": "a7v02070.webp"
+  },
+  {
+   "file": "W21_sauna_domek_3x2_foto.webp",
+   "shot": "W21",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sauna w domku, ława z jasnego drewna",
+    "en": "The cottage sauna with light wooden benches"
+   },
+   "source": "a7v02115.webp"
+  },
+  {
+   "file": "W22_kuchnia_kominek_3x2_foto.webp",
+   "shot": "W22",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Kuchnia z jadalnią i kominkiem",
+    "en": "Kitchen and dining area with a fireplace"
+   },
+   "source": "a7v02165.webp"
+  },
+  {
+   "file": "W23_salon_szczyt_okno_3x2_foto.webp",
+   "shot": "W23",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon pod szczytem dachu z oknem na góry",
+    "en": "Living room under the gable with a window onto the mountains"
+   },
+   "source": "a7v02195.webp"
+  },
+  {
+   "file": "W24_jadalnia_poroze_3x2_foto.webp",
+   "shot": "W24",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Stół w jadalni pod żyrandolem z poroża",
+    "en": "Dining table under an antler chandelier"
+   },
+   "source": "a7v02220.webp"
+  },
+  {
+   "file": "W25_sypialnia_poddasze_3x2_foto.webp",
+   "shot": "W25",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia na poddaszu",
+    "en": "Attic bedroom"
+   },
+   "source": "a7v02255.webp"
+  },
+  {
+   "file": "L22_balkon_lato_3x2_foto.webp",
+   "shot": "L22",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balkon z fotelami i widokiem na zielone wzgórza",
+    "en": "Balcony with chairs and a view of green hills"
+   },
+   "source": "a7v02310.webp"
+  },
+  {
+   "file": "W26_salon_narozna_kanapa_3x2_foto.webp",
+   "shot": "W26",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z narożną kanapą i oknami na dwie strony",
+    "en": "Living room with a corner sofa and windows on two sides"
+   },
+   "source": "a7v02315.webp"
+  },
+  {
+   "file": "L23_domek_z_balkonu_lato_3x2_foto.webp",
+   "shot": "L23",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sąsiedni domek widziany z balkonu",
+    "en": "A neighbouring cottage seen from the balcony"
+   },
+   "source": "a7v02341.webp"
+  },
+  {
+   "file": "L24_dachy_osady_lato_3x2_foto.webp",
+   "shot": "L24",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dachy osady i Tatry na horyzoncie",
+    "en": "The settlement roofs with the Tatras on the horizon"
+   },
+   "source": "a7v02348.webp"
+  },
+  {
+   "file": "L25_laka_tatry_lato_3x2_foto.webp",
+   "shot": "L25",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łąka nad osadą i Tatry w chmurach",
+    "en": "The meadow above the settlement and the Tatras in the clouds"
+   },
+   "source": "a9m00737.webp"
+  },
+  {
+   "file": "L26_domek_na_lace_lato_3x2_foto.webp",
+   "shot": "L26",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek na zboczu, w tle Tatry",
+    "en": "A cottage on the slope with the Tatras behind"
+   },
+   "source": "a9m00771.webp"
+  },
+  {
+   "file": "W27_nakryty_stol_2x3_foto.webp",
+   "shot": "W27",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Nakryty stół z kwiatami",
+    "en": "A laid table with flowers"
+   },
+   "source": "a9m00797.webp"
+  },
+  {
+   "file": "W28_zyrandol_poroze_2x3_foto.webp",
+   "shot": "W28",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Żyrandol z poroża nad stołem",
+    "en": "Antler chandelier above the table"
+   },
+   "source": "a9m00842.webp"
+  },
+  {
+   "file": "W29_sypialnia_balkon_3x2_foto.webp",
+   "shot": "W29",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z wyjściem na balkon",
+    "en": "Bedroom opening onto the balcony"
+   },
+   "source": "A7V07890-HDR.jpg"
+  },
+  {
+   "file": "W30_salon_tatry_3x2_foto.webp",
+   "shot": "W30",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z kanapą i widokiem na Tatry",
+    "en": "Living room with a sofa and a view of the Tatras"
+   },
+   "source": "A7V07975-HDR.jpg"
+  },
+  {
+   "file": "W31_jadalnia_kominek_3x2_foto.webp",
+   "shot": "W31",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Jadalnia i kominek w domku",
+    "en": "The cottage dining area and fireplace"
+   },
+   "source": "A7V08025-HDR.jpg"
+  },
+  {
+   "file": "W32_stol_poroze_3x2_foto.webp",
+   "shot": "W32",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Stół nakryty dla rodziny pod żyrandolami z poroża",
+    "en": "A table laid for the family under antler chandeliers"
+   },
+   "source": "A7V08055-HDR.jpg"
+  },
+  {
+   "file": "W33_schody_hol_3x2_foto.webp",
+   "shot": "W33",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Drewniane schody i hol",
+    "en": "Wooden staircase and hall"
+   },
+   "source": "A7V08130-HDR.jpg"
+  },
+  {
+   "file": "L27_taras_meble_lato_3x2_foto.webp",
+   "shot": "L27",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Taras z meblami i widokiem na sąsiednie domki",
+    "en": "Terrace with furniture and a view of the other cottages"
+   },
+   "source": "A7V08145-HDR.jpg"
+  },
+  {
+   "file": "L28_balkon_tatry_lato_3x2_foto.webp",
+   "shot": "L28",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na Tatry i lasy",
+    "en": "The view from the balcony over the Tatras and forests"
+   },
+   "source": "A7V09726.jpg"
+  },
+  {
+   "file": "L29_balkon_las_lato_3x2_foto.webp",
+   "shot": "L29",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balkon i świerki na zboczu",
+    "en": "The balcony and spruces on the slope"
+   },
+   "source": "A7V09742.jpg"
+  },
+  {
+   "file": "W34_salon_zima_3x2_foto.webp",
+   "shot": "W34",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon zimą, za oknem śnieg i góry",
+    "en": "The living room in winter with snow and mountains outside"
+   },
+   "source": "A7V08879-HDR.jpg"
+  },
+  {
+   "file": "K20_balkon_slonce_zima_3x2_foto.webp",
+   "shot": "K20",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Zimowe słońce nad balkonem",
+    "en": "Winter sun over the balcony"
+   },
+   "source": "A7V08949-HDR.jpg"
+  },
+  {
+   "file": "K21_balia_zima_3x2_foto.webp",
+   "shot": "K21",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balia na tarasie i zaśnieżone Tatry",
+    "en": "The hot tub on the terrace and the snowy Tatras"
+   },
+   "source": "A9M04983.jpg"
+  },
+  {
+   "file": "W35_kominek_fotel_3x2_foto.webp",
+   "shot": "W35",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Fotel przy kominku",
+    "en": "An armchair by the fireplace"
+   },
+   "source": "DSC01929.jpg"
+  },
+  {
+   "file": "W36_narty_przedsionek_2x3_foto.webp",
+   "shot": "W36",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Narty w przedsionku",
+    "en": "Skis in the entrance hall"
+   },
+   "source": "DSC01945.jpg"
+  },
+  {
+   "file": "K22_balkon_zima_3x2_foto.webp",
+   "shot": "K22",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na zimowe Podhale",
+    "en": "The view from the balcony over winter Podhale"
+   },
+   "source": "DSC02011.jpg"
+  },
+  {
    "file": "N1_ferie_stok_narciarze_3x2_foto.webp",
    "shot": "N1",
    "width": 2400,

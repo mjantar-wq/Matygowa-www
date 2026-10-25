@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import type { Locale } from '@/i18n/locales'
 import type { Dictionary } from '@/i18n/dictionaries'
 import { href } from '@/i18n/routes'
@@ -56,6 +56,10 @@ const ADULTS = Array.from({ length: 12 }, (_, i) => i + 1)
  * ofertą i utm_*. Z silnikiem Hotres albo bez cen (Ustawienia → Rezerwacje) od razu przechodzi do silnika.
  */
 export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
+  // kilka pasków na stronie (hero, zaproszenie, okno z przycisku): identyfikatory muszą być unikalne
+  const uid = useId()
+  const calendarId = `${uid}-kalendarz`
+  const errorId = `${uid}-brak-osob`
   const live = engine?.bookingEngine === 'icecoldres' && engine.showPrices !== false
   const [arrival, setArrival] = useState('')
   const [departure, setDeparture] = useState('')
@@ -228,7 +232,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
           type="button"
           className="mo-field"
           aria-expanded={open}
-          aria-controls="mo-kalendarz"
+          aria-controls={calendarId}
           onClick={() => setOpen((o) => !o || !!departure)}
         >
           <span className="mo-label">{t.arrival}</span>
@@ -238,7 +242,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
           type="button"
           className="mo-field"
           aria-expanded={open}
-          aria-controls="mo-kalendarz"
+          aria-controls={calendarId}
           onClick={() => setOpen(true)}
         >
           <span className="mo-label">{t.departure}</span>
@@ -254,7 +258,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
             ref={adultsRef}
             value={guests ?? ''}
             aria-invalid={missingAdults || undefined}
-            aria-describedby={missingAdults ? 'mo-brak-osob' : undefined}
+            aria-describedby={missingAdults ? errorId : undefined}
             onChange={(e) => {
               const n = e.target.value === '' ? null : Number(e.target.value)
               setGuests(n)
@@ -285,7 +289,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
         </button>
       </form>
       {missingAdults ? (
-        <p id="mo-brak-osob" className="mo-body-s mo-booking-error" role="alert">
+        <p id={errorId} className="mo-body-s mo-booking-error" role="alert">
           {t.needAdults}
         </p>
       ) : null}
@@ -322,7 +326,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
       {open ? (
         <div
           className="mo-calendar"
-          id="mo-kalendarz"
+          id={calendarId}
           role="dialog"
           aria-label={arrival && !departure ? t.chooseDeparture : t.chooseArrival}
         >

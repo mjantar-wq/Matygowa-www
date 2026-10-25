@@ -58,7 +58,7 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
   Zmiana środowiska to `routes` i `vars` (`ICECOLDRES_API_URL`, `ICECOLDRES_SLUG`, `NEXT_PUBLIC_SITE_URL`) w `wrangler.jsonc` oraz adres silnika w Ustawieniach strony. Stary adres panelu `/admin` przekierowuje na `/panel`.
 - Pasek rezerwacji: przy silniku IceColdRes i włączonym „Pokazuj ceny i dostępność” kalendarz pokazuje ceny „od” i plakietki promocji strony, a „Sprawdź termin” wyświetla wolne domy z cenami na stronie. „Rezerwuj” otwiera silnik z `arrival`, `departure`, `adults`, `children`, `ages`, `unit`, `offer` i `utm_*` (zapamiętanymi z wejścia na stronę, na czas wizyty). Przeglądarka pyta pośrednika strony `/api/booking/calendar` i `/api/booking/search` (bufor 45 s), nie bezpośrednio IceColdRes. Przy Hotres pasek od razu przechodzi do Hotres.
 - Import treści (`pnpm seed`) ustawia silnik IceColdRes (import służy środowisku testowemu).
-- Webhook „treść zmieniona” (docs/integracja-strony.md w IceColdRes): w kolejnym kroku pod `POST /api/revalidate/icecoldres`.
+- Webhook „treść zmieniona” (docs/integracja-strony.md w IceColdRes): `POST /api/revalidate/icecoldres`, podpis `X-IceColdRes-Signature` (HMAC-SHA256, ważny 5 minut), odświeża bufory zapytań według tematów (`property`, `unitTypes`, `photos`, `services`, `pricing`). Sekret: Cloudflare → Workers → `matygowa-www` → Settings → Variables and Secrets → Add → typ **Secret**, nazwa `SITE_WEBHOOK_SECRET`, ta sama wartość co w Workerze `icecoldres-api`. Bez sekretu adres odpowiada 503.
 
 ## Do zrobienia przed produkcją
 

@@ -35,7 +35,7 @@ export default async function OffersPage({ params }: LocaleParams) {
                 <p className="mo-body-s mo-card__text">{pl ? p.description : p.en.description || p.description}</p>
                 {story ? <Markdown text={story} className="mo-body-s mo-prose" /> : null}
                 <p className="mo-card__meta">
-                  <a href={bookingUrl(engine, ctx.locale, { offer: offerId || undefined })} data-track="offers" className="mo-btn mo-btn--obrys mo-btn--maly">
+                  <a href={bookingUrl(engine, ctx.locale, { offer: offerId || undefined })} data-track="offers" className="mo-btn mo-btn--glowny mo-btn--maly">
                     {ctx.t.booking.book}
                   </a>
                 </p>

@@ -236,6 +236,8 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc .mo-section > .mo-container > header :is(.mo-h1, .mo-h2) { margin-block-end: 0; }
 /* Nadtytuł rozdziału (np. „Gliczarów Górny”) większy i tuż nad tytułem */
 .mo-opowiesc .mo-section > .mo-container > header > .mo-label { font-size: clamp(0.9375rem, 0.8rem + 0.35vw, 1.125rem); letter-spacing: 0.14em; }
+/* „Gliczarów Górny” nad pierwszym rozdziałem: wyraźny tytuł miejsca */
+.mo-opowiesc [data-block="intro"] > .mo-container > header > .mo-label { font-size: clamp(1.375rem, 1rem + 1.4vw, 2.125rem); font-weight: 600; letter-spacing: 0.12em; line-height: 1.15; }
 
 /* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić. Karty bez podsiatki,
    inaczej przerwa między krokami rozciąga każdą kartę na kilka ekranów. */

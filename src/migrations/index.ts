@@ -7,7 +7,6 @@ import * as migration_20261025_075424_scena_warianty from './20261025_075424_sce
 import * as migration_20261025_092914_nazwy_szczytow_mapa_atrakcji from './20261025_092914_nazwy_szczytow_mapa_atrakcji'
 import * as migration_20261025_094500_wlasciciel from './20261025_094500_wlasciciel'
 import * as migration_20261025_113356_opinie_z_google from './20261025_113356_opinie_z_google'
-import * as migration_20261025_150654_oferty_wyroznione from './20261025_150654_oferty_wyroznione'
 
 export const migrations = [
   {
@@ -54,10 +53,5 @@ export const migrations = [
     up: migration_20261025_113356_opinie_z_google.up,
     down: migration_20261025_113356_opinie_z_google.down,
     name: '20261025_113356_opinie_z_google',
-  },
-  {
-    up: migration_20261025_150654_oferty_wyroznione.up,
-    down: migration_20261025_150654_oferty_wyroznione.down,
-    name: '20261025_150654_oferty_wyroznione',
   },
 ]

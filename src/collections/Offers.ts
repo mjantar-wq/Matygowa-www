@@ -10,7 +10,7 @@ import { slugField } from '../fields/slug'
 export const Offers: CollectionConfig = {
   slug: 'offers',
   labels: { singular: 'Oferta', plural: 'Oferty' },
-  admin: { useAsTitle: 'title', group: 'Treści', defaultColumns: ['title', 'validFrom', 'validTo', 'featured', '_status'] },
+  admin: { useAsTitle: 'title', group: 'Treści', defaultColumns: ['title', 'validFrom', 'validTo', '_status'] },
   access: { read: publishedOrLoggedIn, create: editors, update: editors, delete: editors },
   versions: { drafts: { schedulePublish: true }, maxPerDoc: 20 },
   defaultSort: 'order',
@@ -18,7 +18,6 @@ export const Offers: CollectionConfig = {
     { name: 'title', label: 'Tytuł', type: 'text', required: true, localized: true },
     slugField(),
     { name: 'order', label: 'Kolejność', type: 'number', defaultValue: 0, admin: { position: 'sidebar' } },
-    { name: 'featured', label: 'Wyróżniona na stronie głównej', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar' } },
     { name: 'image', label: 'Zdjęcie', type: 'upload', relationTo: 'media' },
     { name: 'summary', label: 'Zajawka', type: 'textarea', localized: true },
     { name: 'content', label: 'Opis', type: 'richText', localized: true },

@@ -145,7 +145,8 @@ async function main() {
       case 'house_inside':
         return { blockType: 'houseInside', ...base, body: md(b.body?.[l]), rooms: b.rooms?.map((r: Any, i: number) => ({ title: r.title?.[l], text: r.body?.[l], image: img(['W1_', 'W2_', 'W3_', 'W5_'][i] ?? 'W') })) }
       case 'rituals_teaser':
-        return { blockType: 'rituals', ...base, body: md(b.body?.[l]), showPrices: true }
+        // zapowiedź na stronie głównej: tekst ze zdjęciem bani (pełne kroki i ceny są na stronie Sauna i bania)
+        return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('B1_bania_alpenglow'), imagePosition: 'start' }
       case 'seasons':
         return { blockType: 'seasons', ...base, winter: { text: b.winter?.[l], image: img('K2_hero_osada_swit_16x9') }, summer: { text: b.summer?.[l], image: img('K2_hero_osada_lato') } }
       case 'surroundings':
@@ -241,7 +242,8 @@ async function main() {
     const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
     let id = found.docs[0]?.id
     for (const locale of LOCALES) {
-      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
+      const cover = img(({ 'apartamenty-wiosna-2027': 'V7_', 'ferie-2027': 'K9_' } as Record<string, string>)[n.slug] ?? 'K2_hero_osada_swit_16x9')
+      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, cover, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
       if (id) await payload.update({ collection: 'news', id, locale, data, draft: true } as never)
       else id = ((await payload.create({ collection: 'news', locale, data, draft: true } as never)) as Any).id
     }

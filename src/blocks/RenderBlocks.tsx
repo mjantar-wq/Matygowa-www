@@ -8,7 +8,7 @@ import { findMany } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getPromotions, getServices } from '@/lib/icecoldres'
 import type { PageContext } from '@/lib/page'
-import type { Attraction, News, Page, Testimonial, Unit } from '@/payload-types'
+import type { Attraction, News, Offer, Page, Testimonial, Unit } from '@/payload-types'
 
 type Block = NonNullable<Page['layout']>[number]
 type Of<T extends Block['blockType']> = Extract<Block, { blockType: T }>
@@ -85,7 +85,7 @@ function Day({ block, ctx }: Props<'dayInSettlement'>) {
       <ol style={{ display: 'grid', gap: 'var(--space-8)' }}>
         {block.scenes?.map((s) => (
           <li key={s.id} data-pora={s.time} style={{ display: 'grid', gap: 'var(--space-4)' }}>
-            <Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} />
+            <div className="mo-card__media"><Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} /></div>
             <h3 className="mo-h3">{s.title}</h3>
             <p className="mo-prose">{s.text}</p>
           </li>
@@ -147,7 +147,7 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <div className="mo-cards">
+      <div className="mo-cards" style={FIT}>
         {(['winter', 'summer'] as const).map((key) => (
           <article key={key} className="mo-card" data-sezon={key === 'winter' ? 'zima' : 'lato'}>
             <div className="mo-card__media"><Media media={block[key]?.image} fallback={ctx.t.attractions[key]} /></div>
@@ -225,13 +225,19 @@ async function Testimonials({ block, ctx }: Props<'testimonials'>) {
 }
 
 async function OffersNews({ block, ctx }: Props<'offersNews'>) {
-  const [promotions, news] = await Promise.all([getPromotions(), findMany<News>('news', ctx.locale, { limit: 1, sort: '-publishedAt' })])
+  const [promotions, news, offers] = await Promise.all([
+    getPromotions(),
+    findMany<News>('news', ctx.locale, { limit: 1, sort: '-publishedAt' }),
+    findMany<Offer>('offers', ctx.locale, { sort: 'order' }),
+  ])
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
-      <div className="mo-cards">
+      <div className="mo-cards" style={FIT}>
         {promotions.map((p) => (
           <article key={p.id} className="mo-card">
+            {/* zdjęcie z oferty w panelu połączonej z promocją, inaczej z pierwszej oferty */}
+            <div className="mo-card__media"><Media media={(offers.find((o) => o.icecoldresPromotionId === String(p.id)) ?? offers[0])?.image} /></div>
             <p className="mo-label">{ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}</h3>
             <p>{ctx.locale === 'pl' ? p.description : p.en.description || p.description}</p>
@@ -318,6 +324,9 @@ function Hosts({ block }: Props<'hosts'>) {
     </Section>
   )
 }
+
+/** Siatka kart, w której 2–3 karty wypełniają cały rząd zamiast zostawiać puste kolumny. */
+const FIT: React.CSSProperties = { gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }
 
 const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode | Promise<React.ReactNode> } = {
   hero: Hero,

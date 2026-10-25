@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './tokens.css';
 @import './components.css';
+@import './effects.css';
 @import './booking.css';
 
 img, video { display: block; max-inline-size: 100%; }

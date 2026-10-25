@@ -63,10 +63,15 @@ export interface Service {
   unitTypeIds: string[] | null
 }
 
-async function get<T>(path: string, revalidate: number): Promise<T | null> {
+/** Tematy webhooka „treść zmieniona” (kontrakt: sekcja Webhook); każde zapytanie ma tag tematów, z których korzysta. */
+export const TOPICS = ['property', 'unitTypes', 'photos', 'services', 'pricing'] as const
+export type Topic = (typeof TOPICS)[number]
+export const topicTag = (t: Topic) => `icecoldres:${t}`
+
+async function get<T>(path: string, revalidate: number, topics: Topic[] = []): Promise<T | null> {
   try {
     const res = await fetch(`${API}/api/public/${ICECOLDRES_SLUG}${path}`, {
-      next: { revalidate, tags: ['icecoldres'] },
+      next: { revalidate, tags: ['icecoldres', ...topics.map(topicTag)] },
       signal: AbortSignal.timeout(5000),
     })
     if (!res.ok) return null
@@ -76,21 +81,21 @@ async function get<T>(path: string, revalidate: number): Promise<T | null> {
   }
 }
 
-export const getProperty = () => get<PublicProperty>('', 300)
+export const getProperty = () => get<PublicProperty>('', 300, ['property', 'unitTypes', 'photos', 'pricing'])
 
 export async function getPricesFrom(): Promise<PriceFrom[]> {
   const today = new Date().toISOString().slice(0, 10)
-  const data = await get<{ types: PriceFrom[] }>(`/prices-from?from=${today}&days=1`, 600)
+  const data = await get<{ types: PriceFrom[] }>(`/prices-from?from=${today}&days=1`, 600, ['pricing'])
   return data?.types ?? []
 }
 
 export async function getPromotions(): Promise<Promotion[]> {
-  const data = await get<{ promotions: Promotion[] }>('/promotions', 300)
+  const data = await get<{ promotions: Promotion[] }>('/promotions', 300, ['pricing'])
   return data?.promotions ?? []
 }
 
 export async function getServices(): Promise<Service[]> {
-  return (await get<Service[]>('/services', 3600)) ?? []
+  return (await get<Service[]>('/services', 3600, ['services'])) ?? []
 }
 
 /** Wynik wyszukiwania dla jednego domu (GET /search): wolne sztuki i cena każdej oferty strony. */
@@ -141,5 +146,5 @@ export async function getCalendar(from: string, days: number) {
 }
 
 export async function getPricesFromDays(from: string, days: number) {
-  return get<{ from: string; types: (PriceFrom & { days: (number | null)[] })[] }>(`/prices-from?from=${from}&days=${days}`, 600)
+  return get<{ from: string; types: (PriceFrom & { days: (number | null)[] })[] }>(`/prices-from?from=${from}&days=${days}`, 600, ['pricing'])
 }

@@ -135,11 +135,11 @@ async function main() {
     const base = { eyebrow: b.eyebrow?.[l], heading: b.heading?.[l] }
     switch (b.type) {
       case 'hero':
-        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true, image: img('K2_hero_osada_swit_16x9'), video: video('K2_hero_osada_swit_16x9') }
+        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true, image: img('K2_hero_osada_swit_16x9'), video: video('K2_hero_osada_swit_16x9'), videoPortrait: video('K2_hero_osada_swit_9x16'), variants: [{ pora: 'noc', image: img('K2_hero_osada_noc_16x9'), video: video('K2_hero_osada_noc_16x9') }, { sezon: 'lato', image: img('K2_hero_osada_lato_16x9') }] }
       case 'intro':
         return { blockType: 'intro', ...base, body: md(b.body?.[l]), stats: b.stats?.map((s: Any) => ({ value: s.value, label: s.label?.[l] })) }
       case 'peak_panorama':
-        return { blockType: 'peaksPanorama', ...base, body: md(b.body?.[l]), showMap: true, image: img('K1_'), map: img('K5_') }
+        return { blockType: 'peaksPanorama', ...base, body: md(b.body?.[l]), showMap: true, image: null, map: null } // ilustracje G2 i G1 z interakcją; zdjęcie i mapa z panelu tylko jako nadpisanie
       case 'day_story':
         return { blockType: 'dayInSettlement', ...base, scenes: b.scenes?.map((s: Any, i: number) => ({ time: s.key, title: s.title?.[l], text: s.winter?.[l], summerText: s.summer?.[l], image: img(['T1_', 'K2_hero_osada_swit_16x9', 'K4_', 'T3_'][i]) })) }
       case 'house_inside':

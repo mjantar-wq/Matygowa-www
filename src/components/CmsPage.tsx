@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import type { RouteKey } from '@/i18n/routes'
-import { findBySlug } from '@/lib/cms'
+import { findBySlug, findMany } from '@/lib/cms'
+import { buildScenes } from '@/lib/scenes'
+import { SceneStage } from './effects/SceneStage'
 import type { PageContext } from '@/lib/page'
-import type { Page } from '@/payload-types'
+import type { Media, Page } from '@/payload-types'
 import { Placeholder } from './Placeholder'
 
 export const getPage = (slug: string, ctx: PageContext) => findBySlug<Page>('pages', slug, ctx.locale)
@@ -12,11 +14,22 @@ export const getPage = (slug: string, ctx: PageContext) => findBySlug<Page>('pag
  * Strona złożona z bloków z panelu. Bez wpisu w panelu pokazuje tytuł z menu i zastępnik
  * (albo `fallback`, np. domyślny układ strony głównej), żeby szkielet był kompletny od pierwszego dnia.
  */
-export async function CmsPage({ route, slug, ctx, fallback, children, required }: { route: RouteKey; slug?: string; ctx: PageContext; fallback?: Page['layout']; children?: React.ReactNode; required?: boolean }) {
+export async function CmsPage({ route, slug, ctx, fallback, children, required, immersive }: { route: RouteKey; slug?: string; ctx: PageContext; fallback?: Page['layout']; children?: React.ReactNode; required?: boolean; immersive?: boolean }) {
   const page = await getPage(slug ?? route, ctx)
   if (!page && required) notFound()
   const blocks = page?.layout?.length ? page.layout : fallback
   const hasHero = blocks?.[0]?.blockType === 'hero'
+  if (immersive && blocks?.length) {
+    // Strona główna: opowieść na stałym tle (koncepcja po M1)
+    const media = await findMany<Media>('media', ctx.locale, { limit: 300, depth: 0 })
+    return (
+      <div className="mo-story">
+        <SceneStage scenes={buildScenes(blocks, media)} t={ctx.t.effects} />
+        <RenderBlocks blocks={blocks} ctx={ctx} immersive />
+        {children}
+      </div>
+    )
+  }
   return (
     <>
       {!hasHero ? (

@@ -91,6 +91,13 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-card__meta { border-top: 1px solid var(--color-linia); padding-top: var(--space-4); display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
 .mo-card__arrow { color: var(--color-swierk); font: 500 15px/1 var(--font-ui); }
 
+/* Karty ze zdjęciami (blok features) i podpis autora cudzego zdjęcia */
+.mo-feature { display: grid; align-content: start; gap: var(--space-4); min-width: 0; }
+.mo-feature__media { margin: 0; }
+.mo-feature__media > img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; border-radius: var(--radius-0); background: var(--color-tlo-2); }
+.mo-credit { margin-top: var(--space-2); font: 400 12px/1.4 var(--font-ui); color: var(--color-wyciszony); }
+.mo-credit a { color: inherit; }
+
 /* Plakietka promocji */
 .mo-badge { display: inline-flex; align-items: center; gap: var(--space-2); font: var(--text-label--font-weight) var(--text-label)/var(--text-label--line-height) var(--font-ui); letter-spacing: var(--text-label--letter-spacing); text-transform: uppercase; color: var(--color-bursztyn-tekst); }
 .mo-badge::before { content: ""; width: 6px; height: 6px; border-radius: var(--radius-kropka); background: var(--color-bursztyn); }

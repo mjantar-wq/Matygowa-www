@@ -943,6 +943,62 @@ export interface Page {
             blockName?: string | null;
             blockType: 'hosts';
           }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            items?:
+              | {
+                  heading?: string | null;
+                  body?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            anchor?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
+          }
       )[]
     | null;
   seo?: {
@@ -962,6 +1018,15 @@ export interface Media {
   id: number;
   alt: string;
   caption?: string | null;
+  /**
+   * Dla zdjęć cudzych (np. Wikimedia Commons): podpis z autorem, licencją i linkiem pokazuje się pod zdjęciem.
+   */
+  credit?: {
+    author?: string | null;
+    license?: string | null;
+    source?: string | null;
+    url?: string | null;
+  };
   /**
    * Zaznacz dla obrazów wygenerowanych do czasu sesji zdjęciowej. Lista filtrowana po tym polu pokazuje, co jeszcze trzeba podmienić.
    */
@@ -2013,6 +2078,43 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        features?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              intro?: T;
+              items?:
+                | T
+                | {
+                    heading?: T;
+                    body?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              anchor?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   seo?:
     | T
@@ -2178,6 +2280,14 @@ export interface TestimonialsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  credit?:
+    | T
+    | {
+        author?: T;
+        license?: T;
+        source?: T;
+        url?: T;
+      };
   isPlaceholder?: T;
   series?: T;
   focusX?: T;

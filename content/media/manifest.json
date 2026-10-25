@@ -997,6 +997,74 @@
    "width": 1920,
    "height": 1080,
    "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  },
+  {
+   "file": "H1_goralszczyzna_drewno_foto.webp",
+   "shot": "H1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Willa Koliba w Zakopanem jesienią",
+    "en": "Koliba villa in Zakopane in autumn"
+   },
+   "credit": {
+    "author": "Aneta Pawska",
+    "license": "CC BY 3.0",
+    "source": "Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg"
+   }
+  },
+  {
+   "file": "H2_goralszczyzna_owce_foto.webp",
+   "shot": "H2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Oscypki na straganie w Zakopanem",
+    "en": "Oscypek cheeses at a stall in Zakopane"
+   },
+   "credit": {
+    "author": "Aga Viburno",
+    "license": "CC BY-SA 3.0",
+    "source": "Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg"
+   }
+  },
+  {
+   "file": "H3_goralszczyzna_stroj_foto.webp",
+   "shot": "H3",
+   "width": 1600,
+   "height": 1064,
+   "placeholder": false,
+   "alt": {
+    "pl": "Haftowana parzenica na góralskich portkach",
+    "en": "Embroidered parzenica on highland trousers"
+   },
+   "credit": {
+    "author": "Joanna Gładkowska",
+    "license": "CC BY-SA 4.0",
+    "source": "Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:Parzenica_01.jpg"
+   }
+  },
+  {
+   "file": "H4_goralszczyzna_muzyka_foto.webp",
+   "shot": "H4",
+   "width": 1600,
+   "height": 930,
+   "placeholder": false,
+   "alt": {
+    "pl": "Góralskie wesele, występ zespołu w strojach podhalańskich",
+    "en": "Highland wedding, a folk performance in Podhale dress"
+   },
+   "credit": {
+    "author": "Marta Malina Moraczewska",
+    "license": "CC BY-SA 4.0",
+    "source": "Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg"
+   }
   }
  ]
 }

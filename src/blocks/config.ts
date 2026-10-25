@@ -241,6 +241,20 @@ export const HostsBlock = block('hosts', 'Gospodarze', [
   },
 ])
 
+// Karty z obrazem i krótkim tekstem (np. „Góralszczyzna dziś”); podpis autora zdjęcia z pola „Autor i licencja” w mediach
+export const FeaturesBlock = block('features', 'Karty ze zdjęciami', [
+  eyebrow,
+  heading,
+  { name: 'intro', label: 'Wstęp', type: 'textarea', localized: true },
+  {
+    name: 'items',
+    label: 'Karty',
+    type: 'array',
+    maxRows: 9,
+    fields: [heading, body, image],
+  },
+])
+
 export const ALL_BLOCKS = [
   HeroBlock,
   IntroBlock,
@@ -258,4 +272,5 @@ export const ALL_BLOCKS = [
   FaqBlock,
   RichTextBlock,
   HostsBlock,
+  FeaturesBlock,
 ]

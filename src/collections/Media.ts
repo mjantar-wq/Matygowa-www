@@ -31,6 +31,28 @@ export const Media: CollectionConfig = {
     { name: 'alt', label: 'Tekst alternatywny', type: 'text', required: true, localized: true },
     { name: 'caption', label: 'Podpis', type: 'text', localized: true },
     {
+      name: 'credit',
+      label: 'Autor i licencja',
+      type: 'group',
+      admin: { description: 'Dla zdjęć cudzych (np. Wikimedia Commons): podpis z autorem, licencją i linkiem pokazuje się pod zdjęciem.' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'author', label: 'Autor', type: 'text' },
+            { name: 'license', label: 'Licencja (np. CC BY-SA 4.0)', type: 'text' },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            { name: 'source', label: 'Źródło (np. Wikimedia Commons)', type: 'text' },
+            { name: 'url', label: 'Adres strony zdjęcia', type: 'text' },
+          ],
+        },
+      ],
+    },
+    {
       name: 'isPlaceholder',
       label: 'Materiał tymczasowy (CGI)',
       type: 'checkbox',

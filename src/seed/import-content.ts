@@ -48,11 +48,14 @@ async function main() {
           locale: 'pl',
           filePath: path.join(DIR, 'media', filename),
           data: real
-            ? { alt: item.alt.pl, isPlaceholder: false, series }
+            ? { alt: item.alt.pl, isPlaceholder: false, series, credit: item.credit }
             : { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
         } as never) as Any
       ).id
       await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}` } })
+    } else if (item.credit) {
+      // podpis autora cudzego zdjęcia także dla plików wgranych wcześniej
+      await payload.update({ collection: 'media', id, data: { credit: item.credit } })
     }
     media.set(filename, id)
   }
@@ -194,8 +197,18 @@ async function main() {
       if (s.id === 'gospodarze') {
         return { blockType: 'hosts', anchor: s.id, heading: s.heading?.[l], intro: s.personal_note?.[l] ?? undefined, people: (s.hosts ?? []).filter((h: Any) => h.name).map((h: Any) => ({ name: h.name, role: h.role?.[l], text: h.bio?.[l] })) }
       }
-      const items = (s.items ?? []).map((it: Any) => `### ${it.heading?.[l]}\n\n*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`)
-      const text = [s.lead?.[l], s.body?.[l], ...items, s.signature?.[l] ? `*${s.signature[l]}*` : null].filter(Boolean).join('\n\n')
+      // karty ze zdjęciami (np. góralszczyzna): obraz z manifestu po nazwie pliku *_<sekcja>_<karta>_*, podpis autora z jego pola credit
+      if (s.items?.length) {
+        const byName = (part: string) => [...media.entries()].find(([k]) => k.includes(part))?.[1]
+        return {
+          blockType: 'features',
+          anchor: s.id,
+          heading: s.heading?.[l],
+          intro: s.lead?.[l],
+          items: s.items.map((it: Any) => ({ heading: it.heading?.[l], body: md(it.body?.[l]), image: it.image ? byName(`_${s.id}_${it.id}_`) : undefined })),
+        }
+      }
+      const text = [s.lead?.[l], s.body?.[l], s.signature?.[l] ? `*${s.signature[l]}*` : null].filter(Boolean).join('\n\n')
       return { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(text), imagePosition: i % 2 ? 'start' : 'end' }
     }),
   )

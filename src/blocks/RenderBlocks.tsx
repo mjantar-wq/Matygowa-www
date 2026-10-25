@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import Link from 'next/link'
 import { BookingBar } from '@/components/BookingBar'
-import { Media } from '@/components/Media'
+import { Media, MediaCredit } from '@/components/Media'
 import { RichText } from '@/components/RichText'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
@@ -408,6 +408,33 @@ function Hosts({ block }: Props<'hosts'>) {
   )
 }
 
+function Features({ block }: Props<'features'>) {
+  const items = block.items ?? []
+  if (!items.length) return null
+  return (
+    <Section block={block}>
+      <Heading eyebrow={block.eyebrow} heading={block.heading} />
+      {block.intro ? <p className="mo-lede">{block.intro}</p> : null}
+      <div className="mo-cards">
+        {items.map((it) => (
+          <article key={it.id} className="mo-feature">
+            {it.image ? (
+              <figure className="mo-feature__media">
+                <Media media={it.image} alt={it.heading ?? undefined} />
+                <MediaCredit media={it.image} />
+              </figure>
+            ) : null}
+            <div>
+              {it.heading ? <h3 className="mo-h3">{it.heading}</h3> : null}
+              <RichText data={it.body} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </Section>
+  )
+}
+
 /** Siatka kart, w której 2–3 karty wypełniają cały rząd zamiast zostawiać puste kolumny. */
 const FIT: React.CSSProperties = { gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }
 
@@ -446,6 +473,7 @@ const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode |
   faq: Faq,
   richText: Text,
   hosts: Hosts,
+  features: Features,
 }
 
 /** `immersive`: strona główna na stałym tle (SceneStage); rozdziały nie pokazują wtedy własnych teł. */

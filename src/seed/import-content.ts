@@ -127,7 +127,9 @@ async function main() {
   let offerIndex = 0
   for (const o of read('offers.json') as Any[]) {
     const [from, to] = String(o.valid ?? '').split('/')
-    const cover = img(['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5])
+    // "image" w offers.json (prefiks pliku z content/media) wygrywa z domyślną rotacją okładek
+    const fallback = ['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5]
+    const cover = (o.image ? img(o.image) : undefined) ?? img(fallback)
     await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], image: cover, validFrom: from || undefined, validTo: to || undefined }))
   }
 

@@ -1,11 +1,12 @@
-import * as migration_20261024_222614_initial from './20261024_222614_initial';
-import * as migration_20261024_223907_role_default from './20261024_223907_role_default';
-import * as migration_20261024_235001_pomiar_zgody from './20261024_235001_pomiar_zgody';
-import * as migration_20261025_002906_unit_bathrooms_hosts from './20261025_002906_unit_bathrooms_hosts';
-import * as migration_20261025_073328_hero_variants from './20261025_073328_hero_variants';
-import * as migration_20261025_075424_scena_warianty from './20261025_075424_scena_warianty';
-import * as migration_20261025_092914_nazwy_szczytow_mapa_atrakcji from './20261025_092914_nazwy_szczytow_mapa_atrakcji';
-import * as migration_20261025_094500_wlasciciel from './20261025_094500_wlasciciel';
+import * as migration_20261024_222614_initial from './20261024_222614_initial'
+import * as migration_20261024_223907_role_default from './20261024_223907_role_default'
+import * as migration_20261024_235001_pomiar_zgody from './20261024_235001_pomiar_zgody'
+import * as migration_20261025_002906_unit_bathrooms_hosts from './20261025_002906_unit_bathrooms_hosts'
+import * as migration_20261025_073328_hero_variants from './20261025_073328_hero_variants'
+import * as migration_20261025_075424_scena_warianty from './20261025_075424_scena_warianty'
+import * as migration_20261025_092914_nazwy_szczytow_mapa_atrakcji from './20261025_092914_nazwy_szczytow_mapa_atrakcji'
+import * as migration_20261025_094500_wlasciciel from './20261025_094500_wlasciciel'
+import * as migration_20261025_113356_opinie_z_google from './20261025_113356_opinie_z_google'
 
 export const migrations = [
   {
@@ -41,11 +42,16 @@ export const migrations = [
   {
     up: migration_20261025_092914_nazwy_szczytow_mapa_atrakcji.up,
     down: migration_20261025_092914_nazwy_szczytow_mapa_atrakcji.down,
-    name: '20261025_092914_nazwy_szczytow_mapa_atrakcji'
+    name: '20261025_092914_nazwy_szczytow_mapa_atrakcji',
   },
   {
     up: migration_20261025_094500_wlasciciel.up,
     down: migration_20261025_094500_wlasciciel.down,
-    name: '20261025_094500_wlasciciel'
+    name: '20261025_094500_wlasciciel',
   },
-];
+  {
+    up: migration_20261025_113356_opinie_z_google.up,
+    down: migration_20261025_113356_opinie_z_google.down,
+    name: '20261025_113356_opinie_z_google',
+  },
+]

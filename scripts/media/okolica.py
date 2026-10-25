@@ -29,18 +29,8 @@ LIC = {
 }
 
 # plik, adres pliku, strona źródła, autor, licencja, kadr w pionie (0 = góra), alt PL, alt EN
-ZDJECIA = [
-    ("A_morskie-oko_1", "https://live.staticflickr.com/4459/37504444722_f8220066f5_b.jpg", "https://www.flickr.com/photos/66885349@N03/37504444722", "Gael Varoquaux", "CC BY 2.0", .5,
-     "Morskie Oko o świcie, nad taflą ściany Mięguszowieckich Szczytów", "Morskie Oko at dawn, the Mięguszowieckie walls above the water"),
-    ("A_gubalowka_1", "https://live.staticflickr.com/5488/9686214805_b2db60ee3c_b.jpg", "https://www.flickr.com/photos/22178197@N00/9686214805", "Kamil Porembiński", "CC BY-SA 2.0", .5,
-     "Panorama Tatr z Gubałówki latem", "The Tatras panorama from Gubałówka in summer"),
-    ("A_gubalowka_2", "https://live.staticflickr.com/5538/9686128195_19dbee7300_b.jpg", "https://www.flickr.com/photos/22178197@N00/9686128195", "Kamil Porembiński", "CC BY-SA 2.0", .5,
-     "Łąki na Gubałówce, w dole Zakopane, w tle Tatry", "Meadows on Gubałówka, Zakopane below, the Tatras behind"),
-    ("A_kasprowy-wierch_1", "https://live.staticflickr.com/5443/9694498926_416a9f6d0e_b.jpg", "https://www.flickr.com/photos/22178197@N00/9694498926", "Kamil Porembiński", "CC BY-SA 2.0", .5,
-     "Szczyt Kasprowego Wierchu z obserwatorium i górną stacją kolei", "The summit of Kasprowy Wierch with the observatory and the top station"),
-    ("A_kasprowy-wierch_2", "https://live.staticflickr.com/3258/2786311693_56a9f5b172_b.jpg", "https://www.flickr.com/photos/29779572@N07/2786311693", "disordered design", "CC BY 2.0", .5,
-     "Zbocza Kasprowego Wierchu latem, na grzbiecie obserwatorium", "The slopes of Kasprowy Wierch in summer, the observatory on the ridge"),
-]
+# Wolne licencje na razie bez zdjęć: Michał odrzucił 25.10 zdjęcia kolei (bez wagonika) i Morskiego Oka (słaba jakość).
+ZDJECIA = []
 
 # plik, adres pliku, strona źródła, obiekt (w podpisie), prawa, kadr w pionie, alt PL, alt EN
 OBIEKTY = [
@@ -72,6 +62,31 @@ OBIEKTY = [
      "Nacieki w Bielskiej Jaskini", "Dripstone formations in Belianska Cave"),
     ("A_bielska-jaskinia_2", "https://www.ssj.sk/sk/photoloader/105/11.jpg/0x0", "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna", "Správa slovenských jaskýň", "pending", .5,
      "Ściana nacieków w Bielskiej Jaskini", "A wall of flowstone in Belianska Cave"),
+    # 25.10 (decyzja Michała): koleje z wagonikiem, Morskie Oko ze schroniskiem nad brzegiem, balon z Tatrami w tle, szlaki
+    ("A_kasprowy-wierch_w1", "https://www.pkl.pl/data/pages/28/1600x0px__n4a0359a.jpg", "https://www.pkl.pl/kasprowy-wierch/kasprowy.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagonik kolei na Kasprowy Wierch nad doliną, w tle Tatry", "The Kasprowy Wierch cable car above the valley, the Tatras behind"),
+    ("A_kasprowy-wierch_w2", "https://www.pkl.pl/data/pages/28/1600x0px_kasprowy-15-.jpg", "https://www.pkl.pl/kasprowy-wierch/kasprowy.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagonik kolei na Kasprowy Wierch w świetle zachodzącego słońca", "The Kasprowy Wierch cable car in the evening sun"),
+    ("A_gubalowka_w1", "https://www.pkl.pl/data/pages/34/1600x0px_20181216_a9dsc06983v1.jpg", "https://www.pkl.pl/gubalowka/gubalowka.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagon kolei na Gubałówkę wśród zaśnieżonych świerków, w tle Tatry", "The Gubałówka funicular among snowy spruces, the Tatras behind"),
+    ("A_gubalowka_w2", "https://www.pkl.pl/data/pages/34/1600x0px_20181213_a6500ab606881v1.jpg", "https://www.pkl.pl/gubalowka/gubalowka.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagon kolei na Gubałówkę na trasie przez zimowy las", "The Gubałówka funicular on its way through the winter forest"),
+    ("A_morskie-oko_s1", "https://schroniskomorskieoko.pl/sites/default/files/static/20121008_ab4_2155.jpg", "https://schroniskomorskieoko.pl", "Schronisko PTTK nad Morskim Okiem", "pending", .5,
+     "Schronisko nad brzegiem Morskiego Oka, za nim ośnieżone zbocza", "The mountain hut on the shore of Morskie Oko, snowy slopes behind"),
+    ("A_morskie-oko_s2", "https://schroniskomorskieoko.pl/sites/default/themes/dozp/images/tlo10.jpg", "https://schroniskomorskieoko.pl", "Schronisko PTTK nad Morskim Okiem", "pending", .5,
+     "Morskie Oko o zachodzie, szczyty odbite w wodzie", "Morskie Oko at sunset, the peaks mirrored in the water"),
+    ("A_balony_1", "https://lotybalonem.com/lib/yxjhjj/13-min-mcbmqtiu.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .3,
+     "Balon nad Podhalem, na horyzoncie grań Tatr", "A balloon above Podhale, the Tatra ridge on the horizon"),
+    ("A_balony_2", "https://lotybalonem.com/lib/yxjhjj/1-mp2c7p4n.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .5,
+     "Napełnianie balonu o świcie, nad mgłą ośnieżone Tatry", "Inflating the balloon at dawn, the snowy Tatras above the mist"),
+    ("A_balony_3", "https://lotybalonem.com/lib/yxjhjj/4-min-mcbmq9k3.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .5,
+     "Tatry Zachodnie i Giewont widziane z balonu", "The Western Tatras and Giewont seen from the balloon"),
+    ("A_szlaki-rowery_1", "https://velodunajec.pl/wp-content/uploads/2021/04/1-43-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
+     "Trasa rowerowa Velo Dunajec wśród łąk, w dali Jezioro Czorsztyńskie", "The Velo Dunajec cycle route through meadows, Lake Czorsztyn in the distance"),
+    ("A_szlaki-rowery_2", "https://glodowka.com.pl/uploads/albums/l/66227a2ecdbae0c71025148312572fb8.jpg", "https://glodowka.com.pl", "Schronisko Głodówka", "pending", .5,
+     "Punkt widokowy na Głodówce, panorama Tatr Wysokich i Bielskich", "The Głodówka viewpoint, a panorama of the High and Belianske Tatras"),
+    ("A_szlaki-rowery_3", "https://velodunajec.pl/wp-content/uploads/2021/04/Group-5-DJI_0609-HDR5_DJI_0649-HDR5-9-images-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
+     "Droga przez łąki Podhala w porannej mgle", "A track across the Podhale meadows in the morning mist"),
 ]
 
 

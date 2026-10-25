@@ -1532,104 +1532,36 @@
    "source": "a7v09800.jpg"
   },
   {
-   "file": "A_morskie-oko_1.webp",
-   "shot": "A_morskie-oko_1",
-   "width": 1024,
-   "height": 683,
+   "file": "O_goralszczyzna_chocholow_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
    "placeholder": false,
-   "rights": "free",
    "alt": {
-    "pl": "Morskie Oko o świcie, nad taflą ściany Mięguszowieckich Szczytów",
-    "en": "Morskie Oko at dawn, the Mięguszowieckie walls above the water"
+    "pl": "Drewniane domy wzdłuż ulicy w Chochołowie",
+    "en": "Wooden houses along the street in Chochołów"
    },
-   "source": "https://www.flickr.com/photos/66885349@N03/37504444722",
-   "author": "Gael Varoquaux",
-   "license": "CC BY 2.0",
-   "license_url": "https://creativecommons.org/licenses/by/2.0/",
    "credit": {
-    "pl": "Fot. Gael Varoquaux · CC BY 2.0 · Flickr https://www.flickr.com/photos/66885349@N03/37504444722",
-    "en": "Photo: Gael Varoquaux · CC BY 2.0 · Flickr https://www.flickr.com/photos/66885349@N03/37504444722"
-   }
+    "pl": "Fot. Aotearoa · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=7710138",
+    "en": "Photo: Aotearoa · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=7710138"
+   },
+   "source": "https://commons.wikimedia.org/w/index.php?curid=7710138"
   },
   {
-   "file": "A_gubalowka_1.webp",
-   "shot": "A_gubalowka_1",
-   "width": 1022,
-   "height": 681,
+   "file": "O_ludzie_pracownia_rzezbiarska_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
    "placeholder": false,
-   "rights": "free",
    "alt": {
-    "pl": "Panorama Tatr z Gubałówki latem",
-    "en": "The Tatras panorama from Gubałówka in summer"
+    "pl": "Wnętrze izby regionalnej w Chochołowie: obrazy, łóżko, ława, drewniane ściany",
+    "en": "Interior of the regional chamber in Chochołów: holy pictures, a bed, a bench, timber walls"
    },
-   "source": "https://www.flickr.com/photos/22178197@N00/9686214805",
-   "author": "Kamil Porembiński",
-   "license": "CC BY-SA 2.0",
-   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
    "credit": {
-    "pl": "Fot. Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686214805",
-    "en": "Photo: Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686214805"
-   }
-  },
-  {
-   "file": "A_gubalowka_2.webp",
-   "shot": "A_gubalowka_2",
-   "width": 1022,
-   "height": 681,
-   "placeholder": false,
-   "rights": "free",
-   "alt": {
-    "pl": "Łąki na Gubałówce, w dole Zakopane, w tle Tatry",
-    "en": "Meadows on Gubałówka, Zakopane below, the Tatras behind"
+    "pl": "Fot. Barbara Maliszewska · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=28698983",
+    "en": "Photo: Barbara Maliszewska · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=28698983"
    },
-   "source": "https://www.flickr.com/photos/22178197@N00/9686128195",
-   "author": "Kamil Porembiński",
-   "license": "CC BY-SA 2.0",
-   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-   "credit": {
-    "pl": "Fot. Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686128195",
-    "en": "Photo: Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9686128195"
-   }
-  },
-  {
-   "file": "A_kasprowy-wierch_1.webp",
-   "shot": "A_kasprowy-wierch_1",
-   "width": 1022,
-   "height": 681,
-   "placeholder": false,
-   "rights": "free",
-   "alt": {
-    "pl": "Szczyt Kasprowego Wierchu z obserwatorium i górną stacją kolei",
-    "en": "The summit of Kasprowy Wierch with the observatory and the top station"
-   },
-   "source": "https://www.flickr.com/photos/22178197@N00/9694498926",
-   "author": "Kamil Porembiński",
-   "license": "CC BY-SA 2.0",
-   "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-   "credit": {
-    "pl": "Fot. Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9694498926",
-    "en": "Photo: Kamil Porembiński · CC BY-SA 2.0 · Flickr https://www.flickr.com/photos/22178197@N00/9694498926"
-   }
-  },
-  {
-   "file": "A_kasprowy-wierch_2.webp",
-   "shot": "A_kasprowy-wierch_2",
-   "width": 1024,
-   "height": 683,
-   "placeholder": false,
-   "rights": "free",
-   "alt": {
-    "pl": "Zbocza Kasprowego Wierchu latem, na grzbiecie obserwatorium",
-    "en": "The slopes of Kasprowy Wierch in summer, the observatory on the ridge"
-   },
-   "source": "https://www.flickr.com/photos/29779572@N07/2786311693",
-   "author": "disordered design",
-   "license": "CC BY 2.0",
-   "license_url": "https://creativecommons.org/licenses/by/2.0/",
-   "credit": {
-    "pl": "Fot. disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693",
-    "en": "Photo: disordered design · CC BY 2.0 · Flickr https://www.flickr.com/photos/29779572@N07/2786311693"
-   }
+   "source": "https://commons.wikimedia.org/w/index.php?curid=28698983"
   },
   {
    "file": "A_termy-bukovina_1.webp",
@@ -1884,36 +1816,220 @@
    }
   },
   {
-   "file": "O_goralszczyzna_chocholow_3x2_foto.webp",
-   "shot": "O",
-   "width": 1800,
-   "height": 1200,
+   "file": "A_kasprowy-wierch_w1.webp",
+   "shot": "A_kasprowy-wierch_w1",
+   "width": 1600,
+   "height": 1067,
    "placeholder": false,
+   "rights": "pending",
    "alt": {
-    "pl": "Drewniane domy wzdłuż ulicy w Chochołowie",
-    "en": "Wooden houses along the street in Chochołów"
+    "pl": "Wagonik kolei na Kasprowy Wierch nad doliną, w tle Tatry",
+    "en": "The Kasprowy Wierch cable car above the valley, the Tatras behind"
    },
+   "source": "https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+   "author": "Polskie Koleje Linowe",
    "credit": {
-    "pl": "Fot. Aotearoa · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=7710138",
-    "en": "Photo: Aotearoa · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=7710138"
-   },
-   "source": "https://commons.wikimedia.org/w/index.php?curid=7710138"
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html"
+   }
   },
   {
-   "file": "O_ludzie_pracownia_rzezbiarska_3x2_foto.webp",
-   "shot": "O",
+   "file": "A_kasprowy-wierch_w2.webp",
+   "shot": "A_kasprowy-wierch_w2",
+   "width": 1599,
+   "height": 1066,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Wagonik kolei na Kasprowy Wierch w świetle zachodzącego słońca",
+    "en": "The Kasprowy Wierch cable car in the evening sun"
+   },
+   "source": "https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+   "author": "Polskie Koleje Linowe",
+   "credit": {
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html"
+   }
+  },
+  {
+   "file": "A_gubalowka_w1.webp",
+   "shot": "A_gubalowka_w1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Wagon kolei na Gubałówkę wśród zaśnieżonych świerków, w tle Tatry",
+    "en": "The Gubałówka funicular among snowy spruces, the Tatras behind"
+   },
+   "source": "https://www.pkl.pl/gubalowka/gubalowka.html",
+   "author": "Polskie Koleje Linowe",
+   "credit": {
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html"
+   }
+  },
+  {
+   "file": "A_gubalowka_w2.webp",
+   "shot": "A_gubalowka_w2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Wagon kolei na Gubałówkę na trasie przez zimowy las",
+    "en": "The Gubałówka funicular on its way through the winter forest"
+   },
+   "source": "https://www.pkl.pl/gubalowka/gubalowka.html",
+   "author": "Polskie Koleje Linowe",
+   "credit": {
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html"
+   }
+  },
+  {
+   "file": "A_morskie-oko_s1.webp",
+   "shot": "A_morskie-oko_s1",
+   "width": 800,
+   "height": 533,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Schronisko nad brzegiem Morskiego Oka, za nim ośnieżone zbocza",
+    "en": "The mountain hut on the shore of Morskie Oko, snowy slopes behind"
+   },
+   "source": "https://schroniskomorskieoko.pl",
+   "author": "Schronisko PTTK nad Morskim Okiem",
+   "credit": {
+    "pl": "Fot. Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl",
+    "en": "Photo: Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl"
+   }
+  },
+  {
+   "file": "A_morskie-oko_s2.webp",
+   "shot": "A_morskie-oko_s2",
+   "width": 1440,
+   "height": 960,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Morskie Oko o zachodzie, szczyty odbite w wodzie",
+    "en": "Morskie Oko at sunset, the peaks mirrored in the water"
+   },
+   "source": "https://schroniskomorskieoko.pl",
+   "author": "Schronisko PTTK nad Morskim Okiem",
+   "credit": {
+    "pl": "Fot. Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl",
+    "en": "Photo: Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl"
+   }
+  },
+  {
+   "file": "A_balony_1.webp",
+   "shot": "A_balony_1",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Balon nad Podhalem, na horyzoncie grań Tatr",
+    "en": "A balloon above Podhale, the Tatra ridge on the horizon"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_2.webp",
+   "shot": "A_balony_2",
    "width": 1800,
    "height": 1200,
    "placeholder": false,
+   "rights": "pending",
    "alt": {
-    "pl": "Wnętrze izby regionalnej w Chochołowie: obrazy, łóżko, ława, drewniane ściany",
-    "en": "Interior of the regional chamber in Chochołów: holy pictures, a bed, a bench, timber walls"
+    "pl": "Napełnianie balonu o świcie, nad mgłą ośnieżone Tatry",
+    "en": "Inflating the balloon at dawn, the snowy Tatras above the mist"
    },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
    "credit": {
-    "pl": "Fot. Barbara Maliszewska · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=28698983",
-    "en": "Photo: Barbara Maliszewska · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=28698983"
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_3.webp",
+   "shot": "A_balony_3",
+   "width": 1440,
+   "height": 960,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Tatry Zachodnie i Giewont widziane z balonu",
+    "en": "The Western Tatras and Giewont seen from the balloon"
    },
-   "source": "https://commons.wikimedia.org/w/index.php?curid=28698983"
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_szlaki-rowery_1.webp",
+   "shot": "A_szlaki-rowery_1",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Trasa rowerowa Velo Dunajec wśród łąk, w dali Jezioro Czorsztyńskie",
+    "en": "The Velo Dunajec cycle route through meadows, Lake Czorsztyn in the distance"
+   },
+   "source": "https://velodunajec.pl",
+   "author": "Velo Dunajec",
+   "credit": {
+    "pl": "Fot. Velo Dunajec · velodunajec.pl https://velodunajec.pl",
+    "en": "Photo: Velo Dunajec · velodunajec.pl https://velodunajec.pl"
+   }
+  },
+  {
+   "file": "A_szlaki-rowery_2.webp",
+   "shot": "A_szlaki-rowery_2",
+   "width": 1536,
+   "height": 1024,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Punkt widokowy na Głodówce, panorama Tatr Wysokich i Bielskich",
+    "en": "The Głodówka viewpoint, a panorama of the High and Belianske Tatras"
+   },
+   "source": "https://glodowka.com.pl",
+   "author": "Schronisko Głodówka",
+   "credit": {
+    "pl": "Fot. Schronisko Głodówka · glodowka.com.pl https://glodowka.com.pl",
+    "en": "Photo: Schronisko Głodówka · glodowka.com.pl https://glodowka.com.pl"
+   }
+  },
+  {
+   "file": "A_szlaki-rowery_3.webp",
+   "shot": "A_szlaki-rowery_3",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Droga przez łąki Podhala w porannej mgle",
+    "en": "A track across the Podhale meadows in the morning mist"
+   },
+   "source": "https://velodunajec.pl",
+   "author": "Velo Dunajec",
+   "credit": {
+    "pl": "Fot. Velo Dunajec · velodunajec.pl https://velodunajec.pl",
+    "en": "Photo: Velo Dunajec · velodunajec.pl https://velodunajec.pl"
+   }
   }
  ]
 }

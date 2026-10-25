@@ -12,19 +12,18 @@ export const attractionMeta = (a: Attraction, ctx: PageContext) =>
     .filter(Boolean)
     .join(' · ')
 
-/** Kolejność strony Okolica: najpierw atrakcje ze strony głównej (jak tam, od najbliższej), potem pozostałe. */
-export const sortAttractions = (list: Attraction[]) =>
-  [...list].sort((a, b) => Number(!!b.featured) - Number(!!a.featured) || (a.distanceKm ?? Infinity) - (b.distanceKm ?? Infinity))
+/** Kolejność strony Okolica: od najbliższej, atrakcje bez jednego miejsca (szlaki, lot balonem) na końcu. */
+export const sortAttractions = (list: Attraction[]) => [...list].sort((a, b) => (a.distanceKm ?? Infinity) - (b.distanceKm ?? Infinity))
 
 /**
- * Atrakcja na stronie Okolica i na jej własnej stronie: zdjęcie z podpisem licencji, opis rozszerzony,
+ * Atrakcja w okienku na stronie Okolica i na jej własnej stronie: zdjęcie z podpisem licencji, opis rozszerzony,
  * dodatkowe zdjęcia i link do obiektu. Na stronie głównej ta sama atrakcja ma tylko krótki opis.
  */
 export function AttractionEntry({ a, ctx, heading: H = 'h2', link }: { a: Attraction; ctx: PageContext; heading?: 'h1' | 'h2'; link?: boolean }) {
   const meta = attractionMeta(a, ctx)
   const title = H === 'h1' ? 'mo-h1' : 'mo-h2'
   return (
-    <article id={a.slug} className="mo-atrakcja">
+    <article className="mo-atrakcja">
       {a.image && cleared(a.image) ? (
         <figure className="mo-zdjecie mo-atrakcja__zdjecie">
           <Media media={a.image} priority={H === 'h1'} />

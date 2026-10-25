@@ -31,7 +31,9 @@ jobs:
     name: Typy, lint, testy, budowanie
     # testy biegną na PR (na scaleniu z main) i przy ręcznym uruchomieniu; po scaleniu do main
     # ich nie powtarzamy, bo wdrożenie i tak buduje stronę; szkice PR czekają na gotowość
-    if: github.event_name != 'push' && !github.event.pull_request.draft
+    # sam import treści nie buduje ani nie wdraża strony: drugi build tego samego commita miał inne nazwy
+    # plików CSS/JS i wdrożony w trakcie działania strony zostawiał ją z brakującymi plikami (ChunkLoadError)
+    if: github.event_name != 'push' && !github.event.pull_request.draft && !inputs.import_content
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -95,7 +97,7 @@ jobs:
     name: Wdrożenie na matygowa.audiowizard.pl
     needs: check
     # przy pushu do main check jest pominięty, przy ręcznym uruchomieniu musi przejść
-    if: ${{ !failure() && !cancelled() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+    if: ${{ !failure() && !cancelled() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.import_content }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     concurrency:
@@ -163,8 +165,7 @@ jobs:
 
   import:
     name: Import treści do bazy na Cloudflare
-    needs: deploy
-    if: github.event_name == 'workflow_dispatch' && inputs.import_content
+    if: github.event_name == 'workflow_dispatch' && inputs.import_content && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:

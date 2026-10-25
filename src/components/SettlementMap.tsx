@@ -5,7 +5,7 @@ import type { Unit } from '@/payload-types'
 import { SvgHotspots } from './effects/SvgHotspots'
 
 /**
- * Mapa osady (ilustracja G1): siedem budynków, sześć domów i budynek z apartamentami, który otwiera się
+ * Mapa osady (ilustracja G1): sześć domów i bliźniak z czterema apartamentami, który otwiera się
  * wiosną 2027. Budynki otwierają dymki; nocą i zimą rysunek zmienia kolory razem z tokenami.
  */
 export function SettlementMap({ units, ctx }: { units: Unit[]; ctx: PageContext }) {
@@ -14,7 +14,8 @@ export function SettlementMap({ units, ctx }: { units: Unit[]; ctx: PageContext 
   const apartments = units.filter((u) => u.kind === 'apartment')
   const buildings = [
     ...houses.map((u) => ({ svgId: `b-dom-${u.slug.replace(/^dom-/, '')}`, popoverId: `mapa-${u.slug}`, label: u.name, units: [u], soon: u.status === 'comingSoon' })),
-    ...(apartments.length ? [{ svgId: 'b-apartamenty', popoverId: 'mapa-apartamenty', label: t.apartmentsBuilding, units: apartments, soon: apartments.every((u) => u.status === 'comingSoon') }] : []),
+    // bliźniak z apartamentami: każdy lokal ma na rysunku własną strefę b-apt-<slug> (góra: Czerwone Wierchy, Kominiarski Wierch; dół: Giewont, Ciemniak)
+    ...apartments.map((u) => ({ svgId: `b-apt-${u.slug}`, popoverId: `mapa-${u.slug}`, label: u.name, units: [u], soon: u.status === 'comingSoon' })),
   ]
   return (
     <figure className="mo-map" aria-label={t.map}>

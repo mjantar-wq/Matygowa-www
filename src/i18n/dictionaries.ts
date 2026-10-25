@@ -106,7 +106,6 @@ const pl = {
     opening: 'Otwarcie wiosną 2027',
     map: 'Mapa osady',
     building: 'Budynek',
-    apartmentsBuilding: 'Budynek z apartamentami',
   },
   placeholder: 'Treść w przygotowaniu',
   footer: {
@@ -239,7 +238,6 @@ const en: Dictionary = {
     opening: 'Opening spring 2027',
     map: 'Settlement map',
     building: 'Building',
-    apartmentsBuilding: 'Apartment building',
   },
   placeholder: 'Content in preparation',
   footer: {

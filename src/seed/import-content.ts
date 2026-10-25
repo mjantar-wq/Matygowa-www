@@ -164,7 +164,16 @@ async function main() {
         return null
     }
   }
-  await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => homeBlock(b, l)).filter(Boolean))
+  // scena w tle i warianty tekstu (koncepcja po M1): w home.json opcjonalnie
+  // "scene": [{ "pora": "noc", "sezon": "zima", "image": "K2_…", "video": "K2_…" }] (prefiksy nazw plików) i
+  // "variants": [{ "pora": "noc", "sezon": "lato", "heading": {pl,en}, "text": {pl,en} }]
+  const withScene = (b: Any, block: Any | null, l: Loc): Any | null => {
+    if (!block) return null
+    const scene = (b.scene ?? []).map((r: Any) => ({ pora: r.pora, sezon: r.sezon, image: r.image ? img(r.image) : undefined, video: r.video ? video(r.video) : undefined, videoPortrait: r.videoPortrait ? video(r.videoPortrait) : undefined }))
+    const textVariants = (b.variants ?? []).map((v: Any) => ({ pora: v.pora, sezon: v.sezon, heading: v.heading?.[l], text: v.text?.[l] }))
+    return { ...block, ...(scene.length ? { scene } : {}), ...(textVariants.length ? { textVariants } : {}) }
+  }
+  await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => withScene(b, homeBlock(b, l), l)).filter(Boolean))
 
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [

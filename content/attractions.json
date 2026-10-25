@@ -360,7 +360,12 @@
       "pl": "Murzasichle to wieś na skraju Tatr, między Poroninem a Zakopanem. Na rodzinne popołudnie jest tu park linowy z trasami dla dzieci i dorosłych, na różnych wysokościach.\n\nZagroda Korkoszów to dawne góralskie gospodarstwo, w którym zobaczycie, jak żyło się na Podhalu.\n\nDobry plan na lato, gdy dzieci potrzebują ruchu, a Wy chcecie zostać blisko gór.",
       "en": "Murzasichle is a village at the edge of the Tatras, between Poronin and Zakopane. For a family afternoon there is a rope park with courses for children and adults, at different heights.\n\nKorkoszów Farmstead is an old highland homestead showing how life was once lived in Podhale.\n\nA good summer plan when the children need to move and you want to stay close to the mountains."
     },
-    "featured": true
+    "featured": true,
+    "distance_km": 10.5,
+    "drive_min": 18,
+    "distance_note": "Park linowy w Murzasichlu, trasa wg OSRM, 25.10.2026.",
+    "lat": 49.3117,
+    "lng": 20.0436
   },
   {
     "slug": "balony",

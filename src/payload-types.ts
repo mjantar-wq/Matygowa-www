@@ -1169,7 +1169,7 @@ export interface Attraction {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Oferty na stronie to promocje z cennika IceColdRes (tytuł, opis, daty, sezon). Tu dodajesz do promocji zdjęcie i dłuższy opis; wybierz ją z listy.
+ * Oferty na stronie to promocje z cennika IceColdRes: tytuł, opisy (także dłuższy), daty i sezon ustawiasz w IceColdRes. Tu wybierasz promocję z listy i dodajesz do niej zdjęcie.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "offers".
@@ -1182,25 +1182,10 @@ export interface Offer {
    */
   slug: string;
   order?: number | null;
+  /**
+   * Bez zdjęcia strona pokaże zdjęcie jednego z domków.
+   */
   image?: (number | null) | Media;
-  summary?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  validFrom?: string | null;
-  validTo?: string | null;
   /**
    * Lista promocji z cennika IceColdRes. Bez wybranej promocji oferta nie pojawi się na stronie.
    */
@@ -2144,10 +2129,6 @@ export interface OffersSelect<T extends boolean = true> {
   slug?: T;
   order?: T;
   image?: T;
-  summary?: T;
-  content?: T;
-  validFrom?: T;
-  validTo?: T;
   icecoldresPromotionId?: T;
   icecoldresOfferId?: T;
   seo?:

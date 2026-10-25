@@ -42,7 +42,9 @@ export interface Promotion {
   id: string
   badge: string
   description: string
-  en: { badge?: string; description?: string }
+  /** dłuższy opis promocji (Markdown) z IceColdRes */
+  story?: string | null
+  en: { badge?: string; description?: string; story?: string | null }
   stayFrom: string | null
   stayTo: string | null
   bookFrom: string | null

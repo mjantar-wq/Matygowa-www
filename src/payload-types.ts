@@ -1033,6 +1033,13 @@ export interface Unit {
   gallery?: (number | Media)[] | null;
   plans?: (number | Media)[] | null;
   peak?: {
+    name?: string | null;
+    nameCases?: {
+      gen?: string | null;
+      acc?: string | null;
+      loc?: string | null;
+      inst?: string | null;
+    };
     elevation?: number | null;
     range?: string | null;
     story?: {
@@ -1143,6 +1150,10 @@ export interface Attraction {
   url?: string | null;
   lat?: number | null;
   lng?: number | null;
+  /**
+   * Puste: a-<adres atrakcji>
+   */
+  mapId?: string | null;
   featured?: boolean | null;
   seo?: {
     title?: string | null;
@@ -2029,6 +2040,15 @@ export interface UnitsSelect<T extends boolean = true> {
   peak?:
     | T
     | {
+        name?: T;
+        nameCases?:
+          | T
+          | {
+              gen?: T;
+              acc?: T;
+              loc?: T;
+              inst?: T;
+            };
         elevation?: T;
         range?: T;
         story?: T;
@@ -2093,6 +2113,7 @@ export interface AttractionsSelect<T extends boolean = true> {
   url?: T;
   lat?: T;
   lng?: T;
+  mapId?: T;
   featured?: T;
   seo?:
     | T

@@ -2,49 +2,173 @@
   {
     "author": "Iga T.",
     "source": "google",
-    "rating": null,
+    "rating": 5,
+    "rating_scale": 5,
+    "date": "2026-09",
+    "date_approx": true,
+    "quote_full": {
+      "pl": "Domki świetnie wyposażone, zadbane i przytulne. Super widoki na góry. Cena nawet bardziej niż adekwatna w stosunku do jakości i komfortu pobytu. Gospodarze bardzo mili i pomocni – nie było problemu z kontaktem."
+    },
+    "quote": {
+      "pl": "Domki świetnie wyposażone, zadbane i przytulne. Super widoki na góry. Gospodarze bardzo mili i pomocni.",
+      "en": "The cottages are superbly equipped, well kept and cosy. Great mountain views. The hosts are very kind and helpful."
+    },
+    "original_lang": "pl",
+    "en_is_translation": true
+  },
+  {
+    "author": "Jose P.",
+    "source": "google",
+    "rating": 5,
+    "rating_scale": 5,
     "date": "2026-08",
     "date_approx": true,
-    "quote": {
-      "pl": "Domki świetnie wyposażone, zadbane i przytulne. Super widoki na góry.",
-      "en": "The cottages are superbly equipped, well kept and cosy. Great mountain views."
+    "quote_full": {
+      "pl": "Cudownie spędziliśmy czas w Matygowej Osadzie. Domki są piękne, przytulne i bardzo zadbane, wszystko świeże, czyste i starannie przygotowane. Poziom czystości był doskonały, co sprawiło, że cały pobyt był od razu komfortowy i relaksujący. Właściciele byli również niezwykle mili, gościnni i pomocni przez cały nasz pobyt. Naprawdę czuć, że zależy im na tym miejscu i na tym, aby goście czuli się jak w domu. Spokojne, urokliwe miejsce otoczone naturą. Idealne na relaks, odpoczynek i delektowanie się wolniejszym rytmem. Gorąco polecam!"
     },
+    "quote": {
+      "pl": "Naprawdę czuć, że zależy im na tym miejscu i na tym, aby goście czuli się jak w domu. Spokojne, urokliwe miejsce otoczone naturą.",
+      "en": "You can really feel that they care about this place and want guests to feel at home. A quiet, charming place surrounded by nature."
+    },
+    "original_lang": "pl",
     "en_is_translation": true
   },
   {
     "author": "Kamila J.",
     "source": "google",
-    "rating": null,
-    "date": "2026-07",
+    "rating": 5,
+    "rating_scale": 5,
+    "date": "2026-08",
     "date_approx": true,
-    "quote": {
-      "pl": "Spędziliśmy 6 nocy w lipcu w osadzie i był to niesamowity czas. Domki są przytulne i nowoczesne, nie brakuje niczego.",
-      "en": "We spent 6 nights at the settlement in July and it was an amazing time. The cottages are cosy and modern, nothing is missing."
+    "quote_full": {
+      "pl": "Spędziliśmy 6 nocy w lipcu w osadzie i był to niesamowity czas. Domki są przytulne i nowoczesne, nie brakuje niczego. Idealne warunki na odpoczynek i bliskość z naturą. Kontakt z właścicielem też rewelacyjnie i bezproblemowo. Nie możemy się doczekać aż wrócimy. Polecam!"
     },
-    "en_is_translation": true
-  },
-  {
-    "author": "Szymon S.",
-    "source": "google",
-    "rating": null,
-    "date": "2025-11",
-    "date_approx": true,
     "quote": {
-      "pl": "Właśnie zakończyliśmy swój pobyt. Jesteśmy zachwyceni.",
-      "en": "We have just finished our stay. We are delighted."
+      "pl": "Spędziliśmy 6 nocy w lipcu w osadzie i był to niesamowity czas. Domki są przytulne i nowoczesne, nie brakuje niczego. Nie możemy się doczekać aż wrócimy.",
+      "en": "We spent 6 nights at the settlement in July and it was an amazing time. The cottages are cosy and modern, nothing is missing. We can't wait to come back."
     },
+    "original_lang": "pl",
     "en_is_translation": true
   },
   {
     "author": "Marek N.",
     "source": "google",
-    "rating": null,
+    "rating": 5,
+    "rating_scale": 5,
     "date": "2026-08",
     "date_approx": true,
+    "quote_full": {
+      "pl": "świetny gospodarz, super lokalizacja, dziękuję"
+    },
     "quote": {
-      "pl": "Świetny gospodarz, super lokalizacja, dziękuję.",
+      "pl": "świetny gospodarz, super lokalizacja, dziękuję",
       "en": "A great host, a superb location, thank you."
     },
+    "original_lang": "pl",
     "en_is_translation": true
+  },
+  {
+    "author": "Kamil S.",
+    "source": "google",
+    "rating": 5,
+    "rating_scale": 5,
+    "date": "2025-12",
+    "date_approx": true,
+    "quote_full": {
+      "pl": "Pobyt w Matygowej Osadzie był po prostu wspaniały! [...] Ogromnym atutem jest balia z gorącą wodą i sauna (w każdym domku na wyłączność!). Relaks w balii przy zimowej scenerii to coś, czego długo nie zapomnimy! [...]"
+    },
+    "quote": {
+      "pl": "Ogromnym atutem jest balia z gorącą wodą i sauna (w każdym domku na wyłączność!). Relaks w balii przy zimowej scenerii to coś, czego długo nie zapomnimy!",
+      "en": "A huge plus is the hot tub and the sauna (private in every cottage!). Relaxing in the hot tub in a winter landscape is something we won't forget for a long time!"
+    },
+    "original_lang": "pl",
+    "en_is_translation": true
+  },
+  {
+    "author": "Szymon S.",
+    "source": "google",
+    "rating": 5,
+    "rating_scale": 5,
+    "date": "2025-12",
+    "date_approx": true,
+    "quote_full": {
+      "pl": "Właśnie zakończyliśmy swój pobyt. Jesteśmy zachwyceni. Widoki z domku rewelacyjne, przepiękne. Sam domek rewelacja bez żadnych zastrzezen- standard bardzo wysoki. Kontakt z wlascicielem bezproblemowy.jedy ny minus tego pobytu to taki ze za szybko sie skończył :( Na pewno tam wrócimy. Kilka fotek na potwierdzenie :)"
+    },
+    "quote": {
+      "pl": "Widoki z domku rewelacyjne, przepiękne. Sam domek rewelacja bez żadnych zastrzeżeń, standard bardzo wysoki. Jedyny minus tego pobytu to taki, że za szybko się skończył.",
+      "en": "The views from the cottage are stunning, beautiful. The cottage itself is superb with no reservations, a very high standard. The only downside of the stay is that it ended too soon."
+    },
+    "original_lang": "pl",
+    "en_is_translation": true
+  },
+  {
+    "author": "tomek b",
+    "source": "google",
+    "rating": 5,
+    "rating_scale": 5,
+    "date": "2025-11",
+    "date_approx": true,
+    "quote_full": {
+      "pl": "Byliśmy pierwszy raz w Matygowej Osadzie i jesteśmy bardzo zadowoleni! [...] Bardzo duże okna, aby można było podziwiać piękne widoki na Tatry. Czuć, że miejsce zrobione bez oszczędności [...] Zdecydowanie polecam!!"
+    },
+    "quote": {
+      "pl": "Bardzo duże okna, aby można było podziwiać piękne widoki na Tatry. Czuć, że miejsce zrobione bez oszczędności. Zdecydowanie polecam!",
+      "en": "Very large windows so you can admire the beautiful views of the Tatras. You can feel no expense was spared. Highly recommended!"
+    },
+    "original_lang": "pl",
+    "en_is_translation": true
+  },
+  {
+    "author": "Michał M.",
+    "source": "google",
+    "rating": 5,
+    "rating_scale": 5,
+    "date": "2025-11",
+    "date_approx": true,
+    "quote_full": {
+      "pl": "Domek okazał się idealnym miejscem na wypoczynek w górach. Pan Gospodarz bardzo uprzejmy i pomocny [...] Sauna i jacuzzi robią świetną robotę:) Widoki z tarasu i okolic to prawdziwy atut – można w pełni poczuć spokój i urok górskiego otoczenia. [...]"
+    },
+    "quote": {
+      "pl": "Widoki z tarasu i okolic to prawdziwy atut – można w pełni poczuć spokój i urok górskiego otoczenia.",
+      "en": "The views from the terrace and the surroundings are a real asset; you can fully feel the peace and charm of the mountains."
+    },
+    "original_lang": "pl",
+    "en_is_translation": true
+  },
+  {
+    "author": "Marcin S.",
+    "source": "google",
+    "rating": 5,
+    "rating_scale": 5,
+    "date": "2025-10",
+    "date_approx": true,
+    "quote_full": {
+      "pl": "Byliśmy pierwszy raz w Matygowej Osadzie i jesteśmy bardzo zadowoleni! Nowe domki, bardzo ładnie i klimatycznie urządzone. [...] Lokalizacja dla nas idealna, bo nie trzeba się pchać do samego Zakopanego, a w okolicy jest sporo stoków narciarskich (Bukowina). [...]"
+    },
+    "quote": {
+      "pl": "Nowe domki, bardzo ładnie i klimatycznie urządzone. Lokalizacja dla nas idealna, bo nie trzeba się pchać do samego Zakopanego.",
+      "en": "New cottages, beautifully and atmospherically furnished. The location is ideal for us, as you don't have to squeeze into Zakopane itself."
+    },
+    "original_lang": "pl",
+    "en_is_translation": true
+  },
+  {
+    "author": "Ahmed",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": null,
+    "date_approx": true,
+    "original_lang": "ar",
+    "quote_full": {
+      "ar": "إقامة كانت جداً ممتازة بالنسبة للموقع جداً جميل بسبب إطلالة الموقع على مناظر طبيعة وعلى المرتفعات وخصوصا جبال التاترا ☺مكان مناسب للسكن مع إطلالات خلابة وماكن جميل تستمتع فيه مع العائلة والكوخ ممتاز وفيه تكييف مناسب للعوائل"
+    },
+    "quote": {
+      "ar": "مكان مناسب للسكن مع إطلالات خلابة وماكن جميل تستمتع فيه مع العائلة والكوخ ممتاز",
+      "pl": "Miejsce dobre na pobyt, z zachwycającymi widokami, piękne, by cieszyć się nim z rodziną. Domek jest świetny.",
+      "en": "A good place to stay with breathtaking views, a lovely place to enjoy with the family. The cottage is excellent."
+    },
+    "en_is_translation": true,
+    "pl_is_translation": true
   }
 ]

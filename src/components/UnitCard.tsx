@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { href } from '@/i18n/routes'
 import { formatPrice } from '@/lib/booking'
+import { peakViewAlt } from '@/lib/peak'
 import type { PageContext } from '@/lib/page'
 import type { Unit } from '@/payload-types'
 import { Media } from './Media'
@@ -10,7 +11,7 @@ export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContex
   const t = ctx.t
   return (
     <Link href={href(ctx.locale, 'houses', unit.slug)} className="mo-card">
-      <div className="mo-card__media"><Media media={unit.hero} fallback={unit.name} /></div>
+      <div className="mo-card__media"><Media media={unit.hero} fallback={unit.name} alt={peakViewAlt(unit, ctx.locale)} /></div>
       <p className="mo-card__eyebrow">
         {unit.peak?.elevation ? <span className="mo-figure">{t.house.elevation(unit.peak.elevation)}</span> : null}
         <span className="mo-label">{t.house.kind[unit.kind]}</span>

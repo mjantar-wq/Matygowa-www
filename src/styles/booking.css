@@ -22,15 +22,22 @@
 .mo-calendar__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
 .mo-calendar__weekday { text-align: center; font: var(--text-label--font-weight) var(--text-label)/var(--text-label--line-height) var(--font-ui); color: var(--color-wyciszony); padding-block: var(--space-2); }
 .mo-calendar__day { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-block-size: 3rem; padding: 0; border: 0; border-radius: var(--radius-pole); background: none; color: inherit; cursor: pointer; font: var(--text-body-s--font-weight) var(--text-body-s)/1.2 var(--font-ui); font-variant-numeric: tabular-nums; }
-.mo-calendar__day small { font-size: 0.6875rem; color: var(--color-wyciszony); }
-.mo-calendar__day:hover:not(:disabled) { background: var(--color-tlo-2); }
-.mo-calendar__day:disabled { color: var(--color-linia-mocna); text-decoration: line-through; cursor: default; }
+.mo-calendar__day:hover:not([aria-disabled="true"]) { background: var(--color-tlo-2); }
+.mo-calendar__day[aria-disabled="true"] { color: var(--color-linia-mocna); text-decoration: line-through; cursor: default; }
+/* nie na wyjazd, ale można od niego zacząć nowy pobyt */
+.mo-calendar__day[data-soft] { color: var(--color-wyciszony); }
+/* okienko o dostępności i min. pobycie nad dniem (jak w IceColdRes) */
+.mo-calendar__tip { position: absolute; z-index: 2; inline-size: max-content; max-inline-size: min(17.5rem, 100% - 1rem); transform: translate(-50%, calc(-100% - 10px)); display: grid; gap: 2px; padding: var(--space-3) var(--space-4); border-radius: var(--radius-pole); background: var(--color-atrament); color: var(--color-powierzchnia); font: var(--text-body-s--font-weight) var(--text-body-s)/1.35 var(--font-ui); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); pointer-events: none; }
+.mo-calendar__tip::after { content: ""; position: absolute; inset-block-start: 100%; inset-inline-start: calc(50% + var(--strzalka, 0px) - 6px); border: 6px solid transparent; border-block-start-color: var(--color-atrament); }
+[dir="rtl"] .mo-calendar__tip::after { inset-inline-start: auto; left: calc(50% + var(--strzalka, 0px) - 6px); }
+.mo-calendar__tip-date { opacity: 0.7; font-size: 0.8125rem; }
+.mo-calendar__tip strong { font-weight: 600; }
+.mo-calendar__tip[data-tone="no"] strong::before { content: "✕ "; color: var(--color-bursztyn); }
+.mo-calendar__hint { margin-block-start: var(--space-4); color: var(--color-wyciszony); }
 .mo-calendar__day[data-range] { background: var(--color-tlo-2); border-radius: 0; }
 .mo-calendar__day[data-edge], .mo-calendar__day[data-edge]:hover { background: var(--color-cta); color: var(--color-na-cta); }
-.mo-calendar__day[data-edge] small { color: inherit; }
-.mo-calendar__day[data-promo]::after { content: ""; position: absolute; inset-block-start: 4px; inset-inline-end: 4px; inline-size: 6px; block-size: 6px; border-radius: var(--radius-kropka); background: var(--color-bursztyn); }
 .mo-calendar__day:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: -2px; }
-@media (max-width: 899px) { .mo-calendar { position: static; margin-block-start: var(--space-2); } }
+@media (max-width: 899px) { .mo-calendar { position: relative; inset: auto; margin-block-start: var(--space-2); } }
 @media (max-width: 767px) {
   .mo-calendar { padding: var(--space-4); }
   .mo-calendar__months { grid-template-columns: minmax(0, 1fr); }

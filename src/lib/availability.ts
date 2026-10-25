@@ -11,8 +11,6 @@ export interface DayInfo {
   ctd: boolean
   minStay: number
   maxStay: number | null
-  /** cena „od” za noc przy przyjeździe tego dnia (grosze) */
-  price: number | null
   /** plakietka promocji strony obejmującej ten dzień */
   promo: string | null
 }
@@ -61,40 +59,78 @@ export function promoOn(p: PromoRules, date: string, unitTypeId: string) {
 const pick = (data: CalendarData, code?: string) => (code ? data.types.filter((t) => t.code === code) : data.types)
 const dayOf = (data: CalendarData, t: CalendarType, date: string) => t.days[daysBetween(data.from, date)]
 
-/** Przyjazd: choć jeden dom (albo wybrany) wolny, w sprzedaży i bez zakazu przyjazdu. Cena: najniższa z takich domów. */
-export function arrivalInfo(data: CalendarData, date: string, code?: string): { ok: boolean; price: number | null; promo: string | null; known: boolean } {
-  if (date < data.today) return { ok: false, price: null, promo: null, known: true }
-  const days = pick(data, code)
-    .map((t) => dayOf(data, t, date))
-    .filter((d): d is DayInfo => Boolean(d))
-  if (!days.length) return { ok: true, price: null, promo: null, known: false }
-  // przyjazd ma sens tylko, gdy dom jest wolny co najmniej przez minimalny pobyt
-  const fits = (t: CalendarType) => {
-    const d = dayOf(data, t, date)
-    if (!d || d.free < 1 || !d.open || d.cta) return false
-    return Array.from({ length: d.minStay }, (_, i) => dayOf(data, t, addDays(date, i))).every((n) => !n || n.free > 0)
+/** Dlaczego dnia nie da się wybrać (okienko w kalendarzu, jak na stronie rezerwacji IceColdRes). */
+export type DayReason = 'past' | 'occupied' | 'closed' | 'noArrival' | 'minStay' | 'maxStay' | 'noDeparture'
+
+export interface ArrivalInfo {
+  ok: boolean
+  promo: string | null
+  known: boolean
+  reason?: DayReason
+  /** najkrótszy minimalny pobyt z domów, w których przyjazd jest możliwy (albo blokuje go tylko min. pobyt) */
+  minStay?: number
+}
+
+/** Przyjazd: choć jeden dom (albo wybrany) wolny, w sprzedaży, bez zakazu przyjazdu i wolny przez minimalny pobyt. */
+export function arrivalInfo(data: CalendarData, date: string, code?: string): ArrivalInfo {
+  if (date < data.today) return { ok: false, promo: null, known: true, reason: 'past' }
+  const types = pick(data, code).filter((t) => dayOf(data, t, date))
+  if (!types.length) return { ok: true, promo: null, known: false }
+  // najpierw powód, który dotyczy najbliższego „prawie wolnego” domu: zajęty < bez sprzedaży < bez przyjazdów < za krótko wolny
+  const rank: DayReason[] = ['occupied', 'closed', 'noArrival', 'minStay']
+  let reason: DayReason = 'occupied'
+  const ok: DayInfo[] = []
+  const short: number[] = []
+  for (const t of types) {
+    const d = dayOf(data, t, date)!
+    const why: DayReason | null =
+      d.free < 1 ? 'occupied'
+      : !d.open ? 'closed'
+      : d.cta ? 'noArrival'
+      : Array.from({ length: d.minStay }, (_, i) => dayOf(data, t, addDays(date, i))).every((n) => !n || n.free > 0) ? null
+      : 'minStay'
+    if (!why) ok.push(d)
+    else {
+      if (why === 'minStay') short.push(d.minStay)
+      if (rank.indexOf(why) > rank.indexOf(reason)) reason = why
+    }
   }
-  const ok = pick(data, code).filter(fits).map((t) => dayOf(data, t, date)!)
-  const prices = ok.map((d) => d.price).filter((p): p is number => p !== null)
-  return { ok: ok.length > 0, price: prices.length ? Math.min(...prices) : null, promo: ok.find((d) => d.promo)?.promo ?? null, known: true }
+  if (ok.length) return { ok: true, promo: ok.find((d) => d.promo)?.promo ?? null, known: true, minStay: Math.min(...ok.map((d) => d.minStay)) }
+  return { ok: false, promo: null, known: true, reason, minStay: short.length ? Math.min(...short) : undefined }
+}
+
+export interface DepartureInfo {
+  ok: boolean
+  reason?: DayReason
+  minStay?: number
+  maxStay?: number
 }
 
 /** Wyjazd: ten sam dom wolny przez wszystkie noce, pobyt w granicach min./maks. dnia przyjazdu, bez zakazu wyjazdu. */
-export function departureOk(data: CalendarData, arrival: string, departure: string, code?: string) {
+export function departureInfo(data: CalendarData, arrival: string, departure: string, code?: string): DepartureInfo {
   const nights = daysBetween(arrival, departure)
-  if (nights < 1) return false
-  return pick(data, code).some((t) => {
+  if (nights < 1) return { ok: false }
+  const rank: DayReason[] = ['occupied', 'noDeparture', 'maxStay', 'minStay']
+  let reason: DayReason = 'occupied'
+  let minStay: number | undefined
+  let maxStay: number | undefined
+  for (const t of pick(data, code)) {
     const first = dayOf(data, t, arrival)
-    if (!first) return true
-    if (nights < first.minStay || (first.maxStay !== null && nights > first.maxStay)) return false
-    for (let i = 0; i < nights; i++) {
-      const d = dayOf(data, t, addDays(arrival, i))
-      if (d && d.free < 1) return false
-    }
-    const last = dayOf(data, t, departure)
-    return !last?.ctd
-  })
+    if (!first) return { ok: true }
+    let why: DayReason | null = null
+    if (nights < first.minStay) why = 'minStay'
+    else if (first.maxStay !== null && nights > first.maxStay) why = 'maxStay'
+    else if (Array.from({ length: nights }, (_, i) => dayOf(data, t, addDays(arrival, i))).some((d) => d && d.free < 1)) why = 'occupied'
+    else if (dayOf(data, t, departure)?.ctd) why = 'noDeparture'
+    if (!why) return { ok: true }
+    if (why === 'minStay') minStay = Math.min(minStay ?? Infinity, first.minStay)
+    if (why === 'maxStay') maxStay = Math.max(maxStay ?? 0, first.maxStay ?? 0)
+    if (rank.indexOf(why) > rank.indexOf(reason)) reason = why
+  }
+  return { ok: false, reason, minStay, maxStay }
 }
+
+export const departureOk = (data: CalendarData, arrival: string, departure: string, code?: string) => departureInfo(data, arrival, departure, code).ok
 
 /** Dni miesiąca w siatce od poniedziałku; null to puste pola przed pierwszym dniem. */
 export function monthGrid(month: string): (string | null)[] {

@@ -6,12 +6,13 @@ import type { Dictionary } from '@/i18n/dictionaries'
 import {
   arrivalInfo,
   daysBetween,
-  departureOk,
+  departureInfo,
   monthGrid,
   nextMonth,
   type CalendarData,
+  type DayReason,
 } from '@/lib/availability'
-import { bookingUrl, formatPrice, type EngineSettings } from '@/lib/booking'
+import { bookingUrl, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
 import { UnitResults, type Result } from './UnitResults'
 import { useAmbience } from './effects/ambience'
@@ -29,6 +30,18 @@ type Props = {
   slogan?: string | null
 }
 
+/** Stan dnia w kalendarzu i treść okienka (jak na stronie rezerwacji IceColdRes, Michał, 25.10.2026). */
+type DayNote = {
+  /** można kliknąć */
+  ok: boolean
+  /** dzień nie nadaje się na wyjazd, ale można od niego zacząć nowy pobyt */
+  soft?: boolean
+  promo: string | null
+  title: string
+  lines: string[]
+  tone: 'ok' | 'no' | 'sel'
+}
+
 type Search =
   | { status: 'idle' }
   | { status: 'loading' }
@@ -40,7 +53,8 @@ const AGES = Array.from({ length: 18 }, (_, i) => i)
 const ADULTS = Array.from({ length: 12 }, (_, i) => i + 1)
 
 /**
- * Pasek rezerwacji (koncepcja S5): kalendarz z cenami „od” i plakietkami promocji, osoby i wiek dzieci,
+ * Pasek rezerwacji (koncepcja S5): kalendarz bez cen, z okienkami o dostępności i min. pobycie jak w IceColdRes
+ * oraz plakietkami promocji, osoby i wiek dzieci,
  * wyniki z cenami z IceColdRes na stronie, a „Rezerwuj” otwiera silnik z wypełnionymi danymi, domem,
  * ofertą i utm_*. Z silnikiem Hotres albo bez cen (Ustawienia → Rezerwacje) od razu przechodzi do silnika.
  */
@@ -65,6 +79,9 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
   const [chunks, setChunks] = useState<Record<string, CalendarData | null>>({})
   const [search, setSearch] = useState<Search>({ status: 'idle' })
   const root = useRef<HTMLDivElement>(null)
+  const calRef = useRef<HTMLDivElement>(null)
+  const tipId = `${uid}-okienko`
+  const [tip, setTip] = useState<{ date: string; left: number; top: number; arrow: number } | null>(null)
   const plural = new Intl.PluralRules(locale === 'pl' ? 'pl' : 'en')
   const nightsLabel = (n: number) =>
     `${n} ${t.nightForms[plural.select(n) as keyof typeof t.nightForms] ?? t.nightForms.other}`
@@ -123,20 +140,62 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       Boolean(c && date >= c.from && daysBetween(c.from, date) < (c.types[0]?.days.length ?? 0)),
     )
 
-  function dayState(date: string): { ok: boolean; price: number | null; promo: string | null } {
-    // „dziś” obiektu (strefa IceColdRes) może być dniem później niż w przeglądarce
-    const first = seasonChunks.find((c) => c)
-    if (date < today() || (first && date < first.today))
-      return { ok: false, price: null, promo: null }
-    const data = chunkFor(date) ?? chunkFor(arrival)
-    if (!data) return { ok: true, price: null, promo: null }
-    if (arrival && !departure && date > arrival)
-      return { ok: departureOk(data, arrival, date, unit), price: null, promo: null }
-    return arrivalInfo(data, date, unit)
+  const fill = (text: string, n: number) => text.replace('{n}', nightsLabel(n))
+  const c = t.cal
+  const why = (r: DayReason | undefined, n: number | undefined, departing: boolean): string => {
+    if (r === 'past') return c.past
+    if (r === 'closed') return c.closed
+    if (r === 'noArrival') return c.noArrival
+    if (r === 'noDeparture') return c.noDeparture
+    if (r === 'maxStay' && n) return fill(c.maxStayFrom, n)
+    if (r === 'minStay' && n) return fill(departing ? c.minStayFrom : c.tooShort, n)
+    return departing ? c.occupiedStay : c.occupied
   }
 
-  function pickDay(date: string) {
+  function dayNote(date: string): DayNote {
+    // „dziś” obiektu (strefa IceColdRes) może być dniem później niż w przeglądarce
+    const first = seasonChunks.find((x) => x)
+    if (date < today() || (first && date < first.today))
+      return { ok: false, promo: null, title: c.unavailable, lines: [c.past], tone: 'no' }
+    const data = chunkFor(date) ?? chunkFor(arrival)
+    const arr = data ? arrivalInfo(data, date, unit) : null
+    const promo = arr?.promo ?? null
+    if (date === arrival) {
+      const lines = [arr?.minStay ? fill(c.minStay, arr.minStay) : null, departure ? null : c.pickDeparture]
+      return { ok: true, promo, title: c.yourArrival, lines: lines.filter((l): l is string => !!l), tone: 'sel' }
+    }
+    if (date === departure) return { ok: true, promo, title: c.yourDeparture, lines: [fill(c.stay, daysBetween(arrival, departure))], tone: 'sel' }
     if (arrival && !departure && date > arrival) {
+      const dep = data ? departureInfo(data, arrival, date, unit) : { ok: true }
+      if (dep.ok) return { ok: true, promo, title: c.departureOk, lines: [fill(c.stay, daysBetween(arrival, date))], tone: 'ok' }
+      const n = 'reason' in dep && dep.reason === 'maxStay' ? dep.maxStay : 'minStay' in dep ? dep.minStay : undefined
+      const lines = [why('reason' in dep ? dep.reason : undefined, n, true)]
+      if (arr?.ok) lines.push(c.startHere)
+      return { ok: !!arr?.ok, soft: !!arr?.ok, promo, title: c.departureNo, lines, tone: 'no' }
+    }
+    if (!arr || !arr.known) return { ok: true, promo, title: '', lines: [], tone: 'ok' }
+    if (!arr.ok) return { ok: false, promo: null, title: c.unavailable, lines: [why(arr.reason, arr.minStay, false)], tone: 'no' }
+    const lines = [promo, arr.minStay ? fill(c.minStay, arr.minStay) : null, c.pickArrival]
+    return { ok: true, promo, title: c.free, lines: lines.filter((l): l is string => !!l), tone: 'ok' }
+  }
+
+  const arrivalData = arrival ? chunkFor(arrival) : undefined
+  const arrivalMinStay = (arrivalData && arrivalInfo(arrivalData, arrival, unit).minStay) || 1
+
+  // okienko nad dniem: w obrębie kalendarza, strzałka nad środkiem dnia
+  function showTip(date: string, el: HTMLElement) {
+    const box = calRef.current?.getBoundingClientRect()
+    if (!box) return
+    const r = el.getBoundingClientRect()
+    const center = r.left + r.width / 2 - box.left
+    const half = Math.min(140, box.width / 2)
+    const left = Math.min(Math.max(center, half), box.width - half)
+    setTip({ date, left, top: r.top - box.top, arrow: center - left })
+  }
+
+  function pickDay(date: string, note: DayNote) {
+    if (!note.ok) return
+    if (arrival && !departure && date > arrival && !note.soft) {
       setDeparture(date)
       setOpen(false)
     } else {
@@ -336,6 +395,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
 
       {open ? (
         <div
+          ref={calRef}
           className="mo-calendar"
           id={calendarId}
           role="dialog"
@@ -378,7 +438,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
                   ))}
                   {monthGrid(m).map((d, i) => {
                     if (!d) return <span key={i} />
-                    const s = dayState(d)
+                    const s = dayNote(d)
                     const inRange = arrival && departure && d > arrival && d < departure
                     const edge = d === arrival || d === departure
                     return (
@@ -388,15 +448,21 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
                         className="mo-calendar__day"
                         data-range={inRange || undefined}
                         data-edge={edge || undefined}
-                        data-promo={s.promo ? true : undefined}
-                        disabled={!s.ok}
-                        title={s.promo ?? undefined}
+                        data-soft={s.soft || undefined}
+                        aria-disabled={!s.ok || undefined}
                         aria-pressed={edge}
-                        aria-label={`${fmt(d)}${s.price ? `, ${t.from} ${formatPrice(s.price, locale)}` : ''}${s.promo ? `, ${s.promo}` : ''}`}
-                        onClick={() => pickDay(d)}
+                        aria-label={[fmt(d), s.title, ...s.lines].filter(Boolean).join(', ')}
+                        aria-describedby={tip?.date === d ? tipId : undefined}
+                        onClick={(e) => {
+                          pickDay(d, s)
+                          showTip(d, e.currentTarget)
+                        }}
+                        onMouseEnter={(e) => showTip(d, e.currentTarget)}
+                        onFocus={(e) => showTip(d, e.currentTarget)}
+                        onMouseLeave={() => setTip(null)}
+                        onBlur={() => setTip(null)}
                       >
                         <span>{Number(d.slice(8))}</span>
-                        {s.price ? <small>{Math.round(s.price / 100)}</small> : null}
                       </button>
                     )
                   })}
@@ -404,6 +470,29 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
               </div>
             ))}
           </div>
+          {(() => {
+            const n = tip ? dayNote(tip.date) : null
+            return n && (n.title || n.lines.length) ? (
+              <div
+                id={tipId}
+                role="tooltip"
+                className="mo-calendar__tip"
+                data-tone={n.tone}
+                style={{ left: tip!.left, top: tip!.top, ['--strzalka' as string]: `${tip!.arrow}px` }}
+              >
+                <span className="mo-calendar__tip-date">{fmt(tip!.date)}</span>
+                {n.title ? <strong>{n.title}</strong> : null}
+                {n.lines.map((l) => (
+                  <span key={l}>{l}</span>
+                ))}
+              </div>
+            ) : null
+          })()}
+          <p className="mo-body-s mo-calendar__hint">
+            {arrival && !departure
+              ? fill(c.hintDeparture, arrivalMinStay)
+              : c.hintArrival}
+          </p>
           <div className="mo-calendar__foot">
             <button
               type="button"

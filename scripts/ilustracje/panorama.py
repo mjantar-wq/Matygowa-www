@@ -130,3 +130,16 @@ out.write_text("\n".join(L))
 (ROOT / "public/ilustracje/G2_panorama.json").write_text(json.dumps({"site": SITE, "eyeM": round(H0), "azimuthFrom": AZ0, "azimuthTo": AZ1, "verticalExaggeration": EXAG, "peaks": [{k: v for k, v in p.items() if k not in ("k", "angle")} for p in peaks]}, ensure_ascii=False, indent=1))
 for p in peaks: print(p["slug"], p["az"], p["dist_km"], p["dem"], round(p["angle"], 2), "OK" if p["visible"] else "UKRYTY")
 print("H0", H0)
+
+# G5: sylwetka każdego szczytu tak, jak widać go z osady (wycinek ±1,6° dalekiej grani, wysokość dopasowana do kadru).
+SW, SH, OKNO = 240, 96, int(1.6 / STEP)
+for p in peaks:
+    k0, k1 = max(0, p["k"] - OKNO), min(len(azs), p["k"] + OKNO + 1)
+    a = sky[2, k0:k1]; lo, hi = a.min(), a.max()
+    sx = lambda k: (k - (p["k"] - OKNO)) / (2 * OKNO) * SW
+    sy = lambda v: SH - 8 - (v - lo) / max(hi - lo, 1e-6) * (SH - 24)
+    d = f"M{sx(k0):.1f},{SH} " + " ".join(f"L{sx(k0 + i):.1f},{sy(v):.1f}" for i, v in enumerate(a)) + f" L{sx(k1 - 1):.1f},{SH} Z"
+    (ROOT / f"public/ilustracje/G5_sylwetka_{p['slug']}.svg").write_text(
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {SW} {SH}" role="img" aria-label="Sylwetka: {p["name"]} widziany z osady">'
+        '<style>.g{fill:var(--color-tlo-2);stroke:var(--color-atrament);stroke-width:1.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}.k{fill:var(--color-bursztyn)}</style>'
+        f'<path class="g" d="{d}"/><circle class="k" cx="{sx(p["k"]):.1f}" cy="{sy(sky[2, p["k"]]):.1f}" r="3.5"/></svg>')

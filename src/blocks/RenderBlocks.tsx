@@ -322,8 +322,8 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
       <div className="mo-cards" style={FIT}>
         {promotions.map((p) => (
           <article key={p.id} className="mo-card" data-sezon-promo={promoSeason(p.season)}>
-            {/* zdjęcie z oferty w panelu połączonej z promocją, inaczej z pierwszej oferty */}
-            <div className="mo-card__media"><Media media={(offers.find((o) => o.icecoldresPromotionId === String(p.id)) ?? offers[0])?.image} /></div>
+            {/* zdjęcie z oferty w panelu połączonej z tą promocją (bez cudzego zdjęcia z innej oferty) */}
+            <div className="mo-card__media"><Media media={offers.find((o) => o.icecoldresPromotionId === p.id)?.image} /></div>
             <p className="mo-label">{ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}</h3>
             <p>{ctx.locale === 'pl' ? p.description : p.en.description || p.description}</p>

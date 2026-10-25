@@ -1169,6 +1169,8 @@ export interface Attraction {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Oferty na stronie to promocje z cennika IceColdRes (tytuł, opis, daty, sezon). Tu dodajesz do promocji zdjęcie i dłuższy opis; wybierz ją z listy.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "offers".
  */
@@ -1199,6 +1201,9 @@ export interface Offer {
   } | null;
   validFrom?: string | null;
   validTo?: string | null;
+  /**
+   * Lista promocji z cennika IceColdRes. Bez wybranej promocji oferta nie pojawi się na stronie.
+   */
   icecoldresPromotionId?: string | null;
   icecoldresOfferId?: string | null;
   seo?: {

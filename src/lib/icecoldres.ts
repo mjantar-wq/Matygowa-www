@@ -102,9 +102,16 @@ export const promoInSeason = (season: string | null | undefined, sezon: string |
   return !s || !sezon || s === sezon
 }
 
+/** Wszystkie promocje z cennika IceColdRes, także przyszłe i nieaktywne (lista do wyboru w panelu). */
+export async function getAllPromotions(): Promise<{ today: string; promotions: Promotion[] }> {
+  const data = await get<{ today?: string; promotions: Promotion[] }>('/promotions', 300, ['pricing'])
+  return { today: data?.today ?? new Date().toISOString().slice(0, 10), promotions: data?.promotions ?? [] }
+}
+
 export async function getPromotions(): Promise<Promotion[]> {
-  const data = await get<{ promotions: Promotion[] }>('/promotions', 300, ['pricing'])
-  return data?.promotions ?? []
+  const { today, promotions } = await getAllPromotions()
+  // strona pokazuje tylko promocje, które da się teraz zarezerwować i których pobyt jeszcze się nie skończył
+  return promotions.filter((p) => p.bookableNow && (!p.stayTo || p.stayTo >= today))
 }
 
 export async function getServices(): Promise<Service[]> {

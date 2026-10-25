@@ -31,3 +31,37 @@ test.describe('Szkielet strony', () => {
     expect(res.headers().location).toBe('/domy')
   })
 })
+
+test.describe('Efekty i interakcje', () => {
+  test('przełącznik Dzień / Noc zmienia nastrój strony i go pamięta', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Noc' }).first().click()
+    await expect(page.locator('html')).toHaveAttribute('data-pora', 'noc')
+    await page.reload()
+    await expect(page.locator('html')).toHaveAttribute('data-pora', 'noc')
+    await page.getByRole('button', { name: 'Lato' }).first().click()
+    await expect(page.locator('html')).toHaveAttribute('data-sezon', 'lato')
+  })
+
+  test('bez ruchu hero nie ładuje filmu', async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' })
+    const page = await ctx.newPage()
+    await page.goto('/')
+    await page.waitForLoadState('load')
+    await page.waitForTimeout(800)
+    const sources = await page.locator('.mo-hero video, .mo-stage video').evaluateAll((vs) => vs.map((v) => (v as HTMLVideoElement).currentSrc))
+    expect(sources.every((s) => !s)).toBe(true)
+    await ctx.close()
+  })
+
+  test('strona główna: scena zmienia się z rozdziałem', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    const first = await page.locator('.mo-stage__scene[data-active]').getAttribute('data-kind')
+    expect(first).toBe('media')
+    await page.locator('[data-block="peaksPanorama"] [data-step]').first().scrollIntoViewIfNeeded()
+    await page.evaluate(() => scrollBy(0, 1))
+    await expect(page.locator('.mo-stage__scene[data-active]')).toHaveAttribute('data-kind', 'panorama')
+  })
+})

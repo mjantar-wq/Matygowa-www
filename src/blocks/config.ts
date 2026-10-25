@@ -22,6 +22,26 @@ export const HeroBlock = block('hero', 'Hero (film i hasło)', [
   { name: 'subline', label: 'Podtytuł', type: 'text', localized: true },
   { ...image, label: 'Kadr startowy (wyświetlany od razu)' },
   { name: 'video', label: 'Film w pętli (15–20 s)', type: 'upload', relationTo: 'media' },
+  { name: 'videoPortrait', label: 'Film pionowy na telefon (9:16)', type: 'upload', relationTo: 'media' },
+  {
+    name: 'variants',
+    label: 'Inne nastroje (przełącznik Dzień / Noc i Zima / Lato)',
+    type: 'array',
+    maxRows: 4,
+    admin: { description: 'Kadr i film dla innej pory dnia lub roku. Bez wariantu strona pokazuje najbliższy pasujący, a na końcu kadr główny.' },
+    fields: [
+      {
+        type: 'row',
+        fields: [
+          { name: 'pora', label: 'Pora dnia', type: 'select', options: [{ label: 'Dzień', value: 'dzien' }, { label: 'Noc', value: 'noc' }], admin: { width: '50%' } },
+          { name: 'sezon', label: 'Pora roku', type: 'select', options: [{ label: 'Zima', value: 'zima' }, { label: 'Lato', value: 'lato' }], admin: { width: '50%' } },
+        ],
+      },
+      { ...image, label: 'Kadr' },
+      { name: 'video', label: 'Film', type: 'upload', relationTo: 'media' },
+      { name: 'videoPortrait', label: 'Film pionowy (9:16)', type: 'upload', relationTo: 'media' },
+    ],
+  },
   { name: 'showBookingBar', label: 'Pasek rezerwacji', type: 'checkbox', defaultValue: true },
 ])
 

@@ -195,7 +195,7 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
    Wnętrza kart i dymków mają własną anatomię, więc są wyłączone. */
 .mo-section :is(.mo-h1, .mo-h2):not(.mo-card *, .mo-section-head *) { margin-block-end: var(--space-6); }
 .mo-section .mo-h3:not(.mo-card *, .mo-tip *) { margin-block-end: var(--space-3); }
-.mo-section :is(p, ul, ol, dl, div, form, figure):not(.mo-card *) + .mo-h2 { margin-block-start: var(--space-8); }
+.mo-section :is(p, ul, ol, dl, div, form, figure):not(.mo-card *, .mo-label) + .mo-h2 { margin-block-start: var(--space-8); }
 .mo-section :is(p, ul, ol, dl, div, form, figure):not(.mo-card *) + .mo-h3:not(.mo-card *) { margin-block-start: var(--space-7); }
 .mo-section .mo-lede:not(.mo-card *) + * { margin-block-start: var(--space-6); }
 .mo-section * + :is(.mo-cards, .mo-panorama, .mo-booking) { margin-block-start: var(--space-6); }

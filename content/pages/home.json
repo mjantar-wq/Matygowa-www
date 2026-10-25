@@ -112,65 +112,6 @@
       }
     },
     {
-      "type": "house_inside",
-      "id": "dom",
-      "heading": {
-        "pl": "Dom od środka",
-        "en": "Inside the house"
-      },
-      "body": {
-        "pl": "Każdy dom ma 120 m² na dwóch poziomach, w jednym z dwóch układów. Hawrań, Gerlach i Świnica mają salon na parterze. Wołoszyn, Łomnica i Lodowy mają salon na piętrze i dodatkową łazienkę przy sypialni na górze.",
-        "en": "Every house has 120 m² over two floors, in one of two layouts. Hawrań, Gerlach and Świnica have the living room on the ground floor. Wołoszyn, Łomnica and Lodowy have the living room upstairs and an extra en-suite bathroom in the upstairs bedroom."
-      },
-      "rooms": [
-        {
-          "key": "living",
-          "title": {
-            "pl": "Salon z kominkiem",
-            "en": "Living room with fireplace"
-          },
-          "body": {
-            "pl": "Kanapa, fotele, drewno ułożone przy kominku. Wieczorem to tu wszyscy się schodzą.",
-            "en": "A sofa, armchairs, logs stacked by the fire. In the evening this is where everyone ends up."
-          }
-        },
-        {
-          "key": "kitchen",
-          "title": {
-            "pl": "Kuchnia i stół",
-            "en": "Kitchen and table"
-          },
-          "body": {
-            "pl": "Pełna kuchnia z płytą indukcyjną, piekarnikiem, zmywarką i ekspresem. Stół, przy którym zmieści się cała rodzina.",
-            "en": "A full kitchen with an induction hob, oven, dishwasher and coffee machine. A table big enough for the whole family."
-          }
-        },
-        {
-          "key": "bedrooms",
-          "title": {
-            "pl": "Cztery sypialnie",
-            "en": "Four bedrooms"
-          },
-          "body": {
-            "pl": "Trzy z łóżkiem podwójnym, jedna z dwoma pojedynczymi, które można zsunąć. Pościel i ręczniki czekają.",
-            "en": "Three with a double bed, one with two singles that push together. Bed linen and towels are ready."
-          }
-        },
-        {
-          "key": "bath",
-          "title": {
-            "pl": "Łazienki i sauna",
-            "en": "Bathrooms and sauna"
-          },
-          "body": {
-            "pl": "Dwie łazienki i osobne WC, a w domach z salonem na piętrze także trzecia, prywatna łazienka przy sypialni. Do tego prywatna sauna. Na tarasie bania z gorącą wodą.",
-            "en": "Two bathrooms and a separate WC, plus a third, en-suite bathroom in the houses with an upstairs living room. And a private sauna. On the terrace, an outdoor hot tub."
-          }
-        }
-      ],
-      "amenities_source": "icecoldres"
-    },
-    {
       "type": "day_story",
       "id": "dzien",
       "heading": {
@@ -249,6 +190,65 @@
           "en": "By night: light in the windows, steam over the hot tub, stars."
         }
       }
+    },
+    {
+      "type": "house_inside",
+      "id": "dom",
+      "heading": {
+        "pl": "Dom od środka",
+        "en": "Inside the house"
+      },
+      "body": {
+        "pl": "Każdy dom ma 120 m² na dwóch poziomach, w jednym z dwóch układów. Hawrań, Gerlach i Świnica mają salon na parterze. Wołoszyn, Łomnica i Lodowy mają salon na piętrze i dodatkową łazienkę przy sypialni na górze.",
+        "en": "Every house has 120 m² over two floors, in one of two layouts. Hawrań, Gerlach and Świnica have the living room on the ground floor. Wołoszyn, Łomnica and Lodowy have the living room upstairs and an extra en-suite bathroom in the upstairs bedroom."
+      },
+      "rooms": [
+        {
+          "key": "living",
+          "title": {
+            "pl": "Salon z kominkiem",
+            "en": "Living room with fireplace"
+          },
+          "body": {
+            "pl": "Kanapa, fotele, drewno ułożone przy kominku. Wieczorem to tu wszyscy się schodzą.",
+            "en": "A sofa, armchairs, logs stacked by the fire. In the evening this is where everyone ends up."
+          }
+        },
+        {
+          "key": "kitchen",
+          "title": {
+            "pl": "Kuchnia i stół",
+            "en": "Kitchen and table"
+          },
+          "body": {
+            "pl": "Pełna kuchnia z płytą indukcyjną, piekarnikiem, zmywarką i ekspresem. Stół, przy którym zmieści się cała rodzina.",
+            "en": "A full kitchen with an induction hob, oven, dishwasher and coffee machine. A table big enough for the whole family."
+          }
+        },
+        {
+          "key": "bedrooms",
+          "title": {
+            "pl": "Cztery sypialnie",
+            "en": "Four bedrooms"
+          },
+          "body": {
+            "pl": "Trzy z łóżkiem podwójnym, jedna z dwoma pojedynczymi, które można zsunąć. Pościel i ręczniki czekają.",
+            "en": "Three with a double bed, one with two singles that push together. Bed linen and towels are ready."
+          }
+        },
+        {
+          "key": "bath",
+          "title": {
+            "pl": "Łazienki i sauna",
+            "en": "Bathrooms and sauna"
+          },
+          "body": {
+            "pl": "Dwie łazienki i osobne WC, a w domach z salonem na piętrze także trzecia, prywatna łazienka przy sypialni. Do tego prywatna sauna. Na tarasie bania z gorącą wodą.",
+            "en": "Two bathrooms and a separate WC, plus a third, en-suite bathroom in the houses with an upstairs living room. And a private sauna. On the terrace, an outdoor hot tub."
+          }
+        }
+      ],
+      "amenities_source": "icecoldres"
     },
     {
       "type": "rituals_teaser",
@@ -338,7 +338,7 @@
           "value": "320 km"
         }
       ],
-      "featured_attractions": 8,
+      "featured_attractions": 10,
       "cta": {
         "pl": "Cała okolica",
         "en": "Explore the area"

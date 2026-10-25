@@ -80,13 +80,14 @@ for slug, name, h, lat, lon in PEAKS:
     near = max(sky[0, k], sky[1, k])
     peaks.append(dict(slug=slug, name=name, height=h, az=round(az, 2), dist_km=round(d / 1000, 1), dem=round(float(e)), angle=a, visible=bool(a > near - 0.02), k=k))
 
-W, H = 3200, 900
-EXAG = 3.2                      # przewyższenie pionowe ilustracji
+W = 3200
+EXAG = 1.0                      # bez przewyższenia: kąty jak w PeakFinderze i w oku (Michał: grań ma być łagodna)
 xs = (azs - AZ0) / (AZ1 - AZ0) * W
-amin = -1.2
+amin = -0.8
+H = int(math.ceil((sky[2].max() - amin) * (W / (AZ1 - AZ0)) * EXAG + 230))  # nad granią miejsce na etykiety
 def y(a): return H - (a - amin) * (W / (AZ1 - AZ0)) * EXAG
 def path(row, smooth=1):
-    pts = " ".join(f"{x:.1f},{y(a):.1f}" for x, a in zip(xs[::smooth], row[::smooth]))
+    pts = " ".join(f"{x:.1f},{y(a):.1f}" for x, a in zip(xs[::smooth], np.maximum(row, amin)[::smooth]))
     return f"M0,{H} L{pts} L{W},{H} Z"
 
 L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-labelledby="g2-title" class="mo-ilustracja mo-panorama-svg">',

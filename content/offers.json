@@ -46,8 +46,8 @@
     },
     "active": true,
     "featured": true,
-    "image": "N2_swieta_choinka",
-    "note": "Cena do potwierdzenia przez Michała. Zdjęcie: choinka przy kominku w salonie (N2_swieta_choinka). Po 27.12.2026 ustawić active = false. featured = karta na stronie głównej."
+    "image": "N2_",
+    "note": "Cena do potwierdzenia przez Michała. Zdjęcie: N2_swieta_stol_zima (prawdziwe, zastawiony stół zimą); docelowo zdjęcie z choinką. Po 27.12.2026 ustawić active = false. featured = karta na stronie głównej."
   },
   {
     "slug": "zlota-jesien",

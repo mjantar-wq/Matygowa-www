@@ -5,6 +5,8 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
+    # sama dokumentacja nie zmienia wdrożonej wersji
+    paths-ignore: ['docs/**', '*.md']
   workflow_dispatch:
     inputs:
       import_content:

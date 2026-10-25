@@ -79,7 +79,7 @@ export default async function UnitPage({ params }: SlugParams) {
       {amenities.length ? (
         <section className="mo-section mo-container">
           <h2 className="mo-h2">{t.house.amenities}</h2>
-          <ul style={{ columns: '16rem', marginBlockStart: 'var(--space-5)' }}>{amenities.map((a) => <li key={a}>{a}</li>)}</ul>
+          <ul className="mo-lista">{amenities.map((a) => <li key={a}>{a}</li>)}</ul>
         </section>
       ) : null}
 

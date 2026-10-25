@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import { motionAllowed, useAmbience, useMotionPaused } from './ambience'
 
 export type HeroImage = { url: string; alt?: string | null; width?: number | null; height?: number | null; focusX?: number | null; focusY?: number | null }
-/** Jeden kadr hero; `slots` to nastroje (np. "noc-zima"), w których ten kadr się pokazuje. */
-export type HeroSlide = { image?: HeroImage | null; video?: string | null; videoPortrait?: string | null; slots: string[] }
+/** Jeden kadr hero; `slots` to nastroje (np. "noc-zima"), w których ten kadr się pokazuje; `nocny` przyciemnia dzienny kadr na noc. */
+export type HeroSlide = { image?: HeroImage | null; video?: string | null; videoPortrait?: string | null; slots: string[]; nocny?: boolean }
 
 /**
  * Filmowe wejście: kadr startowy jest od razu (LCP) i powoli dryfuje (CSS); film, jeśli jest, dociąga się po
@@ -52,7 +52,7 @@ export function HeroStage({ slides, active: shown = true, eager = true }: { slid
       {slides.map((s, i) => {
         const position = `${s.image?.focusX ?? 50}% ${s.image?.focusY ?? 50}%`
         return (
-          <div key={i} className={`mo-hero__slide ${s.slots.map((x) => `is-${x}`).join(' ')}`} data-playing={playing === i || undefined} data-paused={paused || !shown || undefined}>
+          <div key={i} className={`mo-hero__slide ${s.slots.map((x) => `is-${x}`).join(' ')}${s.nocny ? ' is-nocny' : ''}`} data-playing={playing === i || undefined} data-paused={paused || !shown || undefined}>
             {s.image?.url ? (
               // eslint-disable-next-line @next/next/no-img-element -- kadr startowy, rozmiary robi Cloudflare
               <img

@@ -31,8 +31,11 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
       }
       // W przerwie między krokami rozdziału zostaje scena ostatniego minionego kroku, a nie scena rozdziału,
       // więc tło przechodzi z kroku w krok bez powrotu do zdjęcia domyślnego.
+      // Rozdział może przesunąć tę linię niżej (data-scene-line, ułamek wysokości ekranu), żeby tło kolejnego
+      // kroku zaczynało się zmieniać, zanim jego opis dojdzie do połowy ekranu.
       if (el?.tagName === 'SECTION') {
-        for (const n of el.querySelectorAll<HTMLElement>('[data-scene]')) if (n.getBoundingClientRect().top <= mid) el = n
+        const line = innerHeight * Number(el.dataset.sceneLine ?? 0.5)
+        for (const n of el.querySelectorAll<HTMLElement>('[data-scene]')) if (n.getBoundingClientRect().top <= line) el = n
       }
       const id = el?.dataset.scene
       if (!id || !scenes.some((s) => s.id === id)) return

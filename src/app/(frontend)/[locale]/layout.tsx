@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { fraunces, inter, rufina } from '@/app/fonts'
+import { fraunces, inter, jotNewsreader, rufina } from '@/app/fonts'
 import { Analytics } from '@/components/Analytics'
 import { ClickTracking } from '@/components/ClickTracking'
 import { ConsentBanner } from '@/components/ConsentBanner'
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 export default async function LocaleLayout({ children, params }: LocaleParams & { children: React.ReactNode }) {
   const ctx = await pageContext(params)
   return (
-    <html lang={ctx.locale} dir={dirOf(ctx.locale)} data-sezon={seasonOf()} data-pora="dzien" suppressHydrationWarning className={`${fraunces.variable} ${inter.variable} ${rufina.variable}`}>
+    <html lang={ctx.locale} dir={dirOf(ctx.locale)} data-sezon={seasonOf()} data-pora="dzien" suppressHydrationWarning className={`${fraunces.variable} ${inter.variable} ${rufina.variable} ${jotNewsreader.variable}`}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: AMBIENCE_INIT_SCRIPT }} />
         <Analytics gtmId={ctx.settings?.gtmId} />

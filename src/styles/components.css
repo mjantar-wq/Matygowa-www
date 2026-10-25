@@ -41,11 +41,11 @@ body { background: var(--color-tlo); color: var(--color-atrament); font-family: 
 /* Przyciski */
 .mo-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--przycisk-wys); padding: 0 var(--space-6); border: 1px solid transparent; border-radius: var(--radius-pole); font: var(--text-button--font-weight) var(--text-button)/var(--text-button--line-height) var(--font-ui); letter-spacing: var(--text-button--letter-spacing); text-decoration: none; cursor: pointer; transition: background-color var(--ruch-szybki) var(--krzywa-mgla), color var(--ruch-szybki) var(--krzywa-mgla); }
 .mo-btn--glowny { background: var(--color-cta); color: var(--color-na-cta); }
-/* Rozeta podhalańska: wzór jaśniejszy od tła przycisku, przez maskę, więc działa i na zieleni (dzień), i na bursztynie (noc) */
+/* Gont: rytm drewnianych deszczułek jak na elewacjach domków; jaśniejszy od tła przycisku, przez maskę, więc działa i na zieleni (dzień), i na bursztynie (noc) */
 .mo-btn--glowny { position: relative; isolation: isolate; overflow: hidden; }
-.mo-btn--glowny::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: rgb(255 255 255 / 0.13); -webkit-mask: var(--wzor-rozeta) center / 32px 32px repeat; mask: var(--wzor-rozeta) center / 32px 32px repeat; transition: opacity var(--ruch-szybki) var(--krzywa-mgla); }
+.mo-btn--glowny::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: rgb(255 255 255 / 0.13); -webkit-mask: var(--wzor-gont) center / 12px 36px repeat; mask: var(--wzor-gont) center / 12px 36px repeat; transition: opacity var(--ruch-szybki) var(--krzywa-mgla); }
 .mo-btn--glowny:hover::before { background: rgb(255 255 255 / 0.2); }
-:root { --wzor-rozeta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23000' stroke-width='.8'/%3E%3Cpath d='M16,16Q19.2,11.5 16.0,7.0Q12.8,11.5 16,16M16,16Q21.5,16.5 23.8,11.5Q18.3,11.0 16,16M16,16Q18.3,21.0 23.8,20.5Q21.5,15.5 16,16M16,16Q12.8,20.5 16.0,25.0Q19.2,20.5 16,16M16,16Q10.5,15.5 8.2,20.5Q13.7,21.0 16,16M16,16Q13.7,11.0 8.2,11.5Q10.5,16.5 16,16'/%3E%3Cpath d='M0,-2.5L2.5,0L0,2.5L-2.5,0ZM32,-2.5L34.5,0L32,2.5L29.5,0ZM0,29.5L2.5,32L0,34.5L-2.5,32ZM32,29.5L34.5,32L32,34.5L29.5,32Z'/%3E%3C/svg%3E"); }
+:root { --wzor-gont: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='36'%3E%3Cpath d='M0,17.5Q3,19 6,17.5Q9,19 12,17.5M0,35.5Q3,37 6,35.5Q9,37 12,35.5M6,0V17.5M0,18V35.5M12,18V35.5' fill='none' stroke='%23000' stroke-width='1.1'/%3E%3C/svg%3E"); }
 .mo-btn--glowny:hover { filter: brightness(1.08); }
 .mo-btn--obrys { background: transparent; color: var(--color-atrament); border-color: var(--color-atrament); }
 .mo-btn--obrys:hover { background: var(--color-atrament); color: var(--color-tlo); }

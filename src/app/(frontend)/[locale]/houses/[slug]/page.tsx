@@ -10,7 +10,7 @@ import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
 import { href } from '@/i18n/routes'
 import { findBySlug, findMany } from '@/lib/cms'
-import { getProperty, getPromotions } from '@/lib/icecoldres'
+import { getProperty, getPromotions, promoSeason } from '@/lib/icecoldres'
 import { peakName, peakViewAlt } from '@/lib/peak'
 import { buildMetadata, pageContext, type SlugParams } from '@/lib/page'
 import type { Unit } from '@/payload-types'
@@ -95,7 +95,7 @@ export default async function UnitPage({ params }: SlugParams) {
         <section className="mo-section mo-container">
           <h2 className="mo-h2">{t.house.availability}</h2>
           {promos.map((p) => (
-            <p key={p.id} className="mo-label" style={{ color: 'var(--color-bursztyn-tekst)' }}>
+            <p key={p.id} className="mo-label" style={{ color: 'var(--color-bursztyn-tekst)' }} data-sezon-promo={promoSeason(p.season)}>
               {ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}
             </p>
           ))}

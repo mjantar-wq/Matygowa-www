@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { arrivalInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
 import { bookingUrl } from '@/lib/booking'
+import { promoInSeason, promoSeason } from '@/lib/icecoldres'
 
 vi.mock('server-only', () => ({}))
 vi.mock('@/lib/cms', () => ({
@@ -53,6 +54,18 @@ describe('kalendarz dostępności', () => {
     expect(promoOn(p, '2026-12-05', 'x')).toBe(false)
     expect(promoOn({ ...p, unitTypeIds: ['y'] }, '2026-12-04', 'x')).toBe(false)
     expect(promoOn({ ...p, bookableNow: false }, '2026-12-04', 'x')).toBe(false)
+  })
+})
+
+describe('sezon promocji', () => {
+  it('lato/zima z IceColdRes na przełącznik strony, bez sezonu zawsze', () => {
+    expect(promoSeason('summer')).toBe('lato')
+    expect(promoSeason('winter')).toBe('zima')
+    expect(promoSeason(null)).toBeUndefined()
+    expect(promoInSeason('summer', 'zima')).toBe(false)
+    expect(promoInSeason('summer', 'lato')).toBe(true)
+    expect(promoInSeason(null, 'zima')).toBe(true)
+    expect(promoInSeason('winter', null)).toBe(true)
   })
 })
 

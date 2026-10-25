@@ -76,7 +76,7 @@ const pl = {
   },
   house: {
     kind: { house: 'Domek', apartment: 'Apartament' },
-    comingSoon: 'Wkrótce',
+    comingSoon: 'W budowie · otwarcie 2027',
     guests: (n: number) => `do ${n} osób`,
     peak: 'Szczyt',
     elevation: (m: number) => `${m.toLocaleString('pl-PL')} m n.p.m.`,
@@ -216,7 +216,7 @@ const en: Dictionary = {
   },
   house: {
     kind: { house: 'Cottage', apartment: 'Apartment' },
-    comingSoon: 'Coming soon',
+    comingSoon: 'Under construction · opening 2027',
     guests: (n: number) => `up to ${n} guests`,
     peak: 'Peak',
     elevation: (m: number) => `${m.toLocaleString('en-GB')} m a.s.l.`,

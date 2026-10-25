@@ -140,7 +140,7 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-footer a { color: inherit; }
 /* Deseń Podhale i Tatry (od Michała) na dużych jednolitych tłach: leży pod całą stroną w kolorze linii.
    Zdjęcia, filmy, karty, pola i stopka mają własne kryjące tło, więc deseń nigdy nie wchodzi na zdjęcia ani wideo. */
-:root { --wzor-podhale: url("/ilustracje/G6_wzor_podhale_tatry.svg"); --wzor-podhale-kafel: 240px; --wzor-podhale-krycie: 0.3; --wzor-naglowek-krycie: 0.6; }
+:root { --wzor-podhale: url("/ilustracje/G6_wzor_podhale_tatry.svg"); --wzor-podhale-kafel: 240px; --wzor-podhale-krycie: 0.5; --wzor-naglowek-krycie: 0.6; }
 @media (max-width: 767px) { :root { --wzor-podhale-kafel: 180px; } }
 body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: var(--wzor-podhale-krycie); -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; }
 /* Rozeta G6 na górnej krawędzi stopki, w kolorze linii */

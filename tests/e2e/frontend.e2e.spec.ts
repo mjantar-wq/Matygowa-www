@@ -89,3 +89,17 @@ test.describe('Efekty i interakcje', () => {
     await expect(page.locator('.mo-dock__dialog')).not.toBeVisible()
   })
 })
+
+test('logo na stronie głównej przewija na samą górę i czyści kotwicę', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/en')
+  const banner = page.getByRole('dialog', { name: /cookies/i })
+  if (await banner.isVisible()) await banner.getByRole('button').first().click()
+  await page.evaluate(() => {
+    history.replaceState(null, '', '/en#test')
+    window.scrollTo(0, 1500)
+  })
+  await page.locator('.mo-logo').click()
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
+  expect(new URL(page.url()).pathname + new URL(page.url()).hash).toBe('/en')
+})

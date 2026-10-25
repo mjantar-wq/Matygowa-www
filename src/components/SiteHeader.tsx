@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Dictionary } from '@/i18n/dictionaries'
 import type { Locale } from '@/i18n/locales'
 import { href, type RouteKey } from '@/i18n/routes'
+import { HomeLink } from './HomeLink'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { AmbienceSwitch } from './effects/AmbienceSwitch'
 
@@ -12,9 +13,9 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <header className="mo-header">
       <div className="mo-container mo-header__inner">
-        <Link href={href(locale, 'home')} className="mo-logo" prefetch={false}>
+        <HomeLink href={href(locale, 'home')} className="mo-logo">
           <span className="mo-sr">{t.siteName}</span>
-        </Link>
+        </HomeLink>
         <button type="button" className="mo-menu-btn mo-btn mo-btn--obrys mo-btn--maly" popoverTarget="menu-glowne">
           {t.menu}
         </button>

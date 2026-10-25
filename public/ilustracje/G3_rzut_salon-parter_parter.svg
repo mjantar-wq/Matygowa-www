@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 1080 800" role="img" aria-label="Rzut poglądowy domku, układ z salonem na parterze: parter">
-<style>.bryla{fill:var(--color-atrament,#1c2321);stroke:var(--color-atrament,#1c2321);stroke-width:24;stroke-linejoin:miter}.pokoj{fill:var(--color-tlo,#f1f3f2)}.pokoj.skos{fill:var(--color-tlo-2,#e4e9e7)}.stopnie{stroke:var(--color-linia-mocna,#7f8b86);stroke-width:1.5;vector-effect:non-scaling-stroke}.sauna-deski{stroke:var(--color-bursztyn,#c47a2a);stroke-width:1;opacity:.6;vector-effect:non-scaling-stroke}.nazwa{font:500 19px var(--font-ui,sans-serif);letter-spacing:.12em;text-transform:uppercase;fill:var(--color-atrament,#1c2321);paint-order:stroke;stroke:var(--color-tlo,#f1f3f2);stroke-width:8px;stroke-linejoin:round}.dopisek{font:500 18px var(--font-ui,sans-serif);letter-spacing:.06em;font-variant-numeric:tabular-nums;fill:var(--color-wyciszony,#56625e)}.pokoj-g:hover .pokoj,.pokoj-g:focus .pokoj{fill:var(--color-tlo-2,#e4e9e7)}</style>
-<polygon class="bryla" points="128,0 872,0 872,308 1000,308 1000,610 774,610 774,714 226,714 226,610 0,610 0,308 128,308"/>
+<style>.bryla{fill:var(--color-atrament,#1c2321);stroke:var(--color-atrament,#1c2321);stroke-width:24;stroke-linejoin:miter}.pokoj{fill:var(--color-tlo,#f1f3f2)}.pokoj.skos{fill:var(--color-tlo-2,#e4e9e7)}.stopnie{stroke:var(--color-linia-mocna,#7f8b86);stroke-width:1.5;vector-effect:non-scaling-stroke}.bieg{fill:none;stroke:var(--color-atrament-2,#37413d);stroke-width:1.5;vector-effect:non-scaling-stroke}#strzalka path{fill:var(--color-atrament-2,#37413d)}.sauna-deski{stroke:var(--color-bursztyn,#c47a2a);stroke-width:1;opacity:.6;vector-effect:non-scaling-stroke}.nazwa{font:500 19px var(--font-ui,sans-serif);letter-spacing:.12em;text-transform:uppercase;fill:var(--color-atrament,#1c2321);paint-order:stroke;stroke:var(--color-tlo,#f1f3f2);stroke-width:8px;stroke-linejoin:round}.dopisek{font:500 18px var(--font-ui,sans-serif);letter-spacing:.06em;font-variant-numeric:tabular-nums;fill:var(--color-wyciszony,#56625e)}.pokoj-g:hover .pokoj,.pokoj-g:focus .pokoj{fill:var(--color-tlo-2,#e4e9e7)}</style>
+<defs><marker id="strzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs>
+<polygon class="bryla" points="0,0 128,0 872,0 872,308 1000,308 1000,610 774,610 774,714 226,714 226,610 0,610 0,308 128,308 128,157 0,157"/>
+<g id="r-narciarnia" class="pokoj-g" data-nazwa="Narciarnia">
+<rect class="pokoj" x="4" y="4" width="119" height="148"/>
+<text class="nazwa" style="font-size:15px;letter-spacing:.03em" x="64" y="72" text-anchor="middle">Narciarnia</text>
+<text class="dopisek" x="64" y="100" text-anchor="middle">z zewnątrz</text>
+</g>
 <g id="r-sauna" class="pokoj-g" data-nazwa="Sauna">
 <rect class="pokoj" x="132" y="4" width="174" height="148"/>
 <line class="sauna-deski" x1="132" y1="22" x2="306" y2="22"/>
@@ -12,32 +18,26 @@
 <line class="sauna-deski" x1="132" y1="130" x2="306" y2="130"/>
 <text class="nazwa" x="220" y="86" text-anchor="middle">Sauna</text>
 </g>
-<g id="r-narciarnia" class="pokoj-g" data-nazwa="Narciarnia">
-<rect class="pokoj" x="316" y="4" width="199" height="82"/>
-<text class="nazwa" x="415" y="40" text-anchor="middle">Narciarnia</text>
-<text class="dopisek" x="415" y="68" text-anchor="middle">wejście z zewnątrz</text>
-</g>
 <g id="r-lazienka" class="pokoj-g" data-nazwa="Łazienka">
 <rect class="pokoj" x="132" y="162" width="174" height="142"/>
 <text class="nazwa" x="220" y="240" text-anchor="middle">Łazienka</text>
 </g>
 <g id="r-wejscie" class="pokoj-g" data-nazwa="Wejście">
-<rect class="pokoj" x="316" y="95" width="199" height="208"/>
-<text class="nazwa" x="415" y="208" text-anchor="middle">Wejście</text>
+<rect class="pokoj" x="316" y="4" width="199" height="299"/>
+<text class="nazwa" x="415" y="162" text-anchor="middle">Wejście</text>
 </g>
 <g id="r-schody" class="pokoj-g" data-nazwa="Schody">
 <rect class="pokoj" x="524" y="4" width="344" height="166"/>
-<line class="stopnie" x1="552" y1="4" x2="552" y2="170"/>
-<line class="stopnie" x1="581" y1="4" x2="581" y2="170"/>
-<line class="stopnie" x1="610" y1="4" x2="610" y2="170"/>
-<line class="stopnie" x1="638" y1="4" x2="638" y2="170"/>
-<line class="stopnie" x1="667" y1="4" x2="667" y2="170"/>
-<line class="stopnie" x1="696" y1="4" x2="696" y2="170"/>
-<line class="stopnie" x1="724" y1="4" x2="724" y2="170"/>
-<line class="stopnie" x1="753" y1="4" x2="753" y2="170"/>
-<line class="stopnie" x1="782" y1="4" x2="782" y2="170"/>
-<line class="stopnie" x1="810" y1="4" x2="810" y2="170"/>
-<line class="stopnie" x1="839" y1="4" x2="839" y2="170"/>
+<line class="stopnie" x1="553" y1="4" x2="553" y2="170"/>
+<line class="stopnie" x1="583" y1="4" x2="583" y2="170"/>
+<line class="stopnie" x1="612" y1="4" x2="612" y2="170"/>
+<line class="stopnie" x1="642" y1="4" x2="642" y2="170"/>
+<line class="stopnie" x1="672" y1="4" x2="672" y2="170"/>
+<line class="stopnie" x1="702" y1="4" x2="702" y2="170"/>
+<line class="stopnie" x1="702" y1="170" x2="793" y2="4"/>
+<line class="stopnie" x1="702" y1="170" x2="868" y2="4"/>
+<line class="stopnie" x1="702" y1="170" x2="868" y2="79"/>
+<polyline class="bieg" marker-end="url(#strzalka)" points="538,134 784,134 784,164"/>
 <text class="nazwa" x="696" y="96" text-anchor="middle">Schody</text>
 </g>
 <g id="r-wc" class="pokoj-g" data-nazwa="WC">
@@ -59,5 +59,6 @@
 <text class="nazwa" x="613" y="453" text-anchor="middle">Salon z kuchnią</text>
 <text class="dopisek" x="613" y="481" text-anchor="middle">i jadalnią · 32,5 m²</text>
 </g>
-<rect class="pokoj" x="514" y="95" width="9" height="75"/>
+<rect class="pokoj" x="514" y="4" width="9" height="166"/>
+<rect class="pokoj" x="316" y="303" width="199" height="9"/>
 </svg>

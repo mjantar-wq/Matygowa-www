@@ -65,15 +65,10 @@ test.describe('Efekty i interakcje', () => {
     await expect(page.locator('.mo-stage__scene[data-active]')).toHaveAttribute('data-kind', 'panorama')
   })
 
-  test('hero: ruch tła bez filmu, przycisk pauzy go zatrzymuje', async ({ page }) => {
+  test('hero: ruch tła bez filmu i bez przycisku pauzy', async ({ page }) => {
     await page.goto('/')
     await expect(page.locator('.mo-hero__slide video')).toHaveCount(0)
-    const pause = page.locator('.mo-hero__pause')
-    await pause.click()
-    await expect(page.locator('html')).toHaveAttribute('data-ruch', 'stop')
-    await expect(pause).toHaveAttribute('aria-pressed', 'true')
-    await pause.click()
-    await expect(page.locator('html')).not.toHaveAttribute('data-ruch')
+    await expect(page.locator('.mo-hero__pause')).toHaveCount(0)
   })
 
   test('strona główna: przypięty przycisk otwiera pasek rezerwacji, gdy hero zniknie z ekranu', async ({ page }) => {

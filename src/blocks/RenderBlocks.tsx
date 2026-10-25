@@ -7,7 +7,7 @@ import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
 import { PhotoGallery } from '@/components/PhotoGallery'
 import { HeroStage } from '@/components/effects/HeroStage'
-import { MotionPause } from '@/components/effects/MotionPause'
+import { ReviewShuffle } from '@/components/effects/ReviewShuffle'
 import { ScrollSteps } from '@/components/effects/ScrollSteps'
 import { heroSlides, sceneId } from '@/lib/scenes'
 import { href } from '@/i18n/routes'
@@ -48,7 +48,6 @@ function Hero({ block, ctx, immersive }: Props<'hero'>) {
           <HeroStage slides={heroSlides(block)} />
         </div>
       )}
-      <MotionPause t={ctx.t.effects} />
       <div className="mo-container mo-hero__content">
         <h1 className="mo-display-xl mo-hero__title">
           <span className="mo-sr">{block.headline}</span>
@@ -255,14 +254,15 @@ function Story({ block, immersive }: Props<'story'>) {
 
 async function Testimonials({ block, ctx }: Props<'testimonials'>) {
   const chosen = (block.items ?? []).filter((x): x is Testimonial => typeof x === 'object')
-  // 10 opinii (5 × 2 na komputerze, 6 na telefonie); źródła na zmianę, żeby Google i Booking były obok siebie
-  const items = interleave(chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 30, sort: '-date' })).slice(0, 10)
+  // Wszystkie opinie, źródła na zmianę; widać 10 (5 × 2 na komputerze, 6 na telefonie), a ReviewShuffle
+  // losuje je przy każdym wejściu pół na pół z Google i Booking
+  const items = interleave(chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 100, sort: '-date' }))
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <ul className="mo-reviews">
-        {items.map((x) => (
-          <li key={x.id}>
+        {items.map((x, i) => (
+          <li key={x.id} data-source={x.source ?? 'other'} hidden={i >= 10}>
             <figure className="mo-review">
               <SourceMark source={x.source} rating={x.rating} />
               <blockquote>„{x.quote}”</blockquote>
@@ -271,6 +271,7 @@ async function Testimonials({ block, ctx }: Props<'testimonials'>) {
           </li>
         ))}
       </ul>
+      <ReviewShuffle count={10} />
     </Section>
   )
 }

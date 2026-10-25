@@ -30,7 +30,6 @@
 :root[data-pora="dzien"][data-sezon="lato"] .mo-hero__slide.is-dzien-lato,
 :root[data-pora="noc"][data-sezon="zima"] .mo-hero__slide.is-noc-zima,
 :root[data-pora="noc"][data-sezon="lato"] .mo-hero__slide.is-noc-lato { display: block; }
-.mo-hero__pause { position: absolute; inset-block-start: var(--space-9, 6rem); inset-inline-end: var(--margines); z-index: 2; color: var(--color-na-zdjeciu); border-color: currentColor; background: var(--color-zaslona); }
 .mo-hero__title > [aria-hidden] { display: inline-block; }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -191,7 +190,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
 .mo-stage__svg[data-pan] { display: block; }
-.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 450ms var(--ease-mgla);
+.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; will-change: transform;
   /* lewy brzeg rysunku wtapia się w tło, gdy panorama odsuwa się spod kart */
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8rem); mask-image: linear-gradient(90deg, transparent, #000 8rem); }
 .mo-stage__svg .is-lit .accent { transform: scale(2.6); transform-box: fill-box; transform-origin: center; fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
@@ -277,7 +276,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-dock__body { --dock-max: calc(100dvh - var(--dock-gora) - var(--space-5)); position: relative; max-block-size: var(--dock-max); min-block-size: min(var(--dock-max), 36rem); overflow-y: auto; overscroll-behavior: contain; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }
 .mo-dock__close { position: absolute; inset-block-start: var(--space-1); inset-inline-end: var(--space-1); z-index: 1; inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: var(--color-tlo); color: inherit; font-size: 1.5rem; cursor: pointer; }
 @media (max-width: 767px) { .mo-dock__dialog { --dock-gora: var(--space-5); } }
-@media (prefers-reduced-motion: reduce) { .mo-dock__open, .mo-stage__svg[data-pan] svg { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .mo-dock__open { transition: none; } }
 
 /* Okolica: nazwy atrakcji blisko siebie, opis rozwija się po najechaniu (na dotyku jest zawsze widoczny) */
 .mo-attractions { list-style: none; padding: 0; margin-block: var(--space-6) 0; display: grid; gap: var(--space-2); max-inline-size: var(--plyta-szer); }
@@ -326,7 +325,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-reviews { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 768px) { .mo-reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 1200px) { .mo-reviews { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-@media (max-width: 767px) { .mo-reviews > li:nth-child(n + 7) { display: none; } }
+@media (max-width: 767px) { .mo-reviews > li:nth-child(n + 7 of :not([hidden])) { display: none; } }
 .mo-review { block-size: 100%; margin: 0; display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-3); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); text-shadow: none; }
 .mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { color: var(--color-atrament); text-shadow: none; font-size: var(--text-body-s); line-height: 1.5; }
 .mo-review blockquote { margin: 0; }

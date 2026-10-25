@@ -75,7 +75,7 @@ export default async function UnitPage({ params }: SlugParams) {
 
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{t.house.plan}</h2>
-        <div className="mo-cards">
+        <div style={{ display: 'grid', gap: 'var(--rynna)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', marginBlockStart: 'var(--space-6)' }}>
           {unit.plans?.length
             ? unit.plans.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null))
             : planIllustrations(unit).map((src) => (
@@ -117,6 +117,7 @@ export default async function UnitPage({ params }: SlugParams) {
                 <h3 className="mo-h3">{u.name}</h3>
                 <p className="mo-card__meta">
                   {t.house.kind[u.kind]}
+                  {u.peak?.elevation ? ` · ${t.house.elevation(u.peak.elevation)}` : ''}
                   {u.status === 'comingSoon' ? ` · ${t.house.comingSoon}` : ''}
                 </p>
               </Link>

@@ -6,7 +6,7 @@ Poziomice z modelu terenu Terrarium (te same kafle co G2), drogi, rzeki i granic
 Wymaga: numpy, pillow, contourpy (narzędzie jednorazowe, nie zależność strony).
 Uruchom: python3 scripts/ilustracje/mapa_okolicy.py
 """
-import json, math, pathlib, sys, urllib.parse, urllib.request
+import json, math, pathlib, re, sys, urllib.parse, urllib.request
 import numpy as np
 import contourpy
 
@@ -39,7 +39,7 @@ POI = [
     ("termy", "Terma Bania", 49.38759, 20.09902, 12, -6, "start"),
     ("termy-bukovina", "Termy Bukovina", 49.32518, 20.09417, 12, 16, "start"),
     ("skywalk-poronin", "SkyWalk", 49.30728, 20.08848, -12, 4, "end"),
-    ("murzasichle", "Murzasichle", 49.31170, 20.04359, -12, 16, "end"),
+    ("murzasichle", "Park linowy i zagroda", 49.31170, 20.04359, -12, 16, "end"),
     ("splyw-dunajcem", "Spływ Dunajcem", 49.40522, 20.34027, 0, -16, "middle"),
     ("jaskinie-slowacja", "Jaskinia Bielska", 49.22876, 20.31147, 0, 24, "middle"),
     ("morskie-oko", "Morskie Oko", 49.19738, 20.07072, 12, 4, "start"),
@@ -50,6 +50,7 @@ MIEJSCOWOSCI = [
     ("Zakopane", 49.29691, 19.95048, 0, 26, "middle"), ("Poronin", 49.33965, 20.00556, -12, -8, "end"),
     ("Bukowina Tatrzańska", 49.34230, 20.10726, 0, -12, "middle"), ("Białka Tatrzańska", 49.39464, 20.10505, 12, 0, "start"),
     ("Jurgów", 49.34052, 20.13862, 12, 22, "start"), ("Łysa Polana", 49.26535, 20.11631, 12, 4, "start"),
+    ("Murzasichle", 49.3170, 20.0410, -10, -10, "end"),  # miejscowość; atrakcja obok to park linowy i zagroda
 ]
 
 # Poziomice co 100 m, co piąta mocniejsza.
@@ -93,8 +94,8 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.poi text{font:500 15px var(--font-ui,sans-serif);fill:var(--color-atrament);paint-order:stroke;stroke:var(--color-tlo);stroke-width:4px;stroke-linejoin:round}'
      '.wies circle{fill:var(--color-atrament)}'
      '.wies text{font:500 12px var(--font-ui,sans-serif);letter-spacing:.16em;text-transform:uppercase;fill:var(--color-wyciszony);paint-order:stroke;stroke:var(--color-tlo);stroke-width:4px}'
-     '.osada .pierscien{fill:none;stroke:var(--color-swierk);stroke-width:2}.osada .srodek{fill:var(--color-swierk)}'
-     '.osada text{font:700 18px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-swierk);paint-order:stroke;stroke:var(--color-tlo);stroke-width:5px}'
+     '.osada .poswiata{fill:var(--color-bursztyn);opacity:.22}.osada .tarcza{fill:var(--color-tlo);stroke:var(--color-bursztyn);stroke-width:4}.osada .sygnet{fill:var(--color-atrament)}'
+     '.osada .podpis-tlo{fill:var(--color-bursztyn)}.osada text{font:700 17px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-na-cta,#fff)}'
      '.panstwo{font:500 12px var(--font-ui,sans-serif);letter-spacing:.3em;text-transform:uppercase;fill:var(--color-wyciszony)}'
      '.atrybucja{font:400 11px var(--font-ui,sans-serif);fill:var(--color-wyciszony)}'
      '</style>',
@@ -115,8 +116,11 @@ for slug, nazwa, la, lo, dx, dy, a in POI:
     km = 6371 * math.acos(min(1, math.sin(math.radians(SITE[0])) * math.sin(math.radians(la)) + math.cos(math.radians(SITE[0])) * math.cos(math.radians(la)) * math.cos(math.radians(lo - SITE[1]))))
     L.append(f'<g id="a-{slug}" class="poi" data-km="{km:.1f}" transform="translate({x:.0f} {y:.0f})"><circle r="7"/><text x="{dx}" y="{dy + 5}" text-anchor="{a}">{nazwa}</text></g>')
 x, y = xy(*SITE)
-L.append(f'</g><g id="osada" class="osada" transform="translate({x:.0f} {y:.0f})"><circle class="pierscien" r="16"/><circle class="srodek" r="6"/>'
-         '<text x="0" y="40" text-anchor="middle">Matygowa Osada</text></g>')
+# Osada jako punkt centralny (wg Michała ma być lepiej widoczna): poświata, tarcza z sygnetem i podpis na plakietce w kolorze akcentu
+SYGNET = "".join(re.findall(r'd="([^"]+)"', (ROOT / "public/brand/sygnet.svg").read_text()))
+L.append(f'</g><g id="osada" class="osada" transform="translate({x:.0f} {y:.0f})"><circle class="poswiata" r="46"/><circle class="tarcza" r="30"/>'
+         f'<path class="sygnet" transform="scale(0.5) translate(-43.12 -43.12)" d="{SYGNET}"/>'
+         '<rect class="podpis-tlo" x="-122" y="-86" width="244" height="34" rx="17"/><text x="0" y="-63" text-anchor="middle">Matygowa Osada</text></g>')
 L.append(f'<text class="atrybucja" x="{W - 16}" y="{H - 16}" text-anchor="end">Dane: © współtwórcy OpenStreetMap (ODbL), wysokości: Terrarium / SRTM</text></svg>')
 
 out = ROOT / "public/ilustracje/G7_mapa_okolicy.svg"

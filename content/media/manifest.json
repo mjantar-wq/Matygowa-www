@@ -2,6 +2,70 @@
  "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
   {
+   "file": "O_drewno_willa_koliba_3x2_foto.webp",
+   "shot": "O",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Willa Koliba w Zakopanem jesienią",
+    "en": "Koliba villa in Zakopane in autumn"
+   },
+   "credit": {
+    "pl": "Fot. Aneta Pawska · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg",
+    "en": "Photo: Aneta Pawska · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg"
+   },
+   "source": "https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg"
+  },
+  {
+   "file": "O_owce_oscypki_3x2_foto.webp",
+   "shot": "O",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Oscypki na straganie w Zakopanem",
+    "en": "Oscypek cheeses at a stall in Zakopane"
+   },
+   "credit": {
+    "pl": "Fot. Aga Viburno · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg",
+    "en": "Photo: Aga Viburno · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg"
+   },
+   "source": "https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg"
+  },
+  {
+   "file": "O_stroj_parzenica_3x2_foto.webp",
+   "shot": "O",
+   "width": 1600,
+   "height": 1064,
+   "placeholder": false,
+   "alt": {
+    "pl": "Haftowana parzenica na góralskich portkach",
+    "en": "Embroidered parzenica on highland trousers"
+   },
+   "credit": {
+    "pl": "Fot. Joanna Gładkowska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Parzenica_01.jpg",
+    "en": "Photo: Joanna Gładkowska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Parzenica_01.jpg"
+   },
+   "source": "https://commons.wikimedia.org/wiki/File:Parzenica_01.jpg"
+  },
+  {
+   "file": "O_muzyka_wesele_3x2_foto.webp",
+   "shot": "O",
+   "width": 1600,
+   "height": 930,
+   "placeholder": false,
+   "alt": {
+    "pl": "Góralskie wesele, występ zespołu w strojach podhalańskich",
+    "en": "Highland wedding, a folk performance in Podhale dress"
+   },
+   "credit": {
+    "pl": "Fot. Marta Malina Moraczewska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg",
+    "en": "Photo: Marta Malina Moraczewska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg"
+   },
+   "source": "https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg"
+  },
+  {
    "file": "W20_sypialnia_okno_laka_3x2_foto.webp",
    "shot": "W20",
    "width": 1800,

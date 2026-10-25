@@ -48,11 +48,11 @@ async function main() {
           locale: 'pl',
           filePath: path.join(DIR, 'media', filename),
           data: real
-            ? { alt: item.alt.pl, isPlaceholder: false, series }
+            ? { alt: item.alt.pl, isPlaceholder: false, series, caption: item.credit?.pl }
             : { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
         } as never) as Any
       ).id
-      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}` } })
+      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}`, ...(real && item.credit ? { caption: item.credit.en } : {}) } })
     }
     media.set(filename, id)
   }
@@ -189,7 +189,19 @@ async function main() {
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
-    osada.sections.map((s: Any, i: number) => {
+    osada.sections.flatMap((s: Any, i: number) => {
+      // „Góralszczyzna dziś”: wstęp, potem każdy temat osobno, na przemian zdjęcie i tekst; zdjęcie po id tematu (O_<id>_…)
+      // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
+      if (s.id === 'goralszczyzna' && s.items?.some((it: Any) => it.id)) {
+        return [
+          { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), imagePosition: 'end' },
+          ...s.items.map((it: Any, j: number) => ({
+            blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
+            body: md(`*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`),
+            image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
+          })),
+        ]
+      }
       // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
       if (s.id === 'gospodarze') {
         return { blockType: 'hosts', anchor: s.id, heading: s.heading?.[l], intro: s.personal_note?.[l] ?? undefined, people: (s.hosts ?? []).filter((h: Any) => h.name).map((h: Any) => ({ name: h.name, role: h.role?.[l], text: h.bio?.[l] })) }

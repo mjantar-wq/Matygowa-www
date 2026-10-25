@@ -5,7 +5,7 @@ from PIL import Image
 
 CACHE = pathlib.Path("/tmp/terrarium"); CACHE.mkdir(exist_ok=True)
 Z = 12
-SITE = (49.33904, 20.04698)  # Matygówka, Gliczarów Górny (OSM)
+SITE = (49.34471, 20.05793)  # Matygowa Osada (współrzędne od Michała, te same co w PeakFinder)
 
 def tile_xy(lat, lon):
     n = 2 ** Z

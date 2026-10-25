@@ -201,6 +201,10 @@ body { background: var(--color-tlo); color: var(--color-atrament); font-family: 
 .mo-prose li + li { margin-block-start: var(--space-2); }
 
 /* Lista cech (udogodnienia): kolumny po 16rem, na telefonie dwie wąskie, bez punktorów */
-.mo-lista { columns: 2 16rem; column-gap: var(--rynna); margin-block: var(--space-5) 0; padding: 0; list-style: none; font: var(--text-body-s--font-weight) var(--text-body-s)/var(--text-body-s--line-height) var(--font-ui); }
-.mo-lista li { break-inside: avoid; padding-block: var(--space-1); }
-@media (max-width: 599px) { .mo-lista { columns: 2; } }
+/* Udogodnienia: siatka z bursztynowym znacznikiem, tekst w rozmiarze treści i linia pod każdą pozycją. */
+.mo-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); column-gap: var(--rynna); margin-block: var(--space-6) 0; padding: 0; list-style: none; font: var(--text-body--font-weight, 400) var(--text-body)/var(--text-body--line-height, 1.5) var(--font-ui); color: var(--color-atrament); border-top: 1px solid var(--color-linia); }
+.mo-lista li { display: flex; align-items: center; gap: var(--space-3); min-block-size: 3.25rem; padding-block: var(--space-2); border-bottom: 1px solid var(--color-linia); }
+.mo-lista li::before { content: ""; flex: none; inline-size: 1.25rem; block-size: 1.25rem; border-radius: 50%; background: var(--color-bursztyn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat; }
+.mo-lista li span { display: block; }
+.mo-lista li span::first-letter { text-transform: uppercase; }
+@media (max-width: 599px) { .mo-lista { grid-template-columns: 1fr; } .mo-lista li { min-block-size: 2.75rem; } }

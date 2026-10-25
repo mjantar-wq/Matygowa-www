@@ -13,8 +13,8 @@ export async function StructuredData({ locale }: { locale: Locale }) {
     url: site ? `${site}/` : data.url,
     telephone: settings?.phone?.replace(/\s/g, '') || data.telephone,
     email: settings?.email || data.email,
-    checkinTime: property?.property.checkInFrom ?? '16:00',
-    checkoutTime: property?.property.checkOutBy ?? '11:00',
+    checkinTime: property?.property.checkInTime ?? '16:00',
+    checkoutTime: property?.property.checkOutTime ?? '11:00',
   }
   // „<” w danych nie może zamknąć znacznika script
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, '\\u003c') }} />

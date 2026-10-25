@@ -27,6 +27,8 @@ export async function findMany<T>(collection: CollectionSlug, locale: Locale, op
       locale: locale as TypedLocale,
       fallbackLocale: 'pl',
       draft,
+      // Local API domyślnie pomija reguły dostępu: bez podglądu publiczna strona ma widzieć tylko opublikowane
+      overrideAccess: draft,
       where: opts.where,
       limit: opts.limit ?? 100,
       sort: opts.sort,

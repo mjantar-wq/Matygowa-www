@@ -16,14 +16,16 @@
 <g class="wies" transform="translate(647 458)"><circle r="3"/><text x="12" y="22" text-anchor="start">Jurgów</text></g>
 <g class="wies" transform="translate(591 746)"><circle r="3"/><text x="12" y="4" text-anchor="start">Łysa Polana</text></g>
 </g><g id="warstwa-atrakcje">
-<g id="a-kasprowy-wierch" class="poi" data-km="9.0" transform="translate(252 728)"><circle r="7"/><text x="12" y="-5" text-anchor="start">Kolejka na Kasprowy</text></g>
-<g id="a-kotelnica" class="poi" data-km="4.8" transform="translate(502 321)"><circle r="7"/><text x="-12" y="9" text-anchor="end">Kotelnica Białczańska</text></g>
-<g id="a-termy" class="poi" data-km="6.6" transform="translate(548 278)"><circle r="7"/><text x="12" y="-1" text-anchor="start">Terma Bania</text></g>
-<g id="a-termy-bukovina" class="poi" data-km="3.8" transform="translate(535 517)"><circle r="7"/><text x="12" y="21" text-anchor="start">Termy Bukovina</text></g>
-<g id="a-skywalk-poronin" class="poi" data-km="4.6" transform="translate(521 586)"><circle r="7"/><text x="-12" y="9" text-anchor="end">SkyWalk</text></g>
-<g id="a-murzasichle" class="poi" data-km="3.0" transform="translate(409 569)"><circle r="7"/><text x="-12" y="21" text-anchor="end">Murzasichle</text></g>
-<g id="a-splyw-dunajcem" class="poi" data-km="22.5" transform="translate(1151 210)"><circle r="7"/><text x="0" y="-11" text-anchor="middle">Spływ Dunajcem</text></g>
-<g id="a-jaskinie-slowacja" class="poi" data-km="22.8" transform="translate(1079 887)"><circle r="7"/><text x="0" y="29" text-anchor="middle">Jaskinia Bielska</text></g>
-<g id="a-morskie-oko" class="poi" data-km="15.8" transform="translate(477 1007)"><circle r="7"/><text x="12" y="9" text-anchor="start">Morskie Oko</text></g>
-</g><g id="osada" class="osada" transform="translate(417 464)"><circle class="pierscien" r="16"/><circle class="srodek" r="6"/><text x="0" y="40" text-anchor="middle">Matygowa Osada</text></g>
+<g id="a-kasprowy-wierch" class="poi" data-km="10.0" transform="translate(252 728)"><circle r="7"/><text x="12" y="-5" text-anchor="start">Kolejka na Kasprowy</text></g>
+<g id="a-kotelnica" class="poi" data-km="3.9" transform="translate(502 321)"><circle r="7"/><text x="-12" y="9" text-anchor="end">Kotelnica Białczańska</text></g>
+<g id="a-termy" class="poi" data-km="5.6" transform="translate(548 278)"><circle r="7"/><text x="12" y="-1" text-anchor="start">Terma Bania</text></g>
+<g id="a-termy-bukovina" class="poi" data-km="3.4" transform="translate(535 517)"><circle r="7"/><text x="12" y="21" text-anchor="start">Termy Bukovina</text></g>
+<g id="a-skywalk-poronin" class="poi" data-km="4.7" transform="translate(521 586)"><circle r="7"/><text x="-12" y="9" text-anchor="end">SkyWalk</text></g>
+<g id="a-murzasichle" class="poi" data-km="3.8" transform="translate(409 569)"><circle r="7"/><text x="-12" y="21" text-anchor="end">Murzasichle</text></g>
+<g id="a-splyw-dunajcem" class="poi" data-km="21.5" transform="translate(1151 210)"><circle r="7"/><text x="0" y="-11" text-anchor="middle">Spływ Dunajcem</text></g>
+<g id="a-jaskinie-slowacja" class="poi" data-km="22.5" transform="translate(1079 887)"><circle r="7"/><text x="0" y="29" text-anchor="middle">Jaskinia Bielska</text></g>
+<g id="a-morskie-oko" class="poi" data-km="16.4" transform="translate(477 1007)"><circle r="7"/><text x="12" y="9" text-anchor="start">Morskie Oko</text></g>
+<g id="a-gubalowka" class="poi" data-km="9.9" transform="translate(146 608)"><circle r="7"/><text x="4" y="-5" text-anchor="middle">Gubałówka</text></g>
+<g id="a-szymoszkowa" class="poi" data-km="11.0" transform="translate(112 621)"><circle r="7"/><text x="0" y="43" text-anchor="middle">Polana Szymoszkowa</text></g>
+</g><g id="osada" class="osada" transform="translate(445 442)"><circle class="pierscien" r="16"/><circle class="srodek" r="6"/><text x="0" y="40" text-anchor="middle">Matygowa Osada</text></g>
 <text class="atrybucja" x="1384" y="1096" text-anchor="end">Dane: © współtwórcy OpenStreetMap (ODbL), wysokości: Terrarium / SRTM</text></svg>

@@ -5,6 +5,7 @@ Schody leżą w tym samym miejscu na obu piętrach i są otwarte na hol lub wej�
 
 Źródła: projekt architektoniczny „BUDYNEK A1” (Bentkowski, salon na parterze: Świnica, Gerlach, Hawrań)
 i projekt wnętrz W2a z 12.2023 (Topór, salon na piętrze: Wołoszyn, Łomnica, Lodowy).
+Powierzchnie: tabela A1 (powierzchnia podłogi); parter W2a z rysunku; piętro W2a bez wymiarów, zmierzone ze skanu (stąd „ok.”).
 Pokoje są prostokątami w siatce 0–100 na szerokość budynku; ściany to ciemna bryła widoczna między pokojami.
 Uruchom: python3 scripts/ilustracje/rzuty.py
 """
@@ -34,17 +35,17 @@ UKLADY = {
             ("schody", "Schody", 51.9, 0, 87.2, 17.5, None, "schody"),
             ("wc", "WC", 51.9, 17.5, 64.2, 30.8, None, None),
             ("techniczne", "Techniczne", 64.2, 17.5, 87.2, 30.8, None, None),
-            ("sypialnia-1", "Sypialnia", 0, 30.8, 22.6, 61, None, None),
-            ("salon", "Salon z kuchnią", 22.6, 30.8, 100, 61, "i jadalnią", (22.6, 61, 77.4, 71.4)),
+            ("sypialnia-1", "Sypialnia", 0, 30.8, 22.6, 61, "9,6 m²", None),
+            ("salon", "Salon z kuchnią", 22.6, 30.8, 100, 61, "i jadalnią · 32,5 m²", (22.6, 61, 77.4, 71.4)),
         ]),
         "pietro": ([(12.8, 0), (87.2, 0), (87.2, 66), (12.8, 66)], [
-            ("sypialnia-2", "Sypialnia", 12.8, 0, 44, 29.2, None, None),
+            ("sypialnia-2", "Sypialnia", 12.8, 0, 44, 29.2, "13 m²", None),
             ("lazienka-2", "Łazienka", 44, 0, 58.5, 29.2, None, None),
             ("schody", "Schody", 58.5, 0, 72.6, 29.2, None, "schody"),
             ("skos", "", 72.6, 0, 87.2, 29.2, None, "skos"),
             ("hol", "Hol", 12.8, 29.2, 87.2, 39.6, None, None),
-            ("sypialnia-3", "Sypialnia", 12.8, 39.6, 50.9, 66, None, None),
-            ("sypialnia-4", "Sypialnia", 50.9, 39.6, 87.2, 66, None, None),
+            ("sypialnia-3", "Sypialnia", 12.8, 39.6, 50.9, 66, "14,5 m²", None),
+            ("sypialnia-4", "Sypialnia", 50.9, 39.6, 87.2, 66, "11,3 m²", None),
         ]),
     },
     "salon-pietro": {
@@ -64,11 +65,11 @@ UKLADY = {
         ]),
         "pietro": ([(12.8, 0), (87.2, 0), (87.2, 71.6), (12.8, 71.6)], [
             ("lazienka-prywatna", "Łazienka", 12.8, 0, 27.4, 32.8, "prywatna", None),
-            ("sypialnia-4", "Sypialnia", 27.4, 0, 57.7, 32.8, "z łazienką", None),
-            ("hol", "", 57.7, 0, 72.2, 13.3, None, None),
-            ("wc", "WC", 57.7, 13.3, 72.2, 32.8, None, None),
+            ("sypialnia-4", "Sypialnia", 27.4, 0, 57.7, 32.8, "z łazienką · ok. 13 m²", None),
+            ("wc", "WC", 57.7, 0, 72.2, 18.5, None, None),  # wg Michała: WC od ściany zewnętrznej, wejście do sypialni z boku z holu
+            ("hol", "Hol", 57.7, 18.5, 72.2, 32.8, None, None),
             ("schody", "Schody", 72.2, 0, 87.2, 32.8, None, "schody"),
-            ("salon", "Salon z kuchnią", 12.8, 32.8, 87.2, 71.6, "i jadalnią", None),
+            ("salon", "Salon z kuchnią", 12.8, 32.8, 87.2, 71.6, "i jadalnią · ok. 38 m²", None),
         ]),
     },
 }
@@ -104,7 +105,7 @@ OTWARCIA = {
     ("salon-parter", "parter"): [("wejscie", "schody")],
     ("salon-parter", "pietro"): [("schody", "hol")],
     ("salon-pietro", "parter"): [("wejscie", "schody"), ("schody", "schody-2"), ("wejscie", "hol"), ("hol", "korytarz")],
-    ("salon-pietro", "pietro"): [("schody", "salon"), ("hol", "schody")],
+    ("salon-pietro", "pietro"): [("schody", "salon"), ("hol", "schody"), ("hol", "salon")],
     ("apartament", "parter"): [("klatka", "schody")],
     ("apartament", "pietro"): [("klatka", "schody"), ("hol", "klatka")],
 }

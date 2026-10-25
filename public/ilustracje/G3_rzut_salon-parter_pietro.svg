@@ -3,7 +3,8 @@
 <polygon class="bryla" points="128,0 872,0 872,660 128,660"/>
 <g id="r-sypialnia-2" class="pokoj-g" data-nazwa="Sypialnia">
 <rect class="pokoj" x="132" y="4" width="303" height="283"/>
-<text class="nazwa" x="284" y="154" text-anchor="middle">Sypialnia</text>
+<text class="nazwa" x="284" y="140" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="284" y="168" text-anchor="middle">13 m²</text>
 </g>
 <g id="r-lazienka-2" class="pokoj-g" data-nazwa="Łazienka">
 <rect class="pokoj" x="444" y="4" width="136" height="283"/>
@@ -31,11 +32,13 @@
 </g>
 <g id="r-sypialnia-3" class="pokoj-g" data-nazwa="Sypialnia">
 <rect class="pokoj" x="132" y="401" width="372" height="255"/>
-<text class="nazwa" x="318" y="536" text-anchor="middle">Sypialnia</text>
+<text class="nazwa" x="318" y="522" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="318" y="550" text-anchor="middle">14,5 m²</text>
 </g>
 <g id="r-sypialnia-4" class="pokoj-g" data-nazwa="Sypialnia">
 <rect class="pokoj" x="514" y="401" width="354" height="255"/>
-<text class="nazwa" x="690" y="536" text-anchor="middle">Sypialnia</text>
+<text class="nazwa" x="690" y="522" text-anchor="middle">Sypialnia</text>
+<text class="dopisek" x="690" y="550" text-anchor="middle">11,3 m²</text>
 </g>
 <rect class="pokoj" x="590" y="287" width="132" height="9"/>
 </svg>

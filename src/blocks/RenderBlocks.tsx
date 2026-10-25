@@ -3,22 +3,22 @@ import Link from 'next/link'
 import { BookingBar } from '@/components/BookingBar'
 import { Media } from '@/components/Media'
 import { RichText } from '@/components/RichText'
-import { PeaksPanorama } from '@/components/PeaksPanorama'
+import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
 import { PhotoGallery } from '@/components/PhotoGallery'
-import { HeroStage, type HeroImage, type HeroSlide } from '@/components/effects/HeroStage'
+import { HeroStage } from '@/components/effects/HeroStage'
 import { ScrollSteps } from '@/components/effects/ScrollSteps'
-import { assignSlots } from '@/lib/ambience'
+import { heroSlides, sceneId } from '@/lib/scenes'
 import { href } from '@/i18n/routes'
 import { findMany } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getPromotions, getServices } from '@/lib/icecoldres'
 import type { PageContext } from '@/lib/page'
-import type { Attraction, Media as MediaDoc, News, Offer, Page, Testimonial, Unit } from '@/payload-types'
+import type { Attraction, News, Offer, Page, Testimonial, Unit } from '@/payload-types'
 
 type Block = NonNullable<Page['layout']>[number]
 type Of<T extends Block['blockType']> = Extract<Block, { blockType: T }>
-type Props<T extends Block['blockType']> = { block: Of<T>; ctx: PageContext }
+type Props<T extends Block['blockType']> = { block: Of<T>; ctx: PageContext; immersive?: boolean }
 
 function Heading({ eyebrow, heading, level = 2 }: { eyebrow?: string | null; heading?: string | null; level?: 1 | 2 }) {
   const H = level === 1 ? 'h1' : 'h2'
@@ -30,37 +30,23 @@ function Heading({ eyebrow, heading, level = 2 }: { eyebrow?: string | null; hea
   )
 }
 
-function Section({ block, children, className = '' }: { block: { anchor?: string | null; blockType: string }; children: React.ReactNode; className?: string }) {
+function Section({ block, children, className = '', scene = true }: { block: { id?: string | null; anchor?: string | null; blockType: string }; children: React.ReactNode; className?: string; scene?: boolean }) {
   return (
-    <section id={block.anchor || undefined} data-block={block.blockType} className={`mo-section ${className}`}>
+    <section id={block.anchor || undefined} data-block={block.blockType} data-scene={scene ? sceneId(block.id) : undefined} className={`mo-section ${className}`}>
       <div className="mo-container">{children}</div>
     </section>
   )
 }
 
-const asImage = (m?: MediaDoc | number | string | null): HeroImage | null =>
-  m && typeof m === 'object' && m.url ? { url: m.url, alt: m.alt, width: m.width, height: m.height, focusX: m.focusX, focusY: m.focusY } : null
-const asUrl = (m?: MediaDoc | number | string | null) => (m && typeof m === 'object' && m.url ? m.url : null)
-
-/** Hero: kadr główny i warianty nastrojów; który widać, decyduje przełącznik Dzień / Noc i Zima / Lato. */
-function heroSlides(block: Of<'hero'>): HeroSlide[] {
-  const variants = [
-    { pora: null, sezon: null, image: block.image, video: block.video, videoPortrait: block.videoPortrait },
-    ...(block.variants ?? []),
-  ]
-  const slots = assignSlots(variants)
-  return variants
-    .map((v, i) => ({ image: asImage(v.image) ?? asImage(block.image), video: asUrl(v.video), videoPortrait: asUrl(v.videoPortrait), slots: slots[i] }))
-    .filter((s, i) => i === 0 || s.slots.length)
-}
-
-function Hero({ block, ctx }: Props<'hero'>) {
+function Hero({ block, ctx, immersive }: Props<'hero'>) {
   const words = (block.headline ?? '').split(' ')
   return (
-    <section className="mo-hero" data-block="hero" id={block.anchor || undefined}>
-      <div className="mo-hero__media">
-        <HeroStage slides={heroSlides(block)} t={ctx.t.effects} />
-      </div>
+    <section className="mo-hero" data-block="hero" data-scene={sceneId(block.id)} id={block.anchor || undefined}>
+      {immersive ? null : (
+        <div className="mo-hero__media">
+          <HeroStage slides={heroSlides(block)} t={ctx.t.effects} />
+        </div>
+      )}
       <div className="mo-container mo-hero__content">
         <h1 className="mo-display-xl mo-hero__title">
           <span className="mo-sr">{block.headline}</span>
@@ -85,7 +71,7 @@ function Hero({ block, ctx }: Props<'hero'>) {
 
 function Intro({ block }: Props<'intro'>) {
   return (
-    <Section block={block}>
+    <Section block={block} scene={false}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       {block.stats?.length ? (
@@ -102,13 +88,13 @@ function Intro({ block }: Props<'intro'>) {
   )
 }
 
-async function Panorama({ block, ctx }: Props<'peaksPanorama'>) {
+async function Panorama({ block, ctx, immersive }: Props<'peaksPanorama'>) {
   const units = await findMany<Unit>('units', ctx.locale, { sort: 'order' })
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      <PeaksPanorama units={units} image={block.image} ctx={ctx} />
+      {immersive ? <PeakCards units={units} ctx={ctx} /> : <PeaksPanorama units={units} image={block.image} ctx={ctx} />}
       {block.showMap ? block.map ? <Media media={block.map} /> : <SettlementMap units={units} ctx={ctx} /> : null}
     </Section>
   )
@@ -119,8 +105,8 @@ function Day({ block, ctx }: Props<'dayInSettlement'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <ol style={{ display: 'grid', gap: 'var(--space-8)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))' }}>
-        {block.scenes?.map((s) => (
-          <li key={s.id} data-pora={s.time} style={{ display: 'grid', gap: 'var(--space-4)', alignContent: 'start' }}>
+        {block.scenes?.map((s, i) => (
+          <li key={s.id} data-pora={s.time} data-scene={sceneId(block.id, i)} data-step style={{ display: 'grid', gap: 'var(--space-4)', alignContent: 'start' }}>
             <div className="mo-card__media" style={{ aspectRatio: 'var(--proporcja-kadr)' }}><Media media={s.image} fallback={`${ctx.t.placeholder}: ${s.time}`} /></div>
             <h3 className="mo-h3">{s.title}</h3>
             <p className="mo-prose" data-tylko={s.summerText ? 'zima' : undefined}>{s.text}</p>
@@ -138,8 +124,8 @@ function HouseInside({ block, ctx }: Props<'houseInside'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       <div className="mo-cards">
-        {block.rooms?.map((r) => (
-          <article key={r.id} className="mo-card">
+        {block.rooms?.map((r, i) => (
+          <article key={r.id} className="mo-card" data-scene={sceneId(block.id, i)} data-step>
             <div className="mo-card__media"><Media media={r.image} /></div>
             <h3 className="mo-h3">{r.title}</h3>
             <p>{r.text}</p>
@@ -162,8 +148,8 @@ async function Rituals({ block, ctx }: Props<'rituals'>) {
         <ScrollSteps
           label={block.heading ?? undefined}
           media={block.steps.map((st) => <Media key={st.id} media={st.image} fallback={st.word ?? undefined} />)}
-          steps={block.steps.map((st) => (
-            <div key={st.id}>
+          steps={block.steps.map((st, i) => (
+            <div key={st.id} data-scene={sceneId(block.id, i)}>
               <h3 className="mo-h3 mo-steps__word">{st.word}</h3>
               <p className="mo-prose">{st.text}</p>
             </div>
@@ -200,13 +186,13 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
   )
 }
 
-async function Surroundings({ block, ctx }: Props<'surroundings'>) {
+async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
   const attractions = await findMany<Attraction>('attractions', ctx.locale, { where: { featured: { equals: true } }, limit: block.limit ?? 6 })
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
-      {block.map ? (
+      {immersive ? null : block.map ? (
         <Media media={block.map} />
       ) : (
         // ilustracja G7 z wątku wizualnego, dopóki redakcja nie wgra własnej mapy
@@ -215,7 +201,7 @@ async function Surroundings({ block, ctx }: Props<'surroundings'>) {
       )}
       <div className="mo-cards">
         {attractions.map((a) => (
-          <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">
+          <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card" data-scene-focus={`a-${a.slug}`} data-step>
             <div className="mo-card__media"><Media media={a.image} /></div>
             <h3 className="mo-h3">{a.name}</h3>
             {a.distanceKm != null ? <p className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</p> : null}
@@ -366,6 +352,24 @@ function Hosts({ block }: Props<'hosts'>) {
 /** Siatka kart, w której 2–3 karty wypełniają cały rząd zamiast zostawiać puste kolumny. */
 const FIT: React.CSSProperties = { gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }
 
+/** Rozdział „Dziesięć szczytów” na stałym tle: przy każdej karcie panorama przesuwa się do szczytu domku. */
+function PeakCards({ units, ctx }: { units: Unit[]; ctx: PageContext }) {
+  return (
+    <ol className="mo-peak-cards">
+      {units.map((u) => (
+        <li key={u.id} data-scene-focus={peakSvgId(u)} data-step>
+          <Link href={href(ctx.locale, 'houses', u.slug)} className="mo-card mo-peak-card">
+            <div className="mo-card__media"><Media media={u.hero} /></div>
+            <p className="mo-label">{[u.peak?.range, u.peak?.elevation ? ctx.t.house.elevation(u.peak.elevation) : null].filter(Boolean).join(' · ')}</p>
+            <h3 className="mo-h3">{u.name}</h3>
+            {u.status === 'comingSoon' ? <p className="mo-badge">{ctx.t.effects.opening}</p> : u.tagline ? <p>{u.tagline}</p> : null}
+          </Link>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
 const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode | Promise<React.ReactNode> } = {
   hero: Hero,
   intro: Intro,
@@ -385,10 +389,11 @@ const RENDERERS: { [K in Block['blockType']]: (p: Props<K>) => React.ReactNode |
   hosts: Hosts,
 }
 
-export function RenderBlocks({ blocks, ctx }: { blocks: Page['layout']; ctx: PageContext }) {
+/** `immersive`: strona główna na stałym tle (SceneStage); rozdziały nie pokazują wtedy własnych teł. */
+export function RenderBlocks({ blocks, ctx, immersive }: { blocks: Page['layout']; ctx: PageContext; immersive?: boolean }) {
   return blocks?.map((block) => {
-    const Render = RENDERERS[block.blockType] as (p: { block: Block; ctx: PageContext }) => React.ReactNode
-    return <Render key={block.id} block={block} ctx={ctx} />
+    const Render = RENDERERS[block.blockType] as (p: { block: Block; ctx: PageContext; immersive?: boolean }) => React.ReactNode
+    return <Render key={block.id} block={block} ctx={ctx} immersive={immersive} />
   })
 }
 

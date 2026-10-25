@@ -166,3 +166,54 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 @media (prefers-reduced-motion: no-preference) {
   .mo-lightbox[open] .mo-lightbox__figure img { animation: mo-mgla var(--ruch-sredni) var(--ease-mgla); }
 }
+
+/* Strona główna: opowieść na stałym tle (koncepcja po M1). Scena jest przypięta pod treścią, rozdziały
+   przewijają się nad nią na półprzezroczystych płytach. */
+.mo-story { position: relative; isolation: isolate; }
+.mo-stage { position: fixed; inset: 0; z-index: -1; background: var(--color-tlo); pointer-events: none; }
+.mo-stage__scene { position: absolute; inset: 0; opacity: 0; transition: opacity 800ms var(--ease-mgla); }
+.mo-stage__scene[data-active] { opacity: 1; }
+.mo-stage__scene[data-kind="media"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--color-zaslona), transparent 40%, transparent 60%, var(--color-zaslona)); }
+.mo-stage__scene[data-kind="plain"] { background: var(--color-tlo); }
+.mo-stage .mo-hero__pause { pointer-events: auto; position: fixed; }
+.mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
+.mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
+.mo-stage__svg[data-pan] { display: block; }
+.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: 100%; inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 900ms var(--ease-mgla); }
+.mo-stage__svg .is-lit .accent { transform: scale(1.8); transform-box: fill-box; transform-origin: center; }
+.mo-stage__svg .is-lit :is(text, .peak-name) { fill: var(--color-bursztyn-tekst); }
+.mo-stage__svg .is-lit { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
+.mo-stage__svg .accent, .mo-stage__svg text { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); }
+
+.mo-story > .mo-section, .mo-story > .mo-hero { background: transparent; }
+.mo-story .mo-section { padding-block: 22svh; }
+.mo-story .mo-hero { min-block-size: 100svh; }
+.mo-story .mo-hero__content { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); }
+.mo-story .mo-hero .mo-booking { text-shadow: none; }
+
+/* Płyty: każdy blok treści i każdy krok opowieści osobno, żeby między nimi było widać scenę */
+.mo-story .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
+.mo-story [data-step] {
+  max-inline-size: 40rem; padding: var(--space-6) var(--space-7); margin-block: 0;
+  background: color-mix(in srgb, var(--color-tlo) 84%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in srgb, var(--color-linia) 60%, transparent);
+}
+.mo-story .mo-section > .mo-container > * + * { margin-block-start: var(--space-4); }
+.mo-story .mo-section > .mo-container > header { margin-block-end: 0; }
+@media (max-width: 767px) { .mo-story .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map), .mo-story [data-step] { padding: var(--space-5); } }
+
+/* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić */
+.mo-story :is(.mo-cards, .mo-peak-cards, ol):has(> [data-step]) { display: grid !important; grid-template-columns: minmax(0, 40rem) !important; gap: 55svh !important; list-style: none; padding: 0; margin-block-start: 30svh; }
+.mo-story [data-step] > .mo-card__media { display: none; }
+.mo-story .mo-peak-card .mo-card__media { display: block; aspect-ratio: 3 / 2; }
+.mo-story [data-step].mo-card, .mo-story [data-step] > .mo-card { color: var(--color-atrament); }
+.mo-peak-cards { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.mo-peak-card { text-decoration: none; color: inherit; display: grid; gap: var(--space-2); }
+.mo-story [data-step] .mo-peak-card { border: 0; padding: 0; background: none; }
+
+/* Sauna i bania na stałym tle: scena przejmuje zdjęcia, zostają same słowa */
+.mo-story .mo-steps { display: block; }
+.mo-story :is(.mo-steps__stage, .mo-steps__inline) { display: none; }
+.mo-story .mo-steps__list { gap: 45svh; margin-block-start: 25svh; }
+.mo-story .mo-steps__step { opacity: 1; min-block-size: 0; }
+.mo-story .mo-steps__step > div { max-inline-size: 40rem; padding: var(--space-6) var(--space-7); background: color-mix(in srgb, var(--color-tlo) 84%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }

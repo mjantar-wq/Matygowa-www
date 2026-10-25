@@ -12,7 +12,7 @@ export type HeroSlide = { image?: HeroImage | null; video?: string | null; video
  * Filmowe wejście: kadr startowy jest od razu (LCP), film dociąga się po załadowaniu strony i płynnie
  * wchodzi na kadr. Bez ruchu (prefers-reduced-motion, oszczędzanie danych) zostaje sam kadr.
  */
-export function HeroStage({ slides, t }: { slides: HeroSlide[]; t: Dictionary['effects'] }) {
+export function HeroStage({ slides, t, active: shown = true, eager = true, controls = true }: { slides: HeroSlide[]; t: Dictionary['effects']; active?: boolean; eager?: boolean; controls?: boolean }) {
   const { pora, sezon } = useAmbience()
   const active = Math.max(0, slides.findIndex((s) => s.slots.includes(`${pora}-${sezon}`)))
   const videos = useRef<(HTMLVideoElement | null)[]>([])
@@ -35,7 +35,7 @@ export function HeroStage({ slides, t }: { slides: HeroSlide[]; t: Dictionary['e
     if (!ready) return
     videos.current.forEach((v, i) => {
       if (!v) return
-      if (i !== active || paused) return void v.pause()
+      if (i !== active || paused || !shown) return void v.pause()
       const slide = slides[i]
       const src = (matchMedia('(orientation: portrait)').matches && slide.videoPortrait) || slide.video
       if (!src) return
@@ -45,7 +45,7 @@ export function HeroStage({ slides, t }: { slides: HeroSlide[]; t: Dictionary['e
       }
       v.play().catch(() => {})
     })
-  }, [ready, active, paused, slides])
+  }, [ready, active, paused, slides, shown])
 
   const hasVideo = slides[active]?.video
   return (
@@ -61,8 +61,8 @@ export function HeroStage({ slides, t }: { slides: HeroSlide[]; t: Dictionary['e
                 alt={s.image.alt ?? ''}
                 width={s.image.width ?? undefined}
                 height={s.image.height ?? undefined}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                fetchPriority={i === 0 ? 'high' : undefined}
+                loading={eager && i === 0 ? 'eager' : 'lazy'}
+                fetchPriority={eager && i === 0 ? 'high' : undefined}
                 decoding="async"
                 style={{ objectPosition: position }}
               />
@@ -87,7 +87,7 @@ export function HeroStage({ slides, t }: { slides: HeroSlide[]; t: Dictionary['e
           </div>
         )
       })}
-      {ready && hasVideo ? (
+      {controls && shown && ready && hasVideo ? (
         <button type="button" className="mo-hero__pause mo-btn mo-btn--obrys mo-btn--maly" aria-pressed={paused} onClick={() => setPaused((p) => !p)}>
           {paused ? t.play : t.pause}
         </button>

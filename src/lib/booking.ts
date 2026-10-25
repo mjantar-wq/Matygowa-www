@@ -21,7 +21,7 @@ export interface EngineSettings {
 }
 
 /** Parametry kampanii przekazywane do silnika (trafiają do rezerwacji jako jej źródło). */
-export const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'] as const
+export const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id'] as const
 
 /**
  * Adres silnika rezerwacji z wypełnionymi danymi (kontrakt IceColdRes, pkt 6). Do uruchomienia
@@ -64,3 +64,16 @@ export const engineSettings = (s: (EngineSettings & { showPrices?: boolean | nul
         showPrices: s.showPrices !== false,
       }
     : null
+
+/** Domeny silników rezerwacji, do których linki dostają UTM i zdarzenie booking_click. */
+export function engineHosts(s: EngineSettings | null | undefined) {
+  const hosts = new Set(['booking.matygowaosada.pl', 'booking.hotres.pl'])
+  for (const url of [s?.icecoldresUrl, s?.hotresUrl]) {
+    try {
+      if (url) hosts.add(new URL(url).hostname)
+    } catch {
+      // błędny adres w panelu: pomijamy
+    }
+  }
+  return [...hosts]
+}

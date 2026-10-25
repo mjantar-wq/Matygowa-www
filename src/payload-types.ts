@@ -1445,6 +1445,10 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * GA4 i piksel Meta działają jako tagi w GTM, tylko po zgodzie gościa (baner cookies). Puste pole: strona nie ładuje żadnych skryptów pomiarowych. Instrukcja: docs/pomiar.md.
+   */
+  gtmId?: string | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
   seoImage?: (number | null) | Media;
@@ -1473,6 +1477,7 @@ export interface SettingsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  gtmId?: T;
   seoTitle?: T;
   seoDescription?: T;
   seoImage?: T;

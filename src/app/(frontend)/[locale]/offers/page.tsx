@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { BookLink } from '@/components/BookLink'
 import { CmsPage, getPage } from '@/components/CmsPage'
 import { Media } from '@/components/Media'
 import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
-import { engineSettings } from '@/lib/booking'
+import { bookingUrl, engineSettings } from '@/lib/booking'
 import { findMany } from '@/lib/cms'
 import { getPromotions } from '@/lib/icecoldres'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
@@ -36,9 +35,9 @@ export default async function OffersPage({ params }: LocaleParams) {
                 <h2 className="mo-h3 mo-card__title">{pl ? p.badge : p.en.badge || p.badge}</h2>
                 <p className="mo-body-s mo-card__text">{pl ? p.description : p.en.description || p.description}</p>
                 <p className="mo-card__meta">
-                  <BookLink engine={engine} locale={ctx.locale} query={{ offer: extra?.icecoldresOfferId || undefined }} className="mo-btn mo-btn--obrys mo-btn--maly">
+                  <a href={bookingUrl(engine, ctx.locale, { offer: extra?.icecoldresOfferId || undefined })} data-track="offers" className="mo-btn mo-btn--obrys mo-btn--maly">
                     {ctx.t.booking.book}
-                  </BookLink>
+                  </a>
                 </p>
               </article>
             )
@@ -54,9 +53,9 @@ export default async function OffersPage({ params }: LocaleParams) {
                 <div className="mo-card__meta mo-prose">
                   <RichText data={o.content} />
                   {o.icecoldresOfferId ? (
-                    <BookLink engine={engine} locale={ctx.locale} query={{ offer: o.icecoldresOfferId }} className="mo-btn mo-btn--obrys mo-btn--maly">
+                    <a href={bookingUrl(engine, ctx.locale, { offer: o.icecoldresOfferId })} data-track="offers" className="mo-btn mo-btn--obrys mo-btn--maly">
                       {ctx.t.booking.book}
-                    </BookLink>
+                    </a>
                   ) : null}
                 </div>
               </article>

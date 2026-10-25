@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import { fraunces, inter, rufina } from '@/app/fonts'
+import { Analytics } from '@/components/Analytics'
+import { ClickTracking } from '@/components/ClickTracking'
+import { ConsentBanner } from '@/components/ConsentBanner'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
-import { UtmCapture } from '@/components/UtmCapture'
 import { dirOf } from '@/i18n/locales'
+import { href } from '@/i18n/routes'
+import { engineHosts } from '@/lib/booking'
 import { pageContext, type LocaleParams } from '@/lib/page'
 import '@/styles/globals.css'
 
@@ -27,11 +31,13 @@ export default async function LocaleLayout({ children, params }: LocaleParams & 
   return (
     <html lang={ctx.locale} dir={dirOf(ctx.locale)} data-sezon={seasonOf()} data-pora="dzien" className={`${fraunces.variable} ${inter.variable} ${rufina.variable}`}>
       <body>
+        <Analytics gtmId={ctx.settings?.gtmId} />
         <a className="mo-skip mo-btn mo-btn--glowny" href="#tresc">{ctx.t.skipToContent}</a>
         <SiteHeader locale={ctx.locale} t={ctx.t} />
         <main id="tresc">{children}</main>
-        <UtmCapture />
         <SiteFooter locale={ctx.locale} t={ctx.t} settings={ctx.settings} />
+        <ConsentBanner t={ctx.t.consent} policyHref={href(ctx.locale, 'documents', 'cookies')} />
+        <ClickTracking engineHosts={engineHosts(ctx.settings)} />
       </body>
     </html>
   )

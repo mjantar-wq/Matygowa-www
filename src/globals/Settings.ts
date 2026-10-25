@@ -56,6 +56,21 @@ export const Settings: GlobalConfig = {
           ],
         },
         {
+          label: 'Pomiar i zgody',
+          fields: [
+            {
+              name: 'gtmId',
+              label: 'Identyfikator kontenera Google Tag Manager',
+              type: 'text',
+              admin: {
+                placeholder: 'GTM-XXXXXXX',
+                description: 'GA4 i piksel Meta działają jako tagi w GTM, tylko po zgodzie gościa (baner cookies). Puste pole: strona nie ładuje żadnych skryptów pomiarowych. Instrukcja: docs/pomiar.md.',
+              },
+              validate: (v: string | null | undefined) => !v || /^GTM-[A-Z0-9]+$/.test(v.trim().toUpperCase()) || 'Wpisz identyfikator w postaci GTM-XXXXXXX',
+            },
+          ],
+        },
+        {
           label: 'SEO',
           fields: [
             { name: 'seoTitle', label: 'Tytuł domyślny', type: 'text', localized: true },

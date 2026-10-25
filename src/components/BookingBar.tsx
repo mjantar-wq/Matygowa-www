@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import type { Locale } from '@/i18n/locales'
 import type { Dictionary } from '@/i18n/dictionaries'
 import { href } from '@/i18n/routes'
@@ -13,7 +13,9 @@ import {
   type CalendarData,
 } from '@/lib/availability'
 import { bookingUrl, formatPrice, type EngineSettings } from '@/lib/booking'
-import { currentUtm } from '@/lib/utm'
+import { campaignParams, nightsBetween, track } from '@/lib/tracking'
+
+const noSubscribe = () => () => {}
 
 /** Tylko napisy (bez funkcji), bo komponent działa w przeglądarce. */
 type Props = {
@@ -136,15 +138,20 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
     unit: extra.unit ?? unit,
     offer: extra.offer,
   })
-  const go = (extra?: { unit?: string; offer?: string }) =>
-    bookingUrl(engine, locale, query(extra), currentUtm())
+  // linki do silnika bez UTM: dokleja je ClickTracking razem ze zdarzeniem booking_click
+  const go = (extra?: { unit?: string; offer?: string }) => bookingUrl(engine, locale, query(extra))
+  // bez wyników na stronie pasek jest zwykłym formularzem GET do silnika (linker GA4 dokleja _gl)
+  const utmJson = useSyncExternalStore(noSubscribe, () => JSON.stringify(campaignParams()), () => '{}')
+  const utm = useMemo(() => JSON.parse(utmJson) as Record<string, string>, [utmJson])
+  const target = new URL(bookingUrl(engine, locale, query(), utm))
 
   async function submit(e: React.FormEvent) {
-    e.preventDefault()
+    const nights = nightsBetween(arrival, departure)
     if (!live) {
-      window.location.href = go()
+      track('booking_click', { booking_location: 'booking_bar', unit, arrival: arrival || undefined, nights, adults, children })
       return
     }
+    e.preventDefault()
     if (!arrival || !departure) {
       setOpen(true)
       return
@@ -165,6 +172,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
       // dom, z którego strony gość szuka, na początku listy
       data.results.sort((a, b) => Number(b.code === unit) - Number(a.code === unit))
       setSearch({ status: 'done', ...data })
+      track('booking_search', { unit, arrival, nights, adults, children, results: data.results.filter((x) => x.offers.length).length })
     } catch {
       setSearch({ status: 'error' })
     }
@@ -194,7 +202,16 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
 
   return (
     <div className="mo-booking-wrap" ref={root}>
-      <form className="mo-booking" onSubmit={submit} aria-label={t.check}>
+      <form
+        className="mo-booking"
+        method="get"
+        action={target.origin + target.pathname}
+        onSubmit={submit}
+        aria-label={t.check}
+      >
+        {[...target.searchParams].map(([k, v]) => (
+          <input key={k} type="hidden" name={k} value={v} />
+        ))}
         <button
           type="button"
           className="mo-field"
@@ -369,7 +386,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
         {search.status === 'error' ? (
           <p className="mo-body-s">
             {t.error}{' '}
-            <a href={go()} className="mo-link">
+            <a href={go()} data-track="booking_results" className="mo-link">
               {t.goToEngine}
             </a>
           </p>
@@ -406,9 +423,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
                           <a
                             className="mo-btn mo-btn--glowny"
                             href={go({ unit: r.code, offer: o.offerId })}
-                            onClick={(e) =>
-                              (e.currentTarget.href = go({ unit: r.code, offer: o.offerId }))
-                            }
+                            data-track="booking_results"
                           >
                             {t.book}
                           </a>
@@ -428,7 +443,7 @@ export function BookingBar({ locale, t, engine, unit, slogan }: Props) {
               </p>
             ) : null}
             {!available.length ? (
-              <a href={go()} className="mo-link">
+              <a href={go()} data-track="booking_results" className="mo-link">
                 {t.goToEngine}
               </a>
             ) : null}

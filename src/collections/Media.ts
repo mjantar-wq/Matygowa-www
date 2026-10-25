@@ -20,6 +20,12 @@ export const Media: CollectionConfig = {
     crop: false,
     focalPoint: false,
     mimeTypes: ['image/*', 'video/mp4', 'video/webm'],
+    // pliki z R2 idą przez Worker; bez tego każde wyświetlenie to żądanie do Payload (domyślnie no-store).
+    // Payload nadaje nowej wersji pliku nową nazwę, więc 30 dni w przeglądarce i na CDN jest bezpieczne.
+    modifyResponseHeaders: ({ headers }) => {
+      headers.set('Cache-Control', 'public, max-age=2592000, stale-while-revalidate=86400')
+      return headers
+    },
   },
   fields: [
     { name: 'alt', label: 'Tekst alternatywny', type: 'text', required: true, localized: true },

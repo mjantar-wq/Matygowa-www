@@ -48,7 +48,7 @@ export default async function UnitPage({ params }: SlugParams) {
       <section className="mo-hero">
         <div className="mo-hero__media"><Media media={unit.hero} priority alt={peakViewAlt(unit, ctx.locale)} /></div>
         <div className="mo-container mo-hero__content">
-          {unit.status === 'comingSoon' ? <p className="mo-label" style={{ color: 'inherit' }}>{t.house.comingSoon}</p> : null}
+          {unit.status === 'comingSoon' ? <p className="mo-budowa">{t.house.comingSoon}</p> : null}
           <h1 className="mo-display-xl">{unit.name}</h1>
           {unit.peak?.elevation ? <p className="mo-lede">{t.house.elevation(unit.peak.elevation)}{unit.peak.range ? ` · ${unit.peak.range}` : ''}</p> : null}
         </div>
@@ -67,6 +67,8 @@ export default async function UnitPage({ params }: SlugParams) {
         {!unit.peak?.story ? <Placeholder label={t.placeholder} note="Historia szczytu" /> : null}
       </section>
 
+      {/* apartamenty w budowie: bez galerii i rzutów (decyzja Michała) */}
+      {unit.status !== 'comingSoon' ? (<>
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{t.house.gallery}</h2>
         {unit.gallery?.length ? <PhotoGallery media={unit.gallery} ctx={ctx} /> : <Placeholder label={t.placeholder} />}
@@ -83,6 +85,7 @@ export default async function UnitPage({ params }: SlugParams) {
               ))}
         </div>
       </section>
+      </>) : null}
 
       {amenities.length ? (
         <section className="mo-section mo-container">

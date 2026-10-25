@@ -259,3 +259,6 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 @media (min-width: 1024px) {
   .mo-atrakcja:not(.mo-popup *):has(.mo-atrakcja__zdjecie) { grid-template-columns: 7fr 5fr; }
 }
+
+/* Apartamenty w budowie: wyraźna plakietka na górze karty */
+.mo-budowa { display: inline-block; padding: var(--space-2) var(--space-4); border-radius: var(--radius-pole); background: var(--color-cta); color: var(--color-na-cta); font: var(--text-button--font-weight) var(--text-button)/var(--text-button--line-height) var(--font-ui); letter-spacing: var(--text-button--letter-spacing); text-shadow: none; }

@@ -145,6 +145,47 @@
     }
   },
   {
+    "slug": "skywalk-poronin",
+    "map_svg_id": "a-skywalk-poronin",
+    "name": {
+      "pl": "SkyWalk Poronin",
+      "en": "SkyWalk Poronin"
+    },
+    "season": [
+      "summer",
+      "winter"
+    ],
+    "category": "views",
+    "featured": true,
+    "distance_km": 12.8,
+    "drive_min": 19,
+    "distance_note": "Małe Ciche 93, trasa wg OSRM, 25.10.2026.",
+    "body": {
+      "pl": "Szklany taras zawieszony nad Podhalem, w Małem Cichem koło Poronina. Pod stopami przepaść, przed Wami panorama 360°: od Tatr Wysokich po doliny i wsie Podhala.",
+      "en": "A glass terrace suspended above Podhale, in Małe Ciche near Poronin. A drop beneath your feet and a 360° panorama ahead, from the High Tatras to the valleys and villages of Podhale."
+    }
+  },
+  {
+    "slug": "splyw-dunajcem",
+    "map_svg_id": "a-splyw-dunajcem",
+    "name": {
+      "pl": "Spływ Dunajcem",
+      "en": "Dunajec River rafting"
+    },
+    "season": [
+      "summer"
+    ],
+    "category": "family",
+    "featured": true,
+    "distance_km": 35.5,
+    "drive_min": 53,
+    "distance_note": "Do przystani flisackiej w Sromowcach Wyżnych-Kątach, trasa wg OSRM, 25.10.2026.",
+    "body": {
+      "pl": "Drewniane tratwy i flisacy w góralskich strojach prowadzą Was przełomem Dunajca w Pienińskim Parku Narodowym, z Kątów do Szczawnicy. Spokojna woda, wapienne ściany Trzech Koron nad głową. Spływy odbywają się od wiosny do jesieni.",
+      "en": "Wooden rafts steered by raftsmen in highland dress take you through the Dunajec gorge in the Pieniny National Park, from Kąty to Szczawnica. Calm water, with the limestone walls of the Three Crowns above you. Rafting runs from spring to autumn."
+    }
+  },
+  {
     "slug": "stoki-bialka-bukowina",
     "name": {
       "pl": "Stoki w Białce i Bukowinie Tatrzańskiej",
@@ -173,37 +214,6 @@
     "body": {
       "pl": "Kilka kompleksów termalnych w promieniu 3–15 km. Dobre na deszczowy dzień i na zmęczone nogi.",
       "en": "Several thermal spas within 3–15 km. Good for a rainy day and for tired legs."
-    }
-  },
-  {
-    "slug": "skywalk-poronin",
-    "name": {
-      "pl": "SkyWalk Poronin",
-      "en": "SkyWalk Poronin"
-    },
-    "season": [
-      "summer",
-      "winter"
-    ],
-    "category": "views",
-    "body": {
-      "pl": "Szklany taras widokowy kilka kilometrów od osady.",
-      "en": "A glass viewing terrace a few kilometres from the settlement."
-    }
-  },
-  {
-    "slug": "splyw-dunajcem",
-    "name": {
-      "pl": "Spływ Dunajcem",
-      "en": "Dunajec River rafting"
-    },
-    "season": [
-      "summer"
-    ],
-    "category": "family",
-    "body": {
-      "pl": "Drewniane tratwy, flisacy w strojach i przełom Dunajca w Pieninach.",
-      "en": "Wooden rafts, raftsmen in traditional dress and the Dunajec gorge in the Pieniny Mountains."
     }
   },
   {

@@ -12,7 +12,7 @@ type Of<T extends Block['blockType']> = Extract<Block, { blockType: T }>
 type MediaRef = Media | number | string | null | undefined
 type Variant = { pora?: string | null; sezon?: string | null; image?: MediaRef; video?: MediaRef; videoPortrait?: MediaRef }
 
-export type Scene = { id: string; kind: 'media' | 'panorama' | 'map' | 'plain'; slides?: HeroSlide[] }
+export type Scene = { id: string; kind: 'media' | 'panorama' | 'map'; slides?: HeroSlide[] }
 
 export const sceneId = (blockId: string | null | undefined, step?: number) => `s-${blockId ?? 'x'}${step == null ? '' : `-${step}`}`
 
@@ -55,6 +55,9 @@ function defaults(pick: ReturnType<typeof libraryPicker>) {
     } as Record<string, Variant[]>,
     rooms: ['W1_', 'W2_', 'W3_', 'W5_'].map((p) => [v(p)]),
     bania: [v('B1_bania_alpenglow'), v('B1_bania_lato', { sezon: 'lato' }), v('B2_bania_noc_3x2', { pora: 'noc' })],
+    testimonials: [v('K8_punkt_widokowy'), v('T3_noc_gwiazdy', { pora: 'noc' })],
+    offersNews: [v('K6_dom_orbita'), v('K2_hero_osada_noc_16x9', { pora: 'noc' })],
+    bookingInvite: [v('K1_panorama_tatry'), v('K2_hero_osada_noc_16x9', { pora: 'noc' })],
   }
 }
 
@@ -71,8 +74,18 @@ export function buildScenes(blocks: NonNullable<Page['layout']>, media: Media[])
         out.push({ id: sceneId(b.id), kind: 'media', slides: own(b).length ? slidesOf(own(b)) : heroSlides(b, d.hero) })
         break
       case 'peaksPanorama':
-      case 'bookingInvite':
         add(sceneId(b.id), 'panorama')
+        break
+      case 'story': {
+        // zapowiedź bani dostaje też jej nocny i letni kadr
+        const name = typeof b.image === 'object' ? (b.image?.filename ?? '') : ''
+        add(sceneId(b.id), 'media', [...own(b), { image: b.image }, ...(name.startsWith('B') ? d.bania : [])])
+        break
+      }
+      case 'testimonials':
+      case 'offersNews':
+      case 'bookingInvite':
+        add(sceneId(b.id), 'media', [...own(b), ...d[b.blockType]])
         break
       case 'dayInSettlement':
         b.scenes?.forEach((s, i) => add(sceneId(b.id, i), 'media', [...own(s), { image: s.image }, ...(d.day[s.time] ?? [])]))
@@ -95,10 +108,8 @@ export function buildScenes(blocks: NonNullable<Page['layout']>, media: Media[])
       case 'surroundings':
         add(sceneId(b.id), 'map')
         break
-      case 'intro':
-        break
       default:
-        add(sceneId(b.id), 'plain')
+      // wstęp i pozostałe bloki zostają na scenie poprzedniego rozdziału
     }
   }
   return out.filter((s) => s.kind !== 'media' || s.slides?.length)

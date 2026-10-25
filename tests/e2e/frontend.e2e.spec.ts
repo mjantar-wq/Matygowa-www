@@ -64,4 +64,17 @@ test.describe('Efekty i interakcje', () => {
     await page.evaluate(() => scrollBy(0, 1))
     await expect(page.locator('.mo-stage__scene[data-active]')).toHaveAttribute('data-kind', 'panorama')
   })
+
+  test('strona główna: przypięty przycisk otwiera pasek rezerwacji, gdy hero zniknie z ekranu', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    const open = page.locator('.mo-dock__open')
+    await expect(page.locator('.mo-dock')).not.toHaveAttribute('data-shown')
+    await page.locator('[data-block="houseInside"]').scrollIntoViewIfNeeded()
+    await expect(page.locator('.mo-dock')).toHaveAttribute('data-shown')
+    await open.click()
+    await expect(page.locator('.mo-dock__dialog .mo-booking')).toBeVisible()
+    await page.keyboard.press('Escape')
+    await expect(page.locator('.mo-dock__dialog')).not.toBeVisible()
+  })
 })

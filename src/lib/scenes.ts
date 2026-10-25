@@ -94,7 +94,8 @@ export function buildScenes(blocks: NonNullable<Page['layout']>, media: Media[])
         b.scenes?.forEach((s, i) => add(sceneId(b.id, i), 'media', [...own(s), { image: s.image }, ...(d.day[s.time] ?? [])]))
         break
       case 'houseInside':
-        add(sceneId(b.id), 'media', [...own(b), ...d.rooms[0]])
+        // bez pomieszczeń rozdział ma własną scenę; z nimi tytuł używa sceny pierwszego (RenderBlocks)
+        if (!b.rooms?.length) add(sceneId(b.id), 'media', [...own(b), ...d.rooms[0]])
         b.rooms?.forEach((r, i) => add(sceneId(b.id, i), 'media', [...own(r), { image: r.image }, ...(d.rooms[i] ?? [])]))
         break
       case 'rituals':

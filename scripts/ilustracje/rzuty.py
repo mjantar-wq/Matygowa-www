@@ -27,9 +27,9 @@ def parter(b0, b1):
 UKLADY = {
     "salon-parter": {
         "domy": ["swinica", "gerlach", "hawran"],
-        # wg Michała: narciarnia to przybudówka na zewnątrz, na lewo od wejścia, ścianą przy saunie
-        "parter": ([(0, 0)] + parter(22.6, 77.4) + [(12.8, 15.7), (0, 15.7)], [
-            ("narciarnia", "Narciarnia", 0, 0, 12.8, 15.7, "z zewnątrz", None),
+        # wg Michała: narciarnia to przybudówka na zewnątrz, na lewo od wejścia, przy frontowej ścianie sauny
+        "parter": ([(12.8, -9.1), (31.1, -9.1), (31.1, 0)] + parter(22.6, 77.4)[1:], [
+            ("narciarnia", "Narciarnia", 12.8, -9.1, 31.1, 0, "z zewnątrz", None),
             ("sauna", "Sauna", 12.8, 0, 31.1, 15.7, None, "sauna"),
             ("lazienka", "Łazienka", 12.8, 15.7, 31.1, 30.8, None, None),
             ("wejscie", "Wejście", 31.1, 0, 51.9, 30.8, None, None),
@@ -41,8 +41,11 @@ UKLADY = {
         ]),
         "pietro": ([(12.8, 0), (87.2, 0), (87.2, 66), (12.8, 66)], [
             ("sypialnia-2", "Sypialnia", 12.8, 0, 44, 29.2, "13 m²", None),
-            # wg Michała: schody przy prawej ścianie zewnętrznej, z zakrętem; łazienka większa
-            ("lazienka-2", "Łazienka", 44, 0, 72.6, 29.2, None, None),
+            # wg Michała: schody przy prawej ścianie zewnętrznej, z zakrętem; łazienka w kształcie „L”
+            # z wcięciem nad biegiem schodów z parteru (bieg u góry, potem zakręt w dół do holu)
+            ("lazienka-2", "Łazienka", 44, 0, 58.5, 29.2, None, None),
+            ("lazienka-2b", "", 58.5, 14.1, 72.6, 29.2, None, None),
+            ("schody-bieg", "", 58.5, 0, 72.6, 14.1, None, "schody"),
             ("schody", "Schody", 72.6, 0, 87.2, 29.2, None, "schody"),
             ("hol", "Hol", 12.8, 29.2, 87.2, 39.6, None, None),
             ("sypialnia-3", "Sypialnia", 12.8, 39.6, 50.9, 66, "14,5 m²", None),
@@ -51,7 +54,9 @@ UKLADY = {
     },
     "salon-pietro": {
         "domy": ["woloszyn", "lomnica", "lodowy"],
-        "parter": (parter(33.3, 66.7), [
+        # narciarnia jak w domkach z salonem na parterze: przybudówka przy frontowej ścianie sauny, wejście z zewnątrz
+        "parter": ([(12.8, -9.1), (31, -9.1), (31, 0)] + parter(33.3, 66.7)[1:], [
+            ("narciarnia", "Narciarnia", 12.8, -9.1, 31, 0, "z zewnątrz", None),
             ("sauna", "Sauna", 12.8, 0, 31, 14.3, None, "sauna"),
             ("lazienka", "Łazienka", 12.8, 14.3, 38.1, 30.8, None, None),
             ("wejscie", "Wejście", 31, 0, 52.4, 14.3, None, None),
@@ -104,7 +109,7 @@ APARTAMENT = {
 # Pary pomieszczeń bez ściany między nimi (schody z holem, wejściem albo klatką), wg planów źródłowych.
 OTWARCIA = {
     ("salon-parter", "parter"): [("wejscie", "schody"), ("wejscie", "salon")],
-    ("salon-parter", "pietro"): [("schody", "hol")],
+    ("salon-parter", "pietro"): [("schody", "hol"), ("lazienka-2", "lazienka-2b"), ("schody-bieg", "schody")],
     ("salon-pietro", "parter"): [("wejscie", "schody"), ("schody", "schody-2"), ("wejscie", "hol"), ("hol", "korytarz")],
     ("salon-pietro", "pietro"): [("schody", "salon"), ("hol", "schody"), ("hol", "salon")],
     ("apartament", "parter"): [("klatka", "schody")],
@@ -113,10 +118,14 @@ OTWARCIA = {
 
 # Schody z zakrętem: gdzie leży narożnik z klinowymi stopniami. „prawo”: bieg w prawo i zakręt w dół (parter),
 # „gora”: dojście z lewej u góry i bieg w dół do holu (piętro). Strzałka pokazuje kierunek wejścia na górę.
+BIEG_GORA = 72.6 - 58.5  # długość biegu nad wcięciem łazienki (jednostki siatki), strzałka zaczyna się w nim
 ZAKRET = {("salon-parter", "parter"): "prawo", ("salon-parter", "pietro"): "gora"}
 
 def schody(a, b, c, d, zakret):
     """Stopnie poprzecznie do biegu; przy zakręcie narożnik z klinowymi stopniami i strzałka biegu."""
+    if zakret == "poziom":  # krótki bieg poziomy: stopnie pionowo niezależnie od proporcji
+        n = max(2, int(c // 28))
+        return [f'<line class="stopnie" x1="{a + c * i / n:.0f}" y1="{b:.0f}" x2="{a + c * i / n:.0f}" y2="{b + d:.0f}"/>' for i in range(1, n)]
     if not zakret:
         n = int(max(c, d) // 28)
         return [f'<line class="stopnie" x1="{a + c * i / n:.0f}" y1="{b:.0f}" x2="{a + c * i / n:.0f}" y2="{b + d:.0f}"/>' if c >= d else
@@ -131,7 +140,7 @@ def schody(a, b, c, d, zakret):
         n = int((d - k) // 28)
         g = [f'<line class="stopnie" x1="{a:.0f}" y1="{b + k + (d - k) * i / n:.0f}" x2="{a + c:.0f}" y2="{b + k + (d - k) * i / n:.0f}"/>' for i in range(n)]
         o, cele = (a, b + k), [(a + k * .45, b), (a + c, b), (a + c, b + k * .45)]
-        bieg = [(a + c * .8, b + 10), (a + c * .8, b + d - 14)]
+        bieg = [(a - (BIEG_GORA - 1) * S, b + k / 2), (a + c * .62, b + k / 2), (a + c * .62, b + d - 14)]
     g += [f'<line class="stopnie" x1="{o[0]:.0f}" y1="{o[1]:.0f}" x2="{x:.0f}" y2="{y:.0f}"/>' for x, y in cele]
     g.append('<polyline class="bieg" marker-end="url(#strzalka)" points="%s"/>' % " ".join(f"{x:.0f},{y:.0f}" for x, y in bieg))
     return g
@@ -150,7 +159,8 @@ def otwarcie(p, q):
 
 def svg(uklad, pietro, bryla, pokoje):
     pad = 4  # wspólny kadr dla rzutów jednego budynku, żeby piętra miały tę samą skalę na stronie
-    vb = -pad * S, -pad * S, (100 + 2 * pad) * S, ((117 if uklad == "apartament" else 72) + 2 * pad) * S
+    gora = 0 if uklad == "apartament" else 9.1  # narciarnia wystaje przed front, ten sam kadr na obu piętrach
+    vb = -pad * S, -(pad + gora) * S, (100 + 2 * pad) * S, ((117 if uklad == "apartament" else 72) + gora + 2 * pad) * S
     pts = " ".join(f"{x * S:.0f},{y * S:.0f}" for x, y in bryla)
     kondygnacja = "parter" if pietro == "parter" else "piętro"
     tytul = (f"Rzut poglądowy apartamentu na {'parterze' if pietro == 'parter' else 'piętrze'}" if uklad == "apartament" else
@@ -175,7 +185,7 @@ def svg(uklad, pietro, bryla, pokoje):
             e0, f0, e1, f1 = rodzaj
             g.append(f'<rect class="pokoj" x="{(e0 + SCIANA) * S:.0f}" y="{(f0 - 2 * SCIANA) * S:.0f}" width="{(e1 - e0 - 2 * SCIANA) * S:.0f}" height="{(f1 - f0 + SCIANA) * S:.0f}"/>')
         if rodzaj == "schody":  # stopnie poprzecznie do dłuższego boku
-            g += schody(a, b, c, d, ZAKRET.get((uklad, pietro)) if pid == "schody" else None)
+            g += schody(a, b, c, d, ZAKRET.get((uklad, pietro)) if pid == "schody" else "poziom" if pid == "schody-bieg" else None)
         if rodzaj == "sauna":
             for i in range(1, int(d // 18)):
                 g.append(f'<line class="sauna-deski" x1="{a:.0f}" y1="{b + i * 18:.0f}" x2="{a + c:.0f}" y2="{b + i * 18:.0f}"/>')

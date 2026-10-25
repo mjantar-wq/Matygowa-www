@@ -6,7 +6,7 @@
  "eyeM": 959,
  "azimuthFrom": 124.0,
  "azimuthTo": 240.0,
- "verticalExaggeration": 3.2,
+ "verticalExaggeration": 1.0,
  "peaks": [
   {
    "slug": "kominiarski-wierch",

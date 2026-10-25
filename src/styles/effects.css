@@ -74,10 +74,9 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-svg-scroll:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: 2px; }
 .mo-svg-host svg { display: block; inline-size: 100%; block-size: auto; }
 .mo-svg-host[data-state="idle"], .mo-svg-host[data-state="error"] { background: var(--color-tlo-2); }
-.mo-panorama__svg .mo-svg-host { min-inline-size: 1100px; }
-.mo-panorama__svg .mo-svg-host[data-state="idle"] { aspect-ratio: 3200 / 900; }
+.mo-panorama__svg .mo-svg-host { min-inline-size: 2400px; } /* panorama 1:1 jak w PeakFinderze: ok. 21 px na stopień, przewijana w bok */
+.mo-panorama__svg .mo-svg-host[data-state="idle"] { aspect-ratio: 3200 / 407; }
 .mo-map__stage .mo-svg-host[data-state="idle"] { aspect-ratio: 1400 / 800; }
-@media (min-width: 1024px) { .mo-panorama__svg .mo-svg-host { min-inline-size: 0; } }
 .mo-hotspot { cursor: pointer; }
 .mo-hotspot .accent, .mo-hotspot .znacznik { transition: transform var(--ruch-szybki) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
 .mo-hotspot:hover .accent, .mo-hotspot.is-lit .accent, .mo-hotspot:hover .znacznik, .mo-hotspot.is-lit .znacznik { transform: scale(1.6); }

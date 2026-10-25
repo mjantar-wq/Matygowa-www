@@ -174,6 +174,7 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.opis{font:500 12px var(--font-ui,sans-serif);letter-spacing:.06em;fill:var(--color-wyciszony)}'
      '.znacznik{fill:var(--color-bursztyn)}'
      '.etykieta-tlo{fill:var(--color-tlo);opacity:.9}'
+     '.apt-nazwa{pointer-events:none}.apt-nazwa rect{fill:var(--color-tlo);opacity:.92}.apt-nazwa text{font:700 13px var(--font-ui,sans-serif);letter-spacing:.06em;text-transform:uppercase;fill:var(--color-atrament)}'
      '</style>',
      f'<rect class="teren" width="{W}" height="{H}"/>',
      f'<g class="poziomice" id="warstwa-poziomice">{poziomice()}</g>',
@@ -207,11 +208,24 @@ def strefy_apartamentow(cx, cy, l, w, rot, p=12):
         out.append(f'<path id="b-apt-{slug}" class="apt-strefa" data-nazwa="{nazwa}" tabindex="0" role="button" '
                    f'aria-label="Apartament {nazwa}, otwarcie wiosną 2027" d="M{s0},{d0} L{s1},{d0} L{s1},{d1} L{s0},{d1} Z"/>')
     return f'<g transform="translate({cx} {cy}) rotate({rot})">{"".join(out)}</g>'
+
+def nazwy_apartamentow(cx, cy, l, w, rot, p=12):
+    """Nazwy lokali poziomo na środku ich ćwiartek (wg Michała: na górze mapy Czerwone Wierchy i Kominiarski Wierch,
+    na dole Giewont i Ciemniak), na jasnej plakietce, żeby były czytelne na ciemnym dachu."""
+    b, r, out = w / 2 + p, math.radians(rot), []
+    for slug, nazwa, czesc, strona in APARTAMENTY:
+        sm, dm = (-l / 4 if czesc == "gora" else l / 4), (b / 2 if strona == "lewa" else -b / 2)
+        x, y = cx + sm * math.cos(r) - dm * math.sin(r), cy + sm * math.sin(r) + dm * math.cos(r)
+        linie = nazwa.split(" ") if " " in nazwa else [nazwa]
+        sz = max(len(t) for t in linie) * 9.6 + 14; h = 17 * len(linie) + 6
+        out.append(f'<g class="apt-nazwa" aria-hidden="true"><rect x="{x - sz / 2:.0f}" y="{y - h / 2:.0f}" width="{sz:.0f}" height="{h}" rx="3"/>'
+                   + "".join(f'<text x="{x:.0f}" y="{y - h / 2 + 17 * (i + 1) - 1:.0f}" text-anchor="middle">{t}</text>' for i, t in enumerate(linie)) + '</g>')
+    return "".join(out)
 L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" aria-label="Apartamenty: w górnej części Czerwone Wierchy i Kominiarski Wierch, w dolnej Giewont i Ciemniak, otwarcie wiosną 2027">')
-L.append(apartamenty_dach(*APT) + strefy_apartamentow(*APT) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
+L.append(apartamenty_dach(*APT) + nazwy_apartamentow(*APT) + strefy_apartamentow(*APT) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
 L.append('<rect class="etykieta-tlo" x="830" y="4" width="230" height="44" rx="2"/>'
          '<text class="nazwa" x="945" y="24" text-anchor="middle">Apartamenty</text>'
-         '<text class="opis" x="945" y="41" text-anchor="middle">4 apartamenty</text>' + naklejka(962, 94, -4) + piwnica() + '</g>')
+         '<text class="opis" x="945" y="41" text-anchor="middle">4 apartamenty</text>' + naklejka(966, 86, -4) + piwnica() + '</g>')
 px, py, pw, ph = PLAC
 L.append(f'<g id="b-plac-zabaw" class="obiekt is-wkrotce" data-otwarcie="2027" aria-label="Plac zabaw dla dzieci, otwarcie 2027">{plac_zabaw(*PLAC)}'
          f'<rect class="etykieta-tlo" x="{px - 60}" y="{py + ph/2 + 8}" width="120" height="26" rx="2"/>'

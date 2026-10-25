@@ -2,7 +2,7 @@
 
 Układ budynków odrysowany ze zdjęcia z drona „Nazwy domków 2026.jpg” (płótno 1400×800 odpowiada
 kadrowi zdjęcia). Kolory wyłącznie z tokenów --color-*, więc mapa sama zmienia się w trybach noc i lato.
-Identyfikatory b-dom-* i b-apartamenty są umówione z wątkiem efektów (podświetlenie, dymki).
+Identyfikatory b-dom-*, b-apartamenty i b-apt-* są umówione z wątkiem efektów (podświetlenie, dymki).
 Uruchom: python3 scripts/ilustracje/mapa_osady.py
 """
 import json, math
@@ -25,7 +25,11 @@ DOMY = [
 # (środek x, y, długość wzdłuż kalenicy, szerokość, obrót w stopniach)
 APT = (905, 184, 212, 94, 47.6)
 APT_ZNACZNIK = APT[:2]
-APARTAMENTY = [("czerwone-wierchy", "Czerwone Wierchy"), ("giewont", "Giewont"), ("kominiarski", "Kominiarski Wierch"), ("ciemniak", "Ciemniak")]  # Ciemniak: nazwa wstępna, bez podpisu na zdjęciu (content/README.md)
+# Cztery apartamenty w jednej bryle typu bliźniak (Michał, 25.10.2026): w górnej części na mapie
+# Czerwone Wierchy i Kominiarski Wierch, w dolnej Giewont i Ciemniak.
+# Lewa i prawa strona w każdej części przyjęta z dawnych podpisów zdjęcia (Giewont: dolny lewy, potwierdzone).
+APARTAMENTY = [("czerwone-wierchy", "Czerwone Wierchy", "gora", "lewa"), ("kominiarski-wierch", "Kominiarski Wierch", "gora", "prawa"),
+               ("giewont", "Giewont", "dol", "lewa"), ("ciemniak", "Ciemniak", "dol", "prawa")]
 # Plac zabaw (otwarcie 2027): na lewo od apartamentów
 PLAC = (650, 192, 128, 84)
 
@@ -146,7 +150,8 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.stozek{fill:var(--color-bursztyn);opacity:.08}'
      '.dach{fill:var(--color-atrament)}.dach-jasna{fill:color-mix(in srgb,var(--color-atrament) 70%,var(--color-tlo))}.dach-pol{fill:color-mix(in srgb,var(--color-atrament) 84%,var(--color-tlo))}.dach-ciemna{fill:color-mix(in srgb,var(--color-atrament) 92%,#000)}'
      '.kalenica{fill:none;stroke:var(--color-tlo-2);stroke-width:1;opacity:.35;vector-effect:non-scaling-stroke}'
-     '.is-wkrotce{opacity:.92}'
+     '.is-wkrotce{opacity:.92}.apt-strefa{fill:transparent;pointer-events:all;cursor:pointer}.apt-strefa:focus-visible{outline:none;stroke:var(--color-bursztyn);stroke-width:2}'
+     '.sciana-dzialowa{fill:none;stroke:var(--color-tlo-2);stroke-width:2;opacity:.6;vector-effect:non-scaling-stroke}'
      '.plac{fill:color-mix(in srgb,var(--color-bursztyn) 18%,var(--color-tlo))}.plac-obrys{fill:none;stroke:var(--color-wyciszony);stroke-width:1;stroke-dasharray:2 4;vector-effect:non-scaling-stroke}'
      '.plac-drewno{fill:none;stroke:color-mix(in srgb,var(--color-bursztyn) 55%,var(--color-atrament));stroke-width:3;stroke-linecap:round}.plac-lancuch{fill:none;stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}'
      '.plac-siedzisko{fill:var(--color-atrament)}.plac-drewno-pole{fill:color-mix(in srgb,var(--color-bursztyn) 55%,var(--color-atrament))}'
@@ -182,9 +187,20 @@ for slug, nazwa, wys, cx, cy, w, h in DOMY:
              f'<text class="nazwa" x="{cx}" y="{cy + h/2 + 27}" text-anchor="middle">{nazwa}</text>'
              f'<text class="opis" x="{cx}" y="{cy + h/2 + 44}" text-anchor="middle">{wys} m n.p.m.</text></g>')
 
-apts = ",".join(n for _, n in APARTAMENTY)
-L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" tabindex="0" role="button" aria-label="Apartamenty Czerwone Wierchy, Giewont, Kominiarski Wierch i Ciemniak, otwarcie wiosną 2027">')
-L.append(apartamenty_dach(*APT) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
+apts = ",".join(n for _, n, *_ in APARTAMENTY)
+
+def strefy_apartamentow(cx, cy, l, w, rot, p=12):
+    """Cztery klikalne ćwiartki bryły (b-apt-<slug>) i ściana działowa bliźniaka w poprzek osi.
+    Góra mapy to początek osi (s < 0), lewa strona to południowy zachód (d > 0)."""
+    b = w / 2 + p; out = [f'<path class="sciana-dzialowa" d="M0,{-w/2} L0,{w/2}"/>']
+    for slug, nazwa, czesc, strona in APARTAMENTY:
+        s0, s1 = (-l / 2, 0) if czesc == "gora" else (0, l / 2)
+        d0, d1 = (0, b) if strona == "lewa" else (-b, 0)
+        out.append(f'<path id="b-apt-{slug}" class="apt-strefa" data-nazwa="{nazwa}" tabindex="0" role="button" '
+                   f'aria-label="Apartament {nazwa}, otwarcie wiosną 2027" d="M{s0},{d0} L{s1},{d0} L{s1},{d1} L{s0},{d1} Z"/>')
+    return f'<g transform="translate({cx} {cy}) rotate({rot})">{"".join(out)}</g>'
+L.append(f'<g id="b-apartamenty" class="budynek is-wkrotce" data-otwarcie="2027-04" data-apartamenty="{apts}" aria-label="Apartamenty: w górnej części Czerwone Wierchy i Kominiarski Wierch, w dolnej Giewont i Ciemniak, otwarcie wiosną 2027">')
+L.append(apartamenty_dach(*APT) + strefy_apartamentow(*APT) + f'<circle class="znacznik" cx="{APT_ZNACZNIK[0]}" cy="{APT_ZNACZNIK[1]}" r="5"/>')
 L.append('<rect class="etykieta-tlo" x="830" y="4" width="230" height="44" rx="2"/>'
          '<text class="nazwa" x="945" y="24" text-anchor="middle">Apartamenty</text>'
          '<text class="opis" x="945" y="41" text-anchor="middle">4 apartamenty</text>' + naklejka(1000, 64, -4) + piwnica() + '</g>')
@@ -200,6 +216,6 @@ out.write_text(z_zapasem("\n".join(L)))
     "zrodlo": "Nazwy domków 2026.jpg (dron)",
     "domy": [{"id": f"b-dom-{s}", "nazwa": n, "szczytM": h, "x": x, "y": y} for s, n, h, x, y, *_ in DOMY],
     "plac": {"id": "b-plac-zabaw", "otwarcie": "2027"},
-    "apartamenty": {"id": "b-apartamenty", "otwarcie": "2027-04", "lokale": [{"slug": s, "nazwa": n} for s, n in APARTAMENTY]},
+    "apartamenty": {"id": "b-apartamenty", "otwarcie": "2027-04", "lokale": [{"id": f"b-apt-{s}", "slug": s, "nazwa": n, "czesc": c, "strona": st} for s, n, c, st in APARTAMENTY]},
 }, ensure_ascii=False, indent=1))
 print(out)

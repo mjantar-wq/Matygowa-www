@@ -71,71 +71,96 @@
       },
       "items": [
         {
-          "word": "wierch",
-          "translation": {
-            "pl": "szczyt, wierzchołek",
-            "en": "peak, summit"
-          },
+          "id": "drewno",
           "heading": {
             "pl": "Drewno i gont",
             "en": "Timber and shingle"
           },
           "body": {
-            "pl": "Na Podhalu ciesielka to wciąż zawód, nie hobby. Gont, czyli ręcznie łupane drewniane dachówki, kładzie się tu na domach i kaplicach, a ściany wciąż stawia się na zrąb, z bali łączonych na zamki.",
-            "en": "In Podhale carpentry is still a trade, not a hobby. Shingles, hand-split wooden roof tiles, still go onto houses and chapels here, and walls are still raised from logs locked together at the corners."
+            "pl": "Na Podhalu ciesielka to wciąż zawód, nie hobby. Ściany stawia się na zrąb, z bali łączonych na zamki, a dachy kryje gontem, czyli ręcznie łupanymi drewnianymi dachówkami. Pod koniec XIX wieku Stanisław Witkiewicz zamienił tę góralską chałupę w styl zakopiański, a pierwszą willą w tym stylu była zakopiańska Koliba.",
+            "en": "In Podhale carpentry is still a trade, not a hobby. Walls are raised from logs locked together at the corners, and roofs are laid with shingle, hand-split wooden tiles. At the end of the 19th century Stanisław Witkiewicz turned the highland cottage into the Zakopane style, and the first villa built in it was Koliba in Zakopane."
+          },
+          "image": {
+            "source": "Wikimedia Commons",
+            "url": "https://commons.wikimedia.org/wiki/File:Willa_Koliba_jesieni%C4%85.jpg",
+            "author": "Aneta Pawska",
+            "license": "CC BY 3.0",
+            "credit_required": true
+          },
+          "image_alt": {
+            "pl": "Willa Koliba w Zakopanem jesienią",
+            "en": "Koliba villa in Zakopane in autumn"
           }
         },
         {
-          "word": "baca",
-          "translation": {
-            "pl": "główny pasterz na hali",
-            "en": "head shepherd"
-          },
+          "id": "owce",
           "heading": {
-            "pl": "Oscypek",
-            "en": "Oscypek"
+            "pl": "Owce, baca i oscypek",
+            "en": "Sheep, the shepherd and oscypek"
           },
           "body": {
-            "pl": "Prawdziwy oscypek robi baca w bacówce, od maja do września, z mleka owczego, i wędzi go w dymie. Od 2008 roku jego nazwa jest chroniona w całej Unii Europejskiej. Owce nieraz pasą się tuż za płotem osady. Zapytajcie nas, gdzie w okolicy kupić oscypek prosto od niego.",
-            "en": "Real oscypek is made by the head shepherd in his hut from May to September, from sheep's milk, and then smoked. Since 2008 its name has been protected across the European Union. Sheep sometimes graze right beyond the settlement's fence. Ask us where to buy oscypek straight from the shepherd."
-          }
+            "pl": "Pasterstwo przyszło tu z Wołochami, którzy od XIV wieku wędrowali z owcami łukiem Karpat. Ich ślad został w nazwach, na przykład w grani Wołoszyna, od której imię ma jeden z naszych domków. Do dziś od maja do września stada pasą się na halach, a owce nieraz także tuż za płotem osady. Głównym pasterzem jest *baca*: to on w bacówce robi z owczego mleka oscypek i wędzi go w dymie. Od 2008 roku nazwa oscypka jest chroniona w całej Unii Europejskiej. Zapytajcie nas, gdzie kupić go prosto od bacy.",
+            "en": "Shepherding arrived with the Vlachs, who from the 14th century moved with their flocks along the Carpathian arc. They left their mark on place names, such as the Wołoszyn ridge, which gave one of our cottages its name. From May to September flocks still graze the high meadows, and sometimes right beyond the settlement's fence. The head shepherd is the *baca*: in his hut he makes oscypek from sheep's milk and smokes it. Since 2008 the name oscypek has been protected across the European Union. Ask us where to buy it straight from the shepherd."
+          },
+          "image": {
+            "source": "Wikimedia Commons",
+            "url": "https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg",
+            "author": "Aga Viburno",
+            "license": "CC BY-SA 3.0",
+            "credit_required": true
+          },
+          "image_alt": {
+            "pl": "Oscypki na straganie w Zakopanem",
+            "en": "Oscypek cheeses at a stall in Zakopane"
+          },
+          "image_alt_option": "Lepiej: własne zdjęcie owiec za płotem osady."
         },
         {
-          "word": "Wołosi",
-          "translation": {
-            "pl": "wędrowni pasterze z Karpat",
-            "en": "wandering Carpathian shepherds"
-          },
+          "id": "stroj",
           "heading": {
-            "pl": "Skąd się wzięli górale",
-            "en": "Where the highlanders came from"
+            "pl": "Strój i haft",
+            "en": "Dress and embroidery"
           },
           "body": {
-            "pl": "Kultura pasterska przyszła tu razem z Wołochami, którzy od XIV wieku wędrowali z owcami łukiem Karpat. Ślad po nich został w nazwach, na przykład w grani Wołoszyna, od której imię ma jeden z naszych domów.",
-            "en": "Shepherding culture arrived with the Vlachs, who from the 14th century moved with their flocks along the Carpathian arc. They left their mark on place names, such as the Wołoszyn ridge, which gave one of our houses its name."
+            "pl": "Góralski strój nosi się tu od święta, na wesela i do kościoła, a nie do zdjęć. Najbardziej rozpoznawalna jest *parzenica*, haftowany ornament w kształcie serca na wełnianych portkach, do tego skórzane kierpce i kapelusz z muszelkami. Każda wieś ma swój wzór, a dobre hafciarki wciąż mają kolejkę zamówień.",
+            "en": "Highland dress is worn here for feast days, weddings and church, not for photos. The best-known detail is the *parzenica*, a heart-shaped embroidered ornament on woollen trousers, worn with leather *kierpce* shoes and a hat trimmed with shells. Each village has its own pattern, and good embroiderers still have a waiting list."
+          },
+          "image": {
+            "source": "Wikimedia Commons",
+            "url": "https://commons.wikimedia.org/wiki/File:Parzenica_01.jpg",
+            "author": "Joanna Gładkowska",
+            "license": "CC BY-SA 4.0",
+            "credit_required": true
+          },
+          "image_alt": {
+            "pl": "Haftowana parzenica na góralskich portkach",
+            "en": "Embroidered parzenica on highland trousers"
           }
         },
         {
-          "word": "nuta",
-          "translation": {
-            "pl": "melodia góralska",
-            "en": "a highland tune"
-          },
+          "id": "muzyka",
           "heading": {
             "pl": "Muzyka",
             "en": "Music"
           },
           "body": {
-            "pl": "Góralska muzyka to skrzypce i basy, i nuty, które przechodzą z ojca na syna. Na weselach i w karczmach gra się ją do dziś, nie dla turystów, tylko dla siebie.",
-            "en": "Highland music means fiddles and a bass, and tunes passed down from father to son. It is still played at weddings and in inns, not for tourists, but for the people themselves."
+            "pl": "Góralska muzyka to skrzypce i basy, i melodie, które tu nazywa się *nutami* i przekazuje z pokolenia na pokolenie. Gra się je na weselach i w karczmach, a do tańca zbójnickiego staje się z ciupagą.",
+            "en": "Highland music means fiddles and a bass, and melodies called *nuty* here, handed down from one generation to the next. They are played at weddings and in inns, and for the brigands' dance men take up the *ciupaga*, the highlander's axe."
+          },
+          "image": {
+            "source": "Wikimedia Commons",
+            "url": "https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg",
+            "author": "Marta Malina Moraczewska",
+            "license": "CC BY-SA 4.0",
+            "credit_required": true
+          },
+          "image_alt": {
+            "pl": "Góralskie wesele, występ zespołu w strojach podhalańskich",
+            "en": "Highland wedding, a folk performance in Podhale dress"
           }
         },
         {
-          "word": "gazda",
-          "translation": {
-            "pl": "gospodarz",
-            "en": "the master of the house"
-          },
+          "id": "ludzie",
           "heading": {
             "pl": "Ludzie z okolicy",
             "en": "Our neighbours"
@@ -144,6 +169,7 @@
             "pl": "Polecamy tylko tych, których znamy: rzemieślników, przewodników, muzyków i gospodarzy z okolicy. Listę znajdziecie w przewodniku gościa.",
             "en": "We only recommend people we know: local craftspeople, mountain guides, musicians and farmers. You will find the list in our guest guide."
           },
+          "image": null,
           "note": "Lista partnerów lokalnych do uzupełnienia przez Michała (nazwy, kontakty, zgoda na publikację)."
         }
       ]

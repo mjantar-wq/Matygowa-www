@@ -41,10 +41,10 @@
 <text class="dopisek" x="817" y="574" text-anchor="middle">6,5 m²</text>
 </g>
 <g id="r-klatka" class="pokoj-g" data-nazwa="Klatka">
-<rect class="pokoj skos" x="460" y="720" width="146" height="300"/>
+<rect class="pokoj" x="460" y="720" width="146" height="300"/>
 <text class="nazwa" x="532" y="878" text-anchor="middle">Klatka</text>
 </g>
-<g id="r-schody" class="pokoj-g" data-nazwa="schody">
+<g id="r-schody" class="pokoj-g" data-nazwa="Schody">
 <rect class="pokoj" x="614" y="720" width="381" height="300"/>
 <line class="stopnie" x1="644" y1="720" x2="644" y2="1020"/>
 <line class="stopnie" x1="673" y1="720" x2="673" y2="1020"/>
@@ -58,5 +58,8 @@
 <line class="stopnie" x1="908" y1="720" x2="908" y2="1020"/>
 <line class="stopnie" x1="937" y1="720" x2="937" y2="1020"/>
 <line class="stopnie" x1="966" y1="720" x2="966" y2="1020"/>
+<text class="nazwa" x="805" y="878" text-anchor="middle">Schody</text>
 </g>
+<rect class="pokoj" x="605" y="720" width="9" height="300"/>
+<rect class="pokoj" x="460" y="710" width="146" height="9"/>
 </svg>

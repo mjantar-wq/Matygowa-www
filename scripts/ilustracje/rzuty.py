@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """G3: rzuty poglądowe dwóch układów domków (bez skali, bez drzwi), po dwa piętra.
 
+Schody leżą w tym samym miejscu na obu piętrach i są otwarte na hol lub wejście (OTWARCIA), żeby było widać dojście.
+
 Źródła: projekt architektoniczny „BUDYNEK A1” (Bentkowski, salon na parterze: Świnica, Gerlach, Hawrań)
 i projekt wnętrz W2a z 12.2023 (Topór, salon na piętrze: Wołoszyn, Łomnica, Lodowy).
 Pokoje są prostokątami w siatce 0–100 na szerokość budynku; ściany to ciemna bryła widoczna między pokojami.
@@ -81,9 +83,9 @@ APARTAMENT = {
         ("hol", "Hol", 47.2, 45.5, 61, 71.5, None, None),
         ("lazienka", "Łazienka", 61, 45.5, 80.5, 71.5, "4,7 m²", None),
         ("sauna", "Sauna", 80.5, 45.5, 100, 71.5, None, "sauna"),
-        ("klatka", "Klatka", 47.2, 71.5, 61, 99.2, None, "skos"),
-        ("pralnia", "Pralnia", 61, 71.5, 75, 99.2, None, None),
-        ("schody", "", 75, 71.5, 100, 99.2, None, "schody"),
+        ("klatka", "Klatka", 47.2, 71.5, 61, 99.2, None, None),
+        ("pralnia", "Pralnia", 61, 71.5, 100, 85, None, None),
+        ("schody", "Schody", 61, 85, 100, 99.2, None, "schody"),
     ]),
     "pietro": ([(0, 15.4), (100, 15.4), (100, 102.4), (0, 102.4)], [
         ("sypialnia-1", "Sypialnia", 0, 15.4, 45.5, 39, "11,7 m²", None),
@@ -92,10 +94,32 @@ APARTAMENT = {
         ("salon", "Salon z kuchnią", 0, 39, 45.5, 102.4, "i kominkiem · 26,4 m²", None),
         ("hol", "Hol", 45.5, 39, 63.4, 71.5, None, None),
         ("lazienka", "Łazienka", 63.4, 39, 100, 71.5, "6,5 m²", None),
-        ("klatka", "Klatka", 45.5, 71.5, 61, 102.4, None, "skos"),
-        ("schody", "", 61, 71.5, 100, 102.4, None, "schody"),
+        ("klatka", "Klatka", 45.5, 71.5, 61, 102.4, None, None),
+        ("schody", "Schody", 61, 71.5, 100, 102.4, None, "schody"),
     ]),
 }
+
+# Pary pomieszczeń bez ściany między nimi (schody z holem, wejściem albo klatką), wg planów źródłowych.
+OTWARCIA = {
+    ("salon-parter", "parter"): [("wejscie", "schody")],
+    ("salon-parter", "pietro"): [("schody", "hol")],
+    ("salon-pietro", "parter"): [("wejscie", "schody"), ("schody", "schody-2"), ("wejscie", "hol"), ("hol", "korytarz")],
+    ("salon-pietro", "pietro"): [("schody", "salon"), ("hol", "schody")],
+    ("apartament", "parter"): [("klatka", "schody")],
+    ("apartament", "pietro"): [("klatka", "schody"), ("hol", "klatka")],
+}
+
+def otwarcie(p, q):
+    """Prostokąt w kolorze pokoju na wspólnej ścianie dwóch pomieszczeń."""
+    _, _, ax0, ay0, ax1, ay1, *_ = p
+    _, _, bx0, by0, bx1, by1, *_ = q
+    for x in {ax1, ax0} & {bx0, bx1}:  # ściana pionowa
+        y0, y1 = max(ay0, by0) + SCIANA, min(ay1, by1) - SCIANA
+        if y1 > y0: return (x - SCIANA - .01) * S, y0 * S, (2 * SCIANA + .02) * S, (y1 - y0) * S
+    for y in {ay1, ay0} & {by0, by1}:  # ściana pozioma
+        x0, x1 = max(ax0, bx0) + SCIANA, min(ax1, bx1) - SCIANA
+        if x1 > x0: return x0 * S, (y - SCIANA - .01) * S, (x1 - x0) * S, (2 * SCIANA + .02) * S
+    raise ValueError(f"{p[0]} i {q[0]} nie mają wspólnej ściany")
 
 def svg(uklad, pietro, bryla, pokoje):
     pad = 4  # wspólny kadr dla rzutów jednego budynku, żeby piętra miały tę samą skalę na stronie
@@ -134,6 +158,9 @@ def svg(uklad, pietro, bryla, pokoje):
             g.append(f'<text class="nazwa" x="{cx:.0f}" y="{cy - (6 if dop else 0):.0f}" text-anchor="middle">{nazwa}</text>')
             if dop: g.append(f'<text class="dopisek" x="{cx:.0f}" y="{cy + 22:.0f}" text-anchor="middle">{dop}</text>')
         L += g + ["</g>"]
+    pok = {p[0]: p for p in pokoje}
+    for a, b in OTWARCIA.get((uklad, pietro), []):
+        L.append('<rect class="pokoj" x="%.0f" y="%.0f" width="%.0f" height="%.0f"/>' % otwarcie(pok[a], pok[b]))
     L.append("</svg>")
     return "\n".join(L)
 

@@ -118,6 +118,7 @@ async function main() {
       description: md(a.body?.[l]),
       summary: a.summary?.[l],
       distanceKm: a.distance_km,
+      driveMinutes: a.drive_min,
       featured: !!a.featured,
     }))
   }

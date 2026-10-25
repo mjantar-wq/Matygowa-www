@@ -38,8 +38,8 @@
     // opinie z Google (src/lib/reviews.ts); klucz GOOGLE_PLACES_API_KEY jest sekretem Workera. Pusty = źródło wyłączone.
     "GOOGLE_PLACE_ID": ""
   },
-  // codziennie o 4:30 UTC: pobranie opinii z Google (worker.ts → /api/cron/opinie)
-  "triggers": { "crons": ["30 4 * * *"] },
+  // w poniedziałki o 4:30 UTC: pobranie opinii z Google (worker.ts → /api/cron/opinie)
+  "triggers": { "crons": ["30 4 * * 1"] },
   "observability": { "enabled": true },
   // Tylko dla poleceń Payload (migracje, import treści) na bazie w Cloudflare: PAYLOAD_REMOTE_BINDINGS=true.
   // Build i testy używają lokalnej kopii D1 (.wrangler), więc nie potrzebują dostępu do konta.

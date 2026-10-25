@@ -1,7 +1,7 @@
 import type { Payload } from 'payload'
 
 /**
- * Pobieranie opinii ze źródeł do kolekcji testimonials (raz na dobę, zadanie zaplanowane w worker.ts).
+ * Pobieranie opinii ze źródeł do kolekcji testimonials (raz w tygodniu, zadanie zaplanowane w worker.ts).
  * Upsert po externalId: nowe opinie dochodzą, istniejące dostają aktualny tekst i ocenę.
  * Wpisów ręcznych (bez externalId) nie dotykamy, a pobranej opinii autora, który ma już ręczny wpis z tego źródła, nie dublujemy.
  *

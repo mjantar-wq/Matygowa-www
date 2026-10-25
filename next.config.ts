@@ -11,6 +11,9 @@ const noSlash = (p: string) => (p.length > 1 ? p.replace(/\/$/, '') : p)
 const indexable = process.env.SITE_INDEXABLE === 'true'
 
 const nextConfig: NextConfig = {
+  // przy budowaniu każdy proces Next uruchamia lokalny workerd z tą samą bazą .wrangler/state;
+  // kilka naraz kończyło się „database is locked: SQLITE_BUSY” (wdrożenie po #29), więc jeden proces
+  experimental: { cpus: 1 },
   images: {
     localPatterns: [
       {

@@ -109,11 +109,10 @@ export default async function UnitPage({ params }: SlugParams) {
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{t.house.others}</h2>
         <div className="mo-cards">
-          {/* wszystkie pozostałe tego samego rodzaju (domy: 5), dopełnione drugim rodzajem do 4 kart */}
+          {/* wszystkie pozostałe: najpierw domy, potem apartamenty */}
           {others
-            .filter((u) => u.kind === unit.kind)
-            .concat(others.filter((u) => u.kind !== unit.kind))
-            .slice(0, Math.max(others.filter((u) => u.kind === unit.kind).length, 4))
+            .filter((u) => u.kind === 'house')
+            .concat(others.filter((u) => u.kind !== 'house'))
             .map((u) => (
               <Link key={u.id} href={href(ctx.locale, 'houses', u.slug)} className="mo-card">
                 <div className="mo-card__media"><Media media={u.hero} alt={peakViewAlt(u, ctx.locale)} /></div>

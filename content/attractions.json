@@ -29,7 +29,11 @@
     "body": {
       "pl": "Najbliższe termy, dziesięć minut drogi od osady. Woda termalna o temperaturze 30–38°C płynie z głębokości 2400 m, w dwudziestu basenach wewnątrz i na zewnątrz. Do tego osiem saun, od łagodnej ziołowej po fińską.\n\nNajpiękniej jest zimą o zmierzchu: siedzicie w ciepłej wodzie na zewnątrz, nad taflą unosi się para, a przed Wami ciemnieje grań Tatr. Na deszczowy dzień i po całym dniu na nartach to najprostszy plan.\n\nWarto przyjechać rano albo pod wieczór, w weekendy i ferie w środku dnia bywa tłoczno. Bilety i godziny otwarcia sprawdzicie na stronie obiektu.",
       "en": "The nearest thermal baths, ten minutes from the settlement. Thermal water at 30–38°C rises from 2,400 metres below ground into twenty indoor and outdoor pools, with eight saunas, from gentle herbal to Finnish.\n\nIt is at its most beautiful on a winter evening: you sit in the warm outdoor water, steam drifting over the surface, as the Tatra ridge darkens in front of you. On a rainy day, or after a full day on skis, it is the simplest plan there is.\n\nCome in the morning or towards evening; at weekends and in the school holidays midday can be busy. Tickets and opening hours are on the official website."
-    }
+    },
+    "image": "A_termy-bukovina_1.webp",
+    "gallery": [
+      "A_termy-bukovina_2.webp"
+    ]
   },
   {
     "slug": "terma-bania",
@@ -59,7 +63,11 @@
     "body": {
       "pl": "Terma Bania stoi tuż przy dolnej stacji Kotelnicy, więc z nart do ciepłej wody idzie się kilka kroków. Woda geotermalna ma do 38°C, baseny są w środku i pod gołym niebem.\n\nStrefa rekreacji ze zjeżdżalniami jest dla rodzin, a w osobnej strefie relaksu dorośli mają świat saun i spokój. Dzięki temu jeden wyjazd pasuje i dzieciom, i Wam.\n\nDobry plan na cały dzień w Białce: rano stok, po południu termy, wieczorem kolacja w jednej z karczm we wsi.",
       "en": "Terma Bania stands right by the Kotelnica base station, so from the slopes to the warm water is only a few steps. Geothermal water reaches 38°C, with pools indoors and under the open sky.\n\nThe recreation zone with slides is for families, while a separate relaxation zone gives adults a world of saunas and quiet. One trip suits the children and you alike.\n\nA good plan for a whole day in Białka: the slopes in the morning, the thermal pools in the afternoon, dinner in one of the village inns in the evening."
-    }
+    },
+    "image": "A_terma-bania_1.webp",
+    "gallery": [
+      "A_terma-bania_2.webp"
+    ]
   },
   {
     "slug": "bialka-narty",
@@ -87,7 +95,8 @@
     "body": {
       "pl": "Kotelnica, Kaniówka i Bania leżą obok siebie po obu stronach Białki i tworzą jeden z największych terenów narciarskich w Polsce, ze wspólnym karnetem. Trasy są szerokie, dośnieżane i oświetlone, więc jeździ się także wieczorem.\n\nKotelnica ma najdłuższe i najbardziej urozmaicone zjazdy, a z jej grzbietu widać całe Tatry. Kaniówka jest najłagodniejsza, dobra na pierwsze dni i dla dzieci; są tu też szkółki narciarskie.\n\nZ osady to około dwudziestu minut samochodem. W ferie i weekendy warto być na parkingu przed dziewiątą.",
       "en": "Kotelnica, Kaniówka and Bania lie side by side on both banks of the Białka river and form one of the largest ski areas in Poland, with a shared lift pass. The runs are wide, snow-made and floodlit, so you can ski into the evening.\n\nKotelnica has the longest and most varied runs, with the whole Tatra range in view from its ridge. Kaniówka is the gentlest, good for the first days and for children, and has ski schools.\n\nIt is about twenty minutes by car from the settlement. In the holidays and at weekends, aim to be in the car park before nine."
-    }
+    },
+    "image": "A_bialka-narty_1.webp"
   },
   {
     "slug": "skywalk-poronin",
@@ -117,7 +126,12 @@
     "body": {
       "pl": "SkyWalk Serce Poronina stoi na Polanie Zgorzelisko w Małem Cichem, dwadzieścia minut od osady. Drewniana ścieżka ma 854 metry i łagodne nachylenie, bez schodów, więc wejdziecie z wózkiem i z dziadkami.\n\nNa szczycie czeka szklany taras z panoramą 360°: Tatry Wysokie i Bielskie, Giewont, a w dole doliny i wsie Podhala. Dla odważniejszych jest druga droga w górę, po siatkach, a na dół można zjechać zjeżdżalnią.\n\nOtwarte cały rok, ostatnie wejście godzinę przed zamknięciem. Najpiękniej jest przy czystym niebie rano albo przed zachodem słońca.",
       "en": "SkyWalk Heart of Poronin stands on Polana Zgorzelisko in Małe Ciche, twenty minutes from the settlement. The wooden walkway is 854 metres long with a gentle gradient and no steps, so you can bring a pushchair and the grandparents.\n\nAt the top a glass terrace opens onto a 360° panorama: the High and Belianske Tatras, Giewont, and the valleys and villages of Podhale below. For the bolder there is a second way up, over climbing nets, and a slide back down.\n\nOpen all year, with last entry an hour before closing. It is at its best under a clear sky in the morning or before sunset."
-    }
+    },
+    "image": "A_skywalk-poronin_1.webp",
+    "gallery": [
+      "A_skywalk-poronin_2.webp",
+      "A_skywalk-poronin_3.webp"
+    ]
   },
   {
     "slug": "morskie-oko",
@@ -245,7 +259,11 @@
     "body": {
       "pl": "Stacja narciarska na grzbiecie Gubałówki, nad Zakopanem, z trasami zwróconymi prosto na Giewont i całe Tatry. Stoki są szerokie i starannie przygotowane, a ruch spokojniejszy niż na dużych stacjach.\n\nTo dobre miejsce na rodzinny dzień na nartach: są łagodne trasy dla zaczynających, szkółka i wypożyczalnia, a obok można odpocząć z widokiem na góry.\n\nWieczorem trasy są oświetlone. Grzbietem łatwo połączyć narty ze spacerem na Gubałówkę.",
       "en": "A ski area on the Gubałówka ridge above Zakopane, with runs facing straight at Giewont and the whole Tatra range. The slopes are wide and carefully groomed, and it is calmer than the big resorts.\n\nIt is a good place for a family day on skis: gentle runs for beginners, a ski school and rental, and somewhere to rest with a view of the mountains.\n\nThe runs are floodlit in the evening, and the ridge makes it easy to combine skiing with a walk to Gubałówka."
-    }
+    },
+    "image": "A_szymoszkowa_1.webp",
+    "gallery": [
+      "A_szymoszkowa_2.webp"
+    ]
   },
   {
     "slug": "splyw-dunajcem",
@@ -274,7 +292,11 @@
     "body": {
       "pl": "Drewniane tratwy i flisacy w góralskich strojach prowadzą Was przełomem Dunajca w Pienińskim Parku Narodowym, z przystani w Sromowcach Wyżnych-Kątach do Szczawnicy albo dalej do Krościenka. Rzeka wije się między wapiennymi ścianami, nad głową Trzy Korony i Sokolica.\n\nSpływ trwa dwie, trzy godziny, a flisacy po drodze opowiadają o Pieninach z góralskim humorem. Woda jest spokojna, płyną dzieci i starsi.\n\nSpływy odbywają się od kwietnia do października. Z osady to niecała godzina drogi przez Nowy Targ. Do przystani wraca się busem albo rowerem drogą wzdłuż Dunajca.",
       "en": "Wooden rafts steered by raftsmen in highland dress take you through the Dunajec gorge in the Pieniny National Park, from the pier in Sromowce Wyżne-Kąty to Szczawnica or on to Krościenko. The river winds between limestone walls, with the Three Crowns and Sokolica overhead.\n\nThe trip takes two to three hours, and the raftsmen tell stories of the Pieniny along the way with highland humour. The water is calm, so children and older guests come along too.\n\nRafting runs from April to October. It is under an hour from the settlement via Nowy Targ. You return to the pier by minibus, or by bike along the riverside path."
-    }
+    },
+    "image": "A_splyw-dunajcem_1.webp",
+    "gallery": [
+      "A_splyw-dunajcem_2.webp"
+    ]
   },
   {
     "slug": "bielska-jaskinia",
@@ -305,7 +327,12 @@
     "body": {
       "pl": "Bielska Jaskinia leży w Tatrach Bielskich nad Tatrzańską Kotliną, czterdzieści minut od osady przez przejście na Łysej Polanie. To jedna z najstarszych udostępnionych jaskiń w Europie i jedna z pierwszych oświetlonych elektrycznie.\n\nTrasa prowadzi przez sale pełne stalaktytów, stalagmitów i kaskad nacieków, obok małych podziemnych jeziorek. Zwiedzanie z przewodnikiem trwa około godziny, po drodze jest sporo schodów.\n\nOd parkingu do wejścia idzie się leśną ścieżką około dwudziestu minut pod górę. W środku przez cały rok jest około 5°C, więc weźcie kurtkę także latem. Godziny wejść sprawdzicie na stronie Słowackiego Zarządu Jaskiń.",
       "en": "Belianska Cave lies in the Belianske Tatras above Tatranská Kotlina, forty minutes from the settlement via the Łysa Polana crossing. It is one of the oldest show caves in Europe and among the first to be lit by electricity.\n\nThe route leads through halls full of stalactites, stalagmites and cascades of flowstone, past small underground pools. The guided tour takes about an hour, with plenty of steps along the way.\n\nFrom the car park to the entrance is a forest path of about twenty minutes uphill. Inside it is about 5°C all year, so bring a jacket even in summer. Tour times are on the Slovak Caves Administration website."
-    }
+    },
+    "image": "A_bielska-jaskinia_1.webp",
+    "gallery": [
+      "A_bielska-jaskinia_2.webp"
+    ],
+    "featured": true
   },
   {
     "slug": "murzasichle",
@@ -329,7 +356,8 @@
     "body": {
       "pl": "Murzasichle to wieś na skraju Tatr, między Poroninem a Zakopanem. Na rodzinne popołudnie jest tu park linowy z trasami dla dzieci i dorosłych, na różnych wysokościach.\n\nZagroda Korkoszów to dawne góralskie gospodarstwo, w którym zobaczycie, jak żyło się na Podhalu.\n\nDobry plan na lato, gdy dzieci potrzebują ruchu, a Wy chcecie zostać blisko gór.",
       "en": "Murzasichle is a village at the edge of the Tatras, between Poronin and Zakopane. For a family afternoon there is a rope park with courses for children and adults, at different heights.\n\nKorkoszów Farmstead is an old highland homestead showing how life was once lived in Podhale.\n\nA good summer plan when the children need to move and you want to stay close to the mountains."
-    }
+    },
+    "featured": true
   },
   {
     "slug": "balony",

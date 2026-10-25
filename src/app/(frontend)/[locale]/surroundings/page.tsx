@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
-import { AttractionEntry, sortAttractions } from '@/components/Attraction'
+import { AttractionEntry, attractionMeta, sortAttractions } from '@/components/Attraction'
 import { CmsPage, getPage } from '@/components/CmsPage'
+import { AttractionPopup } from '@/components/effects/AttractionPopup'
+import { Media } from '@/components/Media'
+import { href } from '@/i18n/routes'
 import { findMany } from '@/lib/cms'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
 import type { Attraction } from '@/payload-types'
@@ -12,25 +15,46 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 }
 
 /**
- * Okolica: te same atrakcje co w sekcji „Blisko wszystkiego” na głównej (jedna kolekcja w panelu),
- * tu z opisem rozszerzonym i zdjęciami; pod nimi atrakcje bez odpowiednika na głównej (np. szlaki, lot balonem).
+ * Okolica: te same atrakcje co w sekcji „Blisko wszystkiego” na głównej (jedna kolekcja w panelu), jedną listą
+ * kafelków z krótkim opisem; kafelek otwiera okienko z opisem rozszerzonym i zdjęciami.
  */
 export default async function SurroundingsPage({ params }: LocaleParams) {
   const ctx = await pageContext(params)
   const attractions = sortAttractions(await findMany<Attraction>('attractions', ctx.locale, { depth: 1 }))
-  const main = attractions.filter((a) => a.featured)
-  const more = attractions.filter((a) => !a.featured)
   return (
     <CmsPage route="surroundings" ctx={ctx}>
       {attractions.length ? (
-        <section className="mo-section mo-container mo-atrakcje">
-          {(main.length ? main : more).map((a) => <AttractionEntry key={a.id} a={a} ctx={ctx} link />)}
-          {main.length && more.length ? (
-            <>
-              <h2 className="mo-h2 mo-atrakcje__wiecej">{ctx.t.attractions.more}</h2>
-              {more.map((a) => <AttractionEntry key={a.id} a={a} ctx={ctx} link />)}
-            </>
-          ) : null}
+        <section className="mo-section mo-container">
+          <ul className="mo-cards mo-atrakcje" role="list">
+            {attractions.map((a) => {
+              const meta = attractionMeta(a, ctx)
+              return (
+                <AttractionPopup
+                  key={a.id}
+                  slug={a.slug}
+                  href={href(ctx.locale, 'surroundings', a.slug)}
+                  label={a.name}
+                  closeLabel={ctx.t.effects.close}
+                  card={
+                    <>
+                      <div className="mo-card__media">
+                        <Media media={a.image} />
+                      </div>
+                      <h2 className="mo-h3 mo-card__title">{a.name}</h2>
+                      {a.summary ? <p className="mo-card__text">{a.summary}</p> : <span />}
+                      <span />
+                      <p className="mo-card__meta">
+                        <span className="mo-label">{meta}</span>
+                        <span className="mo-card__arrow" aria-hidden="true">→</span>
+                      </p>
+                    </>
+                  }
+                >
+                  <AttractionEntry a={a} ctx={ctx} />
+                </AttractionPopup>
+              )
+            })}
+          </ul>
         </section>
       ) : null}
     </CmsPage>

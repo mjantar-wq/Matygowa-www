@@ -993,7 +993,7 @@ export interface Testimonial {
   date?: string | null;
   unit?: (number | null) | Unit;
   /**
-   * Opinie z tym polem pobiera automatycznie raz na dobę zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.
+   * Opinie z tym polem pobiera automatycznie raz w tygodniu zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.
    */
   externalId?: string | null;
   updatedAt: string;

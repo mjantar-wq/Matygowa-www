@@ -79,6 +79,22 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       .then((data) => setChunks((c) => ({ ...c, [month]: data })))
   }, [live, open, month, locale])
 
+  // otwarty kalendarz ma być cały na ekranie (Michał, 25.10.2026): przewijamy stronę albo okno, w którym stoi pasek
+  useEffect(() => {
+    if (!open) return
+    const frame = requestAnimationFrame(() => {
+      const cal = document.getElementById(calendarId)
+      if (!cal) return
+      const r = cal.getBoundingClientRect()
+      const top = parseFloat(getComputedStyle(cal).scrollMarginTop) || 0
+      if (r.top >= top && r.bottom <= window.innerHeight) return
+      const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      // wyższy od ekranu: od początku kalendarza; niższy: najmniejsze przewinięcie, żeby zmieścił się cały
+      cal.scrollIntoView({ block: r.height + top > window.innerHeight ? 'start' : 'nearest', behavior: smooth ? 'smooth' : 'auto' })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [open, calendarId])
+
   useEffect(() => {
     if (!open) return
     const close = (e: MouseEvent | KeyboardEvent) => {

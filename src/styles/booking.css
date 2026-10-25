@@ -11,7 +11,7 @@
 .mo-booking-ages { display: flex; flex-wrap: wrap; border: 1px solid var(--color-linia); border-block-start: 0; background: var(--color-powierzchnia); }
 .mo-booking-ages .mo-field { flex: 1 1 10rem; }
 
-.mo-calendar { position: absolute; z-index: 20; inset-inline: 0; inset-block-start: calc(var(--pole-wys) + var(--space-2)); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); }
+.mo-calendar { scroll-margin-block: calc(var(--naglowek-wys) + var(--space-3)) var(--space-4); position: absolute; z-index: 20; inset-inline: 0; inset-block-start: calc(var(--pole-wys) + var(--space-2)); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); }
 .mo-calendar__head, .mo-calendar__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
 .mo-calendar__foot { margin-block-start: var(--space-5); }
 .mo-calendar__nav { inline-size: 2.75rem; block-size: 2.75rem; border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: none; color: inherit; cursor: pointer; }

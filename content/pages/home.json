@@ -23,8 +23,8 @@
         "en": "Ten peaks. One view."
       },
       "sub": {
-        "pl": "Domy w Gliczarowie Górnym, każdy nazwany od szczytu, który widać z jego okien. Własna sauna, gorąca bania i cała panorama Tatr.",
-        "en": "Houses in Gliczarów Górny, each named after the peak you see from its windows. Your own sauna, a hot tub and the whole Tatra panorama."
+        "pl": "Domki w Gliczarowie Górnym, każdy nazwany od szczytu, który widać z jego okien. Własna sauna, gorąca bania i cała panorama Tatr.",
+        "en": "Cottages in Gliczarów Górny, each named after the peak you see from its windows. Your own sauna, a hot tub and the whole Tatra panorama."
       },
       "media": "hero-panorama-swit"
     },
@@ -54,8 +54,8 @@
         {
           "value": "6",
           "label": {
-            "pl": "domów",
-            "en": "houses"
+            "pl": "domków",
+            "en": "cottages"
           }
         },
         {
@@ -395,7 +395,7 @@
         "en": "Choose your peak"
       },
       "body": {
-        "pl": "Sprawdźcie wolne terminy i ceny wszystkich domów w jednym kalendarzu. Wolicie porozmawiać? Zadzwońcie, chętnie doradzimy.",
+        "pl": "Sprawdźcie wolne terminy i ceny wszystkich domków w jednym kalendarzu. Wolicie porozmawiać? Zadzwońcie, chętnie doradzimy.",
         "en": "See free dates and prices for every house in one calendar. Prefer to talk? Give us a call, we are happy to help."
       }
     }

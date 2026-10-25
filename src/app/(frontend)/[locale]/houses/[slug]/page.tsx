@@ -45,10 +45,7 @@ export default async function UnitPage({ params }: SlugParams) {
       <section className="mo-hero">
         <div className="mo-hero__media"><Media media={unit.hero} priority /></div>
         <div className="mo-container mo-hero__content">
-          <p className="mo-label" style={{ color: 'inherit' }}>
-            {t.house.kind[unit.kind]}
-            {unit.status === 'comingSoon' ? ` · ${t.house.comingSoon}` : ''}
-          </p>
+          {unit.status === 'comingSoon' ? <p className="mo-label" style={{ color: 'inherit' }}>{t.house.comingSoon}</p> : null}
           <h1 className="mo-display-xl">{unit.name}</h1>
           {unit.peak?.elevation ? <p className="mo-lede">{t.house.elevation(unit.peak.elevation)}{unit.peak.range ? ` · ${unit.peak.range}` : ''}</p> : null}
         </div>

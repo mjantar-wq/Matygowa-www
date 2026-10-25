@@ -14,7 +14,8 @@ const SVG: Partial<Record<Scene['kind'], string>> = { panorama: '/ilustracje/G2_
  */
 export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effects'] }) {
   const [active, setActive] = useState(scenes[0]?.id)
-  const [focus, setFocus] = useState<string | undefined>()
+  const [focus, setFocus] = useState<Focus | undefined>()
+  const [hover, setHover] = useState<string | undefined>()
   const [reach, setReach] = useState(1)
 
   useEffect(() => {
@@ -28,10 +29,15 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
         const r = n.getBoundingClientRect()
         if (r.top <= mid && r.bottom >= mid) el = n
       }
+      // W przerwie między krokami rozdziału zostaje scena ostatniego minionego kroku, a nie scena rozdziału,
+      // więc tło przechodzi z kroku w krok bez powrotu do zdjęcia domyślnego.
+      if (el?.tagName === 'SECTION') {
+        for (const n of el.querySelectorAll<HTMLElement>('[data-scene]')) if (n.getBoundingClientRect().top <= mid) el = n
+      }
       const id = el?.dataset.scene
       if (!id || !scenes.some((s) => s.id === id)) return
       setActive(id)
-      setFocus(focusAt(mid))
+      setFocus(focusAt(el!.closest('section') ?? el!, mid))
       setReach((r) => Math.max(r, scenes.findIndex((s) => s.id === id) + 1))
     }
     const onScroll = () => {
@@ -47,7 +53,22 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
     }
   }, [scenes])
 
+  // Najechanie albo fokus na karcie z data-scene-focus (atrakcja, domek) wskazuje element ilustracji od razu.
+  useEffect(() => {
+    const on = (e: Event) => setHover((e.target as Element).closest<HTMLElement>('[data-scene-focus]')?.dataset.sceneFocus)
+    for (const type of ['pointerover', 'focusin']) document.addEventListener(type, on)
+    return () => {
+      for (const type of ['pointerover', 'focusin']) document.removeEventListener(type, on)
+    }
+  }, [])
+  const shown: Focus | undefined = hover ? { a: hover, b: hover, t: 0 } : focus
+
   const activeKind = scenes.find((s) => s.id === active)?.kind
+  // Kolor i cień tekstów opowieści zależą od tła: zdjęcie albo ilustracja (effects.css, data-tlo).
+  useEffect(() => {
+    const story = document.querySelector<HTMLElement>('.mo-opowiesc')
+    if (story && activeKind) story.dataset.tlo = activeKind
+  }, [activeKind])
   return (
     <div className="mo-stage" aria-hidden="true" data-kind={activeKind}>
       {scenes.map((s, i) => {
@@ -56,7 +77,7 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
         return (
           <div key={s.id} className="mo-stage__scene" data-kind={s.kind} data-active={on || undefined}>
             {s.kind === 'media' && s.slides ? <HeroStage slides={s.slides} t={t} active={on} eager={i === 0} controls={i === 0} /> : null}
-            {SVG[s.kind] ? <InlineSvg src={SVG[s.kind]!} focus={on ? focus : undefined} pan={s.kind === 'panorama'} /> : null}
+            {SVG[s.kind] ? <InlineSvg src={SVG[s.kind]!} focus={on ? shown : undefined} pan={s.kind === 'panorama'} /> : null}
           </div>
         )
       })}
@@ -64,17 +85,28 @@ export function SceneStage({ scenes, t }: { scenes: Scene[]; t: Dictionary['effe
   )
 }
 
-/** Element z data-scene-focus (karta domku, atrakcja) na środku ekranu. */
-function focusAt(mid: number) {
-  for (const n of document.querySelectorAll<HTMLElement>('[data-scene-focus]')) {
+/** Dwa sąsiednie elementy ilustracji (szczyty, atrakcje) i postęp przewijania między ich kartami (0–1). */
+type Focus = { a: string; b: string; t: number }
+
+/**
+ * Karty z data-scene-focus w rozdziale na środku ekranu → między którymi kartami jest środek ekranu.
+ * Panorama przesuwa się płynnie od szczytu do szczytu, zamiast wracać do środka w przerwie między kartami.
+ */
+function focusAt(section: Element, mid: number): Focus | undefined {
+  const cards = [...section.querySelectorAll<HTMLElement>('[data-scene-focus]')].map((n) => {
     const r = n.getBoundingClientRect()
-    if (r.top <= mid && r.bottom >= mid) return n.dataset.sceneFocus
-  }
-  return undefined
+    return { id: n.dataset.sceneFocus!, y: r.top + r.height / 2 }
+  })
+  if (!cards.length) return undefined
+  const next = cards.findIndex((c) => c.y > mid)
+  if (next === 0) return { a: cards[0].id, b: cards[0].id, t: 0 }
+  if (next === -1) return { a: cards.at(-1)!.id, b: cards.at(-1)!.id, t: 0 }
+  const [a, b] = [cards[next - 1], cards[next]]
+  return { a: a.id, b: b.id, t: (mid - a.y) / (b.y - a.y) }
 }
 
 /** Ilustracja wstawiona do strony (kolory z tokenów); panorama przesuwa się do wskazanego szczytu. */
-function InlineSvg({ src, focus, pan }: { src: string; focus?: string; pan?: boolean }) {
+function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: boolean }) {
   const host = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
 
@@ -98,14 +130,21 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: string; pan?: boo
     const el = host.current
     const svg = el?.querySelector('svg')
     if (!ready || !el || !svg) return
-    el.querySelectorAll('.is-lit').forEach((n) => n.classList.remove('is-lit'))
-    const target = focus ? svg.querySelector<SVGGraphicsElement>(`#${CSS.escape(focus)}`) : null
-    target?.classList.add('is-lit')
+    const find = (id?: string) => (id ? svg.querySelector<SVGGraphicsElement>(`#${CSS.escape(id)}`) : null)
+    const lit = find(focus && (focus.t < 0.5 ? focus.a : focus.b))
+    if (!lit?.classList.contains('is-lit')) {
+      el.querySelectorAll('.is-lit').forEach((n) => n.classList.remove('is-lit'))
+      lit?.classList.add('is-lit')
+    }
     if (!pan) return
-    // Środek szczytu względem rysunku → przesunięcie warstwy tak, by szczyt stał na środku ekranu.
+    // Środki obu szczytów względem rysunku, przesunięcie pośrodku wg postępu → szczyt na środku ekranu.
     const sr = svg.getBoundingClientRect()
-    const tr = target?.getBoundingClientRect()
-    const x = tr ? tr.left + tr.width / 2 - sr.left : sr.width / 2
+    const cx = (n: SVGGraphicsElement | null) => {
+      const r = n?.getBoundingClientRect()
+      return r ? r.left + r.width / 2 - sr.left : sr.width / 2
+    }
+    const [xa, xb] = [cx(find(focus?.a)), cx(find(focus?.b))]
+    const x = xa + (xb - xa) * (focus?.t ?? 0)
     const shift = Math.min(0, Math.max(innerWidth - sr.width, innerWidth / 2 - x))
     el.style.setProperty('--przesun', `${shift}px`)
   }, [focus, ready, pan])

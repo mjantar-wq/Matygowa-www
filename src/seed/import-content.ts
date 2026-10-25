@@ -119,6 +119,7 @@ async function main() {
       summary: a.summary?.[l],
       distanceKm: a.distance_km,
       driveMinutes: a.drive_min,
+      mapId: a.map_svg_id,
       featured: !!a.featured,
     }))
   }

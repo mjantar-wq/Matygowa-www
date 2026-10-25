@@ -21770,6 +21770,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "map_id": {
+          "name": "map_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "featured": {
           "name": "featured",
           "type": "integer",
@@ -22118,6 +22125,13 @@
         "version_lng": {
           "name": "version_lng",
           "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "version_map_id": {
+          "name": "version_map_id",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -24909,6 +24923,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "bdc599f0-854d-402d-8b1c-7d32ba95c133",
+  "id": "6b727d2d-a8be-4003-8d58-79e6d25db545",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

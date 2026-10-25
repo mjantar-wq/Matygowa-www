@@ -17,6 +17,7 @@
   },
   {
     "slug": "termy-bukovina",
+    "map_svg_id": "a-termy-bukovina",
     "name": {
       "pl": "Termy Bukovina",
       "en": "Termy Bukovina thermal baths"
@@ -27,9 +28,9 @@
     ],
     "category": "thermal",
     "featured": true,
-    "distance_km": 5,
-    "drive_min": 10,
-    "distance_note": "Szacunek z mapy (linia prosta ok. 3,7 km); do potwierdzenia trasą drogową.",
+    "distance_km": 4.3,
+    "drive_min": 9,
+    "distance_note": "Trasa drogowa wg OpenStreetMap (OSRM), 25.10.2026.",
     "body": {
       "pl": "Dwadzieścia basenów z wodą termalną o temperaturze 30–38°C, czerpaną z głębokości 2400 m, i osiem saun. Z basenów zewnętrznych patrzycie prosto na Tatry, także zimą, w parze nad wodą.",
       "en": "Twenty pools of 30–38°C thermal water drawn from 2,400 metres below ground, and eight saunas. From the outdoor pools you look straight at the Tatras, in winter too, through the steam rising off the water."
@@ -37,6 +38,7 @@
   },
   {
     "slug": "terma-bania",
+    "map_svg_id": "a-termy",
     "name": {
       "pl": "Terma Bania w Białce Tatrzańskiej",
       "en": "Terma Bania, Białka Tatrzańska"
@@ -47,9 +49,9 @@
     ],
     "category": "thermal",
     "featured": true,
-    "distance_km": 10,
-    "drive_min": 15,
-    "distance_note": "Szacunek z mapy (linia prosta ok. 6,5 km); do potwierdzenia trasą drogową.",
+    "distance_km": 11.6,
+    "drive_min": 20,
+    "distance_note": "Trasa drogowa wg OpenStreetMap (OSRM), 25.10.2026.",
     "body": {
       "pl": "Woda geotermalna do 38°C, strefa zjeżdżalni dla dzieci i strefa relaksu ze światem saun dla dorosłych. Leży tuż przy stoku Kotelnicy, więc po nartach wystarczy przejść kilka kroków.",
       "en": "Geothermal water up to 38°C, a slide zone for children and a relaxation area with a world of saunas for adults. It sits right next to the Kotelnica slopes, so after skiing it is only a few steps away."
@@ -57,6 +59,7 @@
   },
   {
     "slug": "bialka-narty",
+    "map_svg_id": "a-kotelnica",
     "name": {
       "pl": "Narty w Białce Tatrzańskiej",
       "en": "Skiing in Białka Tatrzańska"
@@ -66,9 +69,9 @@
     ],
     "category": "ski",
     "featured": true,
-    "distance_km": 10,
-    "drive_min": 15,
-    "distance_note": "Szacunek z mapy; do potwierdzenia trasą drogową.",
+    "distance_km": 12,
+    "drive_min": 20,
+    "distance_note": "Dolna stacja Kotelnicy obok Termy Bania; trasa wg OSRM do Termy Bania, 25.10.2026.",
     "body": {
       "pl": "Kotelnica, Kaniówka i Bania to jeden z największych terenów narciarskich w Polsce, ze wspólnym karnetem. Szerokie, dośnieżane i oświetlone trasy, z których widać Tatry. Kaniówka jest najłagodniejsza i najlepsza dla dzieci.",
       "en": "Kotelnica, Kaniówka and Bania form one of the largest ski areas in Poland, with a shared pass. Wide, snow-made, floodlit runs with views of the Tatras. Kaniówka is the gentlest and best for children."

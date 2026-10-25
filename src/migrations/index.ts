@@ -4,7 +4,7 @@ import * as migration_20261024_235001_pomiar_zgody from './20261024_235001_pomia
 import * as migration_20261025_002906_unit_bathrooms_hosts from './20261025_002906_unit_bathrooms_hosts';
 import * as migration_20261025_073328_hero_variants from './20261025_073328_hero_variants';
 import * as migration_20261025_075424_scena_warianty from './20261025_075424_scena_warianty';
-import * as migration_20261025_092506_nazwy_szczytow from './20261025_092506_nazwy_szczytow';
+import * as migration_20261025_092914_nazwy_szczytow_mapa_atrakcji from './20261025_092914_nazwy_szczytow_mapa_atrakcji';
 
 export const migrations = [
   {
@@ -38,8 +38,8 @@ export const migrations = [
     name: '20261025_075424_scena_warianty',
   },
   {
-    up: migration_20261025_092506_nazwy_szczytow.up,
-    down: migration_20261025_092506_nazwy_szczytow.down,
-    name: '20261025_092506_nazwy_szczytow'
+    up: migration_20261025_092914_nazwy_szczytow_mapa_atrakcji.up,
+    down: migration_20261025_092914_nazwy_szczytow_mapa_atrakcji.down,
+    name: '20261025_092914_nazwy_szczytow_mapa_atrakcji'
   },
 ];

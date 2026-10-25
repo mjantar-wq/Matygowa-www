@@ -11,6 +11,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`ALTER TABLE \`_units_v\` ADD \`version_peak_name_cases_loc\` text;`)
   await db.run(sql`ALTER TABLE \`_units_v\` ADD \`version_peak_name_cases_inst\` text;`)
   await db.run(sql`ALTER TABLE \`_units_v_locales\` ADD \`version_peak_name\` text;`)
+  await db.run(sql`ALTER TABLE \`attractions\` ADD \`map_id\` text;`)
+  await db.run(sql`ALTER TABLE \`_attractions_v\` ADD \`version_map_id\` text;`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -24,4 +26,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`ALTER TABLE \`_units_v\` DROP COLUMN \`version_peak_name_cases_loc\`;`)
   await db.run(sql`ALTER TABLE \`_units_v\` DROP COLUMN \`version_peak_name_cases_inst\`;`)
   await db.run(sql`ALTER TABLE \`_units_v_locales\` DROP COLUMN \`version_peak_name\`;`)
+  await db.run(sql`ALTER TABLE \`attractions\` DROP COLUMN \`map_id\`;`)
+  await db.run(sql`ALTER TABLE \`_attractions_v\` DROP COLUMN \`version_map_id\`;`)
 }

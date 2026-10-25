@@ -58,6 +58,7 @@ export const Attractions: CollectionConfig = {
         { name: 'lng', label: 'Długość geogr.', type: 'number' },
       ],
     },
+    { name: 'mapId', label: 'Id na mapie okolicy (G7)', type: 'text', admin: { position: 'sidebar', placeholder: 'a-kotelnica', description: 'Puste: a-<adres atrakcji>' } },
     { name: 'featured', label: 'Wyróżniona na stronie głównej', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar' } },
     seoField,
   ],

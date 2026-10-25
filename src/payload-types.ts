@@ -1150,6 +1150,10 @@ export interface Attraction {
   url?: string | null;
   lat?: number | null;
   lng?: number | null;
+  /**
+   * Puste: a-<adres atrakcji>
+   */
+  mapId?: string | null;
   featured?: boolean | null;
   seo?: {
     title?: string | null;
@@ -2109,6 +2113,7 @@ export interface AttractionsSelect<T extends boolean = true> {
   url?: T;
   lat?: T;
   lng?: T;
+  mapId?: T;
   featured?: T;
   seo?:
     | T

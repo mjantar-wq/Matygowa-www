@@ -58,5 +58,5 @@
 <text class="nazwa" x="613" y="453" text-anchor="middle">Salon z kuchnią</text>
 <text class="dopisek" x="613" y="481" text-anchor="middle">i jadalnią</text>
 </g>
-<rect class="pokoj" x="514" y="95" width="9" height="75"/>
+<rect class="pokoj" x="512" y="95" width="13" height="75"/>
 </svg>

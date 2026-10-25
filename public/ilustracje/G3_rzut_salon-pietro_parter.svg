@@ -67,8 +67,8 @@
 <text class="nazwa" x="834" y="453" text-anchor="middle">Sypialnia</text>
 <text class="dopisek" x="834" y="481" text-anchor="middle">12 m²</text>
 </g>
-<rect class="pokoj" x="519" y="4" width="9" height="134"/>
-<rect class="pokoj" x="730" y="138" width="137" height="9"/>
-<rect class="pokoj" x="386" y="138" width="134" height="9"/>
-<rect class="pokoj" x="386" y="303" width="134" height="9"/>
+<rect class="pokoj" x="517" y="4" width="13" height="134"/>
+<rect class="pokoj" x="730" y="136" width="137" height="13"/>
+<rect class="pokoj" x="386" y="136" width="134" height="13"/>
+<rect class="pokoj" x="386" y="301" width="134" height="13"/>
 </svg>

@@ -65,8 +65,8 @@ UKLADY = {
         "pietro": ([(12.8, 0), (87.2, 0), (87.2, 71.6), (12.8, 71.6)], [
             ("lazienka-prywatna", "Łazienka", 12.8, 0, 27.4, 32.8, "prywatna", None),
             ("sypialnia-4", "Sypialnia", 27.4, 0, 57.7, 32.8, "z łazienką", None),
-            ("hol", "", 57.7, 0, 72.2, 13.3, None, None),
-            ("wc", "WC", 57.7, 13.3, 72.2, 32.8, None, None),
+            ("wc", "WC", 57.7, 0, 72.2, 19.5, None, None),  # wg Michała: WC od ściany zewnętrznej
+            ("hol", "", 57.7, 19.5, 72.2, 32.8, None, None),  # wejście do sypialni z boku, obok WC
             ("schody", "Schody", 72.2, 0, 87.2, 32.8, None, "schody"),
             ("salon", "Salon z kuchnią", 12.8, 32.8, 87.2, 71.6, "i jadalnią", None),
         ]),
@@ -99,12 +99,12 @@ APARTAMENT = {
     ]),
 }
 
-# Pary pomieszczeń bez ściany między nimi (schody z holem, wejściem albo klatką), wg planów źródłowych.
+# Pary pomieszczeń bez ściany między nimi (schody z holem, wejściem albo klatką, hol z sypialnią), wg planów źródłowych.
 OTWARCIA = {
     ("salon-parter", "parter"): [("wejscie", "schody")],
     ("salon-parter", "pietro"): [("schody", "hol")],
     ("salon-pietro", "parter"): [("wejscie", "schody"), ("schody", "schody-2"), ("wejscie", "hol"), ("hol", "korytarz")],
-    ("salon-pietro", "pietro"): [("schody", "salon"), ("hol", "schody")],
+    ("salon-pietro", "pietro"): [("schody", "salon"), ("hol", "schody"), ("hol", "sypialnia-4")],
     ("apartament", "parter"): [("klatka", "schody")],
     ("apartament", "pietro"): [("klatka", "schody"), ("hol", "klatka")],
 }
@@ -160,7 +160,10 @@ def svg(uklad, pietro, bryla, pokoje):
         L += g + ["</g>"]
     pok = {p[0]: p for p in pokoje}
     for a, b in OTWARCIA.get((uklad, pietro), []):
-        L.append('<rect class="pokoj" x="%.0f" y="%.0f" width="%.0f" height="%.0f"/>' % otwarcie(pok[a], pok[b]))
+        x, y, w, h = otwarcie(pok[a], pok[b])
+        if w < h: x, w = x - 2, w + 4  # zakładka 2 px na oba pokoje, bez cienkiej kreski na styku
+        else: y, h = y - 2, h + 4
+        L.append('<rect class="pokoj" x="%.0f" y="%.0f" width="%.0f" height="%.0f"/>' % (x, y, w, h))
     L.append("</svg>")
     return "\n".join(L)
 

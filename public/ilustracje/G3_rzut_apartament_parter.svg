@@ -65,5 +65,5 @@
 <line class="stopnie" x1="966" y1="854" x2="966" y2="988"/>
 <text class="nazwa" x="805" y="929" text-anchor="middle">Schody</text>
 </g>
-<rect class="pokoj" x="605" y="854" width="9" height="133"/>
+<rect class="pokoj" x="603" y="854" width="13" height="133"/>
 </svg>

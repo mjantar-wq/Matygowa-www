@@ -113,7 +113,7 @@ const en: Dictionary = {
   siteName: 'Matygowa Osada',
   nav: {
     home: 'Home',
-    houses: 'Houses & apartments',
+    houses: 'Cottages & apartments',
     rituals: 'Rituals',
     surroundings: 'Surroundings',
     offers: 'Offers',
@@ -169,12 +169,12 @@ const en: Dictionary = {
     } as Record<string, string>,
   },
   house: {
-    kind: { house: 'House', apartment: 'Apartment' },
+    kind: { house: 'Cottage', apartment: 'Apartment' },
     comingSoon: 'Coming soon',
     guests: (n: number) => `up to ${n} guests`,
     peak: 'Peak',
     elevation: (m: number) => `${m.toLocaleString('en-GB')} m a.s.l.`,
-    others: 'Other houses and apartments',
+    others: 'Other cottages and apartments',
     amenities: 'Amenities',
     availability: 'Availability and prices',
     gallery: 'Gallery',

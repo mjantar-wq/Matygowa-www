@@ -20,7 +20,8 @@ export interface PublicUnitType {
   maxChildren: number
   amenities: string[]
   amenitiesEn: string[]
-  photos: { id: string; src: string }[]
+  /** plik: `${src}/${szerokość}.${format}` dla jednej z `widths` */
+  photos: { id: string; src: string; widths?: number[]; format?: string; focusX?: number; focusY?: number }[]
 }
 
 export interface PublicProperty {

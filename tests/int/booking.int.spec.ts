@@ -3,6 +3,11 @@ import { arrivalInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarD
 import { bookingUrl } from '@/lib/booking'
 
 vi.mock('server-only', () => ({}))
+vi.mock('@/lib/cms', () => ({
+  findMany: async () => [
+    { slug: 'hawran', name: 'Hawrań', kind: 'house', tagline: 'Widok na Hawrań', hero: { url: '/media/hawran.jpg', alt: 'Hawrań', focusX: 30 }, area: 120, bedrooms: 4, peak: { elevation: 2152 } },
+  ],
+}))
 
 const day = (o: Partial<DayInfo> = {}): DayInfo => ({ free: 1, open: true, cta: false, ctd: false, minStay: 2, maxStay: null, price: 95000, promo: null, ...o })
 // 1–7 grudnia; hawran zajęty 3.12, gerlach wolny, ale 4.12 bez wyjazdów
@@ -68,7 +73,7 @@ describe('pośrednik /api/booking', () => {
 
   it('wyszukiwanie: domy po kodzie, cena oferty, plakietka promocji i powód niedostępności', async () => {
     const api: Record<string, unknown> = {
-      '': { unitTypes: [{ id: 'u1', code: 'hawran', name: 'Hawrań' }, { id: 'u2', code: 'gerlach', name: 'Gerlach', content: { en: { name: 'Gerlach cottage' } } }] },
+      '': { unitTypes: [{ id: 'u1', code: 'hawran', name: 'Hawrań', stdOccupancy: 8, maxOccupancy: 8, amenities: ['sauna'], amenitiesEn: ['sauna'], photos: [] }, { id: 'u2', code: 'gerlach', name: 'Gerlach', content: { en: { name: 'Gerlach cottage' } }, photos: [] }] },
       '/search': {
         results: [
           { unitTypeId: 'u1', free: 1, offers: [{ offerId: 'standard', name: 'Standard', available: true, total: 300000, items: [{ nights: 3, total: 300000, promotion: { id: 'p', display: { badge: 'Zima', en: { badge: 'Winter' } } } }] }] },
@@ -88,8 +93,13 @@ describe('pośrednik /api/booking', () => {
     expect(calls.find((c) => c.includes('/search'))).toContain('childCount=1&children=4')
     expect(res.headers.get('Cache-Control')).toContain('s-maxage=45')
     expect(body.nights).toBe(3)
-    expect(body.results[0]).toMatchObject({ code: 'hawran', offers: [{ offerId: 'standard', total: 300000, badge: 'Zima', badgeEn: 'Winter' }], reason: null })
-    expect(body.results[1]).toMatchObject({ code: 'gerlach', nameEn: 'Gerlach cottage', offers: [], reason: 'over_capacity' })
+    expect(body.results[0]).toMatchObject({
+      code: 'hawran',
+      offers: [{ offerId: 'standard', total: 300000, badge: 'Zima', badgeEn: 'Winter' }],
+      reason: null,
+      unit: { slug: 'hawran', photos: [{ src: '/media/hawran.jpg', focus: '30% 50%' }], area: 120, elevation: 2152, maxGuests: 8, amenities: ['sauna'] },
+    })
+    expect(body.results[1]).toMatchObject({ code: 'gerlach', nameEn: 'Gerlach cottage', offers: [], reason: 'over_capacity', unit: null })
   })
 
   it('odrzuca błędne zapytania', async () => {

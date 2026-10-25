@@ -39,8 +39,8 @@ export function setAmbience(next: Partial<Ambience>) {
     if (next.sezon) root.dataset.sezon = next.sezon
   }
   try {
-    if (next.pora) localStorage.setItem(KEYS.pora, next.pora)
-    if (next.sezon) localStorage.setItem(KEYS.sezon, next.sezon)
+    if (next.pora) sessionStorage.setItem(KEYS.pora, next.pora)
+    if (next.sezon) sessionStorage.setItem(KEYS.sezon, next.sezon)
   } catch {}
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
   const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown }

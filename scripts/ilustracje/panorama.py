@@ -53,9 +53,9 @@ def snap(lat, lon, r=150):
             if e > best[0]: best = (e, la, lo)
     return best
 
-AZ0, AZ1, STEP = 240.0, 124.0, 0.05  # od zachodu (lewo) do wschodu (prawo), widok na południe
+AZ0, AZ1, STEP = 124.0, 240.0, 0.05  # widok na południe: wschód (Hawrań) po lewej, zachód (Kominiarski) po prawej, jak w PeakFinderze
 BANDS = [(80, 2500), (2500, 9000), (9000, 45000)]
-azs = np.arange(AZ0, AZ1 - 1e-9, -STEP)
+azs = np.arange(AZ0, AZ1 + 1e-9, STEP)
 sky = np.full((len(BANDS), len(azs)), -10.0)
 for k, az in enumerate(azs):
     for b, (d0, d1) in enumerate(BANDS):
@@ -76,15 +76,15 @@ for slug, name, h, lat, lon in PEAKS:
     e, la, lo = snap(lat, lon)
     az, d = bearing_dist(*SITE, la, lo)
     a = angle(e, d)
-    k = int(round((AZ0 - az) / STEP))
+    k = int(round((az - AZ0) / STEP))
     near = max(sky[0, k], sky[1, k])
     peaks.append(dict(slug=slug, name=name, height=h, az=round(az, 2), dist_km=round(d / 1000, 1), dem=round(float(e)), angle=a, visible=bool(a > near - 0.02), k=k))
 
 W, H = 3200, 900
 EXAG = 3.2                      # przewyższenie pionowe ilustracji
-xs = (AZ0 - azs) / (AZ0 - AZ1) * W
+xs = (azs - AZ0) / (AZ1 - AZ0) * W
 amin = -1.2
-def y(a): return H - (a - amin) * (W / (AZ0 - AZ1)) * EXAG
+def y(a): return H - (a - amin) * (W / (AZ1 - AZ0)) * EXAG
 def path(row, smooth=1):
     pts = " ".join(f"{x:.1f},{y(a):.1f}" for x, a in zip(xs[::smooth], row[::smooth]))
     return f"M0,{H} L{pts} L{W},{H} Z"

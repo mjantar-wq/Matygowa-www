@@ -3,6 +3,7 @@ import * as migration_20261024_223907_role_default from './20261024_223907_role_
 import * as migration_20261024_235001_pomiar_zgody from './20261024_235001_pomiar_zgody';
 import * as migration_20261025_002906_unit_bathrooms_hosts from './20261025_002906_unit_bathrooms_hosts';
 import * as migration_20261025_073328_hero_variants from './20261025_073328_hero_variants';
+import * as migration_20261025_075424_scena_warianty from './20261025_075424_scena_warianty';
 
 export const migrations = [
   {
@@ -28,6 +29,11 @@ export const migrations = [
   {
     up: migration_20261025_073328_hero_variants.up,
     down: migration_20261025_073328_hero_variants.down,
-    name: '20261025_073328_hero_variants'
+    name: '20261025_073328_hero_variants',
+  },
+  {
+    up: migration_20261025_075424_scena_warianty.up,
+    down: migration_20261025_075424_scena_warianty.down,
+    name: '20261025_075424_scena_warianty'
   },
 ];

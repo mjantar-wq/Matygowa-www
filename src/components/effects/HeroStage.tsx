@@ -1,23 +1,23 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import type { Dictionary } from '@/i18n/dictionaries'
-import { motionAllowed, useAmbience } from './ambience'
+import { motionAllowed, useAmbience, useMotionPaused } from './ambience'
 
 export type HeroImage = { url: string; alt?: string | null; width?: number | null; height?: number | null; focusX?: number | null; focusY?: number | null }
 /** Jeden kadr hero; `slots` to nastroje (np. "noc-zima"), w których ten kadr się pokazuje. */
 export type HeroSlide = { image?: HeroImage | null; video?: string | null; videoPortrait?: string | null; slots: string[] }
 
 /**
- * Filmowe wejście: kadr startowy jest od razu (LCP), film dociąga się po załadowaniu strony i płynnie
- * wchodzi na kadr. Bez ruchu (prefers-reduced-motion, oszczędzanie danych) zostaje sam kadr.
+ * Filmowe wejście: kadr startowy jest od razu (LCP) i powoli dryfuje (CSS); film, jeśli jest, dociąga się po
+ * załadowaniu strony i płynnie wchodzi na kadr. Przycisk pauzy (MotionPause w hero) zatrzymuje oba. Bez ruchu
+ * (prefers-reduced-motion, oszczędzanie danych) zostaje nieruchomy kadr.
  */
-export function HeroStage({ slides, t, active: shown = true, eager = true, controls = true }: { slides: HeroSlide[]; t: Dictionary['effects']; active?: boolean; eager?: boolean; controls?: boolean }) {
+export function HeroStage({ slides, active: shown = true, eager = true }: { slides: HeroSlide[]; active?: boolean; eager?: boolean }) {
   const { pora, sezon } = useAmbience()
   const active = Math.max(0, slides.findIndex((s) => s.slots.includes(`${pora}-${sezon}`)))
   const videos = useRef<(HTMLVideoElement | null)[]>([])
   const [ready, setReady] = useState(false)
-  const [paused, setPaused] = useState(false)
+  const paused = useMotionPaused()
   const [playing, setPlaying] = useState<number | null>(null)
 
   useEffect(() => {
@@ -47,13 +47,12 @@ export function HeroStage({ slides, t, active: shown = true, eager = true, contr
     })
   }, [ready, active, paused, slides, shown])
 
-  const hasVideo = slides[active]?.video
   return (
     <>
       {slides.map((s, i) => {
         const position = `${s.image?.focusX ?? 50}% ${s.image?.focusY ?? 50}%`
         return (
-          <div key={i} className={`mo-hero__slide ${s.slots.map((x) => `is-${x}`).join(' ')}`} data-playing={playing === i || undefined}>
+          <div key={i} className={`mo-hero__slide ${s.slots.map((x) => `is-${x}`).join(' ')}`} data-playing={playing === i || undefined} data-paused={paused || !shown || undefined}>
             {s.image?.url ? (
               // eslint-disable-next-line @next/next/no-img-element -- kadr startowy, rozmiary robi Cloudflare
               <img
@@ -87,11 +86,6 @@ export function HeroStage({ slides, t, active: shown = true, eager = true, contr
           </div>
         )
       })}
-      {controls && shown && ready && hasVideo ? (
-        <button type="button" className="mo-hero__pause mo-btn mo-btn--obrys mo-btn--maly" aria-pressed={paused} onClick={() => setPaused((p) => !p)}>
-          {paused ? t.play : t.pause}
-        </button>
-      ) : null}
     </>
   )
 }

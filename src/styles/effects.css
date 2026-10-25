@@ -30,18 +30,21 @@
 :root[data-pora="dzien"][data-sezon="lato"] .mo-hero__slide.is-dzien-lato,
 :root[data-pora="noc"][data-sezon="zima"] .mo-hero__slide.is-noc-zima,
 :root[data-pora="noc"][data-sezon="lato"] .mo-hero__slide.is-noc-lato { display: block; }
-.mo-hero__pause { position: absolute; inset-block-end: var(--space-5); inset-inline-end: var(--margines); z-index: 2; color: var(--color-na-zdjeciu); border-color: currentColor; background: var(--color-zaslona); }
+.mo-hero__pause { position: absolute; inset-block-start: var(--space-9, 6rem); inset-inline-end: var(--margines); z-index: 2; color: var(--color-na-zdjeciu); border-color: currentColor; background: var(--color-zaslona); }
 .mo-hero__title > [aria-hidden] { display: inline-block; }
 
 @media (prefers-reduced-motion: no-preference) {
   .mo-hero__title > [aria-hidden] { animation: mo-wejscie var(--ruch-wolny) var(--ease-mgla) both; animation-delay: calc(200ms + var(--i, 0) * 90ms); }
   .mo-hero__lede { animation: mo-mgla var(--ruch-mgla) var(--ease-mgla) 700ms both; }
   .mo-hero__booking { animation: mo-mgla var(--ruch-mgla) var(--ease-mgla) 1000ms both; }
-  .mo-hero__slide > img { animation: mo-zblizenie 14s var(--ease-mgla) both; }
+  /* Wolny ruch kamery po kadrze: po wejściu kadr dryfuje tam i z powrotem (alternate, więc bez szwu pętli) */
+  .mo-hero__slide > img { animation: mo-zblizenie 14s var(--ease-mgla) both, mo-dryf 48s ease-in-out 14s infinite alternate; will-change: transform; }
+  :root[data-ruch="stop"] .mo-hero__slide > img, .mo-hero__slide[data-paused] > img { animation-play-state: paused; }
 }
 @keyframes mo-wejscie { from { opacity: 0; transform: translateY(0.4em); filter: blur(6px); } }
 @keyframes mo-mgla { from { opacity: 0; transform: translateY(12px); } }
 @keyframes mo-zblizenie { from { transform: scale(1.06); } }
+@keyframes mo-dryf { to { transform: scale(1.07) translate(-1.5%, -1%); } }
 
 /* Panorama: przewijana w bok poniżej 1024 px, znaczniki z dymkami */
 .mo-panorama { aspect-ratio: auto; overflow: visible; background: none; }
@@ -185,11 +188,12 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
     linear-gradient(180deg, var(--color-zaslona), transparent 30%, transparent 75%, var(--color-zaslona));
 }
 @media (max-width: 767px) { .mo-stage__scene[data-kind="media"]::after { background: linear-gradient(180deg, rgba(6, 10, 8, 0.5), rgba(6, 10, 8, 0.38) 50%, rgba(6, 10, 8, 0.55)); } }
-.mo-stage .mo-hero__pause { pointer-events: auto; position: fixed; }
 .mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
 .mo-stage__svg[data-pan] { display: block; }
-.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 450ms var(--ease-mgla); }
+.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: 0; inset-inline-start: 0; block-size: min(52svh, 30rem); inline-size: auto; max-inline-size: none; transform: translateX(var(--przesun, 0px)); transition: transform 450ms var(--ease-mgla);
+  /* lewy brzeg rysunku wtapia się w tło, gdy panorama odsuwa się spod kart */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8rem); mask-image: linear-gradient(90deg, transparent, #000 8rem); }
 .mo-stage__svg .is-lit .accent { transform: scale(2.6); transform-box: fill-box; transform-origin: center; fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
 .mo-stage__svg .is-lit :is(text, .peak-name) { fill: var(--color-bursztyn-tekst); }
 .mo-stage__svg .is-lit { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }

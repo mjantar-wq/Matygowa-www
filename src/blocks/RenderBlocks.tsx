@@ -7,6 +7,7 @@ import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
 import { PhotoGallery } from '@/components/PhotoGallery'
 import { HeroStage } from '@/components/effects/HeroStage'
+import { MotionPause } from '@/components/effects/MotionPause'
 import { ScrollSteps } from '@/components/effects/ScrollSteps'
 import { heroSlides, sceneId } from '@/lib/scenes'
 import { href } from '@/i18n/routes'
@@ -44,9 +45,10 @@ function Hero({ block, ctx, immersive }: Props<'hero'>) {
     <section className="mo-hero" data-block="hero" data-scene={sceneId(block.id)} id={block.anchor || undefined}>
       {immersive ? null : (
         <div className="mo-hero__media">
-          <HeroStage slides={heroSlides(block)} t={ctx.t.effects} />
+          <HeroStage slides={heroSlides(block)} />
         </div>
       )}
+      <MotionPause t={ctx.t.effects} />
       <div className="mo-container mo-hero__content">
         <h1 className="mo-display-xl mo-hero__title">
           <span className="mo-sr">{block.headline}</span>

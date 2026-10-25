@@ -53,6 +53,20 @@ export function setAmbience(next: Partial<Ambience>) {
   window.setTimeout(() => root.classList.remove('mo-przejscie'), 1600)
 }
 
+/** Pauza ruchu tła (przycisk w hero): data-ruch="stop" na <html>; CSS zatrzymuje dryf kadru, HeroStage film. */
+function subscribeMotion(cb: () => void) {
+  const mo = new MutationObserver(cb)
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-ruch'] })
+  return () => mo.disconnect()
+}
+export function useMotionPaused() {
+  return useSyncExternalStore(subscribeMotion, () => document.documentElement.dataset.ruch === 'stop', () => false)
+}
+export function setMotionPaused(paused: boolean) {
+  if (paused) document.documentElement.dataset.ruch = 'stop'
+  else delete document.documentElement.dataset.ruch
+}
+
 /** Czy wolno odtwarzać ruch: bez prefers-reduced-motion i bez trybu oszczędzania danych. */
 export function motionAllowed() {
   const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection

@@ -325,7 +325,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-reviews { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 768px) { .mo-reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 1200px) { .mo-reviews { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-@media (max-width: 767px) { .mo-reviews > li:nth-child(n + 7) { display: none; } }
+@media (max-width: 767px) { .mo-reviews > li:nth-child(n + 7 of :not([hidden])) { display: none; } }
 .mo-review { block-size: 100%; margin: 0; display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-3); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); text-shadow: none; }
 .mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { color: var(--color-atrament); text-shadow: none; font-size: var(--text-body-s); line-height: 1.5; }
 .mo-review blockquote { margin: 0; }

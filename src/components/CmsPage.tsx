@@ -3,6 +3,9 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import type { RouteKey } from '@/i18n/routes'
 import { findBySlug, findMany } from '@/lib/cms'
 import { buildScenes } from '@/lib/scenes'
+import { engineSettings } from '@/lib/booking'
+import { BookingBar } from './BookingBar'
+import { BookingDock } from './effects/BookingDock'
 import { SceneStage } from './effects/SceneStage'
 import type { PageContext } from '@/lib/page'
 import type { Media, Page } from '@/payload-types'
@@ -23,10 +26,13 @@ export async function CmsPage({ route, slug, ctx, fallback, children, required, 
     // Strona główna: opowieść na stałym tle (koncepcja po M1)
     const media = await findMany<Media>('media', ctx.locale, { limit: 300, depth: 0 })
     return (
-      <div className="mo-story">
+      <div className="mo-opowiesc">
         <SceneStage scenes={buildScenes(blocks, media)} t={ctx.t.effects} />
         <RenderBlocks blocks={blocks} ctx={ctx} immersive />
         {children}
+        <BookingDock label={ctx.t.booking.check} close={ctx.t.effects.close}>
+          <BookingBar locale={ctx.locale} t={ctx.t.booking} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
+        </BookingDock>
       </div>
     )
   }

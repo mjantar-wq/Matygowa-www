@@ -134,7 +134,7 @@ body { background: var(--color-tlo); color: var(--color-atrament); font-family: 
 .mo-footer a { color: inherit; }
 
 /* Hero: zdjęcie albo film na pełny ekran, tekst w górnej lub lewej tercji na zasłonie */
-.mo-hero { position: relative; min-block-size: min(100svh, 56rem); display: grid; align-content: end; color: var(--color-na-zdjeciu); background: var(--color-atrament); isolation: isolate; }
+.mo-hero { position: relative; min-block-size: min(100svh, 56rem); display: grid; grid-template-columns: minmax(0, 1fr); align-content: end; color: var(--color-na-zdjeciu); background: var(--color-atrament); isolation: isolate; }
 .mo-hero__media { position: absolute; inset: 0; z-index: -1; }
 .mo-hero__media img, .mo-hero__media video { inline-size: 100%; block-size: 100%; object-fit: cover; }
 .mo-hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--color-zaslona), transparent 45%, var(--color-zaslona)); }

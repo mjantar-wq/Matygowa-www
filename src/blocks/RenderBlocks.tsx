@@ -187,7 +187,9 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
 }
 
 async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
-  const attractions = await findMany<Attraction>('attractions', ctx.locale, { where: { featured: { equals: true } }, limit: block.limit ?? 6 })
+  const featured = await findMany<Attraction>('attractions', ctx.locale, { where: { featured: { equals: true } }, limit: block.limit ?? 6 })
+  // bez wyróżnionych w panelu: pierwsze z listy, żeby karty prowadziły po mapie
+  const attractions = featured.length ? featured : await findMany<Attraction>('attractions', ctx.locale, { limit: block.limit ?? 6 })
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
@@ -212,8 +214,9 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
   )
 }
 
-function Story({ block }: Props<'story'>) {
-  const media = <Media media={block.image} />
+function Story({ block, immersive }: Props<'story'>) {
+  // na stałym tle zdjęcie przejmuje scena
+  const media = immersive ? null : <Media media={block.image} />
   return (
     <Section block={block}>
       <div style={{ display: 'grid', gap: 'var(--space-7)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', alignItems: 'center' }}>

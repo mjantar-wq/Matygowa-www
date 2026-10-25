@@ -169,12 +169,11 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 
 /* Strona główna: opowieść na stałym tle (koncepcja po M1). Scena jest przypięta pod treścią, rozdziały
    przewijają się nad nią na półprzezroczystych płytach. */
-.mo-story { position: relative; isolation: isolate; }
+.mo-opowiesc { position: relative; isolation: isolate; }
 .mo-stage { position: fixed; inset: 0; z-index: -1; background: var(--color-tlo); pointer-events: none; }
 .mo-stage__scene { position: absolute; inset: 0; opacity: 0; transition: opacity 800ms var(--ease-mgla); }
 .mo-stage__scene[data-active] { opacity: 1; }
 .mo-stage__scene[data-kind="media"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--color-zaslona), transparent 40%, transparent 60%, var(--color-zaslona)); }
-.mo-stage__scene[data-kind="plain"] { background: var(--color-tlo); }
 .mo-stage .mo-hero__pause { pointer-events: auto; position: fixed; }
 .mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
 .mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
@@ -185,35 +184,75 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-stage__svg .is-lit { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
 .mo-stage__svg .accent, .mo-stage__svg text { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); }
 
-.mo-story > .mo-section, .mo-story > .mo-hero { background: transparent; }
-.mo-story .mo-section { padding-block: 22svh; }
-.mo-story .mo-hero { min-block-size: 100svh; }
-.mo-story .mo-hero__content { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); }
-.mo-story .mo-hero .mo-booking { text-shadow: none; }
+.mo-opowiesc > .mo-section, .mo-opowiesc > .mo-hero { background: transparent; }
+.mo-opowiesc .mo-section { padding-block: 18svh; }
+.mo-opowiesc .mo-hero { min-block-size: calc(100svh - var(--naglowek-wys)); }
+.mo-opowiesc .mo-hero__content { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); padding-block: var(--space-8) var(--space-7); gap: var(--space-5); }
+.mo-opowiesc .mo-hero__title { font-size: clamp(2.75rem, 2rem + 4.5vw, 6rem); max-inline-size: 16ch; }
+.mo-opowiesc .mo-hero__lede { max-inline-size: 36rem; }
+.mo-opowiesc .mo-hero .mo-booking { text-shadow: none; }
 
-/* Płyty: każdy blok treści i każdy krok opowieści osobno, żeby między nimi było widać scenę */
-.mo-story .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
-.mo-story [data-step] {
-  max-inline-size: 40rem; padding: var(--space-6) var(--space-7); margin-block: 0;
-  background: color-mix(in srgb, var(--color-tlo) 84%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-  border: 1px solid color-mix(in srgb, var(--color-linia) 60%, transparent);
+/* Płyty: każdy blok treści, krok i karta osobno, przejrzyste i tylko tak duże jak tekst, żeby między nimi
+   i przez nie było widać scenę */
+.mo-opowiesc {
+  --plyta: color-mix(in srgb, var(--color-tlo) 66%, transparent);
+  --plyta-szer: 34rem;
 }
-.mo-story .mo-section > .mo-container > * + * { margin-block-start: var(--space-4); }
-.mo-story .mo-section > .mo-container > header { margin-block-end: 0; }
-@media (max-width: 767px) { .mo-story .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map), .mo-story [data-step] { padding: var(--space-5); } }
+.mo-opowiesc .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
+.mo-opowiesc [data-step],
+.mo-opowiesc .mo-cards > .mo-card:not([data-step]),
+.mo-opowiesc .mo-steps__step > div {
+  max-inline-size: var(--plyta-szer); padding: var(--space-5) var(--space-6); margin-block: 0;
+  background: var(--plyta); -webkit-backdrop-filter: blur(10px) saturate(1.1); backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid color-mix(in srgb, var(--color-linia) 45%, transparent);
+}
+/* Zaproszenie z paskiem rezerwacji potrzebuje szerszej płyty */
+.mo-opowiesc .mo-section > .mo-container > .mo-booking-wrap { max-inline-size: 52rem; }
+.mo-opowiesc .mo-section > .mo-container > * + * { margin-block-start: var(--space-3); }
+.mo-opowiesc .mo-section > .mo-container > header { margin-block-end: 0; }
+.mo-opowiesc .mo-section > .mo-container > header :is(.mo-h1, .mo-h2) { margin-block-end: 0; }
+@media (max-width: 767px) {
+  .mo-opowiesc { --plyta: color-mix(in srgb, var(--color-tlo) 74%, transparent); }
+  .mo-opowiesc .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
+  .mo-opowiesc [data-step], .mo-opowiesc .mo-cards > .mo-card:not([data-step]), .mo-opowiesc .mo-steps__step > div { padding: var(--space-4) var(--space-5); }
+}
 
-/* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić */
-.mo-story :is(.mo-cards, .mo-peak-cards, ol):has(> [data-step]) { display: grid !important; grid-template-columns: minmax(0, 40rem) !important; gap: 55svh !important; list-style: none; padding: 0; margin-block-start: 30svh; }
-.mo-story [data-step] > .mo-card__media { display: none; }
-.mo-story .mo-peak-card .mo-card__media { display: block; aspect-ratio: 3 / 2; }
-.mo-story [data-step].mo-card, .mo-story [data-step] > .mo-card { color: var(--color-atrament); }
+/* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić. Karty bez podsiatki,
+   inaczej przerwa między krokami rozciąga każdą kartę na kilka ekranów. */
+.mo-opowiesc :is(.mo-cards, .mo-peak-cards, ol):has(> [data-step]) { display: grid !important; grid-template-columns: minmax(0, var(--plyta-szer)) !important; grid-template-rows: none; gap: 55svh !important; list-style: none; padding: 0; margin-block-start: 30svh; }
+.mo-opowiesc .mo-cards > .mo-card { grid-row: auto; grid-template-rows: none; row-gap: var(--space-2); align-content: start; }
+.mo-opowiesc .mo-cards:not(:has(> [data-step])) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), var(--plyta-szer))); row-gap: var(--space-5); }
+.mo-opowiesc :is([data-step], [data-block="seasons"] .mo-card) > .mo-card__media { display: none; }
+.mo-opowiesc .mo-peak-card .mo-card__media { display: block; aspect-ratio: 3 / 2; }
+.mo-opowiesc [data-step].mo-card, .mo-opowiesc [data-step] > .mo-card { color: var(--color-atrament); }
 .mo-peak-cards { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
 .mo-peak-card { text-decoration: none; color: inherit; display: grid; gap: var(--space-2); }
-.mo-story [data-step] .mo-peak-card { border: 0; padding: 0; background: none; }
+.mo-opowiesc [data-step] .mo-peak-card { border: 0; padding: 0; background: none; }
+
+/* Mapa okolicy: na szerokim ekranie po prawej, obok płyt, żeby tekst jej nie zasłaniał */
+@media (min-width: 1024px) {
+  .mo-stage__scene[data-kind="map"] .mo-stage__svg { padding: calc(var(--naglowek-wys) + var(--space-5)) var(--space-5) var(--space-5) calc(var(--margines) + var(--plyta-szer, 34rem) + var(--space-6)); }
+}
+@media (max-width: 1023px) {
+  /* na wąskim ekranie mapa w górnej części, płyty przewijają się nad dolną */
+  .mo-stage__scene[data-kind="map"] .mo-stage__svg { place-items: start center; padding-block-start: var(--naglowek-wys); }
+  .mo-opowiesc [data-block="surroundings"] :is([data-step], .mo-container > *) { --plyta: color-mix(in srgb, var(--color-tlo) 86%, transparent); }
+}
 
 /* Sauna i bania na stałym tle: scena przejmuje zdjęcia, zostają same słowa */
-.mo-story .mo-steps { display: block; }
-.mo-story :is(.mo-steps__stage, .mo-steps__inline) { display: none; }
-.mo-story .mo-steps__list { gap: 45svh; margin-block-start: 25svh; }
-.mo-story .mo-steps__step { opacity: 1; min-block-size: 0; }
-.mo-story .mo-steps__step > div { max-inline-size: 40rem; padding: var(--space-6) var(--space-7); background: color-mix(in srgb, var(--color-tlo) 84%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.mo-opowiesc .mo-steps { display: block; }
+.mo-opowiesc :is(.mo-steps__stage, .mo-steps__inline) { display: none; }
+.mo-opowiesc .mo-steps__list { gap: 45svh; margin-block-start: 25svh; }
+.mo-opowiesc .mo-steps__step { opacity: 1; min-block-size: 0; }
+
+/* Przypięty przycisk rezerwacji: pojawia się, gdy żaden pasek nie jest na ekranie */
+.mo-dock__open { position: fixed; z-index: 9; inset-block-end: calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); inset-inline-end: var(--margines); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); opacity: 0; translate: 0 var(--space-4); pointer-events: none; transition: opacity var(--ruch-sredni) var(--ease-mgla), translate var(--ruch-sredni) var(--ease-mgla); }
+.mo-dock[data-shown] .mo-dock__open { opacity: 1; translate: none; pointer-events: auto; }
+@media (max-width: 767px) { .mo-dock__open { inset-inline: var(--margines); } }
+/* overflow widoczny: kalendarz z cenami wychodzi pod polami */
+.mo-dock__dialog { inline-size: min(100% - 2 * var(--margines), 64rem); max-inline-size: none; margin: 12svh auto auto; padding: 0; border: 0; background: none; overflow: visible; color: var(--color-atrament); }
+.mo-dock__dialog::backdrop { background: var(--color-zaslona); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.mo-dock__body { position: relative; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }
+.mo-dock__close { position: absolute; inset-block-start: var(--space-1); inset-inline-end: var(--space-1); inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: none; color: inherit; font-size: 1.5rem; cursor: pointer; }
+@media (max-width: 767px) { .mo-dock__dialog { margin-block-start: var(--space-5); } }
+@media (prefers-reduced-motion: reduce) { .mo-dock__open { transition: none; } }

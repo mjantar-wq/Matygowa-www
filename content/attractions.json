@@ -365,7 +365,13 @@
     "drive_min": 18,
     "distance_note": "Park linowy w Murzasichlu, trasa wg OSRM, 25.10.2026.",
     "lat": 49.3117,
-    "lng": 20.0436
+    "lng": 20.0436,
+    "image": "A_murzasichle_1.webp",
+    "gallery": [
+      "A_murzasichle_2.webp",
+      "A_murzasichle_3.webp"
+    ],
+    "url": "https://www.modrzewiowybor.pl"
   },
   {
     "slug": "balony",

@@ -87,6 +87,12 @@ OBIEKTY = [
      "Punkt widokowy na Głodówce, panorama Tatr Wysokich i Bielskich", "The Głodówka viewpoint, a panorama of the High and Belianske Tatras"),
     ("A_szlaki-rowery_3", "https://velodunajec.pl/wp-content/uploads/2021/04/Group-5-DJI_0609-HDR5_DJI_0649-HDR5-9-images-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
      "Droga przez łąki Podhala w porannej mgle", "A track across the Podhale meadows in the morning mist"),
+    ("A_murzasichle_1", "https://www.modrzewiowybor.pl/files/images//1/15/156/1560/2_1.jpg", "https://www.modrzewiowybor.pl", "Park Linowy Murzasichle", "pending", .5,
+     "Trasa parku linowego w Murzasichlu między świerkami", "The rope park course in Murzasichle among the spruces"),
+    ("A_murzasichle_2", "https://www.modrzewiowybor.pl/files/images//f/f3/f3c/f3cc/1_1.jpg", "https://www.modrzewiowybor.pl", "Park Linowy Murzasichle", "pending", .5,
+     "Kładki i platformy parku linowego wysoko na drzewach", "Rope park walkways and platforms high in the trees"),
+    ("A_murzasichle_3", "https://www.modrzewiowybor.pl/files/images//7/79/799/799b/3_1.jpg", "https://www.modrzewiowybor.pl", "Park Linowy Murzasichle", "pending", .5,
+     "Park linowy w Murzasichlu z góry, trasy i daszki wśród drzew", "The Murzasichle rope park from above, courses and roofs among the trees"),
 ]
 
 

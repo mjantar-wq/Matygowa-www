@@ -70,7 +70,7 @@ function defaults(pick: ReturnType<typeof libraryPicker>) {
       ['W5_', 'W21_'],
     ].map(([zima, l]) => [v(zima), lato(l)]),
     bania: [v('B1_bania_alpenglow'), v('B1_bania_lato', { sezon: 'lato' }), v('B2_bania_noc_3x2', { pora: 'noc' }), latoNoc('B1_bania_lato')],
-    nature: [lato('L30_osada'), latoNoc('L30_osada')],
+    nature: [lato('L30_osada'), latoNoc('L30_osada'), v('K2_hero_osada_noc_16x9', { pora: 'noc', sezon: 'zima' })],
     testimonials: [v('K8_punkt_widokowy'), v('T3_noc_gwiazdy', { pora: 'noc' }), latoNoc('K8_punkt_widokowy')],
     offersNews: [v('K6_dom_orbita'), v('K2_hero_osada_noc_16x9', { pora: 'noc' }), lato('L23_'), latoNoc('L23_')],
     bookingInvite: [v('T1_swit_gran'), v('T3_noc_gwiazdy', { pora: 'noc' }), lato('L25_'), latoNoc('L25_')],

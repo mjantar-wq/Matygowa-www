@@ -2056,6 +2056,60 @@
     "pl": "Fot. Velo Dunajec · velodunajec.pl https://velodunajec.pl",
     "en": "Photo: Velo Dunajec · velodunajec.pl https://velodunajec.pl"
    }
+  },
+  {
+   "file": "A_murzasichle_1.webp",
+   "shot": "A_murzasichle_1",
+   "width": 896,
+   "height": 597,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Trasa parku linowego w Murzasichlu między świerkami",
+    "en": "The rope park course in Murzasichle among the spruces"
+   },
+   "source": "https://www.modrzewiowybor.pl",
+   "author": "Park Linowy Murzasichle",
+   "credit": {
+    "pl": "Fot. Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl",
+    "en": "Photo: Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl"
+   }
+  },
+  {
+   "file": "A_murzasichle_2.webp",
+   "shot": "A_murzasichle_2",
+   "width": 896,
+   "height": 597,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Kładki i platformy parku linowego wysoko na drzewach",
+    "en": "Rope park walkways and platforms high in the trees"
+   },
+   "source": "https://www.modrzewiowybor.pl",
+   "author": "Park Linowy Murzasichle",
+   "credit": {
+    "pl": "Fot. Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl",
+    "en": "Photo: Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl"
+   }
+  },
+  {
+   "file": "A_murzasichle_3.webp",
+   "shot": "A_murzasichle_3",
+   "width": 1084,
+   "height": 723,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Park linowy w Murzasichlu z góry, trasy i daszki wśród drzew",
+    "en": "The Murzasichle rope park from above, courses and roofs among the trees"
+   },
+   "source": "https://www.modrzewiowybor.pl",
+   "author": "Park Linowy Murzasichle",
+   "credit": {
+    "pl": "Fot. Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl",
+    "en": "Photo: Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl"
+   }
   }
  ]
 }

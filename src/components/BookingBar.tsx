@@ -496,14 +496,14 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
           <div className="mo-calendar__foot">
             <button
               type="button"
-              className="mo-btn mo-btn--maly"
+              className="mo-btn mo-btn--glowny mo-btn--maly"
               onClick={() => (setArrival(''), setDeparture(''))}
             >
               {t.clear}
             </button>
             <button
               type="button"
-              className="mo-btn mo-btn--obrys mo-btn--maly"
+              className="mo-btn mo-btn--glowny mo-btn--maly"
               onClick={() => setOpen(false)}
             >
               {t.done}

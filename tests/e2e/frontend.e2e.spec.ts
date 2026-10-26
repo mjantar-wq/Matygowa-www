@@ -25,6 +25,23 @@ test.describe('Szkielet strony', () => {
     }
   })
 
+  test('SEO: tytuł i opis strony głównej, obraz do udostępnień, dane strukturalne i mapa witryny', async ({ page, request }) => {
+    await page.goto('/')
+    await expect(page).toHaveTitle(/Matygowa Osada/)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/)
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /^https?:\/\//)
+    await page.goto('/domy/hawran')
+    // nazwa osady tylko raz, także gdy tytuł z panelu już ją zawiera
+    expect((await page.title()).match(/Matygowa Osada/g)?.length).toBe(1)
+    expect(await page.locator('script[type="application/ld+json"]').allTextContents()).toContainEqual(expect.stringContaining('"VacationRental"'))
+    await page.goto('/przewodnik')
+    expect(await page.locator('script[type="application/ld+json"]').allTextContents()).toContainEqual(expect.stringContaining('"FAQPage"'))
+    await expect(page.locator('main')).not.toContainText('{freeCancellation}')
+    const sitemap = await request.get('/sitemap.xml')
+    expect(sitemap.status()).toBe(200)
+    expect(await sitemap.text()).toContain('/domy/hawran')
+  })
+
   test('wewnętrzny adres /pl/houses przekierowuje na /domy', async ({ request }) => {
     const res = await request.get('/pl/houses', { maxRedirects: 0 })
     expect(res.status()).toBe(308)

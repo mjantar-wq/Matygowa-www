@@ -8,6 +8,7 @@ import { PhotoGallery } from '@/components/PhotoGallery'
 import Link from 'next/link'
 import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
+import { UnitStructuredData } from '@/components/StructuredData'
 import { href } from '@/i18n/routes'
 import { findBySlug, findMany, UNIT_ORDER } from '@/lib/cms'
 import { getProperty, getPromotions, promoSeason } from '@/lib/icecoldres'
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: SlugParams): Promise<Metadata
   const ctx = await pageContext(params)
   const { slug } = await params
   const unit = await findBySlug<Unit>('units', slug, ctx.locale)
-  return buildMetadata(ctx.locale, 'houses', { slug, title: unit?.name, description: unit?.tagline, seo: unit?.seo })
+  return buildMetadata(ctx.locale, 'houses', { slug, title: unit?.name, description: unit?.tagline, seo: unit?.seo, image: unit?.hero })
 }
 
 /** Strona domu albo apartamentu (koncepcja: Strona domu albo apartamentu). */
@@ -45,6 +46,7 @@ export default async function UnitPage({ params }: SlugParams) {
 
   return (
     <article>
+      <UnitStructuredData unit={unit} locale={ctx.locale} />
       <section className="mo-hero">
         <div className="mo-hero__media"><Media media={unit.hero} priority alt={peakViewAlt(unit, ctx.locale)} /></div>
         <div className="mo-container mo-hero__content">

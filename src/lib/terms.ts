@@ -47,9 +47,21 @@ export const termVars = cache(async (locale: Locale): Promise<TermVars> => {
 
 const MARK = new RegExp(`\\{(${TERM_KEYS.join('|')})\\}`, 'g')
 
-/** Podmienia znane znaczniki; nieznane i bez wartości zostają (redaktor widzi, czego brakuje). */
+// zdanie z pozostałym znacznikiem: do kropki, wykrzyknika albo pytajnika przed spacją (nie w „12.5%”) lub do końca wiersza;
+// działa w obrębie jednego węzła tekstu Lexical, więc znacznik nie powinien stać w zdaniu z pogrubieniem czy linkiem
+const IN_SENTENCE = '(?:[^.!?\\n]|[.!?](?=\\S))*'
+const UNFILLED_SENTENCE = new RegExp(`[^.!?\\n\\s]${IN_SENTENCE}\\{(?:${TERM_KEYS.join('|')})\\}${IN_SENTENCE}(?:[.!?](?=\\s|$))?[ \\t]*`, 'g')
+
+/**
+ * Podmienia znane znaczniki. Zdanie ze znacznikiem bez wartości znika z publicznej strony
+ * (np. IceColdRes nie podaje dni bezpłatnej rezygnacji, gdy oferta jej nie ma); w panelu tekst zostaje bez zmian.
+ */
 export function fillText(text: string, vars: TermVars) {
-  return text.replace(MARK, (m, key: keyof TermVars) => vars[key] ?? m)
+  const filled = text.replace(MARK, (m, key: keyof TermVars) => vars[key] ?? m)
+  if (!hasMarks(filled)) return filled
+  const out = filled.replace(UNFILLED_SENTENCE, '')
+  // spacja na końcu węzła oddziela go od następnego (np. linku), więc zostaje, jeśli była w oryginale
+  return /\s$/.test(text) ? out : out.trimEnd()
 }
 
 export const hasMarks = (text: string) => new RegExp(MARK.source).test(text)

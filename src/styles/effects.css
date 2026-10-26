@@ -239,8 +239,8 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
   --cien: 0 1px 2px rgba(0, 0, 0, 0.6), 0 2px 20px rgba(0, 0, 0, 0.55);
 }
 .mo-opowiesc .mo-section { color: var(--tekst); text-shadow: var(--cien); transition: color var(--ruch-wolny) var(--ease-mgla), text-shadow var(--ruch-wolny) var(--ease-mgla); }
-.mo-opowiesc .mo-section :is(h2, h3, p, li, dt, dd, blockquote, figcaption, a, .mo-label, .mo-card__meta, .mo-muted, .mo-prose, .mo-price):not(.mo-booking-wrap *) { color: inherit; }
-.mo-opowiesc .mo-section :is(p, li, blockquote, .mo-prose):not(.mo-booking-wrap *, .mo-label, .mo-card__meta) { font-size: max(1.1875rem, 1em); line-height: 1.55; }
+.mo-opowiesc .mo-section :is(h2, h3, p, li, dt, dd, blockquote, figcaption, a, .mo-label, .mo-card__meta, .mo-muted, .mo-prose, .mo-price):not(.mo-booking-wrap *, .mo-popup *) { color: inherit; }
+.mo-opowiesc .mo-section :is(p, li, blockquote, .mo-prose):not(.mo-booking-wrap *, .mo-popup *, .mo-label, .mo-card__meta) { font-size: max(1.1875rem, 1em); line-height: 1.55; }
 .mo-opowiesc .mo-section :is(.mo-booking-wrap, img, .mo-card__media) { text-shadow: none; }
 .mo-opowiesc .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
 .mo-opowiesc [data-step],

@@ -6,6 +6,8 @@ import { RichText } from '@/components/RichText'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
 import { PhotoGallery } from '@/components/PhotoGallery'
+import { AttractionEntry } from '@/components/Attraction'
+import { AttractionPopup } from '@/components/effects/AttractionPopup'
 import { HeroStage } from '@/components/effects/HeroStage'
 import { ReviewShuffle } from '@/components/effects/ReviewShuffle'
 import { ScrollSteps } from '@/components/effects/ScrollSteps'
@@ -209,27 +211,53 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
         // Lista nazw: najechanie albo fokus podświetla atrakcję na mapie (SceneStage) i rozwija jej opis
         <ul className="mo-attractions">
           {attractions.map((a) => (
-            <li key={a.id} className="mo-attraction" data-scene-focus={a.mapId || undefined}>
-              <Link href={href(ctx.locale, 'surroundings', a.slug)} className="mo-attraction__name">
-                <span className="mo-h3">{a.name}</span>
-                {a.distanceKm != null ? <span className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</span> : null}
-              </Link>
-              <div className="mo-attraction__desc">
-                <div>{a.summary ? <p>{a.summary}</p> : <RichText data={a.description} />}</div>
-              </div>
-            </li>
+            <AttractionPopup
+              key={a.id}
+              slug={a.slug}
+              href={href(ctx.locale, 'surroundings', a.slug)}
+              label={a.name}
+              closeLabel={ctx.t.effects.close}
+              className="mo-attraction"
+              linkClassName="mo-attraction__name"
+              focus={a.mapId || undefined}
+              card={
+                <>
+                  <span className="mo-h3">{a.name}</span>
+                  {a.distanceKm != null ? <span className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</span> : null}
+                </>
+              }
+              after={
+                <div className="mo-attraction__desc">
+                  <div>{a.summary ? <p>{a.summary}</p> : <RichText data={a.description} />}</div>
+                </div>
+              }
+            >
+              <AttractionEntry a={a} ctx={ctx} />
+            </AttractionPopup>
           ))}
         </ul>
       ) : (
-        <div className="mo-cards">
+        <ul className="mo-cards mo-atrakcje" role="list">
           {attractions.map((a) => (
-            <Link key={a.id} href={href(ctx.locale, 'surroundings', a.slug)} className="mo-card">
-              <div className="mo-card__media"><Media media={a.image} /></div>
-              <h3 className="mo-h3">{a.name}</h3>
-              {a.distanceKm != null ? <p className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</p> : null}
-            </Link>
+            <AttractionPopup
+              key={a.id}
+              slug={a.slug}
+              href={href(ctx.locale, 'surroundings', a.slug)}
+              label={a.name}
+              closeLabel={ctx.t.effects.close}
+              linkClassName="mo-card"
+              card={
+                <>
+                  <div className="mo-card__media"><Media media={a.image} /></div>
+                  <h3 className="mo-h3">{a.name}</h3>
+                  {a.distanceKm != null ? <p className="mo-card__meta">{ctx.t.attractions.distance(a.distanceKm)}</p> : null}
+                </>
+              }
+            >
+              <AttractionEntry a={a} ctx={ctx} />
+            </AttractionPopup>
           ))}
-        </div>
+        </ul>
       )}
     </Section>
   )

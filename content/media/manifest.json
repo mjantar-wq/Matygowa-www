@@ -1924,33 +1924,15 @@
    }
   },
   {
-   "file": "A_balony_1.webp",
-   "shot": "A_balony_1",
-   "width": 1620,
-   "height": 1080,
-   "placeholder": false,
-   "rights": "pending",
-   "alt": {
-    "pl": "Balon nad Podhalem, na horyzoncie grań Tatr",
-    "en": "A balloon above Podhale, the Tatra ridge on the horizon"
-   },
-   "source": "https://lotybalonem.com/zakopane",
-   "author": "Loty balonem Zakopane i Podhale",
-   "credit": {
-    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
-    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
-   }
-  },
-  {
-   "file": "A_balony_2.webp",
-   "shot": "A_balony_2",
+   "file": "A_balony_z1.webp",
+   "shot": "A_balony_z1",
    "width": 1800,
    "height": 1200,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
-    "pl": "Napełnianie balonu o świcie, nad mgłą ośnieżone Tatry",
-    "en": "Inflating the balloon at dawn, the snowy Tatras above the mist"
+    "pl": "Kolorowy balon nad ośnieżonymi szczytami Tatr",
+    "en": "A colourful balloon above the snowy Tatra peaks"
    },
    "source": "https://lotybalonem.com/zakopane",
    "author": "Loty balonem Zakopane i Podhale",
@@ -1960,15 +1942,87 @@
    }
   },
   {
-   "file": "A_balony_3.webp",
-   "shot": "A_balony_3",
-   "width": 1440,
-   "height": 960,
+   "file": "A_balony_z2.webp",
+   "shot": "A_balony_z2",
+   "width": 1620,
+   "height": 1080,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
-    "pl": "Tatry Zachodnie i Giewont widziane z balonu",
-    "en": "The Western Tatras and Giewont seen from the balloon"
+    "pl": "Kosz balonu nad Podhalem, na horyzoncie cała grań Tatr",
+    "en": "The balloon basket above Podhale, the whole Tatra ridge on the horizon"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_z3.webp",
+   "shot": "A_balony_z3",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Balon nad zaśnieżonymi graniami Tatr",
+    "en": "The balloon above the snowy Tatra ridges"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_z4.webp",
+   "shot": "A_balony_z4",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Balon nad zimowymi polanami Podhala, w tle Tatry",
+    "en": "A balloon above the winter meadows of Podhale, the Tatras behind"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_z5.webp",
+   "shot": "A_balony_z5",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Kosz balonu wśród tatrzańskich szczytów w słońcu",
+    "en": "The balloon basket among the Tatra peaks in the sun"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_z6.webp",
+   "shot": "A_balony_z6",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Balon nad Podhalem w niskim słońcu, w dali Tatry",
+    "en": "The balloon above Podhale in the low sun, the Tatras in the distance"
    },
    "source": "https://lotybalonem.com/zakopane",
    "author": "Loty balonem Zakopane i Podhale",

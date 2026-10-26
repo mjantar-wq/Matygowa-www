@@ -6,6 +6,7 @@ import { RichText } from '@/components/RichText'
 import { FaqStructuredData, plainText } from '@/components/StructuredData'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
+import { GuidePopup } from '@/components/GuidePopup'
 import { PhotoGallery } from '@/components/PhotoGallery'
 import { AttractionEntry } from '@/components/Attraction'
 import { AttractionPopup } from '@/components/effects/AttractionPopup'
@@ -21,7 +22,7 @@ import { getServices, promoSeason } from '@/lib/icecoldres'
 import { getPromoCards, promoText } from '@/lib/promo-cards'
 import { fillText, termVars } from '@/lib/terms'
 import type { PageContext } from '@/lib/page'
-import type { Attraction, News, Page, Testimonial, Unit } from '@/payload-types'
+import type { Attraction, Page, Testimonial, Unit } from '@/payload-types'
 
 type Block = NonNullable<Page['layout']>[number]
 type Of<T extends Block['blockType']> = Extract<Block, { blockType: T }>
@@ -340,7 +341,8 @@ function SourceMark({ source, rating }: { source?: Testimonial['source']; rating
 }
 
 async function OffersNews({ block, ctx }: Props<'offersNews'>) {
-  const [cards, news] = await Promise.all([getPromoCards(ctx.locale), findMany<News>('news', ctx.locale, { limit: 1, sort: '-publishedAt' })])
+  // bez aktualności na głównej (wg Michała); pod ofertami okienko z Przewodnikiem gościa
+  const cards = await getPromoCards(ctx.locale)
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
@@ -355,17 +357,11 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
             <p>{promoText(p, ctx.locale).description}</p>
           </Link>
         ))}
-        {news.map((n) => (
-          <Link key={n.id} href={href(ctx.locale, 'news', n.slug)} className="mo-card">
-            <div className="mo-card__media"><Media media={n.cover} /></div>
-            <h3 className="mo-h3">{n.title}</h3>
-            <p>{n.excerpt}</p>
-          </Link>
-        ))}
       </div>
       <p>
-        <Link href={href(ctx.locale, 'offers')}>{ctx.t.nav.offers}</Link> · <Link href={href(ctx.locale, 'news')}>{ctx.t.nav.news}</Link>
+        <Link href={href(ctx.locale, 'offers')}>{ctx.t.nav.offers}</Link>
       </p>
+      <GuidePopup ctx={ctx} />
     </Section>
   )
 }

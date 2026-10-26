@@ -13,8 +13,9 @@ type Target = { svgId: string; popoverId: string; label: string; href?: string; 
  * żeby kolory szły z tokenów (dzień / noc, zima / lato). Wskazane grupy (np. #p-hawran, #b-dom-hawran)
  * stają się przyciskami otwierającymi dymki (popover) wyrenderowane na serwerze.
  * `listHidden`: lista przycisków pod rysunkiem jest niewidoczna, ale zostaje dla klawiatury i czytników ekranu.
+ * `centered`: na wąskim ekranie (rysunek szerszy niż ekran) przewija się tak, żeby środek rysunku był na środku ekranu.
  */
-export function SvgHotspots({ src, targets, className, scrollLabel, listHidden }: { src: string; targets: Target[]; className?: string; scrollLabel?: string; listHidden?: boolean }) {
+export function SvgHotspots({ src, targets, className, scrollLabel, listHidden, centered }: { src: string; targets: Target[]; className?: string; scrollLabel?: string; listHidden?: boolean; centered?: boolean }) {
   const host = useRef<HTMLDivElement>(null)
   const [state, setState] = useState<'idle' | 'ready' | 'error'>('idle')
 
@@ -55,6 +56,12 @@ export function SvgHotspots({ src, targets, className, scrollLabel, listHidden }
       io.disconnect()
     }
   }, [src])
+
+  useEffect(() => {
+    const box = host.current?.parentElement
+    if (!centered || state !== 'ready' || !box) return
+    box.scrollTo({ left: (box.scrollWidth - box.clientWidth) / 2 })
+  }, [centered, state])
 
   // Klik w rysunek (myszą, palcem) otwiera dymek; klawiatura i czytnik używają przycisków pod rysunkiem.
   useEffect(() => {

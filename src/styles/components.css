@@ -247,6 +247,7 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 .mo-popup__pasek { position: sticky; inset-block-start: 0; z-index: 1; display: flex; justify-content: flex-end; block-size: 0; padding-inline-end: var(--space-3); }
 .mo-popup__close { margin-block-start: var(--space-3); display: grid; place-items: center; inline-size: 3rem; block-size: 3rem; border: 1px solid var(--color-linia); border-radius: var(--radius-kropka); background: var(--color-tlo); color: inherit; font: 300 2rem/1 var(--font-ui); cursor: pointer; z-index: 1; }
 .mo-popup__close:is(:hover, :focus-visible) { border-color: currentColor; }
+.mo-guide-popup { margin-block-start: var(--space-6); }
 @media (prefers-reduced-motion: no-preference) {
   .mo-popup[open] { animation: mo-mgla var(--ruch-sredni) var(--ease-mgla); }
 }

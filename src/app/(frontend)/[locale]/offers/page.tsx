@@ -43,7 +43,14 @@ export default async function OffersPage({ params }: LocaleParams) {
             )
           })}
         </div>
-        {!cards.length ? <Placeholder label={ctx.t.offers.empty} /> : null}
+        {/* pusty sezon: wszystkie promocje są z drugiej pory roku (przełącznik lato/zima chowa je w CSS) */}
+        {(['lato', 'zima'] as const).map((sezon) =>
+          cards.some((c) => (promoSeason(c.promotion.season) ?? sezon) === sezon) ? null : (
+            <div key={sezon} data-sezon-promo={sezon}>
+              <Placeholder label={ctx.t.offers.empty} />
+            </div>
+          ),
+        )}
       </section>
     </CmsPage>
   )

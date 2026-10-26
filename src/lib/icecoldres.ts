@@ -203,7 +203,7 @@ export interface NewsletterConsent {
   privacyUrl: string
 }
 
-export const getNewsletterConsent = (lang: string) => get<NewsletterConsent>(`/newsletter/consent?lang=${lang === 'pl' ? 'pl' : 'en'}`, 3600, ['property'])
+export const getNewsletterConsent = (lang: string) => get<NewsletterConsent>(`/newsletter/consent?lang=${lang === 'pl' ? 'pl' : 'en'}`, 600, ['property'])
 
 /**
  * Zapis na newsletter (docs/newsletter-propozycja.md w IceColdRes): wysyłkę, potwierdzenie mailem i wypisanie robi IceColdRes

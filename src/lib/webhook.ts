@@ -23,3 +23,8 @@ export async function verify(header: string | null, body: string, secret: string
   return same(parts.v1.toLowerCase(), await hmac(secret, `${parts.t}.${body}`))
 }
 
+
+/** Nagłówek X-IceColdRes-Signature dla zapytań strony do IceColdRes (ten sam schemat co webhook, sekret SITE_API_SECRET). */
+export async function sign(body: string, secret: string, now = Math.floor(Date.now() / 1000)) {
+  return `t=${now},v1=${await hmac(secret, `${now}.${body}`)}`
+}

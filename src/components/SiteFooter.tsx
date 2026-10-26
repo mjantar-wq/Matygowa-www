@@ -4,10 +4,13 @@ import type { Locale } from '@/i18n/locales'
 import { href } from '@/i18n/routes'
 import type { Setting } from '@/payload-types'
 import { ConsentSettingsLink } from './ConsentBanner'
+import { getNewsletterConsent } from '@/lib/icecoldres'
 import { directionsUrl } from '@/lib/maps'
+import { NewsletterForm } from './NewsletterForm'
 
-export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Dictionary; settings: Setting | null }) {
+export async function SiteFooter({ locale, t, settings }: { locale: Locale; t: Dictionary; settings: Setting | null }) {
   const route = directionsUrl(settings)
+  const consent = await getNewsletterConsent(locale)
   return (
     <footer className="mo-footer">
       <div className="mo-footer__wzor" aria-hidden="true" />
@@ -34,6 +37,14 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
           <div>
             <p className="mo-label">{t.footer.follow}</p>
             <ul>{settings.social.map((s) => <li key={s.id ?? s.url}><a href={s.url} rel="noopener">{s.label}</a></li>)}</ul>
+          </div>
+        ) : null}
+        {/* bez tekstu zgody z IceColdRes (API niedostępne) formularza nie pokazujemy: zgoda musi mieć wersję */}
+        {consent ? (
+          <div>
+            <p className="mo-label">{t.newsletter.title}</p>
+            <p style={{ marginBlockEnd: 'var(--space-3)' }}>{t.newsletter.lead}</p>
+            <NewsletterForm locale={locale} t={t.newsletter} consent={consent} />
           </div>
         ) : null}
         <p className="mo-muted">© {new Date().getFullYear()} {t.siteName}. {t.footer.rights}.</p>

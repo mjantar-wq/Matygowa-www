@@ -49,6 +49,12 @@ test.describe('Szkielet strony', () => {
     await expect(page.locator('main')).not.toContainText('Panel →')
   })
 
+  test('kontakt prowadzi do trasy dojazdu i wskazówek na zimę', async ({ page }) => {
+    await page.goto('/kontakt')
+    await expect(page.locator('main').getByRole('link', { name: 'Wyznacz trasę' })).toHaveAttribute('href', /google\.com\/maps\/dir\/.*Matyg%C3%B3wka/)
+    await expect(page.locator('main').getByRole('link', { name: 'Dojazd zimą' })).toHaveAttribute('href', '/przewodnik')
+  })
+
   test('wewnętrzny adres /pl/houses przekierowuje na /domy', async ({ request }) => {
     const res = await request.get('/pl/houses', { maxRedirects: 0 })
     expect(res.status()).toBe(308)

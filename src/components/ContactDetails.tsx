@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import { href } from '@/i18n/routes'
 import { bookingUrl, engineSettings } from '@/lib/booking'
 import type { PageContext } from '@/lib/page'
 
@@ -13,6 +15,10 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 }
 
+/** Trasa do osady w Mapach Google (bez osadzania mapy: żadnych cookies ani skryptów z zewnątrz przed zgodą). */
+export const directionsUrl = (address: string) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address.replace(/\s*\n\s*/g, ', '))}`
+
 /** Strona Kontakt: te same dane co w stopce, przycisk do rezerwacji i profile społecznościowe. */
 export function ContactDetails({ ctx }: { ctx: PageContext }) {
   const s = ctx.settings
@@ -22,6 +28,12 @@ export function ContactDetails({ ctx }: { ctx: PageContext }) {
         {s?.phone ? <p className="mo-h3"><a href={`tel:${s.phone.replace(/\s/g, '')}`}>{s.phone}</a></p> : null}
         {s?.email ? <p className="mo-h3"><a href={`mailto:${s.email}`}>{s.email}</a></p> : null}
         {s?.address ? <p style={{ whiteSpace: 'pre-line' }}>{s.address}</p> : null}
+        {s?.address ? (
+          <p style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--space-4)', marginBlockStart: 'var(--space-4)' }}>
+            <a className="mo-btn mo-btn--glowny mo-btn--maly" href={directionsUrl(s.address)} rel="noopener" target="_blank">{ctx.t.footer.directions}</a>
+            <Link href={href(ctx.locale, 'guide')}>{ctx.t.footer.winterRoute}</Link>
+          </p>
+        ) : null}
       </div>
       <p>
         <a className="mo-btn mo-btn--glowny" href={bookingUrl(engineSettings(s), ctx.locale)}>{ctx.t.booking.goToEngine}</a>

@@ -90,12 +90,18 @@
 .mo-tile__body > * { margin: 0; }
 .mo-tile__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); }
 .mo-tile__name { margin: 0; font: var(--text-h3--font-weight) var(--text-h3)/var(--text-h3--line-height) var(--font-display); font-variation-settings: "opsz" 36; letter-spacing: -0.005em; }
+.mo-tile__elev { font: var(--text-body-s--font-weight) var(--text-body-s)/1 var(--font-ui); letter-spacing: 0; white-space: nowrap; color: var(--color-wyciszony); }
 .mo-tile__text { color: var(--color-wyciszony); }
 .mo-tile__foot { margin-block-start: var(--space-2); padding-block-start: var(--space-3); border-block-start: 1px solid var(--color-linia); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); }
 .mo-tile__foot p { margin: 0; }
 .mo-tile__toggle { background: none; border: 0; padding: 0; cursor: pointer; flex: none; }
 /* okno wybranego domu: zdjęcia do powiększenia (Lightbox) i opis z ofertami */
 .mo-unit-dialog { inline-size: min(100% - 2 * var(--margines), 72rem); max-inline-size: none; max-block-size: calc(100dvh - 2 * var(--space-6)); margin: auto; padding: 0; border: 0; border-radius: var(--radius-pole); background: var(--color-powierzchnia); color: var(--color-atrament); overflow: auto; overscroll-behavior: contain; }
+/* okno bywa w hero (wyniki z paska rezerwacji): bez białych etykiet i cieni tekstu z hero */
+.mo-unit-dialog .mo-unit-dialog__text .mo-label { color: var(--color-wyciszony); }
+.mo-unit-dialog .mo-unit-dialog__inner * { text-shadow: none; }
+.mo-unit-dialog__name .mo-tile__elev { font-size: var(--text-body); }
+.mo-unit-dialog__amenities { display: grid; gap: var(--space-1); }
 .mo-unit-dialog::backdrop { background: rgba(8, 12, 10, 0.7); }
 .mo-unit-dialog__inner { position: relative; display: grid; gap: var(--space-6); padding: var(--space-6); }
 @media (min-width: 900px) { .mo-unit-dialog__inner { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; padding: var(--space-7); } }

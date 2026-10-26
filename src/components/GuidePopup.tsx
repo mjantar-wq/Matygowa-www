@@ -8,7 +8,7 @@ import type { PageContext } from '@/lib/page'
 
 /**
  * Przycisk „Przewodnik gościa” z okienkiem: pytania i odpowiedzi z bloku FAQ strony Przewodnik (z warunkami
- * z IceColdRes), na dole link do pełnej strony. Pod ofertami na głównej i pod mapą na stronie Domki (wg Michała).
+ * z IceColdRes), na dole link do pełnej strony. Przycisk w postaci książki; na dole głównej i pod mapą na stronie Domki (wg Michała).
  */
 export async function GuidePopup({ ctx }: { ctx: PageContext }) {
   const [page, vars] = await Promise.all([getPage('guide', ctx), termVars(ctx.locale)])
@@ -18,7 +18,7 @@ export async function GuidePopup({ ctx }: { ctx: PageContext }) {
   const link = href(ctx.locale, 'guide')
   return (
     <div className="mo-guide-popup">
-      <GuideDialog href={link} label={title} closeLabel={ctx.t.effects.close}>
+      <GuideDialog href={link} label={title} closeLabel={ctx.t.effects.close} hint={ctx.t.effects.guideHint}>
         <h2 className="mo-h2">{title}</h2>
         {items.map((i) => (
           <details key={i.id} style={{ borderBlockEnd: '1px solid var(--color-linia)', paddingBlock: 'var(--space-4)' }}>

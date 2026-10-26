@@ -341,7 +341,7 @@ function SourceMark({ source, rating }: { source?: Testimonial['source']; rating
 }
 
 async function OffersNews({ block, ctx }: Props<'offersNews'>) {
-  // bez aktualności na głównej (wg Michała); pod ofertami okienko z Przewodnikiem gościa
+  // bez aktualności na głównej (wg Michała)
   const cards = await getPromoCards(ctx.locale)
   return (
     <Section block={block}>
@@ -361,17 +361,18 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
       <p>
         <Link href={href(ctx.locale, 'offers')}>{ctx.t.nav.offers}</Link>
       </p>
-      <GuidePopup ctx={ctx} />
     </Section>
   )
 }
 
-function BookingInvite({ block, ctx }: Props<'bookingInvite'>) {
+async function BookingInvite({ block, ctx }: Props<'bookingInvite'>) {
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <RichText data={block.body} />
       <BookingBar locale={ctx.locale} t={ctx.t.booking} fx={ctx.t.effects} engine={engineSettings(ctx.settings)} slogan={ctx.settings?.priceSlogan} />
+      {/* na samym dole Przewodnik gościa jako książka (wg Michała) */}
+      <GuidePopup ctx={ctx} />
     </Section>
   )
 }

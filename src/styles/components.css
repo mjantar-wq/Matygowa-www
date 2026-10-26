@@ -250,7 +250,13 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 .mo-popup__pasek { position: sticky; inset-block-start: 0; z-index: 1; display: flex; justify-content: flex-end; block-size: 0; padding-inline-end: var(--space-3); }
 .mo-popup__close { margin-block-start: var(--space-3); display: grid; place-items: center; inline-size: 3rem; block-size: 3rem; border: 1px solid var(--color-linia); border-radius: var(--radius-kropka); background: var(--color-tlo); color: inherit; font: 300 2rem/1 var(--font-ui); cursor: pointer; z-index: 1; }
 .mo-popup__close:is(:hover, :focus-visible) { border-color: currentColor; }
-.mo-guide-popup { margin-block-start: var(--space-6); }
+.mo-guide-popup { display: flex; justify-content: center; margin-block-start: var(--space-7); padding-inline-end: 8px; }
+/* Przewodnik gościa jako książka: okładka w kolorze przycisku z parzenicami, grzbiet z lewej, kartki z prawej */
+.mo-ksiazka { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: var(--space-2); inline-size: min(100%, 15rem); min-block-size: 20rem; padding: var(--space-6) var(--space-5) var(--space-6) calc(var(--space-5) + 18px); border-radius: 3px 10px 10px 3px; text-align: start; white-space: normal; box-shadow: inset 18px 0 0 rgb(0 0 0 / 0.22), inset 20px 0 0 rgb(255 255 255 / 0.12), 4px 4px 0 -1px var(--color-powierzchnia), 4px 4px 0 0 var(--color-linia-mocna), 8px 8px 0 -1px var(--color-powierzchnia), 8px 8px 0 0 var(--color-linia-mocna), 0 14px 30px rgb(0 0 0 / 0.25); transition: translate var(--ruch-szybki) var(--krzywa-mgla), filter var(--ruch-szybki) var(--krzywa-mgla); }
+.mo-ksiazka:hover { translate: 0 -3px; }
+.mo-ksiazka__tytul { font: var(--text-h3--font-weight) var(--text-h3)/1.1 var(--font-display); letter-spacing: 0; text-shadow: none; }
+.mo-ksiazka__opis { font: var(--text-body-s--font-weight) var(--text-body-s)/1.35 var(--font-ui); letter-spacing: 0; opacity: 0.9; text-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .mo-ksiazka { transition: none; } .mo-ksiazka:hover { translate: none; } }
 @media (prefers-reduced-motion: no-preference) {
   .mo-popup[open] { animation: mo-mgla var(--ruch-sredni) var(--ease-mgla); }
 }

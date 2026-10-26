@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { CmsPage, getPage } from '@/components/CmsPage'
 import { UnitCard } from '@/components/UnitCard'
-import { findMany } from '@/lib/cms'
+import { findMany, UNIT_ORDER } from '@/lib/cms'
 import { getPricesFrom } from '@/lib/icecoldres'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
 import type { Unit } from '@/payload-types'
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 
 export default async function HousesPage({ params }: LocaleParams) {
   const ctx = await pageContext(params)
-  const [units, prices] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: 'order' }), getPricesFrom()])
+  const [units, prices] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: UNIT_ORDER }), getPricesFrom()])
   // ceny „od” z IceColdRes (najtańsza oferta strony z promocją); wyłącznik w Ustawieniach → Rezerwacje
   const priceOf = (u: Unit) => (ctx.settings?.showPrices === false ? null : prices.find((p) => p.code === (u.icecoldresCode || u.slug))?.lowest?.nightly)
   return (

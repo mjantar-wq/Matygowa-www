@@ -76,7 +76,7 @@ async function main() {
   if (media.size) payload.logger.info(`media: ${media.size} plików`)
 
   /** Zapis wpisu w obu językach: najpierw PL (tworzy), potem EN (uzupełnia tłumaczenia). */
-  async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any) {
+  async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any, keep: string[] = []) {
     const existing = await payload.find({ collection, where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = existing.docs[0]?.id
     for (const locale of LOCALES) {
@@ -85,6 +85,8 @@ async function main() {
         // bloki i listy są wspólne dla języków: bez ich id zapis EN utworzyłby nowe wiersze i skasował teksty PL
         const current = await payload.findByID({ collection, id, locale: 'pl', depth: 0, draft: true } as never)
         data = withIds(data, current)
+        // pola ustawiane w panelu (np. kolejność domów) import tylko zakłada, nie nadpisuje
+        for (const key of keep) delete data[key]
         await payload.update({ collection, id, locale, data, draft: false } as never)
       } else id = ((await payload.create({ collection, locale, data, draft: false } as never)) as Any).id
     }
@@ -122,7 +124,7 @@ async function main() {
       ensuiteUpstairs: !!u.facts?.ensuite_upstairs,
       livingRoom: u.facts?.living_room === 'upper' || u.facts?.living_room === 'first' ? 'upper' : u.facts?.living_room ? 'ground' : undefined,
       seo: { title: u.seo?.title?.[l], description: u.seo?.description?.[l] },
-    }))
+    }), ['order'])
   }
 
   // Atrakcje: ta sama lista dla sekcji na głównej (featured, krótki opis "summary") i strony Okolica

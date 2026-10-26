@@ -1,7 +1,7 @@
 import 'server-only'
 import type { Locale } from '@/i18n/locales'
 import type { Media, Unit } from '@/payload-types'
-import { findMany } from './cms'
+import { findMany, UNIT_ORDER } from './cms'
 import type { PublicUnitType } from './icecoldres'
 
 export interface TilePhoto {
@@ -43,7 +43,7 @@ function icecoldresPhoto(p: PublicUnitType['photos'][number], fallback: string):
 
 /** Kafelki po kodzie IceColdRes (`icecoldresCode` albo slug domu). Bez zdjęć na stronie bierzemy zdjęcia z IceColdRes. */
 export async function getUnitTiles(locale: Locale, types: PublicUnitType[]): Promise<Record<string, UnitTile>> {
-  const units = await findMany<Unit>('units', locale, { depth: 1, sort: 'order' })
+  const units = await findMany<Unit>('units', locale, { depth: 1, sort: UNIT_ORDER })
   const tiles: Record<string, UnitTile> = {}
   for (const u of units) {
     const code = u.icecoldresCode || u.slug

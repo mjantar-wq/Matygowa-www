@@ -19,7 +19,10 @@ async function isDraft() {
   }
 }
 
-export async function findMany<T>(collection: CollectionSlug, locale: Locale, opts: { where?: Where; limit?: number; sort?: string; depth?: number } = {}) {
+/** Kolejność domów i apartamentów z panelu (pole „Kolejność”); przy równych numerach decyduje nazwa. */
+export const UNIT_ORDER = ['order', 'name']
+
+export async function findMany<T>(collection: CollectionSlug, locale: Locale, opts: { where?: Where; limit?: number; sort?: string | string[]; depth?: number } = {}) {
   try {
     const draft = await isDraft()
     const res = await (await payload()).find({

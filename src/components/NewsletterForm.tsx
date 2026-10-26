@@ -47,13 +47,13 @@ export function NewsletterForm({ locale, t, consent }: { locale: Locale; t: Dict
 
   if (!open)
     return (
-      <button type="button" className="mo-btn mo-btn--glowny mo-btn--maly" aria-expanded="false" aria-controls="nl-form" onClick={() => setOpen(true)} style={{ justifySelf: 'start' }}>
+      <button type="button" className="mo-btn mo-btn--glowny mo-btn--maly" onClick={() => setOpen(true)} style={{ justifySelf: 'start' }}>
         {t.open}
       </button>
     )
 
   return (
-    <form id="nl-form" onSubmit={submit} style={{ display: 'grid', gap: 'var(--space-3)' }}>
+    <form onSubmit={submit} style={{ display: 'grid', gap: 'var(--space-3)' }}>
       <p>{t.lead}</p>
       <label htmlFor="nl-email">{t.email}</label>
       <input ref={email} id="nl-email" name="email" type="email" required autoComplete="email" inputMode="email" maxLength={254}

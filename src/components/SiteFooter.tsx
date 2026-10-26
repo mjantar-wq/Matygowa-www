@@ -38,14 +38,18 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
           <div>
             <p className="mo-label">{t.footer.follow}</p>
             {/* jednobarwne logotypy zamiast nazw (Michał, 26.10.2026); serwis bez ikony zostaje podpisem */}
-            <ul style={{ display: 'flex', gap: 'var(--space-2)', marginInlineStart: -10 }}>
+            <ul className="mo-footer__social">
               {settings.social.map((s) => {
-                const kind = socialKind(s.url)
+                const kind = socialKind(s.url, s.label)
                 return (
                   <li key={s.id ?? s.url}>
-                    <a href={s.url} rel="noopener" aria-label={kind ? s.label : undefined} style={{ display: 'inline-flex', minInlineSize: 44, minBlockSize: 44, alignItems: 'center', justifyContent: 'center' }}>
-                      {kind ? <SocialIcon kind={kind} /> : s.label}
-                    </a>
+                    {kind ? (
+                      <a className="mo-footer__ikona" href={s.url} rel="noopener" aria-label={kind === 'facebook' ? 'Facebook' : 'Instagram'}>
+                        <SocialIcon kind={kind} />
+                      </a>
+                    ) : (
+                      <a href={s.url} rel="noopener">{s.label}</a>
+                    )}
                   </li>
                 )
               })}

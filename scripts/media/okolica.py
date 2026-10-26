@@ -75,12 +75,20 @@ OBIEKTY = [
      "Schronisko nad brzegiem Morskiego Oka, za nim ośnieżone zbocza", "The mountain hut on the shore of Morskie Oko, snowy slopes behind"),
     ("A_morskie-oko_s2", "https://schroniskomorskieoko.pl/sites/default/themes/dozp/images/tlo10.jpg", "https://schroniskomorskieoko.pl", "Schronisko PTTK nad Morskim Okiem", "pending", .5,
      "Morskie Oko o zachodzie, szczyty odbite w wodzie", "Morskie Oko at sunset, the peaks mirrored in the water"),
-    ("A_balony_1", "https://lotybalonem.com/lib/yxjhjj/13-min-mcbmqtiu.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .3,
-     "Balon nad Podhalem, na horyzoncie grań Tatr", "A balloon above Podhale, the Tatra ridge on the horizon"),
-    ("A_balony_2", "https://lotybalonem.com/lib/yxjhjj/1-mp2c7p4n.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .5,
-     "Napełnianie balonu o świcie, nad mgłą ośnieżone Tatry", "Inflating the balloon at dawn, the snowy Tatras above the mist"),
-    ("A_balony_3", "https://lotybalonem.com/lib/yxjhjj/4-min-mcbmq9k3.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .5,
-     "Tatry Zachodnie i Giewont widziane z balonu", "The Western Tatras and Giewont seen from the balloon"),
+    # 26.10: zdjęcia przesłane przez Loty balonem ze zgodą na użycie na stronie (oryginały w folderze „09 ilustracje”
+    # Michała: z1 = Tatry 3, z2 = Podhale 2, z3 = Tatry 2, z4 = Podhale 3, z5 = Tatry 1, z6 = Podhale 1; skopiuj je do .okolica-cache)
+    ("A_balony_z1", None, "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "granted", .5,
+     "Kolorowy balon nad ośnieżonymi szczytami Tatr", "A colourful balloon above the snowy Tatra peaks"),
+    ("A_balony_z2", None, "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "granted", .5,
+     "Kosz balonu nad Podhalem, na horyzoncie cała grań Tatr", "The balloon basket above Podhale, the whole Tatra ridge on the horizon"),
+    ("A_balony_z3", None, "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "granted", .5,
+     "Balon nad zaśnieżonymi graniami Tatr", "The balloon above the snowy Tatra ridges"),
+    ("A_balony_z4", None, "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "granted", .5,
+     "Balon nad zimowymi polanami Podhala, w tle Tatry", "A balloon above the winter meadows of Podhale, the Tatras behind"),
+    ("A_balony_z5", None, "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "granted", .5,
+     "Kosz balonu wśród tatrzańskich szczytów w słońcu", "The balloon basket among the Tatra peaks in the sun"),
+    ("A_balony_z6", None, "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "granted", .5,
+     "Balon nad Podhalem w niskim słońcu, w dali Tatry", "The balloon above Podhale in the low sun, the Tatras in the distance"),
     ("A_szlaki-rowery_1", "https://velodunajec.pl/wp-content/uploads/2021/04/1-43-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
      "Trasa rowerowa Velo Dunajec wśród łąk, w dali Jezioro Czorsztyńskie", "The Velo Dunajec cycle route through meadows, Lake Czorsztyn in the distance"),
     ("A_szlaki-rowery_3", "https://velodunajec.pl/wp-content/uploads/2021/04/Group-5-DJI_0609-HDR5_DJI_0649-HDR5-9-images-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
@@ -113,6 +121,7 @@ def main():
     for kod, url, strona, autor, lic, prawa, oy, alt_pl, alt_en in wpisy:
         src = CACHE / f"{kod}.jpg"
         if not src.exists():
+            if not url: raise SystemExit(f"brak {src}: to zdjęcie przesłane przez obiekt, skopiuj oryginał do .okolica-cache")
             src.write_bytes(urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60).read())
             time.sleep(3)
         im = kadr(ImageOps.exif_transpose(Image.open(src)).convert("RGB"), 3 / 2, oy)

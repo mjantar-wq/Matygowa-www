@@ -32,6 +32,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     // panel treści jest pod /panel (domyślny /admin Payloada zostaje tylko jako przekierowanie)
     return [
+      // http → https: przez http baner zgód nie zapisze ciasteczka „secure” (HSTS działa dopiero po pierwszej wizycie)
+      {
+        source: '/:path*',
+        has: [
+          { type: 'header', key: 'x-forwarded-proto', value: 'http' },
+          { type: 'host', value: '(?<host>.*[a-z]\\.[a-z]{2,})' },
+        ],
+        destination: 'https://:host/:path*',
+        permanent: false,
+      },
       { source: '/admin/:path*', destination: '/panel/:path*', permanent: false },
       // stare adresy obecnej strony (content/redirects.json, wątek treści)
       ...legacyRedirects.map((r) => ({ source: noSlash(r.from), destination: noSlash(r.to), permanent: r.status === 301 })),

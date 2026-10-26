@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import type { Scene } from '@/lib/scenes'
 import { HeroStage } from './HeroStage'
-import { motionAllowed } from './ambience'
+import { motionAllowed, slowConnection } from './ambience'
 
 const SVG: Partial<Record<Scene['kind'], string>> = { panorama: '/ilustracje/G2_panorama.svg', map: '/ilustracje/G7_mapa_okolicy.svg' }
 
@@ -17,6 +17,13 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
   const [focus, setFocus] = useState<Focus | undefined>()
   const [hover, setHover] = useState<string | undefined>()
   const [reach, setReach] = useState(1)
+  // Ile scen naprzód montujemy (ich zdjęcia ładują się od razu). Serwer i słabe łącze: jedną; szybkie łącze: trzy,
+  // żeby przy przewijaniu tło było gotowe. Na 3G każda scena to kolejne kilkaset KB przed resztą strony.
+  const ahead = useSyncExternalStore(
+    noSubscribe,
+    () => (slowConnection() ? 1 : 3),
+    () => 1,
+  )
 
   useEffect(() => {
     let frame = 0
@@ -66,8 +73,10 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
   }, [scenes])
 
   // Zdjęcia w treści opowieści ładują się z dużym wyprzedzeniem (2,5 ekranu), a nie dopiero tuż przed wejściem
-  // na ekran jak przy loading="lazy", żeby przy przewijaniu kart domków były już gotowe.
+  // na ekran jak przy loading="lazy", żeby przy przewijaniu kart domków były już gotowe. Na słabym łączu
+  // wyprzedzenie to jeden ekran, żeby zdjęcia z dołu strony nie blokowały tych, na które gość patrzy.
   useEffect(() => {
+    const margin = slowConnection() ? '100%' : '250%'
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -76,7 +85,7 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
           io.unobserve(e.target)
         }
       },
-      { rootMargin: '250% 0px' },
+      { rootMargin: `${margin} 0px` },
     )
     document.querySelectorAll('.mo-opowiesc img[loading="lazy"]').forEach((img) => io.observe(img))
     return () => io.disconnect()
@@ -102,7 +111,7 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
     <div className="mo-stage" aria-hidden="true" data-kind={activeKind}>
       {scenes.map((s, i) => {
         const on = s.id === active
-        if (i > reach + 3 && !on) return null
+        if (i > reach + ahead && !on) return null
         return (
           <div key={s.id} className="mo-stage__scene" data-kind={s.kind} data-active={on || undefined}>
             {s.kind === 'media' && s.slides ? <HeroStage slides={s.slides} active={on} eager={i === 0} /> : null}
@@ -113,6 +122,8 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
     </div>
   )
 }
+
+const noSubscribe = () => () => {}
 
 /** Dwa sąsiednie elementy ilustracji (szczyty, atrakcje) i postęp przewijania między ich kartami (0–1). */
 type Focus = { a: string; b: string; t: number }

@@ -19,6 +19,7 @@ import { Testimonials } from './collections/Testimonials'
 import { Units } from './collections/Units'
 import { Users } from './collections/Users'
 import { Settings } from './globals/Settings'
+import { contentVersionHooks } from './hooks/contentVersion'
 import { DEFAULT_LOCALE, ENABLED_LOCALES, LOCALES } from './i18n/locales'
 
 const filename = fileURLToPath(import.meta.url)
@@ -66,6 +67,8 @@ const cloudflare =
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
 
+const versioned = contentVersionHooks(cloudflare.env.R2)
+
 export default buildConfig({
   // panel treści pod /panel, osobno od panelu rezerwacji IceColdRes (docs/wdrozenie.md)
   routes: { admin: '/panel' },
@@ -91,8 +94,9 @@ export default buildConfig({
     defaultLocale: DEFAULT_LOCALE,
     fallback: true,
   },
-  collections: [Pages, Units, News, Attractions, Offers, Testimonials, Media, Users],
-  globals: [Settings],
+  // zapis w panelu podbija wersję treści, więc bufor stron (src/edge/pages.ts) od razu składa je od nowa
+  collections: [Pages, Units, News, Attractions, Offers, Testimonials, Media].map(versioned.collection).concat(Users),
+  globals: [Settings].map(versioned.global),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

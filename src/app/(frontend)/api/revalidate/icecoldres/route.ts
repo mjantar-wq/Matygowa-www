@@ -1,4 +1,6 @@
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { revalidateTag } from 'next/cache'
+import { bumpContentVersion } from '@/edge/version'
 import { TOPICS, topicTag, type Topic } from '@/lib/icecoldres'
 import { verify } from '@/lib/webhook'
 
@@ -25,5 +27,7 @@ export async function POST(request: Request) {
   // nieznany albo pusty temat: odświeżamy wszystko z IceColdRes
   const tags = topics.length ? topics.map(topicTag) : ['icecoldres']
   for (const tag of tags) revalidateTag(tag, { expire: 0 })
+  // gotowe strony w buforze (src/edge/pages.ts) też mają się złożyć od nowa
+  await bumpContentVersion((await getCloudflareContext({ async: true })).env.R2).catch(() => {})
   return Response.json({ ok: true, revalidated: tags })
 }

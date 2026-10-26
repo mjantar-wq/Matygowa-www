@@ -5,6 +5,8 @@ interface __BaseEnv_CloudflareEnv {
 	R2: R2Bucket;
 	D1: D1Database;
 	ASSETS: Fetcher;
+	IMAGES: ImagesBinding;
+	CF_VERSION_METADATA: WorkerVersionMetadata;
 	PAYLOAD_SECRET: string;
 }
 declare namespace Cloudflare {

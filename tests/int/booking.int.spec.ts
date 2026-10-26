@@ -127,5 +127,21 @@ describe('pośrednik /api/booking', () => {
     const { GET } = await import('@/app/(frontend)/api/booking/[op]/route')
     const res = await GET(new Request('https://x/api/booking/search?arrival=2026-12-07&departure=2026-12-04&adults=2'), { params: Promise.resolve({ op: 'search' }) })
     expect(res.status).toBe(400)
+    // najwyżej 30 osób razem (Michał, 26.10.2026)
+    const big = await GET(new Request('https://x/api/booking/search?arrival=2026-12-04&departure=2026-12-07&adults=25&children=6'), { params: Promise.resolve({ op: 'search' }) })
+    expect(big.status).toBe(400)
+  })
+
+  it('grupa, której nie pomieści żaden dom, idzie do strony rezerwacji (kilka domów)', async () => {
+    const api: Record<string, unknown> = {
+      '': { unitTypes: [{ id: 'u1', code: 'hawran', name: 'Hawrań', stdOccupancy: 8, maxOccupancy: 10, maxChildren: 6, photos: [] }] },
+      '/search': { results: [{ unitTypeId: 'u1', free: 2, offers: [] }] },
+    }
+    vi.stubGlobal('fetch', async (input: string) => Response.json(api[new URL(input).pathname.replace(/^\/api\/public\/[^/]+/, '')]))
+    const { GET } = await import('@/app/(frontend)/api/booking/[op]/route')
+    const search = (q: string) => GET(new Request(`https://x/api/booking/search?arrival=2026-12-04&departure=2026-12-07&${q}`), { params: Promise.resolve({ op: 'search' }) })
+    expect(await (await search('adults=20&children=4')).json()).toMatchObject({ group: true, results: [] })
+    expect(await (await search('adults=3&children=7')).json()).toMatchObject({ group: true })
+    expect(await (await search('adults=6&children=4')).json()).not.toHaveProperty('group')
   })
 })

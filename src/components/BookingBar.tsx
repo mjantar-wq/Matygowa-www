@@ -14,6 +14,8 @@ import {
 } from '@/lib/availability'
 import { bookingUrl, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
+import { CountPicker } from './CountPicker'
+import { MAX_GUESTS } from '@/lib/count-picker'
 import { UnitResults, type Result } from './UnitResults'
 import { useAmbience } from './effects/ambience'
 
@@ -50,7 +52,6 @@ type Search =
 
 const today = () => new Date().toISOString().slice(0, 10)
 const AGES = Array.from({ length: 18 }, (_, i) => i)
-const ADULTS = Array.from({ length: 12 }, (_, i) => i + 1)
 
 /**
  * Pasek rezerwacji (koncepcja S5): kalendarz bez cen, z okienkami o dostępności i min. pobycie jak w IceColdRes
@@ -69,7 +70,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
   // bez domyślnej liczby osób: gość wybiera ją świadomie (Michał, 25.10.2026)
   const [guests, setGuests] = useState<number | null>(null)
   const [missingAdults, setMissingAdults] = useState(false)
-  const adultsRef = useRef<HTMLSelectElement>(null)
+  const adultsRef = useRef<HTMLInputElement>(null)
   const [children, setChildren] = useState(0)
   // liczba osób razem z dziećmi; dorośli to reszta (co najmniej jeden)
   const adults = guests === null ? null : Math.max(1, guests - children)
@@ -256,7 +257,13 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
     try {
       const r = await fetch(`/api/booking/search?${params}`)
       if (!r.ok) throw new Error(String(r.status))
-      const data = (await r.json()) as { nights: number; results: Result[] }
+      const data = (await r.json()) as { nights: number; results: Result[]; group?: boolean }
+      // grupa, której nie pomieści żaden dom: kilka domów wybiera się na stronie rezerwacji (reguła grup IceColdRes)
+      if (data.group) {
+        track('booking_click', { booking_location: 'booking_bar', unit, arrival, nights, adults, children })
+        window.location.assign(bookingUrl(engine, locale, q, utm))
+        return
+      }
       // dom, z którego strony gość szuka, na początku listy
       data.results.sort((a, b) => Number(b.code === unit) - Number(a.code === unit))
       setSearch({ status: 'done', ...data })
@@ -324,34 +331,30 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
         </button>
         <label className="mo-field">
           <span className="mo-label">{t.guests}</span>
-          <select
-            ref={adultsRef}
-            value={guests ?? ''}
-            aria-invalid={missingAdults || undefined}
-            aria-describedby={missingAdults ? errorId : undefined}
-            onChange={(e) => {
-              const n = e.target.value === '' ? null : Number(e.target.value)
+          <CountPicker
+            inputRef={adultsRef}
+            value={guests}
+            min={1}
+            max={MAX_GUESTS}
+            label={t.guests}
+            rangeMessage={t.countRange}
+            invalid={missingAdults}
+            describedBy={missingAdults ? errorId : undefined}
+            onChange={(n) => {
               setGuests(n)
               if (n !== null && children > n - 1) setChildCount(n - 1)
-              setMissingAdults(false)
+              if (n !== null) setMissingAdults(false)
             }}
-          >
-            <option value="">--</option>
-            {ADULTS.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
+          />
         </label>
         <label className="mo-field">
           <span className="mo-label">{t.childrenOf}</span>
           <input
             type="number"
             min={0}
-            max={guests === null ? 10 : guests - 1}
+            max={(guests ?? MAX_GUESTS) - 1}
             value={children}
-            onChange={(e) => setChildCount(Math.min(guests === null ? 10 : guests - 1, Math.max(0, Number(e.target.value))))}
+            onChange={(e) => setChildCount(Math.min((guests ?? MAX_GUESTS) - 1, Math.max(0, Number(e.target.value) || 0)))}
           />
         </label>
         <button className="mo-btn mo-btn--glowny" type="submit">

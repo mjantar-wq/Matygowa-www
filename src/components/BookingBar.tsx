@@ -368,11 +368,12 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       ) : null}
 
       {children > 0 ? (
-        <div className="mo-booking-ages">
+        <fieldset className="mo-booking-ages">
+          <legend className="mo-label mo-booking-ages__title">{t.childAges}</legend>
           {ages.map((a, i) => (
             <label key={i} className="mo-field">
               <span className="mo-label">
-                {t.childAge} {children > 1 ? i + 1 : ''}
+                {t.child} {children > 1 ? i + 1 : ''}
               </span>
               <select
                 value={a ?? ''}
@@ -393,7 +394,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
               </select>
             </label>
           ))}
-        </div>
+        </fieldset>
       ) : null}
 
       {open ? (

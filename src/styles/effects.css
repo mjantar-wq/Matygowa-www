@@ -226,7 +226,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc .mo-hero__content { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); padding-block: var(--space-8) var(--space-7); gap: var(--space-5); }
 .mo-opowiesc .mo-hero__title { font-size: clamp(2.75rem, 2rem + 4.5vw, 6rem); max-inline-size: 16ch; }
 .mo-opowiesc .mo-hero__lede { max-inline-size: 36rem; }
-.mo-opowiesc .mo-hero .mo-booking { text-shadow: none; }
+.mo-opowiesc .mo-hero .mo-booking, .mo-opowiesc .mo-hero .mo-booking-ages { text-shadow: none; }
 
 /* Teksty wprost na scenie, bez kafelków. Czytelność daje kolor i cień dopasowane do tła (data-tlo ustawia
    SceneStage): na zdjęciu jasny tekst z ciemnym cieniem i przyciemnienie od strony tekstu, na ilustracji

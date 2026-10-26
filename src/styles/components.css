@@ -240,7 +240,7 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 .mo-atrakcje { list-style: none; padding: 0; margin: 0; }
 .mo-atrakcje > li { grid-row: span 5; display: grid; grid-template-rows: subgrid; }
 .mo-atrakcje > li > .mo-card { grid-row: 1 / -1; grid-template-rows: subgrid; row-gap: 0; }
-.mo-popup { position: fixed; inset: 0; margin: auto; block-size: fit-content; inline-size: min(100% - 2 * var(--space-4), 52rem); max-inline-size: none; max-block-size: calc(100dvh - 2 * var(--space-4)); padding: 0; border: 0; border-radius: var(--radius-0); background: var(--color-tlo); color: var(--color-atrament); box-shadow: var(--cien-wyskakujace); overflow: auto; overscroll-behavior: contain; }
+.mo-popup { position: fixed; inset: 0; margin: auto; block-size: fit-content; inline-size: min(100% - 2 * var(--space-4), 52rem); max-inline-size: none; max-block-size: calc(100dvh - 2 * var(--space-4)); padding: 0; border: 0; border-radius: var(--radius-0); background: var(--color-tlo); color: var(--color-atrament); box-shadow: var(--cien-wyskakujace); text-shadow: none; text-align: start; overflow: auto; overscroll-behavior: contain; }
 .mo-popup::backdrop { background: rgba(8, 12, 10, 0.6); }
 .mo-popup__tresc { padding: var(--space-6); }
 .mo-popup__pasek { position: sticky; inset-block-start: 0; z-index: 1; display: flex; justify-content: flex-end; block-size: 0; padding-inline-end: var(--space-3); }

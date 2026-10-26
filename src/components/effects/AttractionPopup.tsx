@@ -3,10 +3,34 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 
 /**
- * Pozycja listy na stronie Okolica: kafelek otwiera okienko z opisem rozszerzonym i zdjęciami (natywny <dialog>).
- * Bez JS kafelek prowadzi do strony atrakcji. Adres #slug otwiera okienko od razu, więc da się je podlinkować.
+ * Pozycja listy atrakcji (strona Okolica i „Wszędzie blisko” na głównej): klik otwiera okienko z opisem rozszerzonym
+ * i zdjęciami (natywny <dialog>). Bez JS link prowadzi do strony atrakcji. Adres #slug otwiera okienko od razu.
  */
-export function AttractionPopup({ slug, href, label, closeLabel, card, children }: { slug: string; href: string; label: string; closeLabel: string; card: ReactNode; children: ReactNode }) {
+export function AttractionPopup({
+  slug,
+  href,
+  label,
+  closeLabel,
+  card,
+  children,
+  className,
+  linkClassName = 'mo-card mo-card--poziom',
+  focus,
+  after,
+}: {
+  slug: string
+  href: string
+  label: string
+  closeLabel: string
+  card: ReactNode
+  children: ReactNode
+  className?: string
+  linkClassName?: string
+  /** punkt na mapie sceny (data-scene-focus) */
+  focus?: string
+  /** treść pod linkiem, np. rozwijany krótki opis na głównej */
+  after?: ReactNode
+}) {
   const dialog = useRef<HTMLDialogElement>(null)
 
   const open = () => {
@@ -19,10 +43,10 @@ export function AttractionPopup({ slug, href, label, closeLabel, card, children 
   }, [slug])
 
   return (
-    <li>
+    <li className={className} data-scene-focus={focus}>
       <a
         href={href}
-        className="mo-card mo-card--poziom"
+        className={linkClassName}
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
           e.preventDefault()
@@ -31,6 +55,7 @@ export function AttractionPopup({ slug, href, label, closeLabel, card, children 
       >
         {card}
       </a>
+      {after}
       <dialog
         ref={dialog}
         className="mo-popup"

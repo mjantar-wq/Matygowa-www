@@ -1,5 +1,6 @@
 import { addDays, daysBetween, promoOn, type CalendarData } from '@/lib/availability'
 import { getCalendar, getPromotions, getProperty, promoInSeason, searchStay } from '@/lib/icecoldres'
+import { MAX_GUESTS } from '@/lib/count-picker'
 import { getUnitTiles } from '@/lib/unit-tiles'
 import { DEFAULT_LOCALE, isLocale } from '@/i18n/locales'
 
@@ -59,15 +60,21 @@ async function search(url: URL) {
   const q = url.searchParams
   const arrival = q.get('arrival') ?? ''
   const departure = q.get('departure') ?? ''
-  const adults = int(q.get('adults'), 1, 20)
-  const children = int(q.get('children'), 0, 20, 0)
+  // najwyżej 30 osób razem (Michał, 26.10.2026), jak w IceColdRes
+  const adults = int(q.get('adults'), 1, MAX_GUESTS)
+  const children = int(q.get('children'), 0, MAX_GUESTS - 1, 0)
   const ages = (q.get('ages') ?? '').split(',').filter(Boolean).map(Number)
   if (!DATE.test(arrival) || !DATE.test(departure) || departure <= arrival || adults === null || children === null) return bad('invalid_input')
+  if (adults + children > MAX_GUESTS) return bad('invalid_input')
   if (ages.length > children || ages.some((a) => !Number.isInteger(a) || a < 0 || a > 17)) return bad('invalid_input')
   const lang = q.get('lang') ?? ''
   const locale = isLocale(lang) ? lang : DEFAULT_LOCALE
   const [results, property] = await Promise.all([searchStay({ arrival, departure, adults, children, ages }), getProperty()])
   if (!results || !property) return unavailable()
+  // grupa, której nie pomieści żaden dom (więcej osób niż najbardziej pojemny albo dzieci ponad limit każdego): pasek
+  // przechodzi do strony rezerwacji, gdzie gość wybiera kilka domów (reguła grup IceColdRes, Michał 25.10.2026)
+  const fits = property.unitTypes.some((u) => adults + children <= (u.maxOccupancy ?? Infinity) && children <= (u.maxChildren ?? Infinity))
+  if (property.unitTypes.length && !fits) return Response.json({ nights: daysBetween(arrival, departure), results: [], group: true }, { headers: CACHE })
   const tiles = await getUnitTiles(locale, property.unitTypes)
   const nights = daysBetween(arrival, departure)
   // domy w kolejności z panelu (kafelki powstają w tej kolejności); nieznane w panelu na końcu

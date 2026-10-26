@@ -107,3 +107,11 @@
 /* promocje z sezonem (IceColdRes: lato/zima) widać tylko przy tej porze roku przełącznika strony */
 html[data-sezon="zima"] [data-sezon-promo="lato"],
 html[data-sezon="lato"] [data-sezon-promo="zima"] { display: none; }
+
+/* Liczba osób: pole z listą, która rośnie przy przewijaniu (CountPicker, Michał 26.10.2026) */
+.mo-picker { position: relative; display: flex; flex-direction: column; }
+.mo-picker__list { position: absolute; z-index: 30; inset-inline: 0; inset-block-start: calc(100% + var(--space-2)); max-block-size: 15rem; overflow-y: auto; margin: 0; padding: var(--space-1) 0; list-style: none; background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); }
+.mo-picker__list li { padding: var(--space-2) var(--space-3); cursor: pointer; font-variant-numeric: tabular-nums; }
+.mo-picker__list li:hover, .mo-picker__list li[aria-selected="true"] { background: var(--color-tlo-2); }
+.mo-picker__error { color: var(--color-bursztyn-tekst); font-size: 0.8125rem; line-height: 1.3; }
+.mo-picker__list[data-up] { inset-block-start: auto; inset-block-end: calc(100% + var(--space-2)); }

@@ -349,12 +349,14 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
         </label>
         <label className="mo-field">
           <span className="mo-label">{t.childrenOf}</span>
-          <input
-            type="number"
+          {/* tak samo jak liczba osób (Michał, 26.10.2026): pole puste zamiast 0, które trudno skasować albo nadpisać */}
+          <CountPicker
+            value={children || null}
             min={0}
             max={(guests ?? MAX_GUESTS) - 1}
-            value={children}
-            onChange={(e) => setChildCount(Math.min((guests ?? MAX_GUESTS) - 1, Math.max(0, Number(e.target.value) || 0)))}
+            label={t.childrenOf}
+            rangeMessage={t.countRange}
+            onChange={(n) => setChildCount(n ?? 0)}
           />
         </label>
         <button className="mo-btn mo-btn--glowny" type="submit">

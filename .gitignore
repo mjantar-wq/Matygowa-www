@@ -57,3 +57,5 @@ node_modules/
 /.open-next/
 /dist/
 .dev.vars
+__pycache__/
+/scripts/media/.okolica-cache

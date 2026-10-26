@@ -15,7 +15,8 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 export default async function HousesPage({ params }: LocaleParams) {
   const ctx = await pageContext(params)
   const [units, prices] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: 'order' }), getPricesFrom()])
-  const priceOf = (u: Unit) => prices.find((p) => p.code === (u.icecoldresCode || u.slug))?.lowest?.nightly
+  // ceny „od” z IceColdRes (najtańsza oferta strony z promocją); wyłącznik w Ustawieniach → Rezerwacje
+  const priceOf = (u: Unit) => (ctx.settings?.showPrices === false ? null : prices.find((p) => p.code === (u.icecoldresCode || u.slug))?.lowest?.nightly)
   return (
     <CmsPage route="houses" ctx={ctx}>
       {(['house', 'apartment'] as const).map((kind) => {
@@ -23,8 +24,11 @@ export default async function HousesPage({ params }: LocaleParams) {
         return list.length ? (
           <section key={kind} className="mo-section mo-container">
             <h2 className="mo-h2">{ctx.t.house.kind[kind]}</h2>
-            <div className="mo-cards">
-              {list.map((u) => <UnitCard key={u.id} unit={u} ctx={ctx} priceFrom={priceOf(u)} />)}
+            {/* ten sam rozmiar i układ co wyniki „Sprawdź termin”: 3 w rzędzie na komputerze, 1 na telefonie */}
+            <div className="mo-tiles-wrap">
+              <ul className="mo-tiles">
+                {list.map((u) => <UnitCard key={u.id} unit={u} ctx={ctx} priceFrom={priceOf(u)} />)}
+              </ul>
             </div>
           </section>
         ) : null

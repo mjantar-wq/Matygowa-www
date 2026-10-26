@@ -2,7 +2,7 @@
 // D1 matygowa-www (WEUR) i R2 matygowa-www-media (jurysdykcja UE): docs/wdrozenie.md.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
+  "main": "worker.ts",
   "name": "matygowa-www",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
@@ -29,8 +29,17 @@
   "vars": {
     "ICECOLDRES_API_URL": "https://icecoldres.audiowizard.pl",
     "ICECOLDRES_SLUG": "booking",
-    "NEXT_PUBLIC_SITE_URL": "https://matygowa.audiowizard.pl"
+    "NEXT_PUBLIC_SITE_URL": "https://matygowa.audiowizard.pl",
+    // bramka /panel: polityka „Redakcja” (wielokrotnego użytku); token CF_ACCESS_API_TOKEN jest sekretem Workera
+    "CF_ACCESS_ACCOUNT_ID": "6519336b2b16c3c9f7b0f09fea497528",
+    "CF_ACCESS_POLICY_ID": "b1228163-73d0-4857-8b89-db6daca9f308",
+    // tych adresów usunięcie konta w panelu nie wykreśla z bramki (właściciel)
+    "CF_ACCESS_KEEP_EMAILS": "m.jantar@gmail.com,michal.jantar@matygowaosada.pl",
+    // opinie z Google (src/lib/reviews.ts); klucz GOOGLE_PLACES_API_KEY jest sekretem Workera. Pusty = źródło wyłączone.
+    "GOOGLE_PLACE_ID": ""
   },
+  // w poniedziałki o 4:30 UTC: pobranie opinii z Google (worker.ts → /api/cron/opinie)
+  "triggers": { "crons": ["30 4 * * 1"] },
   "observability": { "enabled": true },
   // Tylko dla poleceń Payload (migracje, import treści) na bazie w Cloudflare: PAYLOAD_REMOTE_BINDINGS=true.
   // Build i testy używają lokalnej kopii D1 (.wrangler), więc nie potrzebują dostępu do konta.

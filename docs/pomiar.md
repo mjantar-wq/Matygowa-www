@@ -19,7 +19,8 @@ Zdarzenia w `dataLayer`:
 
 | Zdarzenie | Parametry |
 |---|---|
-| `booking_click` | `booking_location` (`booking_bar` albo `link`), `unit`, `arrival`, `nights`, `adults`, `children` |
+| `booking_click` | `booking_location` (`booking_bar`, `booking_results` z wyników na stronie, `offers`, `link`), `unit`, `arrival`, `nights`, `adults`, `children` |
+| `booking_search` | wyszukiwanie z cenami na stronie (silnik IceColdRes): `unit`, `arrival`, `nights`, `adults`, `children`, `results` (liczba wolnych domów) |
 | `contact_click` | `contact_method` (`phone`, `email`, `whatsapp`) |
 | `consent_ready`, `consent_update` | `consent_analytics`, `consent_marketing` |
 

@@ -74,6 +74,23 @@ export const Units: CollectionConfig = {
               type: 'group',
               label: false,
               fields: [
+                { name: 'name', label: 'Nazwa szczytu', type: 'text', localized: true, admin: { placeholder: 'Świnica' } },
+                {
+                  name: 'nameCases',
+                  type: 'group',
+                  label: 'Odmiana nazwy (po polsku, do zdań typu „z widokiem na Świnicę”)',
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        { name: 'gen', label: 'Dopełniacz (nie ma…)', type: 'text', admin: { placeholder: 'Świnicy' } },
+                        { name: 'acc', label: 'Biernik (widok na…)', type: 'text', admin: { placeholder: 'Świnicę' } },
+                        { name: 'loc', label: 'Miejscownik (o…)', type: 'text', admin: { placeholder: 'Świnicy' } },
+                        { name: 'inst', label: 'Narzędnik (pod…)', type: 'text', admin: { placeholder: 'Świnicą' } },
+                      ],
+                    },
+                  ],
+                },
                 {
                   type: 'row',
                   fields: [
@@ -103,6 +120,14 @@ export const Units: CollectionConfig = {
                 { name: 'area', label: 'Powierzchnia (m²)', type: 'number' },
                 { name: 'bedrooms', label: 'Sypialnie', type: 'number' },
                 { name: 'maxGuests', label: 'Maks. osób', type: 'number' },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                { name: 'bathrooms', label: 'Łazienki', type: 'number' },
+                { name: 'separateWc', label: 'Osobne WC', type: 'checkbox' },
+                { name: 'ensuiteUpstairs', label: 'Łazienka przy sypialni na piętrze', type: 'checkbox' },
               ],
             },
             {

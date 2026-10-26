@@ -23,9 +23,18 @@ export const Attractions: CollectionConfig = {
   fields: [
     { name: 'name', label: 'Nazwa', type: 'text', required: true, localized: true },
     slugField(),
+    // podpis autora i licencji zdjęć z zewnątrz (CC, materiały prasowe) wpisuje się w polu „Podpis” pliku
     { name: 'image', label: 'Zdjęcie', type: 'upload', relationTo: 'media' },
-    { name: 'summary', label: 'Krótki opis', type: 'textarea', localized: true },
-    { name: 'description', label: 'Opis', type: 'richText', localized: true },
+    { name: 'gallery', label: 'Więcej zdjęć (strona Okolica)', type: 'upload', relationTo: 'media', hasMany: true },
+    {
+      name: 'summary',
+      label: 'Krótki opis (strona główna)',
+      type: 'textarea',
+      localized: true,
+      admin: { description: 'Dwa, trzy zdania do sekcji „Blisko wszystkiego” na stronie głównej.' },
+    },
+    { name: 'description', label: 'Opis rozszerzony (strona Okolica)', type: 'richText', localized: true },
+    { name: 'place', label: 'Miejsce', type: 'text', localized: true, admin: { placeholder: 'Tatranská Kotlina, Słowacja' } },
     {
       type: 'row',
       fields: [
@@ -54,11 +63,24 @@ export const Attractions: CollectionConfig = {
     {
       type: 'row',
       fields: [
+        // lokalizacja jest opcjonalna: szlaków i lotu balonem nie da się wskazać jednym punktem
         { name: 'lat', label: 'Szerokość geogr.', type: 'number' },
         { name: 'lng', label: 'Długość geogr.', type: 'number' },
       ],
     },
-    { name: 'featured', label: 'Wyróżniona na stronie głównej', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar' } },
+    {
+      name: 'mapId',
+      label: 'Id na mapie okolicy (G7)',
+      type: 'text',
+      admin: { position: 'sidebar', placeholder: 'a-kotelnica', description: 'Puste: bez punktu na mapie (np. szlaki, lot balonem).' },
+    },
+    {
+      name: 'featured',
+      label: 'Pokaż na stronie głównej',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { position: 'sidebar', description: 'Strona Okolica pokazuje wszystkie atrakcje; główna tylko zaznaczone, z krótkim opisem.' },
+    },
     seoField,
   ],
 }

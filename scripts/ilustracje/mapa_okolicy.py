@@ -6,11 +6,12 @@ Poziomice z modelu terenu Terrarium (te same kafle co G2), drogi, rzeki i granic
 Wymaga: numpy, pillow, contourpy (narzędzie jednorazowe, nie zależność strony).
 Uruchom: python3 scripts/ilustracje/mapa_okolicy.py
 """
-import json, math, pathlib, sys, urllib.parse, urllib.request
+import json, math, pathlib, re, sys, urllib.parse, urllib.request
 import numpy as np
 import contourpy
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from tokeny import z_zapasem  # noqa: E402
 from dem import elev, SITE  # noqa: E402  (ten sam DEM i punkt osady co G2)
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -32,21 +33,30 @@ if not OSM.exists():
 osm = json.loads(OSM.read_text())["elements"]
 
 # Atrakcje (slug jak w content/attractions.json) i miejscowości; dx, dy, kotwica etykiety dobrane ręcznie.
+# Angielskie podpisy atrakcji (poza polskim strona pokazuje te); nazwy własne zostają
+EN = {"Kolejka na Kasprowy": "Kasprowy cable car", "Spływ Dunajcem": "Dunajec rafting", "Park linowy i zagroda": "Rope park and farmstead",
+      "Jaskinia Bielska": "Belianska Cave", "Polana Szymoszkowa": "Szymoszkowa glade"}
+def tl(pl, en=None):
+    en = en or EN.get(pl)
+    return f'<tspan class="pl">{pl}</tspan><tspan class="en">{en}</tspan>' if en and en != pl else pl
 POI = [
     ("kasprowy-wierch", "Kolejka na Kasprowy", 49.27025, 19.98085, 12, -10, "start"),
     ("kotelnica", "Kotelnica Białczańska", 49.37623, 20.08090, -12, 4, "end"),
     ("termy", "Terma Bania", 49.38759, 20.09902, 12, -6, "start"),
     ("termy-bukovina", "Termy Bukovina", 49.32518, 20.09417, 12, 16, "start"),
     ("skywalk-poronin", "SkyWalk", 49.30728, 20.08848, -12, 4, "end"),
-    ("murzasichle", "Murzasichle", 49.31170, 20.04359, -12, 16, "end"),
+    ("murzasichle", "Park linowy i zagroda", 49.31170, 20.04359, -12, 16, "end"),
     ("splyw-dunajcem", "Spływ Dunajcem", 49.40522, 20.34027, 0, -16, "middle"),
     ("jaskinie-slowacja", "Jaskinia Bielska", 49.22876, 20.31147, 0, 24, "middle"),
     ("morskie-oko", "Morskie Oko", 49.19738, 20.07072, 12, 4, "start"),
+    ("gubalowka", "Gubałówka", 49.3015, 19.9384, 4, -10, "middle"),
+    ("szymoszkowa", "Polana Szymoszkowa", 49.2980, 19.9249, 0, 38, "middle"),
 ]
 MIEJSCOWOSCI = [
     ("Zakopane", 49.29691, 19.95048, 0, 26, "middle"), ("Poronin", 49.33965, 20.00556, -12, -8, "end"),
     ("Bukowina Tatrzańska", 49.34230, 20.10726, 0, -12, "middle"), ("Białka Tatrzańska", 49.39464, 20.10505, 12, 0, "start"),
     ("Jurgów", 49.34052, 20.13862, 12, 22, "start"), ("Łysa Polana", 49.26535, 20.11631, 12, 4, "start"),
+    ("Murzasichle", 49.3170, 20.0410, -10, -10, "end"),  # miejscowość; atrakcja obok to park linowy i zagroda
 ]
 
 # Poziomice co 100 m, co piąta mocniejsza.
@@ -78,7 +88,7 @@ for e in osm:
 
 L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-labelledby="g7-tytul">',
      '<title id="g7-tytul">Mapa okolicy Matygowej Osady: Podhale, Tatry i atrakcje w pobliżu</title>',
-     '<style>'
+     '<style>svg .en{display:none}:root:not([lang="pl"]) svg .en{display:inline}:root:not([lang="pl"]) svg .pl{display:none}'
      '.teren{fill:var(--color-tlo)}.tatry{fill:var(--color-tlo-2)}'
      '.poz{fill:none;stroke:var(--color-poziomica);stroke-width:.8;opacity:.45;vector-effect:non-scaling-stroke}'
      '.poz-mocna{fill:none;stroke:var(--color-poziomica);stroke-width:1.2;opacity:.7;vector-effect:non-scaling-stroke}'
@@ -90,8 +100,8 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      '.poi text{font:500 15px var(--font-ui,sans-serif);fill:var(--color-atrament);paint-order:stroke;stroke:var(--color-tlo);stroke-width:4px;stroke-linejoin:round}'
      '.wies circle{fill:var(--color-atrament)}'
      '.wies text{font:500 12px var(--font-ui,sans-serif);letter-spacing:.16em;text-transform:uppercase;fill:var(--color-wyciszony);paint-order:stroke;stroke:var(--color-tlo);stroke-width:4px}'
-     '.osada .pierscien{fill:none;stroke:var(--color-swierk);stroke-width:2}.osada .srodek{fill:var(--color-swierk)}'
-     '.osada text{font:700 18px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-swierk);paint-order:stroke;stroke:var(--color-tlo);stroke-width:5px}'
+     '.osada .poswiata{fill:var(--color-bursztyn);opacity:.22}.osada .tarcza{fill:var(--color-tlo);stroke:var(--color-bursztyn);stroke-width:4}.osada .sygnet{fill:var(--color-atrament)}'
+     '.osada .podpis-tlo{fill:var(--color-bursztyn)}.osada text{font:700 17px var(--font-tabliczka,Georgia,serif);letter-spacing:.1em;text-transform:uppercase;fill:var(--color-na-cta,#fff)}'
      '.panstwo{font:500 12px var(--font-ui,sans-serif);letter-spacing:.3em;text-transform:uppercase;fill:var(--color-wyciszony)}'
      '.atrybucja{font:400 11px var(--font-ui,sans-serif);fill:var(--color-wyciszony)}'
      '</style>',
@@ -101,7 +111,7 @@ L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" 
      f'<g id="warstwa-wody"><path class="rzeka" d="{" ".join(rzeki)}"/></g>',
      f'<g id="warstwa-granica"><path class="granica" d="{" ".join(granica)}"/></g>',
      f'<g id="warstwa-drogi"><path class="droga-boczna" d="{" ".join(drogi["boczna"])}"/><path class="droga-glowna" d="{" ".join(drogi["glowna"])}"/></g>',
-     '<text class="panstwo" x="%.0f" y="%.0f">Polska</text><text class="panstwo" x="%.0f" y="%.0f">Słowacja</text>' % (*xy(49.44, 19.92), *xy(49.20, 20.24)),
+     '<text class="panstwo" x="%.0f" y="%.0f">%s</text><text class="panstwo" x="%.0f" y="%.0f">%s</text>' % (*xy(49.44, 19.92), tl('Polska', 'Poland'), *xy(49.20, 20.24), tl('Słowacja', 'Slovakia')),
      '<g id="warstwa-miejscowosci">']
 for nazwa, la, lo, dx, dy, a in MIEJSCOWOSCI:
     x, y = xy(la, lo)
@@ -110,12 +120,15 @@ L.append('</g><g id="warstwa-atrakcje">')
 for slug, nazwa, la, lo, dx, dy, a in POI:
     x, y = xy(la, lo)
     km = 6371 * math.acos(min(1, math.sin(math.radians(SITE[0])) * math.sin(math.radians(la)) + math.cos(math.radians(SITE[0])) * math.cos(math.radians(la)) * math.cos(math.radians(lo - SITE[1]))))
-    L.append(f'<g id="a-{slug}" class="poi" data-km="{km:.1f}" transform="translate({x:.0f} {y:.0f})"><circle r="7"/><text x="{dx}" y="{dy + 5}" text-anchor="{a}">{nazwa}</text></g>')
+    L.append(f'<g id="a-{slug}" class="poi" data-km="{km:.1f}" transform="translate({x:.0f} {y:.0f})"><circle r="7"/><text x="{dx}" y="{dy + 5}" text-anchor="{a}">{tl(nazwa)}</text></g>')
 x, y = xy(*SITE)
-L.append(f'</g><g id="osada" class="osada" transform="translate({x:.0f} {y:.0f})"><circle class="pierscien" r="16"/><circle class="srodek" r="6"/>'
-         '<text x="0" y="40" text-anchor="middle">Matygowa Osada</text></g>')
-L.append(f'<text class="atrybucja" x="{W - 16}" y="{H - 16}" text-anchor="end">Dane: © współtwórcy OpenStreetMap (ODbL), wysokości: Terrarium / SRTM</text></svg>')
+# Osada jako punkt centralny (wg Michała ma być lepiej widoczna): poświata, tarcza z sygnetem i podpis na plakietce w kolorze akcentu
+SYGNET = "".join(re.findall(r'd="([^"]+)"', (ROOT / "public/brand/sygnet.svg").read_text()))
+L.append(f'</g><g id="osada" class="osada" transform="translate({x:.0f} {y:.0f})"><circle class="poswiata" r="46"/><circle class="tarcza" r="30"/>'
+         f'<path class="sygnet" transform="scale(0.5) translate(-43.12 -43.12)" d="{SYGNET}"/>'
+         '<rect class="podpis-tlo" x="-122" y="-86" width="244" height="34" rx="17"/><text x="0" y="-63" text-anchor="middle">Matygowa Osada</text></g>')
+L.append(f'<text class="atrybucja" x="{W - 16}" y="{H - 16}" text-anchor="end">' + tl('Dane: © współtwórcy OpenStreetMap (ODbL), wysokości: Terrarium / SRTM', 'Data: © OpenStreetMap contributors (ODbL), elevation: Terrarium / SRTM') + '</text></svg>')
 
 out = ROOT / "public/ilustracje/G7_mapa_okolicy.svg"
-out.write_text("\n".join(L))
+out.write_text(z_zapasem("\n".join(L)))
 print(out, W, H, f"{out.stat().st_size // 1024} kB")

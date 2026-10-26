@@ -6,7 +6,7 @@ test.describe('Szkielet strony', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'pl')
     await expect(page.locator('h1').first()).toBeVisible()
     await expect(page.getByRole('button', { name: 'Sprawdź termin' }).first()).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Domy i apartamenty' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Domki i apartamenty' })).toBeVisible()
   })
 
   test('wersja EN i przełącznik języka zachowuje podstronę', async ({ page }) => {
@@ -30,4 +30,91 @@ test.describe('Szkielet strony', () => {
     expect(res.status()).toBe(308)
     expect(res.headers().location).toBe('/domy')
   })
+})
+
+test.describe('Efekty i interakcje', () => {
+  test('przełącznik Dzień / Noc zmienia nastrój strony i go pamięta', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Noc' }).first().click()
+    await expect(page.locator('html')).toHaveAttribute('data-pora', 'noc')
+    await page.reload()
+    await expect(page.locator('html')).toHaveAttribute('data-pora', 'noc')
+    await page.getByRole('button', { name: 'Lato' }).first().click()
+    await expect(page.locator('html')).toHaveAttribute('data-sezon', 'lato')
+  })
+
+  test('bez ruchu hero nie ładuje filmu', async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' })
+    const page = await ctx.newPage()
+    await page.goto('/')
+    await page.waitForLoadState('load')
+    await page.waitForTimeout(800)
+    const sources = await page.locator('.mo-hero video, .mo-stage video').evaluateAll((vs) => vs.map((v) => (v as HTMLVideoElement).currentSrc))
+    expect(sources.every((s) => !s)).toBe(true)
+    await ctx.close()
+  })
+
+  test('strona główna: scena zmienia się z rozdziałem', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    const first = await page.locator('.mo-stage__scene[data-active]').getAttribute('data-kind')
+    expect(first).toBe('media')
+    await page.locator('[data-block="peaksPanorama"] [data-step]').first().scrollIntoViewIfNeeded()
+    await page.evaluate(() => scrollBy(0, 1))
+    await expect(page.locator('.mo-stage__scene[data-active]')).toHaveAttribute('data-kind', 'panorama')
+  })
+
+  test('hero: ruch tła bez filmu i bez przycisku pauzy', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.locator('.mo-hero__slide video')).toHaveCount(0)
+    await expect(page.locator('.mo-hero__pause')).toHaveCount(0)
+  })
+
+  test('mapa osady: ukryty przycisk (klawiatura) otwiera okno domu z odnośnikiem do karty', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    const button = page.locator('.mo-map .mo-hotspots button').first()
+    await button.evaluate((el) => el.scrollIntoView({ block: 'center' }))
+    await button.focus()
+    await expect(button).toBeVisible()
+    await page.keyboard.press('Enter')
+    const dialog = page.locator('dialog.mo-map-dialog[open]')
+    await expect(dialog).toBeVisible()
+    await expect(dialog.locator('a.mo-btn')).toHaveAttribute('href', /^\/(domy|en\/houses)\//)
+    await page.keyboard.press('Escape')
+    await expect(dialog).toHaveCount(0)
+  })
+
+  test('strona główna: przypięty przycisk otwiera pasek rezerwacji, gdy hero zniknie z ekranu', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    const open = page.locator('.mo-dock__open')
+    await expect(page.locator('.mo-dock')).not.toHaveAttribute('data-shown')
+    await page.locator('[data-block="houseInside"]').scrollIntoViewIfNeeded()
+    await expect(page.locator('.mo-dock')).toHaveAttribute('data-shown')
+    await open.click()
+    await expect(page.locator('.mo-dock__dialog .mo-booking')).toBeVisible()
+    // długie wyniki przewijają się wewnątrz okna, a jego dół mieści się na ekranie
+    const body = await page.locator('.mo-dock__body').boundingBox()
+    expect(body!.y + body!.height).toBeLessThanOrEqual(800)
+    expect(await page.locator('.mo-dock__body').evaluate((el) => getComputedStyle(el).overflowY)).toBe('auto')
+    await expect(page.locator('.mo-dock__close')).toBeVisible()
+    await page.keyboard.press('Escape')
+    await expect(page.locator('.mo-dock__dialog')).not.toBeVisible()
+  })
+})
+
+test('logo na stronie głównej przewija na samą górę i czyści kotwicę', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/en')
+  const banner = page.getByRole('dialog', { name: /cookies/i })
+  if (await banner.isVisible()) await banner.getByRole('button').first().click()
+  await page.evaluate(() => {
+    history.replaceState(null, '', '/en#test')
+    window.scrollTo(0, 1500)
+  })
+  await page.locator('.mo-logo').click()
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
+  expect(new URL(page.url()).pathname + new URL(page.url()).hash).toBe('/en')
 })

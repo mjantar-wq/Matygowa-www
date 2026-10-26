@@ -1,0 +1,139 @@
+#!/usr/bin/env python3
+"""Zdjęcia atrakcji okolicy na wolnych licencjach (Wikimedia Commons, Flickr CC) do content/media.
+
+Każde zdjęcie ma autora, licencję i adres źródła; podpis „Fot. … · licencja · serwis adres” trafia do pola
+„Podpis” w panelu i wyświetla się pod zdjęciem (licencje CC BY i CC BY-SA wymagają podpisu, CC0 nie, ale go zostawiamy).
+Bez ludzi na pierwszym planie (zgoda na wizerunek). Pliki A_<atrakcja>_<n>.webp; pierwsze zdjęcie atrakcji jest główne.
+
+OBIEKTY to zdjęcia ze stron obiektów, na które Michał poprosił o zgodę 25.10.2026 (decyzja Michała: na stronie
+testowej mogą być od razu). Mają prawa „pending”, więc na produkcji strona ich nie pokaże. Po zgodzie obiektu zmień
+"pending" na "granted" (import poprawi prawa w panelu), a bez zgody usuń wpis i plik.
+Uruchom: python3 scripts/media/okolica.py (pobiera brakujące oryginały do scripts/media/.okolica-cache).
+"""
+import json, time, urllib.request
+from pathlib import Path
+from PIL import Image, ImageOps
+
+ROOT = Path(__file__).resolve().parents[1].parent
+OUT = ROOT / "content/media"
+CACHE = Path(__file__).resolve().parent / ".okolica-cache"
+UA = {"User-Agent": "MatygowaSite/1.0 (https://matygowa.audiowizard.pl)"}
+LIC = {
+    "CC BY 2.0": "https://creativecommons.org/licenses/by/2.0/",
+    "CC BY 2.5": "https://creativecommons.org/licenses/by/2.5/",
+    "CC BY 3.0": "https://creativecommons.org/licenses/by/3.0/",
+    "CC BY-SA 2.0": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "CC BY-SA 3.0": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "CC0": "https://creativecommons.org/publicdomain/zero/1.0/",
+}
+
+# plik, adres pliku, strona źródła, autor, licencja, kadr w pionie (0 = góra), alt PL, alt EN
+# Wolne licencje na razie bez zdjęć: Michał odrzucił 25.10 zdjęcia kolei (bez wagonika) i Morskiego Oka (słaba jakość).
+ZDJECIA = []
+
+# plik, adres pliku, strona źródła, obiekt (w podpisie), prawa, kadr w pionie, alt PL, alt EN
+OBIEKTY = [
+    ("A_termy-bukovina_1", "https://u.profitroom.pl/2015.termabukowina.pl/thumb/1920x1080/uploads/zdjciemniejsze.jpg", "https://www.termybukovina.pl", "Termy Bukovina", "pending", .5,
+     "Baseny zewnętrzne i zjeżdżalnie Term Bukovina, w tle Tatry", "The outdoor pools and slides of Termy Bukovina, the Tatras behind"),
+    ("A_termy-bukovina_2", "https://u.profitroom.pl/2015.termabukowina.pl/thumb/1920x1080/uploads/DJI_20260716190832_0673_D-HDR.jpg", "https://www.termybukovina.pl", "Termy Bukovina", "pending", .5,
+     "Termy Bukovina wśród lasów, na horyzoncie Tatry", "Termy Bukovina among the forests, the Tatras on the horizon"),
+    ("A_terma-bania_1", "https://u.profitroom.pl/2017.termabania.pl/thumb/1920x980/uploads/TermyBaniaBialka112024_14.jpg", "https://www.termabania.pl", "Terma Bania", "pending", .5,
+     "Terma Bania z lotu ptaka, baseny pod gołym niebem przy stoku", "Terma Bania from the air, open-air pools by the slopes"),
+    ("A_terma-bania_2", "https://u.profitroom.pl/2017.termabania.pl/thumb/1920x980/uploads/Terma_Bania_062019_17AB.jpg", "https://www.termabania.pl", "Terma Bania", "pending", .5,
+     "Basen zewnętrzny przed przeszkloną halą Termy Bania", "The outdoor pool in front of the glazed hall of Terma Bania"),
+    ("A_bialka-narty_1", "https://u.profitroom.pl/2017.termabania.pl/thumb/1920x980/uploads/Group51-DJI_20260220174457_0783_D_DJI_20260220174504_0786_D-4images.jpg", "https://www.termabania.pl", "Terma Bania", "pending", .5,
+     "Oświetlone stoki w Białce Tatrzańskiej zimą o zmierzchu", "Floodlit ski slopes in Białka Tatrzańska on a winter evening"),
+    ("A_skywalk-poronin_1", "https://skywalk-poronin.pl/wp-content/uploads/2025/07/skywalk-poronin-lato-4-1700x956.jpg", "https://skywalk-poronin.pl", "SkyWalk Serce Poronina", "pending", .5,
+     "Taras widokowy SkyWalk nad lasem, w tle Tatry", "The SkyWalk viewing deck above the forest, the Tatras behind"),
+    ("A_skywalk-poronin_2", "https://skywalk-poronin.pl/wp-content/uploads/2025/04/9.jpg", "https://skywalk-poronin.pl", "SkyWalk Serce Poronina", "pending", .5,
+     "SkyWalk na Polanie Zgorzelisko z lotu ptaka, za nim panorama Tatr", "SkyWalk on Polana Zgorzelisko from the air, the Tatra panorama behind"),
+    ("A_skywalk-poronin_3", "https://skywalk-poronin.pl/wp-content/uploads/2025/07/skywalk-poronin-lato-3-1-1700x956.jpg", "https://skywalk-poronin.pl", "SkyWalk Serce Poronina", "pending", .5,
+     "Drewniana ścieżka SkyWalk i wieża z lotu ptaka", "The wooden SkyWalk path and tower from the air"),
+    ("A_szymoszkowa_1", "https://szymoszkowa.pl/wp-content/uploads/2020/11/Trasy-narciarskie-na-Polanie-Szymoszkowej-Zakopane.jpg", "https://szymoszkowa.pl", "Polana Szymoszkowa", "pending", .5,
+     "Kolej krzesełkowa na Polanie Szymoszkowej zimą, w tle Tatry", "The chairlift on Polana Szymoszkowa in winter, the Tatras behind"),
+    ("A_szymoszkowa_2", "https://szymoszkowa.pl/wp-content/uploads/2020/08/Polana-Szymoszkowa-Lato-09-2.jpg", "https://szymoszkowa.pl", "Polana Szymoszkowa", "pending", .5,
+     "Polana Szymoszkowa latem z lotu ptaka, na horyzoncie Tatry", "Polana Szymoszkowa in summer from the air, the Tatras on the horizon"),
+    ("A_splyw-dunajcem_1", "https://flisacy.pl/assets/gallery_thumbnails/46/469d5c5196327a9130b9f8316698e52a.jpg", "https://flisacy.pl", "Flisacy Pienińscy", "pending", .5,
+     "Tratwa flisacka na Dunajcu jesienią, nad nią Trzy Korony", "A raft on the Dunajec in autumn, the Three Crowns above"),
+    ("A_splyw-dunajcem_2", "https://flisacy.pl/assets/gallery_thumbnails/97/977082cda46cbde9f29ea1d102f913fd.jpg", "https://flisacy.pl", "Flisacy Pienińscy", "pending", .5,
+     "Dunajec pod Trzema Koronami w słoneczny dzień", "The Dunajec beneath the Three Crowns on a sunny day"),
+    ("A_bielska-jaskinia_1", "https://www.ssj.sk/sk/photoloader/103/9.jpg/0x0", "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna", "Správa slovenských jaskýň", "pending", .5,
+     "Nacieki w Bielskiej Jaskini", "Dripstone formations in Belianska Cave"),
+    ("A_bielska-jaskinia_2", "https://www.ssj.sk/sk/photoloader/105/11.jpg/0x0", "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna", "Správa slovenských jaskýň", "pending", .5,
+     "Ściana nacieków w Bielskiej Jaskini", "A wall of flowstone in Belianska Cave"),
+    # 25.10 (decyzja Michała): koleje z wagonikiem, Morskie Oko ze schroniskiem nad brzegiem, balon z Tatrami w tle, szlaki (26.10: bez zdjęć schroniska Głodówka i schroniska nad Morskim Okiem, Michał nie prosi ich o zgodę)
+    ("A_kasprowy-wierch_w1", "https://www.pkl.pl/data/pages/28/1600x0px__n4a0359a.jpg", "https://www.pkl.pl/kasprowy-wierch/kasprowy.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagonik kolei na Kasprowy Wierch nad doliną, w tle Tatry", "The Kasprowy Wierch cable car above the valley, the Tatras behind"),
+    ("A_kasprowy-wierch_w2", "https://www.pkl.pl/data/pages/28/1600x0px_kasprowy-15-.jpg", "https://www.pkl.pl/kasprowy-wierch/kasprowy.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagonik kolei na Kasprowy Wierch w świetle zachodzącego słońca", "The Kasprowy Wierch cable car in the evening sun"),
+    ("A_gubalowka_w1", "https://www.pkl.pl/data/pages/34/1600x0px_20181216_a9dsc06983v1.jpg", "https://www.pkl.pl/gubalowka/gubalowka.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagon kolei na Gubałówkę wśród zaśnieżonych świerków, w tle Tatry", "The Gubałówka funicular among snowy spruces, the Tatras behind"),
+    ("A_gubalowka_w2", "https://www.pkl.pl/data/pages/34/1600x0px_20181213_a6500ab606881v1.jpg", "https://www.pkl.pl/gubalowka/gubalowka.html", "Polskie Koleje Linowe", "pending", .5,
+     "Wagon kolei na Gubałówkę na trasie przez zimowy las", "The Gubałówka funicular on its way through the winter forest"),
+    ("A_morskie-oko_s1", "https://schroniskomorskieoko.pl/sites/default/files/static/20121008_ab4_2155.jpg", "https://schroniskomorskieoko.pl", "Schronisko PTTK nad Morskim Okiem", "pending", .5,
+     "Schronisko nad brzegiem Morskiego Oka, za nim ośnieżone zbocza", "The mountain hut on the shore of Morskie Oko, snowy slopes behind"),
+    ("A_morskie-oko_s2", "https://schroniskomorskieoko.pl/sites/default/themes/dozp/images/tlo10.jpg", "https://schroniskomorskieoko.pl", "Schronisko PTTK nad Morskim Okiem", "pending", .5,
+     "Morskie Oko o zachodzie, szczyty odbite w wodzie", "Morskie Oko at sunset, the peaks mirrored in the water"),
+    ("A_balony_1", "https://lotybalonem.com/lib/yxjhjj/13-min-mcbmqtiu.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .3,
+     "Balon nad Podhalem, na horyzoncie grań Tatr", "A balloon above Podhale, the Tatra ridge on the horizon"),
+    ("A_balony_2", "https://lotybalonem.com/lib/yxjhjj/1-mp2c7p4n.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .5,
+     "Napełnianie balonu o świcie, nad mgłą ośnieżone Tatry", "Inflating the balloon at dawn, the snowy Tatras above the mist"),
+    ("A_balony_3", "https://lotybalonem.com/lib/yxjhjj/4-min-mcbmq9k3.jpg", "https://lotybalonem.com/zakopane", "Loty balonem Zakopane i Podhale", "pending", .5,
+     "Tatry Zachodnie i Giewont widziane z balonu", "The Western Tatras and Giewont seen from the balloon"),
+    ("A_szlaki-rowery_1", "https://velodunajec.pl/wp-content/uploads/2021/04/1-43-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
+     "Trasa rowerowa Velo Dunajec wśród łąk, w dali Jezioro Czorsztyńskie", "The Velo Dunajec cycle route through meadows, Lake Czorsztyn in the distance"),
+    ("A_szlaki-rowery_3", "https://velodunajec.pl/wp-content/uploads/2021/04/Group-5-DJI_0609-HDR5_DJI_0649-HDR5-9-images-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
+     "Droga przez łąki Podhala w porannej mgle", "A track across the Podhale meadows in the morning mist"),
+    ("A_murzasichle_1", "https://www.modrzewiowybor.pl/files/images//1/15/156/1560/2_1.jpg", "https://www.modrzewiowybor.pl", "Park Linowy Murzasichle", "pending", .5,
+     "Trasa parku linowego w Murzasichlu między świerkami", "The rope park course in Murzasichle among the spruces"),
+    ("A_murzasichle_2", "https://www.modrzewiowybor.pl/files/images//f/f3/f3c/f3cc/1_1.jpg", "https://www.modrzewiowybor.pl", "Park Linowy Murzasichle", "pending", .5,
+     "Kładki i platformy parku linowego wysoko na drzewach", "Rope park walkways and platforms high in the trees"),
+    ("A_murzasichle_3", "https://www.modrzewiowybor.pl/files/images//7/79/799/799b/3_1.jpg", "https://www.modrzewiowybor.pl", "Park Linowy Murzasichle", "pending", .5,
+     "Park linowy w Murzasichlu z góry, trasy i daszki wśród drzew", "The Murzasichle rope park from above, courses and roofs among the trees"),
+]
+
+
+def kadr(im, ar, oy):
+    w, h = im.size
+    if w / h > ar:
+        nw = round(h * ar); x = (w - nw) // 2
+        return im.crop((x, 0, x + nw, h))
+    nh = round(w / ar); y = round((h - nh) * oy)
+    return im.crop((0, y, w, y + nh))
+
+
+def main():
+    CACHE.mkdir(exist_ok=True)
+    m = json.loads((OUT / "manifest.json").read_text())
+    stare = [i for i in m["items"] if not i["file"].startswith("A_")]
+    nowe = []
+    wpisy = [(kod, url, strona, autor, lic, "free", oy, alt_pl, alt_en) for kod, url, strona, autor, lic, oy, alt_pl, alt_en in ZDJECIA]
+    wpisy += [(kod, url, strona, obiekt, None, prawa, oy, alt_pl, alt_en) for kod, url, strona, obiekt, prawa, oy, alt_pl, alt_en in OBIEKTY]
+    for kod, url, strona, autor, lic, prawa, oy, alt_pl, alt_en in wpisy:
+        src = CACHE / f"{kod}.jpg"
+        if not src.exists():
+            src.write_bytes(urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60).read())
+            time.sleep(3)
+        im = kadr(ImageOps.exif_transpose(Image.open(src)).convert("RGB"), 3 / 2, oy)
+        if im.width > 1800: im = im.resize((1800, 1200), Image.LANCZOS)
+        name = f"{kod}.webp"
+        im.save(OUT / name, "WEBP", quality=80, method=6)
+        wpis = {"file": name, "shot": kod, "width": im.width, "height": im.height, "placeholder": False, "rights": prawa,
+                "alt": {"pl": alt_pl, "en": alt_en}, "source": strona, "author": autor}
+        if lic:
+            serwis = "Flickr" if "flickr.com" in strona else "Wikimedia Commons"
+            wpis |= {"license": lic, "license_url": LIC[lic],
+                     "credit": {"pl": f"Fot. {autor} · {lic} · {serwis} {strona}", "en": f"Photo: {autor} · {lic} · {serwis} {strona}"}}
+        else:
+            # zdjęcie obiektu: podpis z nazwą obiektu i linkiem do jego strony
+            domena = strona.split("/")[2].removeprefix("www.")
+            wpis |= {"credit": {"pl": f"Fot. {autor} · {domena} {strona}", "en": f"Photo: {autor} · {domena} {strona}"}}
+        nowe.append(wpis)
+        print(name, im.size)
+    m["items"] = stare + nowe
+    (OUT / "manifest.json").write_text(json.dumps(m, ensure_ascii=False, indent=1))
+
+
+if __name__ == "__main__":
+    main()

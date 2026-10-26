@@ -19,12 +19,12 @@
         }
       ],
       "headline": {
-        "pl": "Dziesięć szczytów. Jeden widok.",
-        "en": "Ten peaks. One view."
+        "pl": "Widok, który zostaje w sercu",
+        "en": "A view that stays in your heart"
       },
       "sub": {
-        "pl": "Domy w Gliczarowie Górnym, każdy nazwany od szczytu, który widać z jego okien. Własna sauna, gorąca bania i cała panorama Tatr.",
-        "en": "Houses in Gliczarów Górny, each named after the peak you see from its windows. Your own sauna, a hot tub and the whole Tatra panorama."
+        "pl": "Domki w Gliczarowie Górnym, każdy nazwany od szczytu, który widać z jego okien. Własna sauna, gorąca bania i cała panorama Tatr.",
+        "en": "Cottages in Gliczarów Górny, each named after the peak you see from its windows. Your own sauna, a hot tub and the whole Tatra panorama."
       },
       "media": "hero-panorama-swit"
     },
@@ -40,22 +40,22 @@
         "en": "Here, the Tatras are not a backdrop"
       },
       "body": {
-        "pl": "Gliczarów Górny leży na wysokości 942 m, tak wysoko, że góry widać stąd przez cały dzień. Są pierwszą rzeczą, którą zobaczycie rano z łóżka, i ostatnią, która gaśnie wieczorem nad banią. Zbudowaliśmy tu domy dla rodzin i przyjaciół, którzy chcą być razem, a jednocześnie mieć własny kąt.",
-        "en": "Gliczarów Górny sits at 942 metres, so high that the mountains stay in view all day. They are the first thing you see from bed in the morning and the last thing to fade at night, above the hot tub. We built these houses for families and friends who want to be together and still have a corner of their own."
+        "pl": "Matygowa Osada leży w Gliczarowie Górnym, na wysokości 942 m, tak wysoko, że Tatry widać z niej w pełnej okazałości, od wyniosłych Tatr Bielskich na wschodzie po skraj Tatr Zachodnich. Są pierwszą rzeczą, którą zobaczycie rano z łóżka, i ostatnią, która gaśnie wieczorem nad banią. Czasem tuż za płotem pasą się owce, a ich dzwonki słychać na całej łące. Zbudowaliśmy tu domy dla rodzin i przyjaciół, którzy chcą być razem, a jednocześnie mieć własny kąt.",
+        "en": "Matygowa Osada sits in Gliczarów Górny at 942 metres, so high that you can see the Tatras in all their glory, from the towering Belianske Tatras in the east to the edge of the Western Tatras. They are the first thing you see from bed in the morning and the last thing to fade at night, above the hot tub. Sometimes sheep graze just beyond the fence, and you can hear their bells across the whole meadow. We built these houses for families and friends who want to be together and still have a corner of their own."
       },
       "stats": [
         {
           "value": "942 m",
           "label": {
-            "pl": "n.p.m.",
-            "en": "above sea level"
+            "pl": "n.p.m., tu, w osadzie",
+            "en": "above sea level, right here"
           }
         },
         {
           "value": "6",
           "label": {
-            "pl": "domów",
-            "en": "houses"
+            "pl": "domków",
+            "en": "cottages"
           }
         },
         {
@@ -112,6 +112,65 @@
       }
     },
     {
+      "type": "house_inside",
+      "id": "dom",
+      "heading": {
+        "pl": "Dom od środka",
+        "en": "Inside the house"
+      },
+      "body": {
+        "pl": "Każdy dom ma 120 m² na dwóch poziomach, w jednym z dwóch układów. Hawrań, Gerlach i Świnica mają salon na parterze. Wołoszyn, Łomnica i Lodowy mają salon na piętrze i dodatkową łazienkę przy sypialni na górze.",
+        "en": "Every house has 120 m² over two floors, in one of two layouts. Hawrań, Gerlach and Świnica have the living room on the ground floor. Wołoszyn, Łomnica and Lodowy have the living room upstairs and an extra en-suite bathroom in the upstairs bedroom."
+      },
+      "rooms": [
+        {
+          "key": "living",
+          "title": {
+            "pl": "Salon z kominkiem",
+            "en": "Living room with fireplace"
+          },
+          "body": {
+            "pl": "Kanapa, fotele, drewno ułożone przy kominku. Wieczorem to tu wszyscy się schodzą.",
+            "en": "A sofa, armchairs, logs stacked by the fire. In the evening this is where everyone ends up."
+          }
+        },
+        {
+          "key": "kitchen",
+          "title": {
+            "pl": "Kuchnia i stół",
+            "en": "Kitchen and table"
+          },
+          "body": {
+            "pl": "Pełna kuchnia z płytą indukcyjną, piekarnikiem, zmywarką i ekspresem. Stół, przy którym zmieści się cała rodzina.",
+            "en": "A full kitchen with an induction hob, oven, dishwasher and coffee machine. A table big enough for the whole family."
+          }
+        },
+        {
+          "key": "bedrooms",
+          "title": {
+            "pl": "Cztery sypialnie",
+            "en": "Four bedrooms"
+          },
+          "body": {
+            "pl": "Trzy z łóżkiem podwójnym, jedna z dwoma pojedynczymi, które można zsunąć. Pościel i ręczniki czekają.",
+            "en": "Three with a double bed, one with two singles that push together. Bed linen and towels are ready."
+          }
+        },
+        {
+          "key": "bath",
+          "title": {
+            "pl": "Łazienki i sauna",
+            "en": "Bathrooms and sauna"
+          },
+          "body": {
+            "pl": "Dwie łazienki i osobne WC, a w domach z salonem na piętrze także trzecia, prywatna łazienka przy sypialni. Do tego prywatna sauna. Na tarasie bania z gorącą wodą.",
+            "en": "Two bathrooms and a separate WC, plus a third, en-suite bathroom in the houses with an upstairs living room. And a private sauna. On the terrace, an outdoor hot tub."
+          }
+        }
+      ],
+      "amenities_source": "icecoldres"
+    },
+    {
       "type": "day_story",
       "id": "dzien",
       "heading": {
@@ -126,8 +185,8 @@
             "en": "Dawn"
           },
           "summer": {
-            "pl": "Pierwsze światło trafia w granie, zanim dotknie doliny. Kawa na tarasie, rosa na łące, cisza.",
-            "en": "The first light touches the ridges before it reaches the valley. Coffee on the terrace, dew on the meadow, silence."
+            "pl": "Pierwsze światło trafia w granie, zanim dotknie doliny. Kawa na tarasie, rosa na łące, a w ciszy tylko dzwonki owiec gdzieś za płotem.",
+            "en": "The first light touches the ridges before it reaches the valley. Coffee on the terrace, dew on the meadow, and in the quiet only sheep bells somewhere beyond the fence."
           },
           "winter": {
             "pl": "Śnieg za oknem jest różowy przez dziesięć minut. Warto nastawić budzik.",
@@ -190,65 +249,6 @@
           "en": "By night: light in the windows, steam over the hot tub, stars."
         }
       }
-    },
-    {
-      "type": "house_inside",
-      "id": "dom",
-      "heading": {
-        "pl": "Dom od środka",
-        "en": "Inside the house"
-      },
-      "body": {
-        "pl": "Każdy dom ma 120 m² na dwóch poziomach i jest urządzony tak samo. Różni się tylko widokiem.",
-        "en": "Every house has 120 m² over two floors and is furnished the same way. Only the view is different."
-      },
-      "rooms": [
-        {
-          "key": "living",
-          "title": {
-            "pl": "Salon z kominkiem",
-            "en": "Living room with fireplace"
-          },
-          "body": {
-            "pl": "Kanapa, fotele, drewno ułożone przy kominku. Wieczorem to tu wszyscy się schodzą.",
-            "en": "A sofa, armchairs, logs stacked by the fire. In the evening this is where everyone ends up."
-          }
-        },
-        {
-          "key": "kitchen",
-          "title": {
-            "pl": "Kuchnia i stół",
-            "en": "Kitchen and table"
-          },
-          "body": {
-            "pl": "Pełna kuchnia z płytą indukcyjną, piekarnikiem, zmywarką i ekspresem. Stół, przy którym zmieści się cała rodzina.",
-            "en": "A full kitchen with an induction hob, oven, dishwasher and coffee machine. A table big enough for the whole family."
-          }
-        },
-        {
-          "key": "bedrooms",
-          "title": {
-            "pl": "Cztery sypialnie",
-            "en": "Four bedrooms"
-          },
-          "body": {
-            "pl": "Trzy z łóżkiem podwójnym, jedna z dwoma pojedynczymi, które można zsunąć. Pościel i ręczniki czekają.",
-            "en": "Three with a double bed, one with two singles that push together. Bed linen and towels are ready."
-          }
-        },
-        {
-          "key": "bath",
-          "title": {
-            "pl": "Łazienki i sauna",
-            "en": "Bathrooms and sauna"
-          },
-          "body": {
-            "pl": "Dwie łazienki, osobne WC i prywatna sauna. Na tarasie bania z gorącą wodą.",
-            "en": "Two bathrooms, a separate WC and a private sauna. On the terrace, an outdoor hot tub."
-          }
-        }
-      ],
-      "amenities_source": "icecoldres"
     },
     {
       "type": "rituals_teaser",
@@ -338,7 +338,7 @@
           "value": "320 km"
         }
       ],
-      "featured_attractions": 6,
+      "featured_attractions": 11,
       "cta": {
         "pl": "Cała okolica",
         "en": "Explore the area"
@@ -369,10 +369,6 @@
         "pl": "Wracają do nas",
         "en": "Guests who come back"
       },
-      "rating_line": {
-        "pl": "Google 5,0",
-        "en": "Google 5.0"
-      },
       "source": "cms_testimonials"
     },
     {
@@ -395,7 +391,7 @@
         "en": "Choose your peak"
       },
       "body": {
-        "pl": "Sprawdźcie wolne terminy i ceny wszystkich domów w jednym kalendarzu. Wolicie porozmawiać? Zadzwońcie, chętnie doradzimy.",
+        "pl": "Sprawdźcie wolne terminy i ceny wszystkich domków w jednym kalendarzu. Wolicie porozmawiać? Zadzwońcie, chętnie doradzimy.",
         "en": "See free dates and prices for every house in one calendar. Prefer to talk? Give us a call, we are happy to help."
       }
     }

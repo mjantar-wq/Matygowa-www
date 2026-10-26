@@ -74,7 +74,15 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    meta: { titleSuffix: ' · Matygowa Osada' },
+    meta: {
+      titleSuffix: ' · Matygowa Osada',
+      // sygnet osady zamiast ikon Payloada na karcie panelu (te same pliki co na stronie, src/app)
+      icons: [
+        { rel: 'icon', type: 'image/svg+xml', url: '/icon.svg' },
+        { rel: 'icon', type: 'image/x-icon', sizes: '48x48', url: '/favicon.ico' },
+        { rel: 'apple-touch-icon', type: 'image/png', sizes: '180x180', url: '/apple-icon.png' },
+      ],
+    },
   },
   // panel po polsku (koncepcja F2), angielski do wyboru na koncie
   i18n: { supportedLanguages: { pl, en }, fallbackLanguage: 'pl' },

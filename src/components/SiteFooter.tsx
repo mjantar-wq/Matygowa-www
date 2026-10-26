@@ -8,6 +8,7 @@ import { ConsentSettingsLink } from './ConsentBanner'
 export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Dictionary; settings: Setting | null }) {
   return (
     <footer className="mo-footer">
+      <div className="mo-footer__wzor" aria-hidden="true" />
       <div className="mo-container mo-footer__grid">
         <div>
           <p className="mo-label">{t.footer.contact}</p>
@@ -18,10 +19,10 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
         <nav aria-label={t.menu}>
           <ul>
             {(['guide', 'contact', 'news'] as const).map((key) => (
-              <li key={key}><Link href={href(locale, key)}>{t.nav[key]}</Link></li>
+              <li key={key}><Link href={href(locale, key)} prefetch={false}>{t.nav[key]}</Link></li>
             ))}
             {(['regulamin', 'prywatnosc', 'cookies'] as const).map((slug, i) => (
-              <li key={slug}><Link href={href(locale, 'documents', slug)}>{[t.footer.terms, t.footer.privacy, t.footer.cookies][i]}</Link></li>
+              <li key={slug}><Link href={href(locale, 'documents', slug)} prefetch={false}>{[t.footer.terms, t.footer.privacy, t.footer.cookies][i]}</Link></li>
             ))}
             <li><ConsentSettingsLink label={t.footer.cookieSettings} /></li>
           </ul>

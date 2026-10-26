@@ -2,14 +2,21 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
+    # sama dokumentacja nie zmienia wdrożonej wersji
+    paths-ignore: ['docs/**', '*.md']
   workflow_dispatch:
     inputs:
       import_content:
         description: 'Wgraj treści robocze i obrazy CGI z content/ do bazy na Cloudflare (nadpisuje te same wpisy w panelu)'
         type: boolean
         default: false
+      import_only:
+        description: 'Tylko wybrane części, np. attractions albo units,offers (puste: wszystko; pages = strony, opinie, dokumenty, ustawienia)'
+        type: string
+        default: ''
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -17,6 +24,7 @@ concurrency:
 
 permissions:
   contents: read
+  pull-requests: read
 
 env:
   PAYLOAD_SECRET: ci-only-secret
@@ -25,27 +33,66 @@ env:
 jobs:
   check:
     name: Typy, lint, testy, budowanie
+    # testy biegną na PR (na scaleniu z main) i przy ręcznym uruchomieniu; po scaleniu do main
+    # ich nie powtarzamy, bo wdrożenie i tak buduje stronę; szkice PR czekają na gotowość
+    # sam import treści nie buduje ani nie wdraża strony: drugi build tego samego commita miał inne nazwy
+    # plików CSS/JS i wdrożony w trakcie działania strony zostawiał ją z brakującymi plikami (ChunkLoadError)
+    if: github.event_name != 'push' && !github.event.pull_request.draft && !inputs.import_content
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v5
+      # PR zmieniający tylko docs/ albo pliki .md w katalogu głównym nie potrzebuje testów
+      - name: Zakres zmian
+        id: zakres
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          files=$(gh api --paginate "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" --jq '.[].filename')
+          if echo "$files" | grep -qvE '^docs/|^[^/]+\.md$'; then
+            echo "kod=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "kod=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Zmiany tylko w dokumentacji, pomijam testy i budowanie."
+          fi
+      - if: steps.zakres.outputs.kod != 'false'
+        uses: actions/checkout@v5
+      - if: steps.zakres.outputs.kod != 'false'
+        uses: pnpm/action-setup@v4
+      - if: steps.zakres.outputs.kod != 'false'
+        uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm typecheck
-      - run: pnpm lint
-      - run: pnpm test
+      - if: steps.zakres.outputs.kod != 'false'
+        run: pnpm install --frozen-lockfile
+      # pamięć podręczna kompilacji Next skraca budowanie przy kolejnych PR
+      - if: steps.zakres.outputs.kod != 'false'
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: next-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+      - if: steps.zakres.outputs.kod != 'false'
+        run: pnpm typecheck
+      - if: steps.zakres.outputs.kod != 'false'
+        run: pnpm lint
+      - if: steps.zakres.outputs.kod != 'false'
+        run: pnpm test
       # lokalna kopia D1 (.wrangler) z migracjami i treściami roboczymi z content/
       - name: Baza testowa
+        if: steps.zakres.outputs.kod != 'false'
         run: pnpm payload migrate && pnpm seed
-      - run: pnpm build
+      - if: steps.zakres.outputs.kod != 'false'
+        run: pnpm build
+      # Google Chrome jest już na obrazie ubuntu-latest, więc nie pobieramy Chromium Playwrighta
       - name: Testy przeglądarkowe (Playwright)
-        run: |
-          pnpm exec playwright install --with-deps chromium
-          pnpm test:e2e
+        if: steps.zakres.outputs.kod != 'false'
+        env:
+          PW_CHROMIUM_PATH: /usr/bin/google-chrome
+        run: pnpm test:e2e
       - name: Paczka Workera (OpenNext) i jej rozmiar
+        if: steps.zakres.outputs.kod != 'false'
         run: |
           pnpm build:worker
           pnpm exec wrangler deploy --dry-run --outdir dist | grep -E "Total Upload"
@@ -53,8 +100,10 @@ jobs:
   deploy:
     name: Wdrożenie na matygowa.audiowizard.pl
     needs: check
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    # przy pushu do main check jest pominięty, przy ręcznym uruchomieniu musi przejść
+    if: ${{ !failure() && !cancelled() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.import_content }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     concurrency:
       group: deploy-test
       cancel-in-progress: false
@@ -82,6 +131,9 @@ jobs:
           cache: pnpm
       - if: steps.secrets.outputs.ready == 'true'
         run: pnpm install --frozen-lockfile
+      # szybka kontrola typów zamiast pełnych testów: łapie konflikt dwóch PR scalonych jeden po drugim
+      - if: steps.secrets.outputs.ready == 'true'
+        run: pnpm typecheck
       - name: Zasoby Cloudflare (R2) i sekret Payload
         if: steps.secrets.outputs.ready == 'true'
         env:
@@ -117,9 +169,9 @@ jobs:
 
   import:
     name: Import treści do bazy na Cloudflare
-    needs: deploy
-    if: github.event_name == 'workflow_dispatch' && inputs.import_content
+    if: github.event_name == 'workflow_dispatch' && inputs.import_content && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -134,3 +186,5 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm seed
+        env:
+          IMPORT_ONLY: ${{ inputs.import_only }}

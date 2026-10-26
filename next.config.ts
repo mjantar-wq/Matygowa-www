@@ -11,6 +11,9 @@ const noSlash = (p: string) => (p.length > 1 ? p.replace(/\/$/, '') : p)
 const indexable = process.env.SITE_INDEXABLE === 'true'
 
 const nextConfig: NextConfig = {
+  // przy budowaniu każdy proces Next uruchamia lokalny workerd z tą samą bazą .wrangler/state;
+  // kilka naraz kończyło się „database is locked: SQLITE_BUSY” (wdrożenie po #29), więc jeden proces
+  experimental: { cpus: 1 },
   images: {
     localPatterns: [
       {
@@ -51,11 +54,24 @@ const nextConfig: NextConfig = {
     ]
   },
 
-  webpack: (webpackConfig) => {
+  webpack: (webpackConfig, { isServer, dev }) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
+    }
+
+    // Pliki JS przeglądarki bez nawiasów z nazw katalogów tras ((frontend), [locale]): część proxy i antywirusów
+    // przepisuje je na %28…%29, a Workers Static Assets odsyła wtedy 307 w pętli i strona nie hydratuje się.
+    if (!isServer && !dev) {
+      const output = webpackConfig.output
+      const safe = (template: unknown) => (pathData: { chunk?: { name?: string | null } }, assetInfo: unknown) => {
+        const resolved = typeof template === 'function' ? template(pathData, assetInfo) : template
+        const name = pathData.chunk?.name
+        return name && /[[\]()]/.test(name) ? String(resolved).replace('[name]', name.replace(/[[\]()]/g, '_')) : resolved
+      }
+      output.filename = safe(output.filename)
+      output.chunkFilename = safe(output.chunkFilename)
     }
 
     return webpackConfig

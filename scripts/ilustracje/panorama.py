@@ -12,6 +12,7 @@ from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 from dem import elev, SITE  # noqa: E402  (wspólny model terenu i punkt osady)
+from tokeny import z_zapasem  # noqa: E402
 EYE = 6.0                     # m nad terenem (taras, piętro)
 PEAKS = [  # slug, nazwa, wysokość (jak w treściach strony), współrzędne wierzchołka (OpenStreetMap)
     ("kominiarski-wierch", "Kominiarski Wierch", 1829, 49.24081, 19.83554),
@@ -52,9 +53,9 @@ def snap(lat, lon, r=150):
             if e > best[0]: best = (e, la, lo)
     return best
 
-AZ0, AZ1, STEP = 240.0, 124.0, 0.05  # od zachodu (lewo) do wschodu (prawo), widok na południe
+AZ0, AZ1, STEP = 124.0, 240.0, 0.05  # widok na południe: wschód (Hawrań) po lewej, zachód (Kominiarski) po prawej, jak w PeakFinderze
 BANDS = [(80, 2500), (2500, 9000), (9000, 45000)]
-azs = np.arange(AZ0, AZ1 - 1e-9, -STEP)
+azs = np.arange(AZ0, AZ1 + 1e-9, STEP)
 sky = np.full((len(BANDS), len(azs)), -10.0)
 for k, az in enumerate(azs):
     for b, (d0, d1) in enumerate(BANDS):
@@ -75,17 +76,18 @@ for slug, name, h, lat, lon in PEAKS:
     e, la, lo = snap(lat, lon)
     az, d = bearing_dist(*SITE, la, lo)
     a = angle(e, d)
-    k = int(round((AZ0 - az) / STEP))
+    k = int(round((az - AZ0) / STEP))
     near = max(sky[0, k], sky[1, k])
     peaks.append(dict(slug=slug, name=name, height=h, az=round(az, 2), dist_km=round(d / 1000, 1), dem=round(float(e)), angle=a, visible=bool(a > near - 0.02), k=k))
 
-W, H = 3200, 900
-EXAG = 3.2                      # przewyższenie pionowe ilustracji
-xs = (AZ0 - azs) / (AZ0 - AZ1) * W
-amin = -1.2
-def y(a): return H - (a - amin) * (W / (AZ0 - AZ1)) * EXAG
+W = 3200
+EXAG = 1.0                      # bez przewyższenia: kąty jak w PeakFinderze i w oku (Michał: grań ma być łagodna)
+xs = (azs - AZ0) / (AZ1 - AZ0) * W
+amin = -0.8
+H = int(math.ceil((sky[2].max() - amin) * (W / (AZ1 - AZ0)) * EXAG + 230))  # nad granią miejsce na etykiety
+def y(a): return H - (a - amin) * (W / (AZ1 - AZ0)) * EXAG
 def path(row, smooth=1):
-    pts = " ".join(f"{x:.1f},{y(a):.1f}" for x, a in zip(xs[::smooth], row[::smooth]))
+    pts = " ".join(f"{x:.1f},{y(a):.1f}" for x, a in zip(xs[::smooth], np.maximum(row, amin)[::smooth]))
     return f"M0,{H} L{pts} L{W},{H} Z"
 
 L = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-labelledby="g2-title" class="mo-ilustracja mo-panorama-svg">',
@@ -126,7 +128,7 @@ for g in sorted(groups, key=lambda g: -max(p["height"] for p in g)):
         cx += 2 * half + 32
 L.append("</g></svg>")
 out = ROOT / "public/ilustracje/G2_panorama.svg"; out.parent.mkdir(parents=True, exist_ok=True)
-out.write_text("\n".join(L))
+out.write_text(z_zapasem("\n".join(L)))
 (ROOT / "public/ilustracje/G2_panorama.json").write_text(json.dumps({"site": SITE, "eyeM": round(H0), "azimuthFrom": AZ0, "azimuthTo": AZ1, "verticalExaggeration": EXAG, "peaks": [{k: v for k, v in p.items() if k not in ("k", "angle")} for p in peaks]}, ensure_ascii=False, indent=1))
 for p in peaks: print(p["slug"], p["az"], p["dist_km"], p["dem"], round(p["angle"], 2), "OK" if p["visible"] else "UKRYTY")
 print("H0", H0)
@@ -139,7 +141,7 @@ for p in peaks:
     sx = lambda k: (k - (p["k"] - OKNO)) / (2 * OKNO) * SW
     sy = lambda v: SH - 8 - (v - lo) / max(hi - lo, 1e-6) * (SH - 24)
     d = f"M{sx(k0):.1f},{SH} " + " ".join(f"L{sx(k0 + i):.1f},{sy(v):.1f}" for i, v in enumerate(a)) + f" L{sx(k1 - 1):.1f},{SH} Z"
-    (ROOT / f"public/ilustracje/G5_sylwetka_{p['slug']}.svg").write_text(
+    (ROOT / f"public/ilustracje/G5_sylwetka_{p['slug']}.svg").write_text(z_zapasem(
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {SW} {SH}" role="img" aria-label="Sylwetka: {p["name"]} widziany z osady">'
         '<style>.g{fill:var(--color-tlo-2);stroke:var(--color-atrament);stroke-width:1.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}.k{fill:var(--color-bursztyn)}</style>'
-        f'<path class="g" d="{d}"/><circle class="k" cx="{sx(p["k"]):.1f}" cy="{sy(sky[2, p["k"]]):.1f}" r="3.5"/></svg>')
+        f'<path class="g" d="{d}"/><circle class="k" cx="{sx(p["k"]):.1f}" cy="{sy(sky[2, p["k"]]):.1f}" r="3.5"/></svg>'))

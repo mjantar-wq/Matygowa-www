@@ -1,0 +1,376 @@
+/* Efekty i interakcje (etap 2: prototyp). Ruch tylko przy prefers-reduced-motion: no-preference;
+   bez niego wszystko jest widoczne i działa, tylko się nie rusza. */
+
+/* Przełączniki nastroju w nagłówku */
+.mo-ambience { display: inline-flex; flex-wrap: wrap; gap: var(--space-2); }
+.mo-ambience .mo-toggle { background: var(--color-tlo); }
+.mo-ambience .mo-toggle button { min-width: 56px; padding: 0 var(--space-3); }
+.mo-nav .mo-ambience { margin-block-start: var(--space-5); }
+/* Na tablecie i desktopie przełączniki pływają w prawym górnym rogu pod nagłówkiem (jak w Domku w Brzozach), na telefonie są w menu */
+.mo-header__inner > .mo-ambience { display: none; }
+@media (min-width: 768px) {
+  .mo-header__inner > .mo-ambience { display: inline-flex; position: fixed; inset-block-start: calc(var(--naglowek-wys) + var(--space-4)); inset-inline-end: var(--space-5); z-index: 20; box-shadow: var(--cien-wyskakujace, 0 8px 24px rgba(0, 0, 0, 0.18)); }
+  .mo-nav .mo-ambience { display: none; }
+}
+
+/* Zmiana nastroju przez View Transitions: przenikanie w tempie mgły */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--ruch-mgla); animation-timing-function: var(--ease-przejscie); }
+
+/* Treści tylko dla jednej pory roku */
+:root[data-sezon="zima"] [data-tylko="lato"], :root[data-sezon="lato"] [data-tylko="zima"] { display: none; }
+:root[data-pora="dzien"] [data-tylko="noc"], :root[data-pora="noc"] [data-tylko="dzien"] { display: none; }
+:root[data-sezon="lato"] .mo-season[data-sezon="lato"], :root[data-sezon="zima"] .mo-season[data-sezon="zima"] { order: -1; }
+
+/* Hero: kadry nastrojów nałożone na siebie, widać ten, który pasuje do <html data-pora data-sezon> */
+.mo-hero__slide { position: absolute; inset: 0; display: none; }
+.mo-hero__slide > * { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; }
+/* Letnia noc bez własnego zdjęcia: dzienny letni kadr przyciemniony i ochłodzony, z granatowym niebem u góry. */
+.mo-hero__slide.is-nocny > img { filter: brightness(0.78) saturate(0.5) contrast(1.08); }
+.mo-hero__slide.is-nocny::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(28 48 112), rgb(52 74 128) 55%, rgb(24 38 84)); mix-blend-mode: multiply; pointer-events: none; }
+.mo-hero__slide video { opacity: 0; transition: opacity var(--ruch-wolny) var(--ease-mgla); }
+.mo-hero__slide[data-playing] video { opacity: 1; }
+:root[data-pora="dzien"][data-sezon="zima"] .mo-hero__slide.is-dzien-zima,
+:root[data-pora="dzien"][data-sezon="lato"] .mo-hero__slide.is-dzien-lato,
+:root[data-pora="noc"][data-sezon="zima"] .mo-hero__slide.is-noc-zima,
+:root[data-pora="noc"][data-sezon="lato"] .mo-hero__slide.is-noc-lato { display: block; }
+.mo-hero__title > [aria-hidden] { display: inline-block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .mo-hero__title > [aria-hidden] { animation: mo-wejscie var(--ruch-wolny) var(--ease-mgla) both; animation-delay: calc(200ms + var(--i, 0) * 90ms); }
+  .mo-hero__lede { animation: mo-mgla var(--ruch-mgla) var(--ease-mgla) 700ms both; }
+  .mo-hero__booking { animation: mo-mgla var(--ruch-mgla) var(--ease-mgla) 1000ms both; }
+  /* Wolny ruch kamery po kadrze: po wejściu kadr dryfuje tam i z powrotem (alternate, więc bez szwu pętli) */
+  .mo-hero__slide > img { animation: mo-zblizenie 14s var(--ease-mgla) both, mo-dryf 48s ease-in-out 14s infinite alternate; will-change: transform; }
+  :root[data-ruch="stop"] .mo-hero__slide > img, .mo-hero__slide[data-paused] > img { animation-play-state: paused; }
+}
+@keyframes mo-wejscie { from { opacity: 0; transform: translateY(0.4em); filter: blur(6px); } }
+@keyframes mo-mgla { from { opacity: 0; transform: translateY(12px); } }
+@keyframes mo-zblizenie { from { transform: scale(1.06); } }
+@keyframes mo-dryf { to { transform: scale(1.07) translate(-1.5%, -1%); } }
+
+/* Panorama: przewijana w bok poniżej 1024 px, znaczniki z dymkami */
+.mo-panorama { aspect-ratio: auto; overflow: visible; background: none; }
+.mo-panorama__scroller { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.mo-panorama__scroller:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: 2px; }
+.mo-panorama__stage { position: relative; aspect-ratio: 21 / 9; min-inline-size: 1100px; overflow: hidden; background: var(--color-tlo-2); }
+@media (min-width: 1024px) { .mo-panorama__stage { min-inline-size: 0; } }
+.mo-panorama__layer { position: absolute; inset: -6% 0; }
+.mo-panorama__layer > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
+:root[data-pora="noc"] .mo-panorama__layer img { filter: brightness(0.42) saturate(0.55) hue-rotate(195deg); }
+.mo-panorama__hint { margin-block-start: var(--space-3); font-size: var(--text-body-s); }
+@media (min-width: 1024px) { .mo-panorama__hint { display: none; } }
+button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2); cursor: pointer; scroll-snap-align: center; color: var(--color-na-zdjeciu); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55); }
+.mo-panorama__marker .mo-muted { color: inherit; opacity: 0.85; }
+.mo-panorama__marker::after { transition: transform var(--ruch-szybki) var(--ease-mgla), box-shadow var(--ruch-szybki) var(--ease-mgla); }
+.mo-panorama__marker:is(:hover, :focus-visible)::after { transform: scale(1.4); box-shadow: 0 0 0 6px rgba(196, 122, 42, 0.35); }
+.mo-panorama__marker:focus-visible { outline: 2px solid var(--color-na-zdjeciu); outline-offset: 2px; }
+.mo-panorama__marker[data-wkrotce]::after { background: transparent; box-shadow: 0 0 0 2px var(--color-bursztyn); }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-panorama__marker:not([data-wkrotce])::after { animation: mo-puls 3.2s var(--ease-mgla) infinite; animation-delay: calc(var(--n, 0) * 160ms); }
+  @supports (animation-timeline: view()) {
+    .mo-panorama__layer { animation: mo-paralaksa linear both; animation-timeline: view(); }
+  }
+}
+@keyframes mo-puls { 0%, 70%, 100% { box-shadow: 0 0 0 4px var(--color-tlo); } 35% { box-shadow: 0 0 0 9px rgba(196, 122, 42, 0.25); } }
+@keyframes mo-paralaksa { from { transform: translateY(-4%); } to { transform: translateY(4%); } }
+
+/* Ilustracje SVG (G1, G2) wstawiane do strony: kolory z tokenów, klikalne grupy, lista przycisków pod spodem */
+.mo-svg-scroll { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.mo-svg-scroll:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: 2px; }
+.mo-svg-host svg { display: block; inline-size: 100%; block-size: auto; }
+.mo-svg-host[data-state="idle"], .mo-svg-host[data-state="error"] { background: var(--color-tlo-2); }
+.mo-panorama__svg .mo-svg-host { min-inline-size: 2400px; } /* panorama 1:1 jak w PeakFinderze: ok. 21 px na stopień, przewijana w bok */
+.mo-panorama__svg .mo-svg-host[data-state="idle"] { aspect-ratio: 3200 / 407; }
+.mo-map__stage .mo-svg-host[data-state="idle"] { aspect-ratio: 1400 / 800; }
+.mo-hotspot { cursor: pointer; }
+.mo-hotspot .accent, .mo-hotspot .znacznik { transition: transform var(--ruch-szybki) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
+.mo-hotspot:hover .accent, .mo-hotspot.is-lit .accent, .mo-hotspot:hover .znacznik, .mo-hotspot.is-lit .znacznik { transform: scale(1.6); }
+.mo-hotspot.is-lit :is(.dach, .dach-jasna, .dach-ciemna), .mo-hotspot:hover :is(.dach, .dach-jasna, .dach-ciemna) { fill: var(--color-bursztyn); }
+.mo-hotspot.is-lit .dach-jasna, .mo-hotspot:hover .dach-jasna { fill: color-mix(in srgb, var(--color-bursztyn) 75%, #fff); }
+:root[data-pora="noc"] .mo-hotspot:not(.is-wkrotce) .dach { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
+/* zimą w dzień dachy pod śniegiem: połacie od światła najjaśniejsze */
+:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host :is(.dach, .dach-jasna, .dach-ciemna) { fill: var(--color-powierzchnia); stroke: var(--color-atrament); stroke-width: 1; vector-effect: non-scaling-stroke; }
+:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach-jasna { fill: #fff; }
+:root[data-sezon="zima"][data-pora="dzien"] .mo-svg-host .dach-ciemna { fill: color-mix(in srgb, var(--color-powierzchnia) 85%, var(--color-atrament)); }
+/* latem w nocy dachy ciemne (blacha w mroku), żeby noc letnia wyraźnie różniła się od zimowej z białymi dachami; podświetlenie po najechaniu wygrywa */
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach { fill: #2c3330; }
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach-jasna { fill: #46504b; }
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach-ciemna { fill: #1d2321; }
+:where(:root[data-sezon="lato"][data-pora="noc"]) .mo-svg-host .dach-pol { fill: #39413d; }
+.mo-hotspots { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.mo-hotspots button { min-block-size: 2.75rem; padding: 0 var(--space-4); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: var(--color-powierzchnia); color: var(--color-atrament); font: 500 12px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+@media (max-width: 767px) { .mo-hotspots { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block-end: var(--space-2); } .mo-hotspots button { white-space: nowrap; } .mo-map__stage .mo-svg-host { min-inline-size: 640px; } }
+.mo-hotspots button:is(:hover, :focus-visible) { border-color: var(--color-bursztyn); }
+/* Mapa osady: lista ukryta (wg Michała), pokazuje się tylko przy nawigacji klawiaturą */
+.mo-hotspots.mo-sr { margin: 0; padding: 0; overflow: hidden; }
+.mo-hotspots.mo-sr:focus-within { position: static; inline-size: auto; block-size: auto; clip-path: none; overflow: visible; margin-block-start: var(--space-4); }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-hotspot .accent { animation: mo-puls-svg 3.2s var(--ease-mgla) infinite; }
+  @supports (animation-timeline: view()) {
+    .mo-panorama__svg #warstwa-tatry { animation: mo-warstwa-1 linear both; animation-timeline: view(); }
+    .mo-panorama__svg #warstwa-podhale { animation: mo-warstwa-2 linear both; animation-timeline: view(); }
+    .mo-panorama__svg #warstwa-osada { animation: mo-warstwa-3 linear both; animation-timeline: view(); }
+  }
+}
+@keyframes mo-puls-svg { 0%, 70%, 100% { opacity: 1; } 35% { opacity: 0.55; } }
+@keyframes mo-warstwa-1 { from { transform: translateY(-10px); } to { transform: translateY(10px); } }
+@keyframes mo-warstwa-2 { from { transform: translateY(-24px); } to { transform: translateY(24px); } }
+@keyframes mo-warstwa-3 { from { transform: translateY(-44px); } to { transform: translateY(44px); } }
+
+/* Dymki (popover): na telefonie na środku ekranu, na szerszym przy elemencie (pozycję ustawia SvgHotspots) */
+.mo-popover:not(:popover-open) { display: none; }
+.mo-popover { position: fixed; margin: auto; inset: 0; block-size: fit-content; max-block-size: min(80svh, 32rem); overflow: auto; color: var(--color-atrament); padding-inline-end: var(--space-8); }
+.mo-popover::backdrop { background: var(--color-zaslona); }
+@media (min-width: 768px) { .mo-popover { margin: 0; } .mo-popover::backdrop { background: transparent; } }
+.mo-popover .mo-prose { font-size: var(--text-body-s); }
+.mo-section .mo-popover .mo-h3 { margin: 0; }
+.mo-popover__close { position: absolute; inset-block-start: var(--space-2); inset-inline-end: var(--space-2); z-index: 1; inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: var(--color-tlo); color: var(--color-wyciszony); font-size: 1.5rem; cursor: pointer; }
+.mo-popover__links { list-style: none; padding: 0; margin: var(--space-2) 0 0; display: grid; gap: var(--space-2); }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-popover:popover-open { animation: mo-mgla var(--ruch-sredni) var(--ease-mgla); }
+}
+
+/* Mapa osady */
+.mo-map { margin: var(--space-8) 0 0; }
+
+/* Opowieść o bani i saunie: sticky zdjęcia na szerokim ekranie, kroki przewijane obok */
+.mo-steps { display: grid; gap: var(--space-8); }
+.mo-steps__stage { display: none; }
+.mo-steps__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-9, 4rem); }
+.mo-steps__inline { margin-block-end: var(--space-5); aspect-ratio: 3 / 2; overflow: hidden; }
+.mo-steps__inline > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
+.mo-steps__word { font-family: var(--font-display); font-style: italic; }
+@media (min-width: 1024px) {
+  .mo-steps { grid-template-columns: 7fr 5fr; gap: var(--rynna); align-items: start; }
+  .mo-steps__stage { display: block; position: sticky; inset-block-start: calc(var(--naglowek-wys) + var(--space-6)); aspect-ratio: 3 / 2; overflow: hidden; background: var(--color-tlo-2); }
+  .mo-steps__frame { position: absolute; inset: 0; opacity: 0; transition: opacity var(--ruch-wolny) var(--ease-mgla); }
+  .mo-steps__frame[data-active] { opacity: 1; }
+  .mo-steps__frame > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
+  .mo-steps__inline { display: none; }
+  .mo-steps__step { min-block-size: 70svh; display: grid; align-content: center; opacity: 0.35; transition: opacity var(--ruch-sredni) var(--ease-mgla); }
+  .mo-steps__step[data-active] { opacity: 1; }
+}
+.mo-steps__steam { position: absolute; inset: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-steps__steam::before, .mo-steps__steam::after { content: ""; position: absolute; inset-block-end: -20%; inset-inline-start: 20%; inline-size: 45%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 255, 255, 0.22), transparent); filter: blur(18px); animation: mo-para 9s ease-in-out infinite; }
+  .mo-steps__steam::after { inset-inline-start: 45%; animation-delay: -4.5s; animation-duration: 11s; }
+}
+@keyframes mo-para { 0% { transform: translateY(0) scale(0.8); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(-90%) scale(1.3); opacity: 0; } }
+
+/* Galeria z powiększeniem (lightbox) */
+.mo-gallery { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.mo-gallery__thumb { display: block; inline-size: 100%; aspect-ratio: 3 / 2; padding: 0; border: 0; overflow: hidden; background: var(--color-tlo-2); cursor: zoom-in; }
+.mo-gallery__thumb img { inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform var(--ruch-wolny) var(--ease-mgla); }
+.mo-gallery__thumb:is(:hover, :focus-visible) img { transform: scale(1.04); }
+.mo-gallery__thumb:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: 2px; }
+.mo-lightbox { inline-size: 100vw; block-size: 100dvh; max-inline-size: none; max-block-size: none; margin: 0; padding: 0; border: 0; background: rgba(8, 12, 10, 0.94); color: #f4f6f5; }
+.mo-lightbox:not([open]) { display: none; }
+.mo-lightbox[open] { display: grid; place-items: center; }
+.mo-lightbox::backdrop { background: rgba(8, 12, 10, 0.94); }
+.mo-lightbox__figure { margin: 0; display: grid; justify-items: center; gap: var(--space-3); max-inline-size: 100%; padding: var(--space-8) var(--space-4) var(--space-4); }
+.mo-lightbox__figure img { max-inline-size: min(100%, 1600px); max-block-size: calc(100dvh - 8rem); inline-size: auto; block-size: auto; object-fit: contain; }
+.mo-lightbox__caption { display: flex; gap: var(--space-4); font: 400 14px/1.4 var(--font-ui); color: rgba(244, 246, 245, 0.8); text-align: center; }
+.mo-lightbox__count { font-variant-numeric: tabular-nums; }
+.mo-lightbox__nav, .mo-lightbox__close { position: absolute; display: grid; place-items: center; inline-size: 3rem; block-size: 3rem; border: 1px solid rgba(244, 246, 245, 0.35); border-radius: var(--radius-kropka); background: rgba(8, 12, 10, 0.5); color: inherit; font: 300 2rem/1 var(--font-ui); cursor: pointer; }
+.mo-lightbox__nav:is(:hover, :focus-visible), .mo-lightbox__close:is(:hover, :focus-visible) { border-color: #f4f6f5; }
+.mo-lightbox__nav { inset-block-start: 50%; translate: 0 -50%; }
+.mo-lightbox__nav--prev { inset-inline-start: var(--space-4); }
+.mo-lightbox__nav--next { inset-inline-end: var(--space-4); }
+[dir="rtl"] .mo-lightbox__nav { scale: -1 1; }
+.mo-lightbox__close { inset-block-start: var(--space-4); inset-inline-end: var(--space-4); }
+@media (max-width: 767px) { .mo-lightbox__nav { inset-block-start: auto; inset-block-end: var(--space-4); translate: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-lightbox[open] .mo-lightbox__figure img { animation: mo-mgla var(--ruch-sredni) var(--ease-mgla); }
+}
+
+/* Strona główna: opowieść na stałym tle (koncepcja po M1). Scena jest przypięta pod treścią, rozdziały
+   przewijają się wprost nad nią. */
+.mo-opowiesc { position: relative; isolation: isolate; }
+.mo-stage { position: fixed; inset: 0; z-index: -1; background: var(--color-tlo); pointer-events: none; }
+/* Długie, miękkie przenikanie: nowa scena wyłania się, poprzednia gaśnie wolniej */
+.mo-stage__scene { position: absolute; inset: 0; opacity: 0; transition: opacity 1800ms cubic-bezier(0.45, 0, 0.25, 1); }
+.mo-stage__scene[data-active] { transition-duration: 1400ms; z-index: 1; }
+.mo-stage__scene[data-active] { opacity: 1; }
+.mo-stage__scene[data-kind="media"]::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(6, 10, 8, 0.62), rgba(6, 10, 8, 0.4) 34%, rgba(6, 10, 8, 0.08) 62%, transparent 75%),
+    linear-gradient(180deg, var(--color-zaslona), transparent 30%, transparent 75%, var(--color-zaslona));
+}
+@media (max-width: 767px) { .mo-stage__scene[data-kind="media"]::after { background: linear-gradient(180deg, rgba(6, 10, 8, 0.5), rgba(6, 10, 8, 0.38) 50%, rgba(6, 10, 8, 0.55)); } }
+.mo-stage__svg { position: absolute; inset: 0; display: grid; place-items: center; background: var(--color-tlo); }
+.mo-stage__svg svg { inline-size: 100%; block-size: 100%; }
+.mo-stage__svg[data-pan] { display: block; }
+/* Pas „trawy” pod panoramą (wg Michała grań wyżej w kadrze): kolor najbliższej warstwy rysunku, czyli poziomica 0,35 i 0,7 na tle-2 */
+.mo-stage__svg[data-pan] { --panorama-trawa: 9svh; }
+.mo-stage__svg[data-pan]::after { content: ""; position: absolute; inset: auto 0 0; block-size: calc(var(--panorama-trawa) + 2px); background: color-mix(in srgb, var(--color-poziomica) 80.5%, var(--color-tlo-2)); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8rem); mask-image: linear-gradient(90deg, transparent, #000 8rem); }
+/* Deseń na niebie panoramy, do wysokości najwyższego szczytu (grań najwyższego szczytu leży 230 z 407 jednostek od góry rysunku); stoi w miejscu, rysunek przesuwa się nad nim z przezroczystym niebem */
+.mo-stage__svg[data-pan] { --panorama-wys: min(52svh, 30rem); isolation: isolate; }
+.mo-stage__svg[data-pan]::before { content: ""; position: absolute; inset: 0 0 calc(var(--panorama-trawa) + var(--panorama-wys) * 177 / 407); z-index: -1; pointer-events: none; background: var(--color-linia); opacity: var(--wzor-podhale-krycie);
+  -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat, linear-gradient(0deg, transparent, #000 5rem); -webkit-mask-composite: source-in;
+  mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat, linear-gradient(0deg, transparent, #000 5rem); mask-composite: intersect; }
+.mo-stage__svg[data-pan] #niebo { fill: transparent; }
+.mo-stage__svg[data-pan] svg { position: absolute; inset-block-end: var(--panorama-trawa); inset-inline-start: 0; block-size: var(--panorama-wys); inline-size: auto; max-inline-size: none; will-change: transform;
+  /* lewy brzeg rysunku wtapia się w tło, gdy panorama odsuwa się spod kart */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8rem); mask-image: linear-gradient(90deg, transparent, #000 8rem); }
+.mo-stage__svg .is-lit .accent { transform: scale(2.6); transform-box: fill-box; transform-origin: center; fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
+.mo-stage__svg .is-lit :is(text, .peak-name) { fill: var(--color-bursztyn-tekst); }
+.mo-stage__svg .is-lit { filter: drop-shadow(0 0 6px var(--color-bursztyn)); }
+.mo-stage__svg .accent, .mo-stage__svg text { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); }
+
+.mo-opowiesc > .mo-section, .mo-opowiesc > .mo-hero { background: transparent; }
+.mo-opowiesc .mo-section { padding-block: 18svh; }
+.mo-opowiesc .mo-hero { min-block-size: calc(100svh - var(--naglowek-wys)); }
+.mo-opowiesc .mo-hero__content { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); padding-block: var(--space-8) var(--space-7); gap: var(--space-5); }
+.mo-opowiesc .mo-hero__title { font-size: clamp(2.75rem, 2rem + 4.5vw, 6rem); max-inline-size: 16ch; }
+.mo-opowiesc .mo-hero__lede { max-inline-size: 36rem; }
+.mo-opowiesc .mo-hero .mo-booking { text-shadow: none; }
+
+/* Teksty wprost na scenie, bez kafelków. Czytelność daje kolor i cień dopasowane do tła (data-tlo ustawia
+   SceneStage): na zdjęciu jasny tekst z ciemnym cieniem i przyciemnienie od strony tekstu, na ilustracji
+   ciemny tekst z poświatą w kolorze tła. */
+.mo-opowiesc {
+  --plyta-szer: 34rem;
+  --tekst: var(--color-atrament);
+  --cien: 0 0 2px var(--color-tlo), 0 0 12px var(--color-tlo), 0 0 28px var(--color-tlo);
+}
+.mo-opowiesc[data-tlo="media"] {
+  --tekst: var(--color-na-zdjeciu);
+  --cien: 0 1px 2px rgba(0, 0, 0, 0.6), 0 2px 20px rgba(0, 0, 0, 0.55);
+}
+.mo-opowiesc .mo-section { color: var(--tekst); text-shadow: var(--cien); transition: color var(--ruch-wolny) var(--ease-mgla), text-shadow var(--ruch-wolny) var(--ease-mgla); }
+.mo-opowiesc .mo-section :is(h2, h3, p, li, dt, dd, blockquote, figcaption, a, .mo-label, .mo-card__meta, .mo-muted, .mo-prose, .mo-price):not(.mo-booking-wrap *) { color: inherit; }
+.mo-opowiesc .mo-section :is(p, li, blockquote, .mo-prose):not(.mo-booking-wrap *, .mo-label, .mo-card__meta) { font-size: max(1.1875rem, 1em); line-height: 1.55; }
+.mo-opowiesc .mo-section :is(.mo-booking-wrap, img, .mo-card__media) { text-shadow: none; }
+.mo-opowiesc .mo-section > .mo-container > :not(ol, ul, .mo-cards, .mo-peak-cards, .mo-steps, .mo-map),
+.mo-opowiesc [data-step],
+.mo-opowiesc .mo-cards > .mo-card:not([data-step]),
+.mo-opowiesc .mo-steps__step > div {
+  max-inline-size: var(--plyta-szer); padding: 0; margin-block: 0; background: none; border: 0;
+}
+.mo-opowiesc .mo-section .mo-card { background: none; border: 0; }
+/* Zaproszenie z paskiem rezerwacji potrzebuje szerszej płyty */
+.mo-opowiesc .mo-section > .mo-container > .mo-booking-wrap { max-inline-size: 52rem; }
+.mo-opowiesc .mo-section > .mo-container > * + * { margin-block-start: var(--space-3); }
+.mo-opowiesc .mo-section > .mo-container > header { margin-block-end: 0; }
+.mo-opowiesc .mo-section > .mo-container > header :is(.mo-h1, .mo-h2) { margin-block-end: 0; }
+/* Nadtytuł rozdziału (np. „Gliczarów Górny”) większy i tuż nad tytułem */
+.mo-opowiesc .mo-section > .mo-container > header > .mo-label { font-size: clamp(0.9375rem, 0.8rem + 0.35vw, 1.125rem); letter-spacing: 0.14em; }
+/* „Gliczarów Górny” nad pierwszym rozdziałem: wyraźny tytuł miejsca */
+.mo-opowiesc [data-block="intro"] > .mo-container > header > .mo-label { font-size: clamp(1.375rem, 1rem + 1.4vw, 2.125rem); font-weight: 600; letter-spacing: 0.12em; line-height: 1.15; }
+
+/* Kroki: jeden pod drugim, z ekranem przerwy, żeby scena zdążyła się zmienić. Karty bez podsiatki,
+   inaczej przerwa między krokami rozciąga każdą kartę na kilka ekranów. */
+.mo-opowiesc :is(.mo-cards, .mo-peak-cards, ol):has(> [data-step]) { display: grid !important; grid-template-columns: minmax(0, var(--plyta-szer)) !important; grid-template-rows: none; gap: 55svh !important; list-style: none; padding: 0; margin-block-start: 30svh; }
+/* Domki, pory dnia i pomieszczenia bliżej siebie: scena przechodzi płynnie, bez długiej przerwy */
+.mo-opowiesc .mo-peak-cards:has(> [data-step]) { gap: 18svh !important; }
+.mo-opowiesc :is([data-block="dayInSettlement"], [data-block="houseInside"]) :is(.mo-cards, ol):has(> [data-step]) { gap: 28svh !important; margin-block-start: 18svh; }
+.mo-opowiesc .mo-cards > .mo-card { grid-row: auto; grid-template-rows: none; row-gap: var(--space-2); align-content: start; }
+.mo-opowiesc .mo-cards:not(:has(> [data-step])) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), var(--plyta-szer))); row-gap: var(--space-5); }
+.mo-opowiesc :is([data-step], [data-block="seasons"] .mo-card) > .mo-card__media { display: none; }
+.mo-opowiesc .mo-peak-card .mo-card__media { display: block; aspect-ratio: 3 / 2; }
+.mo-opowiesc [data-step].mo-card, .mo-opowiesc [data-step] > .mo-card { color: inherit; }
+.mo-peak-cards { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.mo-peak-card { text-decoration: none; color: inherit; display: grid; gap: var(--space-2); }
+.mo-opowiesc [data-step] .mo-peak-card { border: 0; padding: 0; background: none; }
+
+/* Mapa okolicy: na szerokim ekranie po prawej, obok płyt, żeby tekst jej nie zasłaniał */
+@media (min-width: 1024px) {
+  .mo-stage__scene[data-kind="map"] .mo-stage__svg { padding: calc(var(--naglowek-wys) + var(--space-5)) var(--space-5) var(--space-5) calc(var(--margines) + var(--plyta-szer, 34rem) + var(--space-6)); }
+}
+@media (max-width: 1023px) {
+  /* na wąskim ekranie mapa w górnej części, płyty przewijają się nad dolną */
+  .mo-stage__scene[data-kind="map"] .mo-stage__svg { place-items: start center; padding-block-start: var(--naglowek-wys); }
+}
+
+/* Sauna i bania na stałym tle: scena przejmuje zdjęcia, zostają same słowa */
+.mo-opowiesc .mo-steps { display: block; }
+.mo-opowiesc :is(.mo-steps__stage, .mo-steps__inline) { display: none; }
+.mo-opowiesc .mo-steps__list { gap: 45svh; margin-block-start: 25svh; }
+.mo-opowiesc .mo-steps__step { opacity: 1; min-block-size: 0; }
+
+/* Przypięty przycisk rezerwacji: pojawia się, gdy żaden pasek nie jest na ekranie */
+.mo-dock__open { position: fixed; z-index: 9; inset-block-end: calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); inset-inline-end: var(--margines); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); opacity: 0; translate: 0 var(--space-4); pointer-events: none; transition: opacity var(--ruch-sredni) var(--ease-mgla), translate var(--ruch-sredni) var(--ease-mgla); }
+.mo-dock[data-shown] .mo-dock__open { opacity: 1; translate: none; pointer-events: auto; }
+@media (max-width: 767px) { .mo-dock__open { inset-inline: var(--margines); } }
+/* Okno przewija się samo (wyniki z rozwiniętym kafelkiem bywają wyższe niż ekran); minimalna wysokość
+   mieści kalendarz z cenami (ok. 26rem pod polami), który przesuwa się razem z treścią */
+.mo-dock__dialog { --dock-gora: 12svh; inline-size: min(100% - 2 * var(--margines), 64rem); max-inline-size: none; max-block-size: none; margin: var(--dock-gora) auto auto; padding: 0; border: 0; background: none; overflow: visible; color: var(--color-atrament); }
+.mo-dock__dialog::backdrop { background: var(--color-zaslona); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.mo-dock__body { --dock-max: calc(100dvh - var(--dock-gora) - var(--space-5)); position: relative; max-block-size: var(--dock-max); min-block-size: min(var(--dock-max), 36rem); overflow-y: auto; overscroll-behavior: contain; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }
+.mo-dock__close { position: absolute; inset-block-start: var(--space-1); inset-inline-end: var(--space-1); z-index: 1; inline-size: 2.75rem; block-size: 2.75rem; border: 0; background: var(--color-tlo); color: inherit; font-size: 1.5rem; cursor: pointer; }
+@media (max-width: 767px) { .mo-dock__dialog { --dock-gora: var(--space-5); } }
+@media (prefers-reduced-motion: reduce) { .mo-dock__open { transition: none; } }
+
+/* Okolica: nazwy atrakcji blisko siebie, opis rozwija się po najechaniu (na dotyku jest zawsze widoczny) */
+.mo-attractions { list-style: none; padding: 0; margin-block: var(--space-6) 0; display: grid; gap: var(--space-2); max-inline-size: var(--plyta-szer); }
+.mo-attraction__name { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-2); color: inherit; text-decoration: none; border-block-end: 1px solid color-mix(in srgb, currentColor 25%, transparent); }
+.mo-attraction__name .mo-h3 { margin: 0; transition: color var(--ruch-szybki) var(--ease-mgla); }
+.mo-attraction__desc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--ruch-sredni) var(--ease-mgla); }
+.mo-attraction__desc > div { overflow: hidden; }
+.mo-attraction__desc p { margin: var(--space-2) 0 var(--space-3); }
+.mo-attraction:is(:hover, :focus-within) .mo-attraction__desc { grid-template-rows: 1fr; }
+.mo-attraction:is(:hover, :focus-within) .mo-h3 { color: var(--color-bursztyn-tekst); }
+@media (hover: none) { .mo-attraction__desc { grid-template-rows: 1fr; } }
+.mo-stage__svg .poi circle { transition: transform var(--ruch-sredni) var(--ease-mgla), fill var(--ruch-sredni) var(--ease-mgla); transform-box: fill-box; transform-origin: center; }
+.mo-stage__svg .poi.is-lit circle { transform: scale(2.6); fill: var(--color-bursztyn); stroke: var(--color-bursztyn); }
+.mo-stage__svg .poi.is-lit text { fill: var(--color-bursztyn-tekst); font-weight: 700; }
+
+/* Finał „Wybierzcie swój szczyt”: na środku ekranu, pasek rezerwacji w jednym rzędzie */
+/* Zaproszenie na końcu: bez pełnego ekranu i bez odstępu przed stopką, żeby razem ze stopką mieściło się na jednym ekranie (wg Michała) */
+.mo-opowiesc [data-block="bookingInvite"] { display: grid; align-content: center; padding-block: var(--space-9) var(--space-8); }
+body:has(.mo-opowiesc) .mo-footer { margin-block-start: 0; padding-block: var(--space-7); }
+.mo-opowiesc [data-block="bookingInvite"] .mo-h2 { font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem); }
+/* tekst i pasek w jednej szerokości */
+.mo-opowiesc [data-block="bookingInvite"].mo-section > .mo-container > * { max-inline-size: 56rem; }
+.mo-opowiesc [data-block="bookingInvite"] :is(.mo-prose, p) { max-inline-size: none; }
+.mo-opowiesc [data-block="bookingInvite"] .mo-container > .mo-booking-wrap { margin-block-start: var(--space-6); }
+.mo-opowiesc .mo-booking-note { color: inherit; text-shadow: var(--cien); }
+@media (max-width: 1023px) { .mo-stage__scene[data-kind="map"] .mo-stage__svg svg { opacity: 0.4; } }
+
+/* Karty domków nad panoramą: podpis nad zdjęciem, w jasnej górnej części ekranu, a nie na tle szczytów i ich nazw */
+.mo-opowiesc .mo-peak-card { align-content: start; }
+.mo-opowiesc .mo-peak-card .mo-card__media { order: 1; margin: var(--space-3) 0 0; }
+@media (max-width: 767px) {
+  .mo-stage__svg[data-pan] { --panorama-trawa: 7svh; --panorama-wys: min(36svh, 22rem); }
+  .mo-opowiesc .mo-peak-card .mo-card__media { aspect-ratio: 16 / 9; }
+}
+
+/* Wyróżnienie szczytu i atrakcji: reszta przygasa, wybrany punkt jest większy, w kolorze akcentu i pulsuje */
+.mo-stage__svg :is(g[id^="p-"], .poi) { transition: opacity var(--ruch-sredni) var(--ease-mgla); }
+.mo-stage__svg.has-lit :is(g[id^="p-"], .poi):not(.is-lit) { opacity: 0.3; }
+.mo-stage__svg .is-lit .line { stroke: var(--color-bursztyn); stroke-width: 2.5; }
+.mo-stage__svg .is-lit :is(.peak-name, .poi text) { font-weight: 700; }
+@keyframes mo-puls { from { stroke-width: 0; stroke-opacity: 0.7; } to { stroke-width: 9; stroke-opacity: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  .mo-stage__svg .is-lit :is(.accent, circle) { animation: mo-puls 1.6s var(--ease-mgla) infinite; }
+}
+
+/* Opinie: świadomy wyjątek od tekstu bez kafelków. Każda opinia na własnym kafelku ze znakiem źródła;
+   10 w układzie 5 × 2 na komputerze, 6 w układzie 2 × 3 na telefonie. */
+.mo-reviews { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 768px) { .mo-reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .mo-reviews { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .mo-reviews > li:nth-child(n + 7 of :not([hidden])) { display: none; } }
+.mo-review { block-size: 100%; margin: 0; display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-3); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); text-shadow: none; }
+.mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { color: var(--color-atrament); text-shadow: none; font-size: var(--text-body-s); line-height: 1.5; }
+.mo-review blockquote { margin: 0; }
+.mo-review__source { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin: 0; }
+.mo-review__logo { font: 700 1.125rem/1 var(--font-ui); letter-spacing: -0.01em; }
+.mo-review__score { font: 600 0.875rem/1 var(--font-ui); color: var(--color-bursztyn-tekst); }
+[data-source="google"] .mo-review__logo > :nth-child(1), [data-source="google"] .mo-review__logo > :nth-child(4) { color: #4285f4; }
+[data-source="google"] .mo-review__logo > :nth-child(2), [data-source="google"] .mo-review__logo > :nth-child(6) { color: #ea4335; }
+[data-source="google"] .mo-review__logo > :nth-child(3) { color: #fbbc05; }
+[data-source="google"] .mo-review__logo > :nth-child(5) { color: #34a853; }
+[data-source="booking"] .mo-review__logo > :first-child { color: #003580; }
+[data-source="booking"] .mo-review__logo > :last-child { color: #009fe3; }
+[data-source="airbnb"] .mo-review__logo { color: #ff5a5f; }
+.mo-opowiesc [data-block="testimonials"].mo-section > .mo-container > .mo-reviews { max-inline-size: none; }
+@media (max-width: 767px) { .mo-review { padding: var(--space-4); } .mo-opowiesc .mo-section .mo-reviews .mo-review :is(blockquote, figcaption, p) { font-size: 0.875rem; } }
+
+/* Mapa osady: okno domu z przycisku pod mapą (wygląd jak okno domu w wynikach wyszukiwania, booking.css) */
+.mo-unit-dialog__close-form { display: contents; }
+.mo-map-dialog .mo-unit-dialog__text .mo-btn { justify-self: start; }
+/* okno leży w sekcji opowieści, której reguły dziedziczenia koloru i cienia nie mogą go dotyczyć */
+.mo-opowiesc .mo-section .mo-map-dialog :is(p, h3, dt, dd, a, li, .mo-label) { text-shadow: none; }
+.mo-opowiesc .mo-section .mo-map-dialog a.mo-btn--glowny { color: var(--color-na-cta); }

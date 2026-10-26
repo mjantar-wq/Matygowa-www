@@ -161,7 +161,46 @@ export interface Page {
             subline?: string | null;
             image?: (number | null) | Media;
             video?: (number | null) | Media;
+            videoPortrait?: (number | null) | Media;
+            /**
+             * Kadr i film dla innej pory dnia lub roku. Bez wariantu strona pokazuje najbliższy pasujący, a na końcu kadr główny.
+             */
+            variants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
             showBookingBar?: boolean | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -192,6 +231,31 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -218,6 +282,31 @@ export interface Page {
             image?: (number | null) | Media;
             showMap?: boolean | null;
             map?: (number | null) | Media;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -233,6 +322,44 @@ export interface Page {
                   text?: string | null;
                   summerText?: string | null;
                   image?: (number | null) | Media;
+                  /**
+                   * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+                   */
+                  scene?:
+                    | {
+                        pora?: ('dzien' | 'noc') | null;
+                        sezon?: ('zima' | 'lato') | null;
+                        image?: (number | null) | Media;
+                        video?: (number | null) | Media;
+                        videoPortrait?: (number | null) | Media;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -264,10 +391,48 @@ export interface Page {
                   title?: string | null;
                   text?: string | null;
                   image?: (number | null) | Media;
+                  /**
+                   * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+                   */
+                  scene?:
+                    | {
+                        pora?: ('dzien' | 'noc') | null;
+                        sezon?: ('zima' | 'lato') | null;
+                        image?: (number | null) | Media;
+                        video?: (number | null) | Media;
+                        videoPortrait?: (number | null) | Media;
+                        id?: string | null;
+                      }[]
+                    | null;
                   id?: string | null;
                 }[]
               | null;
             plan?: (number | null) | Media;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -296,10 +461,48 @@ export interface Page {
                   word?: string | null;
                   text?: string | null;
                   image?: (number | null) | Media;
+                  /**
+                   * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+                   */
+                  scene?:
+                    | {
+                        pora?: ('dzien' | 'noc') | null;
+                        sezon?: ('zima' | 'lato') | null;
+                        image?: (number | null) | Media;
+                        video?: (number | null) | Media;
+                        videoPortrait?: (number | null) | Media;
+                        id?: string | null;
+                      }[]
+                    | null;
                   id?: string | null;
                 }[]
               | null;
             showPrices?: boolean | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -318,6 +521,31 @@ export interface Page {
               text?: string | null;
               image?: (number | null) | Media;
             };
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -343,6 +571,31 @@ export interface Page {
             } | null;
             map?: (number | null) | Media;
             limit?: number | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -368,6 +621,31 @@ export interface Page {
             } | null;
             image?: (number | null) | Media;
             imagePosition?: ('start' | 'end' | 'background') | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -377,6 +655,31 @@ export interface Page {
             eyebrow?: string | null;
             heading?: string | null;
             items?: (number | Testimonial)[] | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -385,6 +688,31 @@ export interface Page {
         | {
             eyebrow?: string | null;
             heading?: string | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -408,6 +736,31 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -417,6 +770,31 @@ export interface Page {
             eyebrow?: string | null;
             heading?: string | null;
             images?: (number | Media)[] | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -445,6 +823,31 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -467,10 +870,78 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             anchor?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'richText';
+          }
+        | {
+            eyebrow?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            people?:
+              | {
+                  name?: string | null;
+                  role?: string | null;
+                  photo?: (number | null) | Media;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
+             */
+            scene?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  image?: (number | null) | Media;
+                  video?: (number | null) | Media;
+                  videoPortrait?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Podstawowy tekst to zima, dzień. Tu nagłówek i krótki tekst na inną porę.
+             */
+            textVariants?:
+              | {
+                  pora?: ('dzien' | 'noc') | null;
+                  sezon?: ('zima' | 'lato') | null;
+                  heading?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            anchor?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hosts';
           }
       )[]
     | null;
@@ -495,6 +966,10 @@ export interface Media {
    * Zaznacz dla obrazów wygenerowanych do czasu sesji zdjęciowej. Lista filtrowana po tym polu pokazuje, co jeszcze trzeba podmienić.
    */
   isPlaceholder?: boolean | null;
+  /**
+   * Dla zdjęć spoza własnej sesji. „Czeka na zgodę” nie pokaże się na produkcji.
+   */
+  rights?: ('free' | 'granted' | 'pending') | null;
   series?: ('winter' | 'summer' | 'day' | 'night' | 'interiors' | 'rituals' | 'surroundings')[] | null;
   focusX?: number | null;
   focusY?: number | null;
@@ -521,6 +996,10 @@ export interface Testimonial {
   rating?: number | null;
   date?: string | null;
   unit?: (number | null) | Unit;
+  /**
+   * Opinie z tym polem pobiera automatycznie raz w tygodniu zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.
+   */
+  externalId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -562,6 +1041,13 @@ export interface Unit {
   gallery?: (number | Media)[] | null;
   plans?: (number | Media)[] | null;
   peak?: {
+    name?: string | null;
+    nameCases?: {
+      gen?: string | null;
+      acc?: string | null;
+      loc?: string | null;
+      inst?: string | null;
+    };
     elevation?: number | null;
     range?: string | null;
     story?: {
@@ -585,6 +1071,9 @@ export interface Unit {
   area?: number | null;
   bedrooms?: number | null;
   maxGuests?: number | null;
+  bathrooms?: number | null;
+  separateWc?: boolean | null;
+  ensuiteUpstairs?: boolean | null;
   livingRoom?: ('ground' | 'upper') | null;
   seo?: {
     title?: string | null;
@@ -646,6 +1135,10 @@ export interface Attraction {
    */
   slug: string;
   image?: (number | null) | Media;
+  gallery?: (number | Media)[] | null;
+  /**
+   * Dwa, trzy zdania do sekcji „Blisko wszystkiego” na stronie głównej.
+   */
   summary?: string | null;
   description?: {
     root: {
@@ -662,6 +1155,7 @@ export interface Attraction {
     };
     [k: string]: unknown;
   } | null;
+  place?: string | null;
   distanceKm?: number | null;
   driveMinutes?: number | null;
   category?: ('trails' | 'ski' | 'thermal' | 'family' | 'views' | 'bike' | 'culture') | null;
@@ -669,6 +1163,13 @@ export interface Attraction {
   url?: string | null;
   lat?: number | null;
   lng?: number | null;
+  /**
+   * Puste: bez punktu na mapie (np. szlaki, lot balonem).
+   */
+  mapId?: string | null;
+  /**
+   * Strona Okolica pokazuje wszystkie atrakcje; główna tylko zaznaczone, z krótkim opisem.
+   */
   featured?: boolean | null;
   seo?: {
     title?: string | null;
@@ -680,6 +1181,8 @@ export interface Attraction {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Oferty na stronie to promocje z cennika IceColdRes: tytuł, opisy (także dłuższy), daty i sezon ustawiasz w IceColdRes. Tu wybierasz promocję z listy i dodajesz do niej zdjęcie.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "offers".
  */
@@ -691,25 +1194,13 @@ export interface Offer {
    */
   slug: string;
   order?: number | null;
+  /**
+   * Bez zdjęcia strona pokaże zdjęcie jednego z domków.
+   */
   image?: (number | null) | Media;
-  summary?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  validFrom?: string | null;
-  validTo?: string | null;
+  /**
+   * Lista promocji z cennika IceColdRes. Bez wybranej promocji oferta nie pojawi się na stronie.
+   */
   icecoldresPromotionId?: string | null;
   icecoldresOfferId?: string | null;
   seo?: {
@@ -728,7 +1219,7 @@ export interface Offer {
 export interface User {
   id: number;
   name?: string | null;
-  role: 'admin' | 'editor';
+  role: 'owner' | 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -958,7 +1449,37 @@ export interface PagesSelect<T extends boolean = true> {
               subline?: T;
               image?: T;
               video?: T;
+              videoPortrait?: T;
+              variants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
               showBookingBar?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -976,6 +1497,25 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     id?: T;
                   };
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -989,6 +1529,25 @@ export interface PagesSelect<T extends boolean = true> {
               image?: T;
               showMap?: T;
               map?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1006,6 +1565,35 @@ export interface PagesSelect<T extends boolean = true> {
                     text?: T;
                     summerText?: T;
                     image?: T;
+                    scene?:
+                      | T
+                      | {
+                          pora?: T;
+                          sezon?: T;
+                          image?: T;
+                          video?: T;
+                          videoPortrait?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
                     id?: T;
                   };
               anchor?: T;
@@ -1024,9 +1612,38 @@ export interface PagesSelect<T extends boolean = true> {
                     title?: T;
                     text?: T;
                     image?: T;
+                    scene?:
+                      | T
+                      | {
+                          pora?: T;
+                          sezon?: T;
+                          image?: T;
+                          video?: T;
+                          videoPortrait?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               plan?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1043,9 +1660,38 @@ export interface PagesSelect<T extends boolean = true> {
                     word?: T;
                     text?: T;
                     image?: T;
+                    scene?:
+                      | T
+                      | {
+                          pora?: T;
+                          sezon?: T;
+                          image?: T;
+                          video?: T;
+                          videoPortrait?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               showPrices?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1069,6 +1715,25 @@ export interface PagesSelect<T extends boolean = true> {
                     text?: T;
                     image?: T;
                   };
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1081,6 +1746,25 @@ export interface PagesSelect<T extends boolean = true> {
               body?: T;
               map?: T;
               limit?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1093,6 +1777,25 @@ export interface PagesSelect<T extends boolean = true> {
               body?: T;
               image?: T;
               imagePosition?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1103,6 +1806,25 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               items?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1112,6 +1834,25 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               eyebrow?: T;
               heading?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1122,6 +1863,25 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               body?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1132,6 +1892,25 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               heading?: T;
               images?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1147,6 +1926,25 @@ export interface PagesSelect<T extends boolean = true> {
                     answer?: T;
                     id?: T;
                   };
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1156,6 +1954,63 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               heading?: T;
               body?: T;
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              anchor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        hosts?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              intro?: T;
+              people?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    photo?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              scene?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    image?: T;
+                    video?: T;
+                    videoPortrait?: T;
+                    id?: T;
+                  };
+              textVariants?:
+                | T
+                | {
+                    pora?: T;
+                    sezon?: T;
+                    heading?: T;
+                    text?: T;
+                    id?: T;
+                  };
               anchor?: T;
               id?: T;
               blockName?: T;
@@ -1191,6 +2046,15 @@ export interface UnitsSelect<T extends boolean = true> {
   peak?:
     | T
     | {
+        name?: T;
+        nameCases?:
+          | T
+          | {
+              gen?: T;
+              acc?: T;
+              loc?: T;
+              inst?: T;
+            };
         elevation?: T;
         range?: T;
         story?: T;
@@ -1200,6 +2064,9 @@ export interface UnitsSelect<T extends boolean = true> {
   area?: T;
   bedrooms?: T;
   maxGuests?: T;
+  bathrooms?: T;
+  separateWc?: T;
+  ensuiteUpstairs?: T;
   livingRoom?: T;
   seo?:
     | T
@@ -1243,8 +2110,10 @@ export interface AttractionsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   image?: T;
+  gallery?: T;
   summary?: T;
   description?: T;
+  place?: T;
   distanceKm?: T;
   driveMinutes?: T;
   category?: T;
@@ -1252,6 +2121,7 @@ export interface AttractionsSelect<T extends boolean = true> {
   url?: T;
   lat?: T;
   lng?: T;
+  mapId?: T;
   featured?: T;
   seo?:
     | T
@@ -1273,10 +2143,6 @@ export interface OffersSelect<T extends boolean = true> {
   slug?: T;
   order?: T;
   image?: T;
-  summary?: T;
-  content?: T;
-  validFrom?: T;
-  validTo?: T;
   icecoldresPromotionId?: T;
   icecoldresOfferId?: T;
   seo?:
@@ -1301,6 +2167,7 @@ export interface TestimonialsSelect<T extends boolean = true> {
   rating?: T;
   date?: T;
   unit?: T;
+  externalId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1312,6 +2179,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   isPlaceholder?: T;
+  rights?: T;
   series?: T;
   focusX?: T;
   focusY?: T;

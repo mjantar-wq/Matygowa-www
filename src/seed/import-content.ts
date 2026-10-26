@@ -18,12 +18,18 @@ type Loc = (typeof LOCALES)[number]
 
 const read = (file: string) => JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'))
 
+// Import partiami: IMPORT_ONLY=attractions (albo np. units,offers) wgrywa nowe pliki z manifestu i tylko te kolekcje.
+// „pages” to strony, opinie, dokumenty, aktualności i ustawienia. Bez zmiennej import obejmuje wszystko.
+const only = new Set((process.env.IMPORT_ONLY ?? '').split(',').map((k) => k.trim()).filter(Boolean))
+const want = (key: 'units' | 'attractions' | 'offers' | 'pages') => !only.size || only.has(key)
+
 async function main() {
   const payload = await getPayload({ config })
   const editorConfig = await editorConfigFactory.default({ config: payload.config })
   const md = (text?: string | null) => (text ? convertMarkdownToLexical({ editorConfig, markdown: text }) : null)
 
-  // Materiały tymczasowe CGI (content/media, manifest wątku wizualnego): zawsze isPlaceholder = true.
+  // content/media/manifest.json: prawdziwe zdjęcia (*_foto, placeholder: false, alt PL/EN z manifestu)
+  // stoją przed CGI, więc byPrefix wybiera je pierwsze. CGI zawsze isPlaceholder = true.
   // Plik o tej samej nazwie nie jest wgrywany drugi raz.
   const media = new Map<string, number | string>()
   const manifestPath = path.join(DIR, 'media', 'manifest.json')
@@ -39,16 +45,24 @@ async function main() {
         /_noc_|gwiazdy/.test(stem) ? 'night' : null,
         /^[VW]\d/.test(stem) ? 'interiors' : null,
         /^B\d/.test(stem) ? 'rituals' : null,
+        /^A_/.test(stem) ? 'surroundings' : null,
       ].filter(Boolean)
+      const real = item.placeholder === false
       id = (
         await payload.create({
           collection: 'media',
           locale: 'pl',
           filePath: path.join(DIR, 'media', filename),
-          data: { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
+          data: real
+            ? { alt: item.alt.pl, isPlaceholder: false, series, caption: item.credit?.pl, rights: item.rights }
+            : { alt: `Wizualizacja tymczasowa: ${describe}`, isPlaceholder: true, series, caption: item.note },
         } as never) as Any
       ).id
-      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: `Temporary visualisation: ${describe}` } })
+      await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}`, ...(real && item.credit ? { caption: item.credit.en } : {}) } })
+    } else if (item.rights && found.docs[0]?.rights !== item.rights) {
+      // zgoda obiektu przyszła po wgraniu pliku: manifest zmienia prawa i podpis bez ponownego wgrywania
+      await payload.update({ collection: 'media', id, locale: 'pl', data: { rights: item.rights, caption: item.credit?.pl } })
+      if (item.credit?.en) await payload.update({ collection: 'media', id, locale: 'en', data: { caption: item.credit.en } })
     }
     media.set(filename, id)
   }
@@ -59,14 +73,14 @@ async function main() {
   }
   const img = (prefix: string) => byPrefix(prefix, '.webp')
   const video = (prefix: string) => byPrefix(prefix, '.mp4')
-  if (media.size) payload.logger.info(`media: ${media.size} plików tymczasowych`)
+  if (media.size) payload.logger.info(`media: ${media.size} plików`)
 
   /** Zapis wpisu w obu językach: najpierw PL (tworzy), potem EN (uzupełnia tłumaczenia). */
   async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any) {
     const existing = await payload.find({ collection, where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = existing.docs[0]?.id
     for (const locale of LOCALES) {
-      let data = { ...build(locale), slug, _status: 'published' } as Any
+      let data = { _status: 'published', ...build(locale), slug } as Any
       if (id) {
         // bloki i listy są wspólne dla języków: bez ich id zapis EN utworzyłby nowe wiersze i skasował teksty PL
         const current = await payload.findByID({ collection, id, locale: 'pl', depth: 0, draft: true } as never)
@@ -79,43 +93,93 @@ async function main() {
 
   const peaks: Any[] = read('peaks.json')
   const units: Any[] = read('units.json')
-  for (const u of units) {
+  // własne zdjęcia domków z sesji (Łomnica, Lodowy, Wołoszyn); pozostałe domy mają kadr domu i wspólne wnętrza
+  const unitPhotos: Record<string, { hero: string; gallery: string[] }> = fs.existsSync(path.join(DIR, 'unit-photos.json')) ? read('unit-photos.json') : {}
+  for (const u of want('units') ? units : []) {
     const peak = peaks.find((p) => p.slug === u.peak) ?? {}
     const slug = u.icecoldres_code || u.peak
-    const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski', 'giewont', 'ciemniak'].indexOf(slug) + 1
+    const vShot = ['hawran', 'gerlach', 'swinica', 'woloszyn', 'lomnica', 'lodowy', 'czerwone-wierchy', 'kominiarski-wierch', 'giewont', 'ciemniak'].indexOf(slug) + 1
     await upsert('units', slug, (l) => ({
-      hero: vShot ? img(`V${vShot}_`) : undefined,
-      name: peak.name?.[l] ?? u.name?.[l],
+      hero: unitPhotos[slug] ? media.get(unitPhotos[slug].hero) : vShot ? img(`V${vShot}_`) : undefined,
+      // seria zdjęć: własna sesja domku albo kadr domu i wspólne wnętrza (domy są urządzone podobnie)
+      gallery: (unitPhotos[slug]
+        ? [unitPhotos[slug].hero, ...unitPhotos[slug].gallery].map((f) => media.get(f))
+        : [vShot ? img(`V${vShot}_`) : undefined, ...['W1_', 'W2_', 'W3_', 'W5_', 'W6_', 'W7_'].map(img)]
+      ).filter(Boolean),
+      name: u.name?.[l] ?? peak.name?.[l],
       kind: u.kind === 'apartment' ? 'apartment' : 'house',
       status: u.status === 'coming_soon' ? 'comingSoon' : 'bookable',
       order: u.sort ?? 0,
       icecoldresCode: u.icecoldres_code,
       tagline: u.lead?.[l],
       story: md(u.story?.[l]),
-      peak: { elevation: peak.elevation_m, range: peak.range?.[l], story: md(peak.story?.[l]) },
+      peak: { name: peak.name?.[l], nameCases: peak.name_cases_pl, elevation: peak.elevation_m, range: peak.range?.[l], story: md(peak.story?.[l]) },
       area: u.facts?.area_m2,
       bedrooms: u.facts?.bedrooms,
       maxGuests: u.facts?.max_guests,
+      bathrooms: u.facts?.bathrooms,
+      separateWc: !!u.facts?.separate_wc,
+      ensuiteUpstairs: !!u.facts?.ensuite_upstairs,
       livingRoom: u.facts?.living_room === 'upper' || u.facts?.living_room === 'first' ? 'upper' : u.facts?.living_room ? 'ground' : undefined,
       seo: { title: u.seo?.title?.[l], description: u.seo?.description?.[l] },
     }))
   }
 
-  for (const a of read('attractions.json') as Any[]) {
+  // Atrakcje: ta sama lista dla sekcji na głównej (featured, krótki opis "summary") i strony Okolica
+  // (opis rozszerzony "body", zdjęcia "image" i "gallery" jako nazwy plików z content/media, z podpisem licencji w manifeście).
+  // "retired": true zdejmuje wpis ze strony (szkic), np. dawne zbiorcze „Termy”, zastąpione konkretnymi obiektami.
+  for (const a of want('attractions') ? (read('attractions.json') as Any[]) : []) {
     await upsert('attractions', a.slug, (l) => ({
       name: a.name?.[l],
       seasons: a.season,
       category: a.category,
       description: md(a.body?.[l]),
       summary: a.summary?.[l],
+      place: a.place?.[l],
+      url: a.url,
+      lat: a.lat,
+      lng: a.lng,
+      image: a.image ? media.get(a.image) : undefined,
+      gallery: (a.gallery ?? []).map((f: string) => media.get(f)).filter(Boolean),
       distanceKm: a.distance_km,
+      driveMinutes: a.drive_min,
+      mapId: a.map_svg_id ?? null,
       featured: !!a.featured,
+      ...(a.retired ? { _status: 'draft' } : {}),
     }))
   }
 
-  for (const o of read('offers.json') as Any[]) {
-    const [from, to] = String(o.valid ?? '').split('/')
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], summary: o.body?.[l], validFrom: from || undefined, validTo: to || undefined }))
+  let offerIndex = 0
+  for (const o of want('offers') ? (read('offers.json') as Any[]) : []) {
+    // "image" w offers.json (prefiks pliku z content/media) wygrywa z domyślną rotacją okładek
+    const fallback = ['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5]
+    const cover = (o.image ? img(o.image) : undefined) ?? img(fallback)
+    // active: false zostaje szkicem (niewidoczna); kolejność jak w offers.json
+    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], image: cover, order: offerIndex, icecoldresPromotionId: o.icecoldres_promotion_id || undefined, _status: o.active === false ? 'draft' : 'published' }))
+  }
+
+  // oferty bez promocji w IceColdRes nie są pokazywane, więc usuwamy je z panelu (Michał, 25.10.2026);
+  // gdy IceColdRes nie odpowiada, niczego nie usuwamy
+  const api = process.env.ICECOLDRES_API_URL ?? 'https://icecoldres.audiowizard.pl'
+  let promoIds: string[] | null = null
+  try {
+    const res = await fetch(`${api}/api/public/${process.env.ICECOLDRES_SLUG ?? 'booking'}/promotions`)
+    if (res.ok) promoIds = ((await res.json()) as { promotions: { id: string }[] }).promotions.map((p) => p.id)
+  } catch {
+    promoIds = null
+  }
+  if (promoIds && want('offers')) {
+    const stale = await payload.find({ collection: 'offers', limit: 0, pagination: false, depth: 0, draft: true })
+    for (const o of stale.docs) {
+      if (o.icecoldresPromotionId && promoIds.includes(o.icecoldresPromotionId)) continue
+      await payload.delete({ collection: 'offers', id: o.id })
+      console.log(`oferta ${o.slug} usunięta: brak promocji w IceColdRes`)
+    }
+  }
+
+  if (!want('pages')) {
+    payload.logger.info(`Import częściowy zakończony (${[...only].join(', ')})`)
+    process.exit(0)
   }
 
   // strona główna: bloki w kolejności szkieletu
@@ -124,25 +188,26 @@ async function main() {
     const base = { eyebrow: b.eyebrow?.[l], heading: b.heading?.[l] }
     switch (b.type) {
       case 'hero':
-        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true, image: img('K2_hero_osada_swit_16x9'), video: video('K2_hero_osada_swit_16x9') }
+        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true, image: img('K12_'), video: video('K2_hero_osada_swit_16x9'), videoPortrait: video('K2_hero_osada_swit_9x16'), variants: [{ pora: 'noc', image: img('K2_hero_osada_noc_16x9'), video: video('K2_hero_osada_noc_16x9') }, { sezon: 'lato', image: img('K13_') }] }
       case 'intro':
         return { blockType: 'intro', ...base, body: md(b.body?.[l]), stats: b.stats?.map((s: Any) => ({ value: s.value, label: s.label?.[l] })) }
       case 'peak_panorama':
-        return { blockType: 'peaksPanorama', ...base, body: md(b.body?.[l]), showMap: true, image: img('K1_'), map: img('K5_') }
+        return { blockType: 'peaksPanorama', ...base, body: md(b.body?.[l]), showMap: true, image: null, map: null } // ilustracje G2 i G1 z interakcją; zdjęcie i mapa z panelu tylko jako nadpisanie
       case 'day_story':
         return { blockType: 'dayInSettlement', ...base, scenes: b.scenes?.map((s: Any, i: number) => ({ time: s.key, title: s.title?.[l], text: s.winter?.[l], summerText: s.summer?.[l], image: img(['T1_', 'K2_hero_osada_swit_16x9', 'K4_', 'T3_'][i]) })) }
       case 'house_inside':
         return { blockType: 'houseInside', ...base, body: md(b.body?.[l]), rooms: b.rooms?.map((r: Any, i: number) => ({ title: r.title?.[l], text: r.body?.[l], image: img(['W1_', 'W2_', 'W3_', 'W5_'][i] ?? 'W') })) }
       case 'rituals_teaser':
-        return { blockType: 'rituals', ...base, body: md(b.body?.[l]), showPrices: true }
+        // zapowiedź na stronie głównej: tekst ze zdjęciem bani (pełne kroki i ceny są na stronie Sauna i bania)
+        return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('B1_bania_alpenglow'), imagePosition: 'start' }
       case 'seasons':
         return { blockType: 'seasons', ...base, winter: { text: b.winter?.[l], image: img('K2_hero_osada_swit_16x9') }, summer: { text: b.summer?.[l], image: img('K2_hero_osada_lato') } }
       case 'surroundings':
         return { blockType: 'surroundings', ...base, body: md(b.body?.[l]), limit: b.featured_attractions ?? 6 }
       case 'nature':
-        return { blockType: 'story', ...base, body: md(b.body?.[l]) }
+        return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('K3_'), imagePosition: 'end' }
       case 'testimonials':
-        return { blockType: 'testimonials', ...base, eyebrow: b.rating_line?.[l] }
+        return { blockType: 'testimonials', ...base, eyebrow: b.rating_line?.[l] ?? null }
       case 'offers_news':
         return { blockType: 'offersNews', ...base }
       case 'booking_invite':
@@ -152,19 +217,55 @@ async function main() {
         return null
     }
   }
-  await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => homeBlock(b, l)).filter(Boolean))
+  // scena w tle i warianty tekstu (koncepcja po M1): w home.json opcjonalnie
+  // "scene": [{ "pora": "noc", "sezon": "zima", "image": "K2_…", "video": "K2_…" }] (prefiksy nazw plików) i
+  // "variants": [{ "pora": "noc", "sezon": "lato", "heading": {pl,en}, "text": {pl,en} }]
+  const withScene = (b: Any, block: Any | null, l: Loc): Any | null => {
+    if (!block) return null
+    const scene = (b.scene ?? []).map((r: Any) => ({ pora: r.pora, sezon: r.sezon, image: r.image ? img(r.image) : undefined, video: r.video ? video(r.video) : undefined, videoPortrait: r.videoPortrait ? video(r.videoPortrait) : undefined }))
+    const textVariants = (b.variants ?? []).map((v: Any) => ({ pora: v.pora, sezon: v.sezon, heading: v.heading?.[l], text: v.text?.[l] }))
+    return { ...block, ...(scene.length ? { scene } : {}), ...(textVariants.length ? { textVariants } : {}) }
+  }
+  await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => withScene(b, homeBlock(b, l), l)).filter(Boolean))
 
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
-    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any, i: number) => ({ word: s.word?.[l], text: s.body?.[l], image: img(['B1_', 'B2_', 'B3_', 'B5_'][i] ?? 'B') })), showPrices: true },
-    { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), imagePosition: 'end' },
-    { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), imagePosition: 'start' },
+    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any, i: number) => ({ word: s.word?.[l], text: s.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][i] ?? 'B') })), showPrices: true },
+    // same prawdziwe zdjęcia sauny i bani, bez wygenerowanych ludzi (wg Michała)
+    { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), image: img('W51_sauna_lawy'), imagePosition: 'end' },
+    { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), image: img('B1_bania_lato'), imagePosition: 'start' },
     { blockType: 'richText', body: md(rytualy.rules?.[l]) },
   ], (l) => rytualy.lead?.[l])
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
-    osada.sections.map((s: Any, i: number) => ({ blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.body?.[l]), imagePosition: i % 2 ? 'start' : 'end' })),
+    osada.sections.flatMap((s: Any, i: number) => {
+      // „Góralszczyzna dziś”: wstęp, potem każdy temat osobno, na przemian zdjęcie i tekst; zdjęcie po id tematu (O_<id>_…)
+      // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
+      if (s.id === 'goralszczyzna' && s.items?.some((it: Any) => it.id)) {
+        return [
+          { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), image: s.image ? img(s.image) : undefined, imagePosition: 'end' },
+          ...s.items.map((it: Any, j: number) => ({
+            blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
+            body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
+            image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
+          })),
+          // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
+          ...(s.glossary?.words?.length ? [{
+            blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
+            body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
+            image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
+          }] : []),
+        ]
+      }
+      // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
+      if (s.id === 'gospodarze') {
+        return { blockType: 'hosts', anchor: s.id, heading: s.heading?.[l], intro: s.personal_note?.[l] ?? undefined, people: (s.hosts ?? []).filter((h: Any) => h.name).map((h: Any) => ({ name: h.name, role: h.role?.[l], text: h.bio?.[l] })) }
+      }
+      const items = (s.items ?? []).map((it: Any) => `### ${it.heading?.[l]}\n\n*${it.word}*: ${it.translation?.[l]}\n\n${it.body?.[l]}`)
+      const text = [s.lead?.[l], s.body?.[l], ...items, s.signature?.[l] ? `*${s.signature[l]}*` : null].filter(Boolean).join('\n\n')
+      return { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(text), image: s.image ? img(s.image) : undefined, imagePosition: i % 2 ? 'start' : 'end' }
+    }),
   )
 
   const guide = read('pages/przewodnik.json')
@@ -199,7 +300,7 @@ async function main() {
   // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)
   const seoPages: Any = read('seo-pages.json')
   const seoKeys: Record<string, string> = { home: 'home', domy: 'houses', rytualy: 'rituals', osada: 'settlement', okolica: 'surroundings', oferty: 'offers', aktualnosci: 'news', galeria: 'gallery', kontakt: 'contact', przewodnik: 'guide', regulamin: 'regulamin', prywatnosc: 'prywatnosc' }
-  const navTitles: Record<string, L> = { houses: { pl: 'Domy i apartamenty', en: 'Houses & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
+  const navTitles: Record<string, L> = { houses: { pl: 'Domki i apartamenty', en: 'Cottages & apartments' }, surroundings: { pl: 'Okolica', en: 'Surroundings' }, offers: { pl: 'Oferty', en: 'Offers' }, news: { pl: 'Aktualności', en: 'News' }, gallery: { pl: 'Galeria', en: 'Gallery' }, regulamin: { pl: 'Regulamin', en: 'Terms' }, prywatnosc: { pl: 'Polityka prywatności', en: 'Privacy policy' } }
   for (const [key, entry] of Object.entries(seoPages) as [string, Any][]) {
     const slug = seoKeys[key]
     if (!slug) continue
@@ -222,7 +323,8 @@ async function main() {
     const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
     let id = found.docs[0]?.id
     for (const locale of LOCALES) {
-      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
+      const cover = img(({ 'apartamenty-wiosna-2027': 'V7_', 'ferie-2027': 'K9_' } as Record<string, string>)[n.slug] ?? 'K2_hero_osada_swit_16x9')
+      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, cover, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
       if (id) await payload.update({ collection: 'news', id, locale, data, draft: true } as never)
       else id = ((await payload.create({ collection: 'news', locale, data, draft: true } as never)) as Any).id
     }

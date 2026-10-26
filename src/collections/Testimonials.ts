@@ -29,5 +29,17 @@ export const Testimonials: CollectionConfig = {
       ],
     },
     { name: 'unit', label: 'Dom (opcjonalnie)', type: 'relationship', relationTo: 'units' },
+    {
+      name: 'externalId',
+      label: 'Id w źródle',
+      type: 'text',
+      unique: true,
+      index: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Opinie z tym polem pobiera automatycznie raz w tygodniu zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.',
+      },
+    },
   ],
 }

@@ -11,7 +11,7 @@ export const Media: CollectionConfig = {
   labels: { singular: 'Plik', plural: 'Galeria i media' },
   admin: {
     group: 'Treści',
-    defaultColumns: ['filename', 'alt', 'isPlaceholder', 'series', 'updatedAt'],
+    defaultColumns: ['filename', 'alt', 'isPlaceholder', 'rights', 'series', 'updatedAt'],
     listSearchableFields: ['filename', 'alt'],
   },
   access: { read: anyone, create: editors, update: editors, delete: editors },
@@ -20,6 +20,12 @@ export const Media: CollectionConfig = {
     crop: false,
     focalPoint: false,
     mimeTypes: ['image/*', 'video/mp4', 'video/webm'],
+    // pliki z R2 idą przez Worker; bez tego każde wyświetlenie to żądanie do Payload (domyślnie no-store).
+    // Payload nadaje nowej wersji pliku nową nazwę, więc 30 dni w przeglądarce i na CDN jest bezpieczne.
+    modifyResponseHeaders: ({ headers }) => {
+      headers.set('Cache-Control', 'public, max-age=2592000, stale-while-revalidate=86400')
+      return headers
+    },
   },
   fields: [
     { name: 'alt', label: 'Tekst alternatywny', type: 'text', required: true, localized: true },
@@ -31,6 +37,20 @@ export const Media: CollectionConfig = {
       defaultValue: false,
       index: true,
       admin: { position: 'sidebar', description: 'Zaznacz dla obrazów wygenerowanych do czasu sesji zdjęciowej. Lista filtrowana po tym polu pokazuje, co jeszcze trzeba podmienić.' },
+    },
+    {
+      // zdjęcia z zewnątrz: wolna licencja (CC, podpis w polu „Podpis”), zgoda obiektu na piśmie albo zgoda w toku.
+      // „Czeka na zgodę” jest widoczne tylko na stronie testowej; na produkcji (SITE_INDEXABLE=true) strona go nie pokazuje.
+      name: 'rights',
+      label: 'Prawa do zdjęcia',
+      type: 'select',
+      index: true,
+      admin: { position: 'sidebar', description: 'Dla zdjęć spoza własnej sesji. „Czeka na zgodę” nie pokaże się na produkcji.' },
+      options: [
+        { label: 'Wolna licencja (CC)', value: 'free' },
+        { label: 'Zgoda obiektu', value: 'granted' },
+        { label: 'Czeka na zgodę', value: 'pending' },
+      ],
     },
     {
       name: 'series',

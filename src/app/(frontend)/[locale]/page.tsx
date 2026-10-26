@@ -15,7 +15,7 @@ export default async function Home({ params }: LocaleParams) {
   return (
     <>
       <StructuredData locale={ctx.locale} />
-      <CmsPage route="home" ctx={ctx} fallback={defaultHomeLayout(ctx.locale)} />
+      <CmsPage route="home" ctx={ctx} immersive fallback={defaultHomeLayout(ctx.locale)} />
     </>
   )
 }

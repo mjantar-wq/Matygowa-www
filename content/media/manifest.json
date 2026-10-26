@@ -1,6 +1,798 @@
 {
- "rule": "Każdy plik z sufiksem _cgi jest tymczasowy: w CMS pole isPlaceholder = true, blokada publikacji na produkcji.",
+ "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
+  {
+   "file": "N2_swieta_stol_zima_3x2_foto.webp",
+   "shot": "N2",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Świąteczny stół w salonie, za oknem zaśnieżony domek",
+    "en": "A festive table in the living room, a snowy cottage outside"
+   },
+   "source": "dsc01959.jpg"
+  },
+  {
+   "file": "O_owce_oscypki_3x2_foto.webp",
+   "shot": "O",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Oscypki na straganie w Zakopanem",
+    "en": "Oscypek cheeses at a stall in Zakopane"
+   },
+   "credit": {
+    "pl": "Fot. Aga Viburno · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg",
+    "en": "Photo: Aga Viburno · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg"
+   },
+   "source": "https://commons.wikimedia.org/wiki/File:Zakopane_-_Oscypki_-_panoramio.jpg"
+  },
+  {
+   "file": "O_stroj_parzenica_2x3_foto.webp",
+   "shot": "O",
+   "width": 1200,
+   "height": 1565,
+   "placeholder": false,
+   "alt": {
+    "pl": "Haftowana parzenica na góralskich portkach z XIX wieku, Muzeum Tatrzańskie",
+    "en": "Embroidered parzenica on 19th-century highland trousers, Tatra Museum"
+   },
+   "credit": {
+    "pl": "Fot. Marta Malina Moraczewska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Parzenica_close-up.jpg",
+    "en": "Photo: Marta Malina Moraczewska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Parzenica_close-up.jpg"
+   },
+   "source": "https://commons.wikimedia.org/wiki/File:Parzenica_close-up.jpg"
+  },
+  {
+   "file": "O_muzyka_wesele_3x2_foto.webp",
+   "shot": "O",
+   "width": 1600,
+   "height": 930,
+   "placeholder": false,
+   "alt": {
+    "pl": "Góralskie wesele, występ zespołu w strojach podhalańskich",
+    "en": "Highland wedding, a folk performance in Podhale dress"
+   },
+   "credit": {
+    "pl": "Fot. Marta Malina Moraczewska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg",
+    "en": "Photo: Marta Malina Moraczewska · CC BY-SA 4.0 · Wikimedia Commons https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg"
+   },
+   "source": "https://commons.wikimedia.org/wiki/File:Highlanders%27_Wedding_-_folk_performance_in_Podhale_costume.jpg"
+  },
+  {
+   "file": "W20_sypialnia_okno_laka_3x2_foto.webp",
+   "shot": "W20",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z przeszklonym narożnikiem na łąkę",
+    "en": "Bedroom with a glazed corner facing the meadow"
+   },
+   "source": "a7v02005.webp"
+  },
+  {
+   "file": "L20_taras_domu_lato_3x2_foto.webp",
+   "shot": "L20",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Taras domku pod okapem z modrzewia",
+    "en": "The cottage terrace under a larch-clad eave"
+   },
+   "source": "a7v02065.webp"
+  },
+  {
+   "file": "L21_laka_widok_osada_lato_3x2_foto.webp",
+   "shot": "L21",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łąka przed domkiem i widok na sąsiednie zbocza",
+    "en": "The meadow in front of the cottage with the neighbouring slopes"
+   },
+   "source": "a7v02070.webp"
+  },
+  {
+   "file": "W21_sauna_domek_3x2_foto.webp",
+   "shot": "W21",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sauna w domku, ława z jasnego drewna",
+    "en": "The cottage sauna with light wooden benches"
+   },
+   "source": "a7v02115.webp"
+  },
+  {
+   "file": "W22_kuchnia_kominek_3x2_foto.webp",
+   "shot": "W22",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Kuchnia z jadalnią i kominkiem",
+    "en": "Kitchen and dining area with a fireplace"
+   },
+   "source": "a7v02165.webp"
+  },
+  {
+   "file": "W23_salon_szczyt_okno_3x2_foto.webp",
+   "shot": "W23",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon pod szczytem dachu z oknem na góry",
+    "en": "Living room under the gable with a window onto the mountains"
+   },
+   "source": "a7v02195.webp"
+  },
+  {
+   "file": "W24_jadalnia_poroze_3x2_foto.webp",
+   "shot": "W24",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Stół w jadalni pod żyrandolem z poroża",
+    "en": "Dining table under an antler chandelier"
+   },
+   "source": "a7v02220.webp"
+  },
+  {
+   "file": "W25_sypialnia_poddasze_3x2_foto.webp",
+   "shot": "W25",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia na poddaszu",
+    "en": "Attic bedroom"
+   },
+   "source": "a7v02255.webp"
+  },
+  {
+   "file": "L22_balkon_lato_3x2_foto.webp",
+   "shot": "L22",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balkon z fotelami i widokiem na zielone wzgórza",
+    "en": "Balcony with chairs and a view of green hills"
+   },
+   "source": "a7v02310.webp"
+  },
+  {
+   "file": "W26_salon_narozna_kanapa_3x2_foto.webp",
+   "shot": "W26",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z narożną kanapą i oknami na dwie strony",
+    "en": "Living room with a corner sofa and windows on two sides"
+   },
+   "source": "a7v02315.webp"
+  },
+  {
+   "file": "L23_domek_z_balkonu_lato_3x2_foto.webp",
+   "shot": "L23",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sąsiedni domek widziany z balkonu",
+    "en": "A neighbouring cottage seen from the balcony"
+   },
+   "source": "a7v02341.webp"
+  },
+  {
+   "file": "L24_dachy_osady_lato_3x2_foto.webp",
+   "shot": "L24",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dachy osady i Tatry na horyzoncie",
+    "en": "The settlement roofs with the Tatras on the horizon"
+   },
+   "source": "a7v02348.webp"
+  },
+  {
+   "file": "L25_laka_tatry_lato_3x2_foto.webp",
+   "shot": "L25",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łąka nad osadą i Tatry w chmurach",
+    "en": "The meadow above the settlement and the Tatras in the clouds"
+   },
+   "source": "a9m00737.webp"
+  },
+  {
+   "file": "L26_domek_na_lace_lato_3x2_foto.webp",
+   "shot": "L26",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek na zboczu, w tle Tatry",
+    "en": "A cottage on the slope with the Tatras behind"
+   },
+   "source": "a9m00771.webp"
+  },
+  {
+   "file": "W27_nakryty_stol_2x3_foto.webp",
+   "shot": "W27",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Nakryty stół z kwiatami",
+    "en": "A laid table with flowers"
+   },
+   "source": "a9m00797.webp"
+  },
+  {
+   "file": "W28_zyrandol_poroze_2x3_foto.webp",
+   "shot": "W28",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Żyrandol z poroża nad stołem",
+    "en": "Antler chandelier above the table"
+   },
+   "source": "a9m00842.webp"
+  },
+  {
+   "file": "W29_sypialnia_balkon_3x2_foto.webp",
+   "shot": "W29",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z wyjściem na balkon",
+    "en": "Bedroom opening onto the balcony"
+   },
+   "source": "A7V07890-HDR.jpg"
+  },
+  {
+   "file": "W30_salon_tatry_3x2_foto.webp",
+   "shot": "W30",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z kanapą i widokiem na Tatry",
+    "en": "Living room with a sofa and a view of the Tatras"
+   },
+   "source": "A7V07975-HDR.jpg"
+  },
+  {
+   "file": "W31_jadalnia_kominek_3x2_foto.webp",
+   "shot": "W31",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Jadalnia i kominek w domku",
+    "en": "The cottage dining area and fireplace"
+   },
+   "source": "A7V08025-HDR.jpg"
+  },
+  {
+   "file": "W32_stol_poroze_3x2_foto.webp",
+   "shot": "W32",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Stół nakryty dla rodziny pod żyrandolami z poroża",
+    "en": "A table laid for the family under antler chandeliers"
+   },
+   "source": "A7V08055-HDR.jpg"
+  },
+  {
+   "file": "W33_schody_hol_3x2_foto.webp",
+   "shot": "W33",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Drewniane schody i hol",
+    "en": "Wooden staircase and hall"
+   },
+   "source": "A7V08130-HDR.jpg"
+  },
+  {
+   "file": "L27_taras_meble_lato_3x2_foto.webp",
+   "shot": "L27",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Taras z meblami i widokiem na sąsiednie domki",
+    "en": "Terrace with furniture and a view of the other cottages"
+   },
+   "source": "A7V08145-HDR.jpg"
+  },
+  {
+   "file": "L28_balkon_tatry_lato_3x2_foto.webp",
+   "shot": "L28",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na Tatry i lasy",
+    "en": "The view from the balcony over the Tatras and forests"
+   },
+   "source": "A7V09726.jpg"
+  },
+  {
+   "file": "L29_balkon_las_lato_3x2_foto.webp",
+   "shot": "L29",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balkon i świerki na zboczu",
+    "en": "The balcony and spruces on the slope"
+   },
+   "source": "A7V09742.jpg"
+  },
+  {
+   "file": "L30_osada_szeroki_plan_lato_16x9_foto.webp",
+   "shot": "L30",
+   "width": 1920,
+   "height": 1080,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domy osady na zboczu w Gliczarowie Górnym, w tle łąki, lasy i Tatry latem",
+    "en": "The settlement's houses on the slope in Gliczarów Górny, with meadows, forests and the Tatras in summer"
+   },
+   "source": "matygowa-osada-01.jpg"
+  },
+  {
+   "file": "W34_salon_zima_3x2_foto.webp",
+   "shot": "W34",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon zimą, za oknem śnieg i góry",
+    "en": "The living room in winter with snow and mountains outside"
+   },
+   "source": "A7V08879-HDR.jpg"
+  },
+  {
+   "file": "K20_balkon_slonce_zima_3x2_foto.webp",
+   "shot": "K20",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Zimowe słońce nad balkonem",
+    "en": "Winter sun over the balcony"
+   },
+   "source": "A7V08949-HDR.jpg"
+  },
+  {
+   "file": "K21_balia_zima_3x2_foto.webp",
+   "shot": "K21",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balia na tarasie i zaśnieżone Tatry",
+    "en": "The hot tub on the terrace and the snowy Tatras"
+   },
+   "source": "A9M04983.jpg"
+  },
+  {
+   "file": "W35_kominek_fotel_3x2_foto.webp",
+   "shot": "W35",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Fotel przy kominku",
+    "en": "An armchair by the fireplace"
+   },
+   "source": "DSC01929.jpg"
+  },
+  {
+   "file": "W36_narty_przedsionek_2x3_foto.webp",
+   "shot": "W36",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Narty w przedsionku",
+    "en": "Skis in the entrance hall"
+   },
+   "source": "DSC01945.jpg"
+  },
+  {
+   "file": "K22_balkon_zima_3x2_foto.webp",
+   "shot": "K22",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na zimowe Podhale",
+    "en": "The view from the balcony over winter Podhale"
+   },
+   "source": "DSC02011.jpg"
+  },
+  {
+   "file": "N1_ferie_stok_narciarze_3x2_foto.webp",
+   "shot": "N1",
+   "width": 2400,
+   "height": 1600,
+   "placeholder": false,
+   "alt": {
+    "pl": "Narciarze na szerokim, łagodnym stoku wśród świerków, w tle ośnieżone góry",
+    "en": "Skiers on a wide, gentle slope among spruce trees, snowy mountains behind"
+   },
+   "source": "Unsplash, Clemens van Lay, https://unsplash.com/photos/_tuKn-iHayg (Oberallgäu, licencja Unsplash: użycie komercyjne bez obowiązku podpisu). Do podmiany na zdjęcie z Białki lub Kotelnicy, gdy będzie własne."
+  },
+  {
+   "file": "K2_hero_osada_swit_16x9_foto.webp",
+   "shot": "K2",
+   "width": 2400,
+   "height": 1350,
+   "placeholder": false,
+   "alt": {
+    "pl": "Matygowa Osada z lotu ptaka zimą, w tle Tatry nad poranną mgłą",
+    "en": "Matygowa Osada from the air in winter, the Tatras above the morning mist"
+   },
+   "source": "DJI_20260121180502_0393_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_swit_16x9_foto.mp4",
+   "shot": "K2",
+   "width": 1920,
+   "height": 1080,
+   "placeholder": false,
+   "alt": {
+    "pl": "Matygowa Osada z lotu ptaka zimą, w tle Tatry nad poranną mgłą",
+    "en": "Matygowa Osada from the air in winter, the Tatras above the morning mist"
+   },
+   "source": "DJI_20260121180502_0393_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_swit_9x16_foto.webp",
+   "shot": "K2",
+   "width": 1080,
+   "height": 1920,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domy osady wśród świerków, nad nimi ośnieżone Tatry",
+    "en": "The houses among spruces, the snowy Tatras above"
+   },
+   "source": "DJI_20260121180524_0394_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_swit_9x16_foto.mp4",
+   "shot": "K2",
+   "width": 1080,
+   "height": 1920,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domy osady wśród świerków, nad nimi ośnieżone Tatry",
+    "en": "The houses among spruces, the snowy Tatras above"
+   },
+   "source": "DJI_20260121180524_0394_D.jpg"
+  },
+  {
+   "file": "K2_hero_osada_lato_16x9_foto.webp",
+   "shot": "K2",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Drewniana elewacja domu z balkonem latem",
+    "en": "The wooden façade of a house with its balcony in summer"
+   },
+   "source": "a7v09961.jpg"
+  },
+  {
+   "file": "K12_hero_tatry_zima_16x9_foto.webp",
+   "shot": "K12",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Ośnieżone Tatry nad poranną mgłą, na dole dachy osady",
+    "en": "The snow-covered Tatras above the morning mist, with the settlement roofs below"
+   },
+   "source": "DJI_20260121180502_0393_D.jpg"
+  },
+  {
+   "file": "K13_hero_tatry_lato_16x9_foto.webp",
+   "shot": "K13",
+   "width": 1434,
+   "height": 807,
+   "placeholder": false,
+   "alt": {
+    "pl": "Tatry latem w wieczornym świetle, na dole łąki i świerkowe lasy",
+    "en": "The Tatras in summer evening light, with meadows and spruce forests below"
+   },
+   "source": "widoki-02.jpg"
+  },
+  {
+   "file": "K1_panorama_tatry_21x9_foto.webp",
+   "shot": "K1",
+   "width": 2048,
+   "height": 878,
+   "placeholder": false,
+   "alt": {
+    "pl": "Panorama Tatr widziana z osady zimą",
+    "en": "The Tatras panorama seen from the settlement in winter"
+   },
+   "source": "a9m05010.jpg"
+  },
+  {
+   "file": "K3_dron_przelot_16x9_foto.webp",
+   "shot": "K3",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada we mgle i grań Tatr z drona",
+    "en": "The settlement in mist and the Tatra ridge from a drone"
+   },
+   "source": "dji_20260121180524_0394_d.jpg"
+  },
+  {
+   "file": "K4_osada_zmierzch_16x9_foto.webp",
+   "shot": "K4",
+   "width": 1918,
+   "height": 1079,
+   "placeholder": false,
+   "alt": {
+    "pl": "Gliczarów Górny o zmierzchu",
+    "en": "Gliczarów Górny at dusk"
+   },
+   "source": "widoki-05.jpg"
+  },
+  {
+   "file": "K6_dom_orbita_16x9_foto.webp",
+   "shot": "K6",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom z dużym przeszkleniem szczytu, za nim Tatry",
+    "en": "A house with a glazed gable, the Tatras behind it"
+   },
+   "source": "dji_20260121180313_0389_d.jpg"
+  },
+  {
+   "file": "K8_punkt_widokowy_16x9_foto.webp",
+   "shot": "K8",
+   "width": 1614,
+   "height": 908,
+   "placeholder": false,
+   "alt": {
+    "pl": "Punkt widokowy nad osadą z widokiem na Tatry",
+    "en": "Viewpoint above the settlement facing the Tatras"
+   },
+   "source": "widoki-01.jpg"
+  },
+  {
+   "file": "T1_swit_gran_16x9_foto.webp",
+   "shot": "T1",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na ośnieżone Tatry",
+    "en": "View from the balcony to the snowy Tatras"
+   },
+   "source": "dsc02011.jpg"
+  },
+  {
+   "file": "W1_salon_kominek_3x2_foto.webp",
+   "shot": "W1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z kominkiem i oknem na Tatry",
+    "en": "Living room with a fireplace and a window onto the Tatras"
+   },
+   "source": "a7v08874-hdr.jpg"
+  },
+  {
+   "file": "W2_kuchnia_stol_3x2_foto.webp",
+   "shot": "W2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Stół w jadalni nakryty dla ośmiu osób, za oknem śnieg",
+    "en": "Dining table set for eight, snow outside the window"
+   },
+   "source": "a7v08864-hdr.jpg"
+  },
+  {
+   "file": "W3_sypialnia_ranek_3x2_foto.webp",
+   "shot": "W3",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z oknem na zaśnieżony stok",
+    "en": "Bedroom with a window onto the snowy slope"
+   },
+   "source": "a7v08979-hdr.jpg"
+  },
+  {
+   "file": "W5_sauna_3x2_foto.webp",
+   "shot": "W5",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sauna w łazience domu, ławy z jasnego drewna",
+    "en": "The sauna in the house bathroom, benches of pale wood"
+   },
+   "source": "A7V08095-HDR.jpg"
+  },
+  {
+   "file": "W6_taras_wejscie_3x2_foto.webp",
+   "shot": "W6",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Zadaszony taras z widokiem na Tatry zimą",
+    "en": "Covered terrace with a view of the Tatras in winter"
+   },
+   "source": "a9m05021.jpg"
+  },
+  {
+   "file": "W7_detal_drewno_kawa_3x2_foto.webp",
+   "shot": "W7",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Świeży chleb na desce w kuchni",
+    "en": "Fresh bread on a board in the kitchen"
+   },
+   "source": "dsc01920.jpg"
+  },
+  {
+   "file": "B1_bania_alpenglow_3x2_foto.webp",
+   "shot": "B1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Bania na tarasie, w tle świerk i Tatry",
+    "en": "The hot tub on the terrace, a spruce and the Tatras behind"
+   },
+   "source": "a9m05004.jpg"
+  },
+  {
+   "file": "B1_bania_lato_3x2_foto.webp",
+   "shot": "B1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Bania na tarasie latem",
+    "en": "The hot tub on the terrace in summer"
+   },
+   "source": "a7v09923.jpg"
+  },
+  {
+   "file": "B5_sciezka_do_bani_3x2_foto.webp",
+   "shot": "B5",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Bania pod okapem domu, wokół śnieg",
+    "en": "The hot tub under the eaves, snow all around"
+   },
+   "source": "a9m05036.jpg"
+  },
+  {
+   "file": "B6_kawa_taras_3x2_foto.webp",
+   "shot": "B6",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Krzesła na tarasie w zimowym słońcu",
+    "en": "Chairs on the terrace in the winter sun"
+   },
+   "source": "a9m05017.jpg"
+  },
+  {
+   "file": "V1_hawran_salon_3x2_foto.webp",
+   "shot": "V1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Hawrań, salon z narożnym oknem na Tatry",
+    "en": "Hawrań cottage, living room with a corner window onto the Tatras"
+   },
+   "source": "a7v08909-hdr.jpg"
+  },
+  {
+   "file": "V2_gerlach_okno_3x2_foto.webp",
+   "shot": "V2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Gerlach, wnętrze z widokiem za oknem",
+    "en": "Gerlach cottage, the interior and the view outside"
+   },
+   "source": "main_gerlach_A7V08035-HDR.jpg"
+  },
+  {
+   "file": "V3_swinica_okno_3x2_foto.webp",
+   "shot": "V3",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Świnica, wnętrze z widokiem za oknem",
+    "en": "Świnica cottage, the interior and the view outside"
+   },
+   "source": "main_swinica_A7V08030-HDR.jpg"
+  },
+  {
+   "file": "V4_woloszyn_okno_3x2_foto.webp",
+   "shot": "V4",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Wołoszyn, wnętrze z widokiem za oknem",
+    "en": "Wołoszyn cottage, the interior and the view outside"
+   },
+   "source": "main_woloszyn_A7V02195-HDR.jpg"
+  },
+  {
+   "file": "V5_lomnica_okno_3x2_foto.webp",
+   "shot": "V5",
+   "width": 1536,
+   "height": 1024,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Łomnica, balkon z widokiem na Tatry",
+    "en": "Łomnica cottage, the balcony facing the Tatras"
+   },
+   "source": "main_lomnica_bez_samochodu.jpg"
+  },
+  {
+   "file": "V6_lodowy_okno_3x2_foto.webp",
+   "shot": "V6",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Lodowy, wnętrze z widokiem za oknem",
+    "en": "Lodowy cottage, the interior and the view outside"
+   },
+   "source": "main_lodowy_A7V02190-HDR.jpg"
+  },
   {
    "file": "B1_bania_alpenglow_3x2_cgi.webp",
    "shot": "B1",
@@ -28,13 +820,6 @@
    "width": 540,
    "height": 963,
    "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B2)."
-  },
-  {
-   "file": "B3_reka_para_3x2_cgi.webp",
-   "shot": "B3",
-   "width": 884,
-   "height": 590,
-   "note": "Tylko do testów i podglądu. Nie publikować na produkcji; podmienić na materiał z sesji (photo-plan, ujęcie B3)."
   },
   {
    "file": "B5_sciezka_do_bani_3x2_cgi.webp",
@@ -301,6 +1086,986 @@
    "width": 1920,
    "height": 1080,
    "note": "Tymczasowa pętla 15 s bez dźwięku. Nie publikować na produkcji."
+  },
+  {
+   "file": "W41_sypialnia_garderoba_3x2_foto.webp",
+   "shot": "W41",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z łóżkiem małżeńskim widziana zza drewnianej garderoby",
+    "en": "Double bedroom seen past an open wooden wardrobe"
+   },
+   "source": "a7v01990.webp"
+  },
+  {
+   "file": "W42_sypialnia_narozne_okno_3x2_foto.webp",
+   "shot": "W42",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z narożnym przeszkleniem na łąkę",
+    "en": "Bedroom with corner glazing onto the meadow"
+   },
+   "source": "a7v01995.webp"
+  },
+  {
+   "file": "W43_sypialnia_dwa_lozka_3x2_foto.webp",
+   "shot": "W43",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z dwoma łóżkami i otwartą garderobą",
+    "en": "Twin bedroom with an open wardrobe"
+   },
+   "source": "a7v02000.webp"
+  },
+  {
+   "file": "W44_sypialnia_wyjscie_taras_3x2_foto.webp",
+   "shot": "W44",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z przeszklonymi drzwiami na taras",
+    "en": "Bedroom with glass doors onto the terrace"
+   },
+   "source": "a7v02010.webp"
+  },
+  {
+   "file": "W45_sypialnia_okno_wzgorza_3x2_foto.webp",
+   "shot": "W45",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z oknem do podłogi i widokiem na wzgórza",
+    "en": "Bedroom with a floor-length window onto the hills"
+   },
+   "source": "a7v02025.webp"
+  },
+  {
+   "file": "W46_sypialnia_biurko_wzor_3x2_foto.webp",
+   "shot": "W46",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z biurkiem i ścianą w góralski wzór",
+    "en": "Bedroom with a desk and a highlander-pattern wall"
+   },
+   "source": "a7v02035.webp"
+  },
+  {
+   "file": "W47_sypialnia_belki_3x2_foto.webp",
+   "shot": "W47",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia pod drewnianymi belkami",
+    "en": "Bedroom under wooden beams"
+   },
+   "source": "a7v02050.webp"
+  },
+  {
+   "file": "W48_sypialnia_otwarta_garderoba_3x2_foto.webp",
+   "shot": "W48",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z otwartą garderobą z drewna",
+    "en": "Bedroom with an open wooden wardrobe"
+   },
+   "source": "a7v02060.webp"
+  },
+  {
+   "file": "W49_lazienka_prysznic_sypialnia_3x2_foto.webp",
+   "shot": "W49",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z prysznicem przy sypialni",
+    "en": "Bathroom with a shower next to the bedroom"
+   },
+   "source": "a7v02095.webp"
+  },
+  {
+   "file": "W50_lazienka_sauna_drzwi_3x2_foto.webp",
+   "shot": "W50",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z prysznicem i wejściem do sauny",
+    "en": "Bathroom with a shower and the sauna door"
+   },
+   "source": "a7v02100.webp"
+  },
+  {
+   "file": "W51_sauna_lawy_3x2_foto.webp",
+   "shot": "W51",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sauna z ławami z jasnego drewna",
+    "en": "Sauna with light wooden benches"
+   },
+   "source": "a7v02110.webp"
+  },
+  {
+   "file": "W52_hol_widok_sypialnia_3x2_foto.webp",
+   "shot": "W52",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Hol z widokiem do sypialni",
+    "en": "Hallway looking into a bedroom"
+   },
+   "source": "a7v02120.webp"
+  },
+  {
+   "file": "W53_hol_palma_3x2_foto.webp",
+   "shot": "W53",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Hol z palmą i drzwiami do łazienki",
+    "en": "Hallway with a palm and the bathroom door"
+   },
+   "source": "a7v02125.webp"
+  },
+  {
+   "file": "W54_hol_schody_3x2_foto.webp",
+   "shot": "W54",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Wejście do łazienki i schody na piętro",
+    "en": "Bathroom door and the stairs to the upper floor"
+   },
+   "source": "a7v02135.webp"
+  },
+  {
+   "file": "W55_lazienka_prysznic_3x2_foto.webp",
+   "shot": "W55",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z prysznicem",
+    "en": "Bathroom with a walk-in shower"
+   },
+   "source": "a7v02140.webp"
+  },
+  {
+   "file": "W56_kuchnia_jadalnia_szczyt_3x2_foto.webp",
+   "shot": "W56",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Kuchnia z jadalnią pod przeszklonym szczytem",
+    "en": "Kitchen and dining area under the glazed gable"
+   },
+   "source": "a7v02160.webp"
+  },
+  {
+   "file": "W57_salon_kominek_poroze_3x2_foto.webp",
+   "shot": "W57",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z kominkiem i żyrandolem z poroża",
+    "en": "Living room with a fireplace and an antler chandelier"
+   },
+   "source": "a7v02170.webp"
+  },
+  {
+   "file": "W58_salon_kanapa_jadalnia_3x2_foto.webp",
+   "shot": "W58",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z kanapą i jadalnią przy przeszkleniu",
+    "en": "Living room with a sofa and the dining area by the glazing"
+   },
+   "source": "a7v02185.webp"
+  },
+  {
+   "file": "W59_jadalnia_kominek_3x2_foto.webp",
+   "shot": "W59",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Jadalnia przy kominku i aneksie kuchennym",
+    "en": "Dining table by the fireplace and the kitchenette"
+   },
+   "source": "a7v02190.webp"
+  },
+  {
+   "file": "W60_jadalnia_balkon_tatry_3x2_foto.webp",
+   "shot": "W60",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Jadalnia z wyjściem na balkon i widokiem na Tatry",
+    "en": "Dining area opening onto the balcony with a view of the Tatras"
+   },
+   "source": "a7v02205.webp"
+  },
+  {
+   "file": "W61_stol_pod_szczytem_3x2_foto.webp",
+   "shot": "W61",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Stół dla całej rodziny pod szczytem dachu",
+    "en": "A table for the whole family under the roof gable"
+   },
+   "source": "a7v02215.webp"
+  },
+  {
+   "file": "W62_salon_narozna_kanapa_kominek_3x2_foto.webp",
+   "shot": "W62",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z narożną kanapą i kominkiem",
+    "en": "Living room with a corner sofa and a fireplace"
+   },
+   "source": "a7v02225.webp"
+  },
+  {
+   "file": "W63_kuchnia_jadalnia_poroze_3x2_foto.webp",
+   "shot": "W63",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Kuchnia i jadalnia pod żyrandolem z poroża",
+    "en": "Kitchen and dining area under an antler chandelier"
+   },
+   "source": "a7v02230.webp"
+  },
+  {
+   "file": "W64_wc_przy_salonie_3x2_foto.webp",
+   "shot": "W64",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Drzwi do toalety przy salonie",
+    "en": "Door to the WC by the living room"
+   },
+   "source": "a7v02260.webp"
+  },
+  {
+   "file": "W65_lazienka_wanna_okno_3x2_foto.webp",
+   "shot": "W65",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z wanną i oknem do podłogi",
+    "en": "Bathroom with a bathtub and a full-height window"
+   },
+   "source": "a7v02275.webp"
+  },
+  {
+   "file": "W66_lazienka_wanna_3x2_foto.webp",
+   "shot": "W66",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z wanną",
+    "en": "Bathroom with a bathtub"
+   },
+   "source": "a7v02280.webp"
+  },
+  {
+   "file": "W67_lazienka_wanna_sypialnia_3x2_foto.webp",
+   "shot": "W67",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z wanną przy sypialni",
+    "en": "Bathroom with a bathtub next to the bedroom"
+   },
+   "source": "a7v02285.webp"
+  },
+  {
+   "file": "W68_sypialnia_wzor_3x2_foto.webp",
+   "shot": "W68",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia ze ścianą w góralski wzór",
+    "en": "Bedroom with a highlander-pattern wall"
+   },
+   "source": "a7v02290.webp"
+  },
+  {
+   "file": "L30_balkon_krzesla_tatry_lato_3x2_foto.webp",
+   "shot": "L30",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balkon z krzesłami, widok na osadę i Tatry",
+    "en": "Balcony with chairs overlooking the settlement and the Tatras"
+   },
+   "source": "a7v02305.webp"
+  },
+  {
+   "file": "L31_balkon_okap_wzgorza_lato_3x2_foto.webp",
+   "shot": "L31",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balkon pod okapem z widokiem na zielone wzgórza",
+    "en": "Balcony under the eaves with green hills beyond"
+   },
+   "source": "a7v02335.webp"
+  },
+  {
+   "file": "L32_balkon_tatry_parking_lato_3x2_foto.webp",
+   "shot": "L32",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na Tatry i parking przy domku",
+    "en": "Balcony view of the Tatras and the cottage parking space"
+   },
+   "source": "a7v02339.webp"
+  },
+  {
+   "file": "L33_balkon_sasiedni_domek_lato_3x2_foto.webp",
+   "shot": "L33",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Balkon i sąsiedni domek na tle Tatr",
+    "en": "Balcony and a neighbouring cottage against the Tatras"
+   },
+   "source": "a7v02345.webp"
+  },
+  {
+   "file": "L34_balkon_lasy_lato_3x2_foto.webp",
+   "shot": "L34",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na zalesione wzgórza",
+    "en": "Balcony view of forested hills"
+   },
+   "source": "a7v02349.webp"
+  },
+  {
+   "file": "O_historia_dom_lato_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Jeden z domków Matygowej Osady, drewniana elewacja i balkon pod szczytem dachu",
+    "en": "One of the Matygowa Osada cottages, timber facade and gable balcony"
+   },
+   "source": "a7v09961.jpg"
+  },
+  {
+   "file": "O_natura_osada_tatry_zima_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domki osady wśród świerków, w tle Tatry",
+    "en": "The settlement's cottages among spruces, the Tatras behind"
+   },
+   "source": "dji_20260121180502_0393_d.jpg"
+  },
+  {
+   "file": "O_drewno_krzeslo_serce_2x3_foto.webp",
+   "shot": "O",
+   "width": 1200,
+   "height": 1800,
+   "placeholder": false,
+   "alt": {
+    "pl": "Oparcie góralskiego krzesła z wyciętym sercem",
+    "en": "The back of a highland chair with a carved heart"
+   },
+   "source": "a7v09887.jpg"
+  },
+  {
+   "file": "O_slowniczek_plakaty_szczytow_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Plakaty tatrzańskich szczytów na ścianie domku",
+    "en": "Posters of Tatra peaks on a cottage wall"
+   },
+   "source": "a7v09800.jpg"
+  },
+  {
+   "file": "O_goralszczyzna_chocholow_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Drewniane domy wzdłuż ulicy w Chochołowie",
+    "en": "Wooden houses along the street in Chochołów"
+   },
+   "credit": {
+    "pl": "Fot. Aotearoa · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=7710138",
+    "en": "Photo: Aotearoa · CC BY 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=7710138"
+   },
+   "source": "https://commons.wikimedia.org/w/index.php?curid=7710138"
+  },
+  {
+   "file": "O_ludzie_pracownia_rzezbiarska_3x2_foto.webp",
+   "shot": "O",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "alt": {
+    "pl": "Wnętrze izby regionalnej w Chochołowie: obrazy, łóżko, ława, drewniane ściany",
+    "en": "Interior of the regional chamber in Chochołów: holy pictures, a bed, a bench, timber walls"
+   },
+   "credit": {
+    "pl": "Fot. Barbara Maliszewska · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=28698983",
+    "en": "Photo: Barbara Maliszewska · CC BY-SA 3.0 · Wikimedia Commons https://commons.wikimedia.org/w/index.php?curid=28698983"
+   },
+   "source": "https://commons.wikimedia.org/w/index.php?curid=28698983"
+  },
+  {
+   "file": "A_termy-bukovina_1.webp",
+   "shot": "A_termy-bukovina_1",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Baseny zewnętrzne i zjeżdżalnie Term Bukovina, w tle Tatry",
+    "en": "The outdoor pools and slides of Termy Bukovina, the Tatras behind"
+   },
+   "source": "https://www.termybukovina.pl",
+   "author": "Termy Bukovina",
+   "credit": {
+    "pl": "Fot. Termy Bukovina · termybukovina.pl https://www.termybukovina.pl",
+    "en": "Photo: Termy Bukovina · termybukovina.pl https://www.termybukovina.pl"
+   }
+  },
+  {
+   "file": "A_termy-bukovina_2.webp",
+   "shot": "A_termy-bukovina_2",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Termy Bukovina wśród lasów, na horyzoncie Tatry",
+    "en": "Termy Bukovina among the forests, the Tatras on the horizon"
+   },
+   "source": "https://www.termybukovina.pl",
+   "author": "Termy Bukovina",
+   "credit": {
+    "pl": "Fot. Termy Bukovina · termybukovina.pl https://www.termybukovina.pl",
+    "en": "Photo: Termy Bukovina · termybukovina.pl https://www.termybukovina.pl"
+   }
+  },
+  {
+   "file": "A_terma-bania_1.webp",
+   "shot": "A_terma-bania_1",
+   "width": 1470,
+   "height": 980,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Terma Bania z lotu ptaka, baseny pod gołym niebem przy stoku",
+    "en": "Terma Bania from the air, open-air pools by the slopes"
+   },
+   "source": "https://www.termabania.pl",
+   "author": "Terma Bania",
+   "credit": {
+    "pl": "Fot. Terma Bania · termabania.pl https://www.termabania.pl",
+    "en": "Photo: Terma Bania · termabania.pl https://www.termabania.pl"
+   }
+  },
+  {
+   "file": "A_terma-bania_2.webp",
+   "shot": "A_terma-bania_2",
+   "width": 1470,
+   "height": 980,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Basen zewnętrzny przed przeszkloną halą Termy Bania",
+    "en": "The outdoor pool in front of the glazed hall of Terma Bania"
+   },
+   "source": "https://www.termabania.pl",
+   "author": "Terma Bania",
+   "credit": {
+    "pl": "Fot. Terma Bania · termabania.pl https://www.termabania.pl",
+    "en": "Photo: Terma Bania · termabania.pl https://www.termabania.pl"
+   }
+  },
+  {
+   "file": "A_bialka-narty_1.webp",
+   "shot": "A_bialka-narty_1",
+   "width": 1470,
+   "height": 980,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Oświetlone stoki w Białce Tatrzańskiej zimą o zmierzchu",
+    "en": "Floodlit ski slopes in Białka Tatrzańska on a winter evening"
+   },
+   "source": "https://www.termabania.pl",
+   "author": "Terma Bania",
+   "credit": {
+    "pl": "Fot. Terma Bania · termabania.pl https://www.termabania.pl",
+    "en": "Photo: Terma Bania · termabania.pl https://www.termabania.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_1.webp",
+   "shot": "A_skywalk-poronin_1",
+   "width": 1434,
+   "height": 956,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Taras widokowy SkyWalk nad lasem, w tle Tatry",
+    "en": "The SkyWalk viewing deck above the forest, the Tatras behind"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_2.webp",
+   "shot": "A_skywalk-poronin_2",
+   "width": 810,
+   "height": 540,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "SkyWalk na Polanie Zgorzelisko z lotu ptaka, za nim panorama Tatr",
+    "en": "SkyWalk on Polana Zgorzelisko from the air, the Tatra panorama behind"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_3.webp",
+   "shot": "A_skywalk-poronin_3",
+   "width": 1434,
+   "height": 956,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Drewniana ścieżka SkyWalk i wieża z lotu ptaka",
+    "en": "The wooden SkyWalk path and tower from the air"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_szymoszkowa_1.webp",
+   "shot": "A_szymoszkowa_1",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Kolej krzesełkowa na Polanie Szymoszkowej zimą, w tle Tatry",
+    "en": "The chairlift on Polana Szymoszkowa in winter, the Tatras behind"
+   },
+   "source": "https://szymoszkowa.pl",
+   "author": "Polana Szymoszkowa",
+   "credit": {
+    "pl": "Fot. Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl",
+    "en": "Photo: Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl"
+   }
+  },
+  {
+   "file": "A_szymoszkowa_2.webp",
+   "shot": "A_szymoszkowa_2",
+   "width": 800,
+   "height": 533,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Polana Szymoszkowa latem z lotu ptaka, na horyzoncie Tatry",
+    "en": "Polana Szymoszkowa in summer from the air, the Tatras on the horizon"
+   },
+   "source": "https://szymoszkowa.pl",
+   "author": "Polana Szymoszkowa",
+   "credit": {
+    "pl": "Fot. Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl",
+    "en": "Photo: Polana Szymoszkowa · szymoszkowa.pl https://szymoszkowa.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_1.webp",
+   "shot": "A_splyw-dunajcem_1",
+   "width": 900,
+   "height": 600,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Tratwa flisacka na Dunajcu jesienią, nad nią Trzy Korony",
+    "en": "A raft on the Dunajec in autumn, the Three Crowns above"
+   },
+   "source": "https://flisacy.pl",
+   "author": "Flisacy Pienińscy",
+   "credit": {
+    "pl": "Fot. Flisacy Pienińscy · flisacy.pl https://flisacy.pl",
+    "en": "Photo: Flisacy Pienińscy · flisacy.pl https://flisacy.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_2.webp",
+   "shot": "A_splyw-dunajcem_2",
+   "width": 900,
+   "height": 600,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Dunajec pod Trzema Koronami w słoneczny dzień",
+    "en": "The Dunajec beneath the Three Crowns on a sunny day"
+   },
+   "source": "https://flisacy.pl",
+   "author": "Flisacy Pienińscy",
+   "credit": {
+    "pl": "Fot. Flisacy Pienińscy · flisacy.pl https://flisacy.pl",
+    "en": "Photo: Flisacy Pienińscy · flisacy.pl https://flisacy.pl"
+   }
+  },
+  {
+   "file": "A_bielska-jaskinia_1.webp",
+   "shot": "A_bielska-jaskinia_1",
+   "width": 600,
+   "height": 400,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Nacieki w Bielskiej Jaskini",
+    "en": "Dripstone formations in Belianska Cave"
+   },
+   "source": "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+   "author": "Správa slovenských jaskýň",
+   "credit": {
+    "pl": "Fot. Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+    "en": "Photo: Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna"
+   }
+  },
+  {
+   "file": "A_bielska-jaskinia_2.webp",
+   "shot": "A_bielska-jaskinia_2",
+   "width": 600,
+   "height": 400,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Ściana nacieków w Bielskiej Jaskini",
+    "en": "A wall of flowstone in Belianska Cave"
+   },
+   "source": "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+   "author": "Správa slovenských jaskýň",
+   "credit": {
+    "pl": "Fot. Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna",
+    "en": "Photo: Správa slovenských jaskýň · ssj.sk https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna"
+   }
+  },
+  {
+   "file": "A_kasprowy-wierch_w1.webp",
+   "shot": "A_kasprowy-wierch_w1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Wagonik kolei na Kasprowy Wierch nad doliną, w tle Tatry",
+    "en": "The Kasprowy Wierch cable car above the valley, the Tatras behind"
+   },
+   "source": "https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+   "author": "Polskie Koleje Linowe",
+   "credit": {
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html"
+   }
+  },
+  {
+   "file": "A_kasprowy-wierch_w2.webp",
+   "shot": "A_kasprowy-wierch_w2",
+   "width": 1599,
+   "height": 1066,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Wagonik kolei na Kasprowy Wierch w świetle zachodzącego słońca",
+    "en": "The Kasprowy Wierch cable car in the evening sun"
+   },
+   "source": "https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+   "author": "Polskie Koleje Linowe",
+   "credit": {
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/kasprowy-wierch/kasprowy.html"
+   }
+  },
+  {
+   "file": "A_gubalowka_w1.webp",
+   "shot": "A_gubalowka_w1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Wagon kolei na Gubałówkę wśród zaśnieżonych świerków, w tle Tatry",
+    "en": "The Gubałówka funicular among snowy spruces, the Tatras behind"
+   },
+   "source": "https://www.pkl.pl/gubalowka/gubalowka.html",
+   "author": "Polskie Koleje Linowe",
+   "credit": {
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html"
+   }
+  },
+  {
+   "file": "A_gubalowka_w2.webp",
+   "shot": "A_gubalowka_w2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Wagon kolei na Gubałówkę na trasie przez zimowy las",
+    "en": "The Gubałówka funicular on its way through the winter forest"
+   },
+   "source": "https://www.pkl.pl/gubalowka/gubalowka.html",
+   "author": "Polskie Koleje Linowe",
+   "credit": {
+    "pl": "Fot. Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html",
+    "en": "Photo: Polskie Koleje Linowe · pkl.pl https://www.pkl.pl/gubalowka/gubalowka.html"
+   }
+  },
+  {
+   "file": "A_morskie-oko_s1.webp",
+   "shot": "A_morskie-oko_s1",
+   "width": 800,
+   "height": 533,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Schronisko nad brzegiem Morskiego Oka, za nim ośnieżone zbocza",
+    "en": "The mountain hut on the shore of Morskie Oko, snowy slopes behind"
+   },
+   "source": "https://schroniskomorskieoko.pl",
+   "author": "Schronisko PTTK nad Morskim Okiem",
+   "credit": {
+    "pl": "Fot. Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl",
+    "en": "Photo: Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl"
+   }
+  },
+  {
+   "file": "A_morskie-oko_s2.webp",
+   "shot": "A_morskie-oko_s2",
+   "width": 1440,
+   "height": 960,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Morskie Oko o zachodzie, szczyty odbite w wodzie",
+    "en": "Morskie Oko at sunset, the peaks mirrored in the water"
+   },
+   "source": "https://schroniskomorskieoko.pl",
+   "author": "Schronisko PTTK nad Morskim Okiem",
+   "credit": {
+    "pl": "Fot. Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl",
+    "en": "Photo: Schronisko PTTK nad Morskim Okiem · schroniskomorskieoko.pl https://schroniskomorskieoko.pl"
+   }
+  },
+  {
+   "file": "A_balony_1.webp",
+   "shot": "A_balony_1",
+   "width": 1620,
+   "height": 1080,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Balon nad Podhalem, na horyzoncie grań Tatr",
+    "en": "A balloon above Podhale, the Tatra ridge on the horizon"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_2.webp",
+   "shot": "A_balony_2",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Napełnianie balonu o świcie, nad mgłą ośnieżone Tatry",
+    "en": "Inflating the balloon at dawn, the snowy Tatras above the mist"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_balony_3.webp",
+   "shot": "A_balony_3",
+   "width": 1440,
+   "height": 960,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Tatry Zachodnie i Giewont widziane z balonu",
+    "en": "The Western Tatras and Giewont seen from the balloon"
+   },
+   "source": "https://lotybalonem.com/zakopane",
+   "author": "Loty balonem Zakopane i Podhale",
+   "credit": {
+    "pl": "Fot. Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane",
+    "en": "Photo: Loty balonem Zakopane i Podhale · lotybalonem.com https://lotybalonem.com/zakopane"
+   }
+  },
+  {
+   "file": "A_szlaki-rowery_1.webp",
+   "shot": "A_szlaki-rowery_1",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Trasa rowerowa Velo Dunajec wśród łąk, w dali Jezioro Czorsztyńskie",
+    "en": "The Velo Dunajec cycle route through meadows, Lake Czorsztyn in the distance"
+   },
+   "source": "https://velodunajec.pl",
+   "author": "Velo Dunajec",
+   "credit": {
+    "pl": "Fot. Velo Dunajec · velodunajec.pl https://velodunajec.pl",
+    "en": "Photo: Velo Dunajec · velodunajec.pl https://velodunajec.pl"
+   }
+  },
+  {
+   "file": "A_szlaki-rowery_3.webp",
+   "shot": "A_szlaki-rowery_3",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Droga przez łąki Podhala w porannej mgle",
+    "en": "A track across the Podhale meadows in the morning mist"
+   },
+   "source": "https://velodunajec.pl",
+   "author": "Velo Dunajec",
+   "credit": {
+    "pl": "Fot. Velo Dunajec · velodunajec.pl https://velodunajec.pl",
+    "en": "Photo: Velo Dunajec · velodunajec.pl https://velodunajec.pl"
+   }
+  },
+  {
+   "file": "A_murzasichle_1.webp",
+   "shot": "A_murzasichle_1",
+   "width": 896,
+   "height": 597,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Trasa parku linowego w Murzasichlu między świerkami",
+    "en": "The rope park course in Murzasichle among the spruces"
+   },
+   "source": "https://www.modrzewiowybor.pl",
+   "author": "Park Linowy Murzasichle",
+   "credit": {
+    "pl": "Fot. Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl",
+    "en": "Photo: Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl"
+   }
+  },
+  {
+   "file": "A_murzasichle_2.webp",
+   "shot": "A_murzasichle_2",
+   "width": 896,
+   "height": 597,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Kładki i platformy parku linowego wysoko na drzewach",
+    "en": "Rope park walkways and platforms high in the trees"
+   },
+   "source": "https://www.modrzewiowybor.pl",
+   "author": "Park Linowy Murzasichle",
+   "credit": {
+    "pl": "Fot. Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl",
+    "en": "Photo: Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl"
+   }
+  },
+  {
+   "file": "A_murzasichle_3.webp",
+   "shot": "A_murzasichle_3",
+   "width": 1084,
+   "height": 723,
+   "placeholder": false,
+   "rights": "pending",
+   "alt": {
+    "pl": "Park linowy w Murzasichlu z góry, trasy i daszki wśród drzew",
+    "en": "The Murzasichle rope park from above, courses and roofs among the trees"
+   },
+   "source": "https://www.modrzewiowybor.pl",
+   "author": "Park Linowy Murzasichle",
+   "credit": {
+    "pl": "Fot. Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl",
+    "en": "Photo: Park Linowy Murzasichle · modrzewiowybor.pl https://www.modrzewiowybor.pl"
+   }
   }
  ]
 }

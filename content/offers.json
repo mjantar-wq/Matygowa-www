@@ -1,51 +1,5 @@
 [
   {
-    "slug": "ferie-2027",
-    "title": {
-      "pl": "Ferie zimowe 2027",
-      "en": "Winter holidays 2027"
-    },
-    "price_from": 1300,
-    "min_nights": 5,
-    "valid": "2027-01-15/2027-02-28",
-    "body": {
-      "pl": "Śnieg, stoki kilka minut stąd i bania wieczorem. Dom dla całej rodziny, bez wyżywienia, od 1300 zł za dobę, minimum 5 nocy.",
-      "en": "Snow, slopes a few minutes away and the hot tub in the evening. A house for the whole family, self-catering, from 1,300 PLN per night, minimum 5 nights."
-    },
-    "icecoldres_link": null,
-    "note": "Cena i daty do potwierdzenia w IceColdRes (sezon ferie-2027)."
-  },
-  {
-    "slug": "standard",
-    "title": {
-      "pl": "Pobyt w osadzie",
-      "en": "A stay at the settlement"
-    },
-    "price_from": 950,
-    "min_nights": 3,
-    "body": {
-      "pl": "Cały dom od 950 zł za dobę, minimum 3 noce albo weekend. Sauna każdego dnia w cenie.",
-      "en": "A whole house from 950 PLN per night, minimum 3 nights or a weekend. A daily sauna session included."
-    },
-    "icecoldres_link": "standard"
-  },
-  {
-    "slug": "boze-narodzenie-2026",
-    "title": {
-      "pl": "Boże Narodzenie 2026",
-      "en": "Christmas 2026"
-    },
-    "price_from": 2300,
-    "min_nights": 5,
-    "valid": "2026-12-22/2026-12-27",
-    "body": {
-      "pl": "Święta przy jednym stole, z choinką przy kominku i Tatrami za oknem. 2300 zł za dobę, minimum 5 nocy.",
-      "en": "Christmas around one table, with a tree by the fire and the Tatras outside. 2,300 PLN per night, minimum 5 nights."
-    },
-    "active": false,
-    "note": "Wygaśnie przed startem strony; zostawione jako wzór na kolejny rok."
-  },
-  {
     "slug": "zlota-jesien",
     "title": {
       "pl": "Złota polska jesień",
@@ -56,7 +10,9 @@
       "pl": "Od czwartej nocy płacicie połowę. Czerwone Wierchy właśnie rdzewieją.",
       "en": "From the fourth night you pay half. The Red Peaks are just turning rust-red."
     },
-    "active": false,
-    "note": "Sezonowa, do wznowienia jesienią 2027 jako promocja w IceColdRes."
+    "active": true,
+    "icecoldres_promotion_id": "nowa-promocja",
+    "image": "L25_",
+    "note": "Zdjęcie i opis dla promocji IceColdRes „Złota polska jesień” (id nowa-promocja)."
   }
 ]

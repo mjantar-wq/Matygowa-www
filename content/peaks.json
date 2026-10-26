@@ -17,6 +17,13 @@
     "story": {
       "pl": "Hawrań to najwyższy szczyt Tatr Bielskich i najwyższy wapienny szczyt całych Tatr (2152 m). Nazwa pochodzi od kruka: po słowacku *havran*, a Niemcy mówili na niego *Rabenstein*, Krucza Skała. W XIX wieku Tatry Bielskie były prywatnym łowiskiem księcia Christiana Hohenlohe, który kazał tu wytyczać myśliwskie ścieżki. Dziś na Hawrań nie prowadzi żaden szlak: grań należy do kozic i orłów. Z Waszego tarasu widać jego ostrą piramidę obok bliźniaczej Żdziarskiej Widły. To ten sam duet, który zdobi stare pocztówki ze Spiszu.",
       "en": "Havran is the highest peak of the Belianske Tatras and the highest limestone summit in the whole range (2,152 m). Its name means raven: *havran* in Slovak, *Rabenstein*, Raven Rock, in German. In the 19th century these mountains were the private hunting ground of Prince Christian Hohenlohe, who had hunting paths cut across the slopes. Today no trail leads to the top: the ridge belongs to chamois and eagles. From your terrace you can see its sharp pyramid beside its twin, Ždiarska Vidla, the same pair that appears on old postcards of the Spiš region."
+    },
+    "name_cases_pl": {
+      "nom": "Hawrań",
+      "gen": "Hawrania",
+      "acc": "Hawrań",
+      "loc": "Hawraniu",
+      "inst": "Hawraniem"
     }
   },
   {
@@ -37,6 +44,13 @@
     "story": {
       "pl": "Gerlach jest najwyższy w Tatrach i w całych Karpatach (2655 m), ale długo nikt o tym nie wiedział. Za króla Tatr uchodził Krywań, a Gerlach dopiero w 1838 roku wskazał jako najwyższy leśnik Ľudovít Greiner. Potem szczyt zmieniał imię razem z granicami: w 1896 roku został Szczytem Franciszka Józefa, w 1923 Szczytem Legionistów, w 1949 Szczytem Stalina. Swoją dawną nazwę, od wsi Gerlachov u jego stóp, odzyskał w 1959 roku. Na wierzchołek nie prowadzi znakowany szlak, wchodzi się tylko z przewodnikiem. Wieczorem możecie podziwiać go bez liny: z tarasu, z kubkiem herbaty.",
       "en": "Gerlach is the highest peak in the Tatras and in the entire Carpathians (2,655 m), yet for a long time nobody knew it. Kriváň was thought to be the king of the Tatras, and only in 1838 did the forester Ľudovít Greiner identify Gerlach as the highest. After that the peak changed its name along with the borders: in 1896 it became Franz Joseph Peak, in 1923 Legionnaires' Peak, in 1949 Stalin Peak. It got its old name back, after the village of Gerlachov at its foot, in 1959. No marked trail leads to the summit; you can only climb it with a guide. In the evening you can admire it without a rope: from the terrace, with a mug of tea."
+    },
+    "name_cases_pl": {
+      "nom": "Gerlach",
+      "gen": "Gerlacha",
+      "acc": "Gerlach",
+      "loc": "Gerlachu",
+      "inst": "Gerlachem"
     }
   },
   {
@@ -55,8 +69,15 @@
       "en": "A humble name, three granite summits."
     },
     "story": {
-      "pl": "Świnica (2301 m) leży na granicy polsko-słowackiej i jest pierwszym wysokim szczytem Tatr Wysokich, gdy patrzy się od zachodu. Ma trzy wierzchołki, które z daleka układają się w trójząb. Dawniej nazywano ją Świnnicą i Dźwinią Skałą, a Słowacy mówili na nią *Hlúpy vrch*, Głupi Wierch, bo bywała zdradliwa. Pierwsze udokumentowane wejście to 1867 rok, z przewodnikiem Maciejem Sieczką. Na jej ścianach uczyli się ratownicy TOPR i polscy himalaiści, w tym Wanda Rutkiewicz i Jerzy Kukuczka. Z domu Świnica widzicie ją o świcie, gdy granit najpierw różowieje, a potem robi się złoty.",
-      "en": "Świnica (2,301 m) sits on the Polish-Slovak border and is the first high peak of the High Tatras when you look from the west. Its three summits form a trident on the skyline. It used to be called Świnnica and Dźwinia Skała, and the Slovaks named it *Hlúpy vrch*, the Foolish Peak, because it could be treacherous. The first documented ascent was in 1867, with the guide Maciej Sieczka. Tatra rescuers and Polish Himalayan climbers, Wanda Rutkiewicz and Jerzy Kukuczka among them, trained on its walls. From the Świnica house you see it at dawn, when the granite turns pink and then gold."
+      "pl": "Świnica (2301 m) leży na granicy polsko-słowackiej i jest pierwszym wysokim szczytem Tatr Wysokich, gdy patrzy się od zachodu. Ma trzy wierzchołki, które z daleka układają się w trójząb. Dawniej nazywano ją Świnnicą i Dźwinią Skałą, a Słowacy mówili na nią *Hlúpy vrch*, Głupi Wierch, bo bywała zdradliwa. Pierwsze udokumentowane wejście to 1867 rok, z przewodnikiem Maciejem Sieczką. Na jej ścianach uczyli się ratownicy TOPR i polscy himalaiści, w tym Wanda Rutkiewicz i Jerzy Kukuczka. Z Domku Świnica widzicie ją o świcie, gdy granit najpierw różowieje, a potem robi się złoty.",
+      "en": "Świnica (2,301 m) sits on the Polish-Slovak border and is the first high peak of the High Tatras when you look from the west. Its three summits form a trident on the skyline. It used to be called Świnnica and Dźwinia Skała, and the Slovaks named it *Hlúpy vrch*, the Foolish Peak, because it could be treacherous. The first documented ascent was in 1867, with the guide Maciej Sieczka. Tatra rescuers and Polish Himalayan climbers, Wanda Rutkiewicz and Jerzy Kukuczka among them, trained on its walls. From the Świnica cottage you see it at dawn, when the granite turns pink and then gold."
+    },
+    "name_cases_pl": {
+      "nom": "Świnica",
+      "gen": "Świnicy",
+      "acc": "Świnicę",
+      "loc": "Świnicy",
+      "inst": "Świnicą"
     }
   },
   {
@@ -77,6 +98,13 @@
     "story": {
       "pl": "Wołoszyn to długa grań z kilkoma wierzchołkami, najwyższy z nich, Wielki Wołoszyn, ma 2155 m. Nazwa najpewniej pochodzi od Wołochów, pasterzy, którzy między XIV a XVII wiekiem wędrowali łukiem Karpat z owcami. To od nich Podhale ma bacówki, oscypki i wypas na halach. Dziś grań leży w ochronie ścisłej Tatrzańskiego Parku Narodowego i nie prowadzi na nią szlak. Między skałami rośnie tu pierwiosnek maleńki, jeden z najmniejszych kwiatów Tatr. Pierwszego zimowego wejścia dokonał w 1908 roku Mieczysław Karłowicz, kompozytor, który kochał góry tak bardzo, że pisał o nich muzykę.",
       "en": "Wołoszyn is a long ridge with several summits; the highest, Wielki Wołoszyn, rises to 2,155 m. The name most likely comes from the Vlachs, shepherds who moved with their flocks along the Carpathian arc between the 14th and 17th centuries. Podhale owes them its shepherds' huts, its oscypek cheese and its summer grazing on the high meadows. Today the ridge lies within the strictly protected zone of the Tatra National Park and no trail leads to it. Between the rocks grows the least primrose, one of the smallest flowers in the Tatras. The first winter ascent was made in 1908 by Mieczysław Karłowicz, a composer who loved the mountains so much that he wrote music about them."
+    },
+    "name_cases_pl": {
+      "nom": "Wołoszyn",
+      "gen": "Wołoszyna",
+      "acc": "Wołoszyn",
+      "loc": "Wołoszynie",
+      "inst": "Wołoszynem"
     }
   },
   {
@@ -97,6 +125,13 @@
     "story": {
       "pl": "Łomnica (2634 m) jest drugim co do wysokości szczytem Tatr. W sierpniu 1793 roku wszedł na nią z dwoma góralskimi przewodnikami Anglik Robert Townson i zmierzył ją barometrem. Pomylił się o około metr, a po jego pomiarach Łomnicę przez wiele lat uważano za najwyższy szczyt Tatr. Od 1940 roku na wierzchołek wjeżdża kolejka, a przy jej górnej stacji przez cały rok pracują obserwatorium i stacja meteorologiczna. Wieczorem, gdy dolina już szarzeje, Łomnica łapie ostatnie światło dnia. Najlepiej oglądać to z gorącej bani.",
       "en": "Lomnický štít (2,634 m) is the second highest peak in the Tatras. In August 1793 the Englishman Robert Townson climbed it with two highland guides and measured it with a barometer. He was off by about a metre, and after his measurement the peak was considered the highest in the Tatras for many years. Since 1940 a cable car has run to the summit, and an observatory and weather station at its top station are staffed all year round. In the evening, when the valley is already turning grey, Lomnica catches the last light of the day. The best seat is in the hot tub."
+    },
+    "name_cases_pl": {
+      "nom": "Łomnica",
+      "gen": "Łomnicy",
+      "acc": "Łomnicę",
+      "loc": "Łomnicy",
+      "inst": "Łomnicą"
     }
   },
   {
@@ -117,6 +152,13 @@
     "story": {
       "pl": "Lodowy Szczyt (2627 m) jest trzeci w Tatrach i w całych Karpatach, zaraz za Gerlachem i Łomnicą. Nazwę wziął od Doliny Lodowej, a Węgrzy do dziś mówią na niego Szczyt Lodowej Doliny. Pierwsze potwierdzone wejście odbyło się w 1843 roku, z Johnem Ballem, przyrodnikiem, który kilkanaście lat później został pierwszym prezesem londyńskiego Alpine Clubu. Jedna z dróg prowadzi przez Lodowego Konia, wąską grań, na której wspinacze siadają okrakiem jak w siodle. Z Waszych okien wygląda spokojnie i biało, szczególnie w lutym.",
       "en": "Ľadový štít, the Ice Peak (2,627 m), is the third highest in the Tatras and in the entire Carpathians, right after Gerlach and Lomnica. It takes its name from the Ice Valley, and Hungarians still call it Ice Valley Peak. The first confirmed ascent was in 1843, with John Ball, a naturalist who some fifteen years later became the first president of the Alpine Club in London. One route crosses the Ice Horse, a ridge so narrow that climbers sit astride it as if in a saddle. From your windows it looks calm and white, especially in February."
+    },
+    "name_cases_pl": {
+      "nom": "Lodowy Szczyt",
+      "gen": "Lodowego Szczytu",
+      "acc": "Lodowy Szczyt",
+      "loc": "Lodowym Szczycie",
+      "inst": "Lodowym Szczytem"
     }
   },
   {
@@ -135,8 +177,15 @@
       "en": "Four domes that turn rust-red in autumn."
     },
     "story": {
-      "pl": "Czerwone Wierchy to cztery łagodne kopuły na granicy z Słowacją: Kopa Kondracka, Małołączniak, Krzesanica (najwyższa, 2122 m) i Ciemniak. Nazwę zawdzięczają situ skucinie, trawie, która pod koniec lata i jesienią robi się rdzawoczerwona, więc cały masyw płonie w słońcu. Pod spodem góra jest pusta jak ser: w wapieniu kryją się dziesiątki jaskiń, w tym Jaskinia Wielka Śnieżna, najdłuższa i najgłębsza w Polsce. We wrześniu i październiku zobaczycie z apartamentu, jak zieleń grani zmienia się w miedź.",
+      "pl": "Czerwone Wierchy to cztery łagodne kopuły na granicy ze Słowacją: Kopa Kondracka, Małołączniak, Krzesanica (najwyższa, 2122 m) i Ciemniak. Nazwę zawdzięczają situ skucinie, trawie, która pod koniec lata i jesienią robi się rdzawoczerwona, więc cały masyw płonie w słońcu. Pod spodem góra jest pusta jak ser: w wapieniu kryją się dziesiątki jaskiń, w tym Jaskinia Wielka Śnieżna, najdłuższa i najgłębsza w Polsce. We wrześniu i październiku zobaczycie z apartamentu, jak zieleń grani zmienia się w miedź.",
       "en": "Czerwone Wierchy, the Red Peaks, are four gentle domes on the Slovak border: Kopa Kondracka, Małołączniak, Krzesanica (the highest, 2,122 m) and Ciemniak. They owe their name to the highland rush, a grass that turns rusty red in late summer and autumn, so the whole massif glows in the sun. Underneath, the mountain is hollow: dozens of caves hide in the limestone, including Wielka Śnieżna, the longest and deepest cave in Poland. In September and October you can watch from your apartment as the green ridge turns to copper."
+    },
+    "name_cases_pl": {
+      "nom": "Czerwone Wierchy",
+      "gen": "Czerwonych Wierchów",
+      "acc": "Czerwone Wierchy",
+      "loc": "Czerwonych Wierchach",
+      "inst": "Czerwonymi Wierchami"
     }
   },
   {
@@ -157,6 +206,13 @@
     "story": {
       "pl": "Kominiarski Wierch (1829 m) wznosi się między Doliną Chochołowską a Kościeliską. Dawniej nazywano go Kominami Tylkowymi. Góra kryje ponad 140 jaskiń. Górale opowiadali, że chowali się w nich zbójnicy, i trudno o lepszą kryjówkę. Od 1988 roku szczyt jest zamknięty dla turystów, żeby orły mogły tu spokojnie gniazdować. Z apartamentu widzicie go zawsze takim, jakim był przed wiekami.",
       "en": "Kominiarski Wierch (1,829 m) rises between the Chochołowska and Kościeliska valleys. It was once called Kominy Tylkowe. The mountain hides more than 140 caves. Highlanders used to say that outlaws hid in them, and it is hard to imagine a better hideout. Since 1988 the summit has been closed to visitors so that eagles can nest in peace. From your apartment you see it just as it was centuries ago."
+    },
+    "name_cases_pl": {
+      "nom": "Kominiarski Wierch",
+      "gen": "Kominiarskiego Wierchu",
+      "acc": "Kominiarski Wierch",
+      "loc": "Kominiarskim Wierchu",
+      "inst": "Kominiarskim Wierchem"
     }
   },
   {
@@ -177,6 +233,13 @@
     "story": {
       "pl": "Od strony Zakopanego Giewont (1894 m) wygląda jak rycerz leżący na wznak: Długi Giewont to jego tułów, a trzy wierzchołki Wielkiego Giewontu układają się w podbródek, nos i brew. Legenda mówi, że w głębi góry śpią rycerze, którzy obudzą się, gdy Polsce będzie grozić niebezpieczeństwo. Obraz utrwalił Adam Asnyk w wierszu z 1880 roku, a pięć lat wcześniej Giewont trafił na pieczęć Zakopanego. Na wierzchołku od 1901 roku stoi stalowy krzyż wysoki na 15 metrów. Malarz Walery Eljasz nazwał Giewont „królem Zakopanego”. Z apartamentu widzicie króla z boku, przy porannej kawie.",
       "en": "Seen from Zakopane, Giewont (1,894 m) looks like a knight lying on his back: Long Giewont is his body, and the three summits of Great Giewont form his chin, nose and brow. Legend says that knights sleep deep inside the mountain and will wake when Poland is in danger. The poet Adam Asnyk fixed the image in a poem in 1880, and five years earlier Giewont had appeared on the seal of Zakopane. Since 1901 a 15-metre steel cross has stood on the summit. The painter Walery Eljasz called Giewont \"the king of Zakopane\". From your apartment you see the king in profile, over your morning coffee."
+    },
+    "name_cases_pl": {
+      "nom": "Giewont",
+      "gen": "Giewontu",
+      "acc": "Giewont",
+      "loc": "Giewoncie",
+      "inst": "Giewontem"
     }
   },
   {
@@ -197,6 +260,13 @@
     "story": {
       "pl": "Ciemniak (2096 m) zamyka Czerwone Wierchy od zachodu. Na jego wierzchołku grań skręca pod kątem prostym, a nazwa wzięła się prawdopodobnie od Doliny Mułowej, którą pasterze nazywali Ciemną. W XIX wieku na jego zboczach wydobywano rudę żelaza i mówiono na niego Upłaziański Czerwony Wierch. W wapieniu pod szczytem kryją się jaskinie, w tym Miętusia i Wysoka, a wśród traw rosną rzadkie rośliny wysokogórskie. W lipcu łodygi situ na Twardym Grzbiecie brązowieją i Ciemniak jako pierwszy z czterech wierchów nabiera czerwieni.",
       "en": "Ciemniak (2,096 m) closes the Red Peaks from the west. At its summit the ridge turns at a right angle, and its name probably comes from Mułowa Valley, which shepherds used to call the Dark Valley. In the 19th century iron ore was mined on its slopes and it was known as the Upłaz Red Peak. Caves hide in the limestone below the summit, Miętusia and Wysoka among them, and rare alpine plants grow in its grass. In July the rush stems on Twardy Grzbiet start to brown, and Ciemniak is the first of the four peaks to turn red."
+    },
+    "name_cases_pl": {
+      "nom": "Ciemniak",
+      "gen": "Ciemniaka",
+      "acc": "Ciemniak",
+      "loc": "Ciemniaku",
+      "inst": "Ciemniakiem"
     }
   }
 ]

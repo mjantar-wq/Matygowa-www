@@ -5,6 +5,7 @@ import { getDictionary } from '@/i18n/dictionaries'
 import { ENABLED_LOCALES, isLocale, type Locale } from '@/i18n/locales'
 import { href, type RouteKey } from '@/i18n/routes'
 import { getSettings } from './cms'
+import { requestLocale } from './terms'
 import type { Media } from '@/payload-types'
 
 export type LocaleParams = { params: Promise<{ locale: string }> }
@@ -14,6 +15,7 @@ export type SlugParams = { params: Promise<{ locale: string; slug: string }> }
 export async function pageContext(params: Promise<{ locale: string }>) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
+  requestLocale().locale = locale
   return { locale, t: getDictionary(locale), settings: await getSettings(locale) }
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motionAllowed } from './ambience'
 
 const DURATION = 1200
+const SR_ONLY: React.CSSProperties = { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clipPath: 'inset(50%)', whiteSpace: 'nowrap' }
 
 /**
  * Liczba we wstępie narasta od zera, gdy wchodzi w widok (koncepcja: strona główna, sekcja 2).
@@ -11,7 +12,9 @@ const DURATION = 1200
  */
 export function CountUp({ value }: { value: string }) {
   const match = value.match(/^(\D*?)(\d+(?:[\s\u00a0]\d{3})*)(.*)$/)
-  const target = match ? Number(match[2]!.replace(/\s/g, '')) : NaN
+  // ułamki (np. „4,9 ★”) zostają bez animacji, bo kolejne klatki pokazywałyby błędne wartości
+  const target = match && !/^[.,]\d/.test(match[3]!) ? Number(match[2]!.replace(/[\s\u00a0]/g, '')) : NaN
+  const separator = match?.[2]!.match(/[\s\u00a0]/)?.[0]
   const [shown, setShown] = useState<number | null>(null)
   const el = useRef<HTMLSpanElement>(null)
 
@@ -45,6 +48,12 @@ export function CountUp({ value }: { value: string }) {
   }, [target])
 
   if (!match || shown === null) return <span ref={el}>{value}</span>
-  // cyfry o stałej szerokości, żeby napis nie drgał w trakcie narastania
-  return <span ref={el} style={{ fontVariantNumeric: 'tabular-nums' }}>{`${match[1]}${shown}${match[3]}`}</span>
+  const digits = separator ? String(shown).replace(/\B(?=(\d{3})+(?!\d))/g, separator) : String(shown)
+  return (
+    <span ref={el}>
+      {/* cyfry o stałej szerokości, żeby napis nie drgał; czytnik ekranu dostaje od razu pełną wartość */}
+      <span aria-hidden="true" style={{ fontVariantNumeric: 'tabular-nums' }}>{`${match[1]}${digits}${match[3]}`}</span>
+      <span style={SR_ONLY}>{value}</span>
+    </span>
+  )
 }

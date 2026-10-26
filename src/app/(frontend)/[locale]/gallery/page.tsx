@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { CmsPage, getPage } from '@/components/CmsPage'
+import { cleared } from '@/components/Media'
 import { PhotoGallery } from '@/components/PhotoGallery'
 import { findMany } from '@/lib/cms'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
@@ -31,13 +32,14 @@ export default async function GalleryPage({ params }: LocaleParams) {
     ? []
     : await Promise.all(
         PRIORITY.map((series) =>
-          findMany<Media>('media', ctx.locale, { where: { and: [{ series: { in: [series] } }, { isPlaceholder: { not_equals: true } }] }, limit: 90, sort: 'filename', depth: 0 }),
+          findMany<Media>('media', ctx.locale, { where: { and: [{ series: { in: [series] } }, { isPlaceholder: { not_equals: true } }, { mimeType: { like: 'image/' } }] }, limit: 90, sort: 'filename', depth: 0 }),
         ),
       )
   const seen = new Set<Media['id']>()
   const bySeries = new Map<Series, Media[]>()
   PRIORITY.forEach((series, i) => {
-    const media = (found[i] ?? []).filter((m) => !m.mimeType?.startsWith('video/') && !seen.has(m.id))
+    // seria bez zdjęć do pokazania (np. wszystkie czekają na zgodę) nie dostaje pustego nagłówka
+    const media = (found[i] ?? []).filter((m) => m.url && cleared(m) && !seen.has(m.id))
     media.forEach((m) => seen.add(m.id))
     bySeries.set(series, media)
   })

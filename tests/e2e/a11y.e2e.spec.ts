@@ -10,7 +10,7 @@ test.describe('Dostępność (axe)', () => {
       test.setTimeout(120_000)
       await page.goto(path)
       // baner zgód zasłania stronę przy pierwszym wejściu; sprawdzamy stronę po wyborze
-      await page.getByRole('button', { name: 'Tylko niezbędne' }).click({ timeout: 5_000 }).catch(() => {})
+      await page.getByRole('button', { name: /^(Tylko niezbędne|Necessary only)$/ }).click({ timeout: 5_000 }).catch(() => {})
       const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
       const serious = violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')
       expect(serious.map((v) => `${v.id}: ${v.help} (${v.nodes.length}) ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(', ')}`)).toEqual([])

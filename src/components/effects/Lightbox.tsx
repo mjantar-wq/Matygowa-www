@@ -75,8 +75,10 @@ export function Lightbox({ items, t }: { items: LightboxItem[]; t: Dictionary['e
       >
         {current ? (
           <figure className="mo-lightbox__figure">
+            {/* Zamknięte okno ma display: none, a „lazy” nie pobiera wtedy zdjęcia. Bez tego React dodawał preload
+                pierwszego powiększenia każdej galerii i strona główna ściągała je na starcie (ok. 1,5 MB). */}
             {/* eslint-disable-next-line @next/next/no-img-element -- powiększenie: kopia na szerokość ekranu */}
-            <img key={current.url} src={current.url} srcSet={srcSet(current.url, current.width)} sizes="100vw" alt={current.alt ?? ''} width={current.width ?? undefined} height={current.height ?? undefined} />
+            <img key={current.url} src={current.url} srcSet={srcSet(current.url, current.width)} sizes="100vw" loading="lazy" alt={current.alt ?? ''} width={current.width ?? undefined} height={current.height ?? undefined} />
             <figcaption className="mo-lightbox__caption">
               {current.alt ? <span>{current.alt}</span> : null}
               {current.credit ? <span className="mo-lightbox__credit">{current.credit}</span> : null}

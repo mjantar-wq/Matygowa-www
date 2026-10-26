@@ -101,6 +101,9 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-hotspots button { min-block-size: 2.75rem; padding: 0 var(--space-4); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: var(--color-powierzchnia); color: var(--color-atrament); font: 500 12px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
 @media (max-width: 767px) { .mo-hotspots { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block-end: var(--space-2); } .mo-hotspots button { white-space: nowrap; } .mo-map__stage .mo-svg-host { min-inline-size: 640px; } }
 .mo-hotspots button:is(:hover, :focus-visible) { border-color: var(--color-bursztyn); }
+/* Mapa osady: lista ukryta (wg Michała), pokazuje się tylko przy nawigacji klawiaturą */
+.mo-hotspots.mo-sr { margin: 0; padding: 0; overflow: hidden; }
+.mo-hotspots.mo-sr:focus-within { position: static; inline-size: auto; block-size: auto; clip-path: none; overflow: visible; margin-block-start: var(--space-4); }
 @media (prefers-reduced-motion: no-preference) {
   .mo-hotspot .accent { animation: mo-puls-svg 3.2s var(--ease-mgla) infinite; }
   @supports (animation-timeline: view()) {

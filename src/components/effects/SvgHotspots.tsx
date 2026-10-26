@@ -12,8 +12,9 @@ type Target = { svgId: string; popoverId: string; label: string; href?: string; 
  * Ilustracja SVG (G1 mapa, G2 panorama) wczytywana dopiero przy zbliżeniu do sekcji i wstawiana do strony,
  * żeby kolory szły z tokenów (dzień / noc, zima / lato). Wskazane grupy (np. #p-hawran, #b-dom-hawran)
  * stają się przyciskami otwierającymi dymki (popover) wyrenderowane na serwerze.
+ * `listHidden`: lista przycisków pod rysunkiem jest niewidoczna, ale zostaje dla klawiatury i czytników ekranu.
  */
-export function SvgHotspots({ src, targets, className, scrollLabel }: { src: string; targets: Target[]; className?: string; scrollLabel?: string }) {
+export function SvgHotspots({ src, targets, className, scrollLabel, listHidden }: { src: string; targets: Target[]; className?: string; scrollLabel?: string; listHidden?: boolean }) {
   const host = useRef<HTMLDivElement>(null)
   const [state, setState] = useState<'idle' | 'ready' | 'error'>('idle')
 
@@ -82,7 +83,7 @@ export function SvgHotspots({ src, targets, className, scrollLabel }: { src: str
       <div className="mo-svg-scroll" tabIndex={scrollLabel ? 0 : undefined} role={scrollLabel ? 'region' : undefined} aria-label={scrollLabel}>
         <div ref={host} className="mo-svg-host" data-state={state} />
       </div>
-      <ul className="mo-hotspots">
+      <ul className={listHidden ? 'mo-hotspots mo-sr' : 'mo-hotspots'}>
         {targets.map((t) => (
           <li key={t.svgId}>
             <button

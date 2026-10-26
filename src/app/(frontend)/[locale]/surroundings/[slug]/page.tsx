@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: SlugParams): Promise<Metadata
   const ctx = await pageContext(params)
   const { slug } = await params
   const a = await findBySlug<Attraction>('attractions', slug, ctx.locale)
-  return buildMetadata(ctx.locale, 'surroundings', { slug, title: a?.name, description: a?.summary, seo: a?.seo })
+  return buildMetadata(ctx.locale, 'surroundings', { slug, title: a?.name, description: a?.summary, seo: a?.seo, image: a?.image })
 }
 
 export default async function AttractionPage({ params }: SlugParams) {

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { BookingBar } from '@/components/BookingBar'
 import { Credit, Media } from '@/components/Media'
 import { RichText } from '@/components/RichText'
+import { FaqStructuredData, plainText } from '@/components/StructuredData'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
 import { PhotoGallery } from '@/components/PhotoGallery'
@@ -15,6 +16,7 @@ import { findMany } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getServices, promoSeason } from '@/lib/icecoldres'
 import { getPromoCards } from '@/lib/promo-cards'
+import { fillText, termVars } from '@/lib/terms'
 import type { PageContext } from '@/lib/page'
 import type { Attraction, News, Page, Testimonial, Unit } from '@/payload-types'
 
@@ -357,9 +359,12 @@ function Gallery({ block, ctx }: Props<'gallery'>) {
   )
 }
 
-function Faq({ block }: Props<'faq'>) {
+async function Faq({ block, ctx }: Props<'faq'>) {
+  const vars = await termVars(ctx.locale)
+  const faq = (block.items ?? []).map((i) => ({ question: i.question ?? '', answer: fillText(plainText(i.answer as Parameters<typeof plainText>[0]), vars) }))
   return (
     <Section block={block}>
+      <FaqStructuredData items={faq} />
       <Heading heading={block.heading} />
       {block.items?.map((i) => (
         <details key={i.id} style={{ borderBlockEnd: '1px solid var(--color-linia)', paddingBlock: 'var(--space-4)' }}>

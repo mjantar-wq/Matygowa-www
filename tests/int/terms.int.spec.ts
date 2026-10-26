@@ -6,10 +6,13 @@ describe('znaczniki warunków z IceColdRes', async () => {
   const { fillText, fillTree, termVars } = await import('@/lib/terms')
   const vars = { checkin: '15:00', deposit: '30%', balance: '14' }
 
-  it('podmienia znane znaczniki, brakujące i obce zostawia', () => {
-    expect(fillText('Przyjazd od {checkin}, zaliczka {deposit}, dopłata {balance} dni, {freeCancellation}, {inne}', vars)).toBe(
-      'Przyjazd od 15:00, zaliczka 30%, dopłata 14 dni, {freeCancellation}, {inne}',
-    )
+  it('podmienia znane znaczniki, obce zostawia', () => {
+    expect(fillText('Przyjazd od {checkin}, zaliczka {deposit}, dopłata {balance} dni, {inne}', vars)).toBe('Przyjazd od 15:00, zaliczka 30%, dopłata 14 dni, {inne}')
+  })
+
+  it('zdanie ze znacznikiem bez wartości znika, reszta tekstu zostaje', () => {
+    expect(fillText('Zaliczka {deposit}. Rezygnacja jest bezpłatna do {freeCancellation} dni przed przyjazdem. Pełny opis: {terms}', vars)).toBe('Zaliczka 30%.')
+    expect(fillText('Zaliczka {deposit}, rezygnacja do {freeCancellation} dni! Cisza nocna od 23:00.', vars)).toBe('Cisza nocna od 23:00.')
   })
 
   it('w drzewie Lexical tylko w polach text, bez zmiany oryginału', () => {

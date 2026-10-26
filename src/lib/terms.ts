@@ -47,9 +47,16 @@ export const termVars = cache(async (locale: Locale): Promise<TermVars> => {
 
 const MARK = new RegExp(`\\{(${TERM_KEYS.join('|')})\\}`, 'g')
 
-/** Podmienia znane znaczniki; nieznane i bez wartości zostają (redaktor widzi, czego brakuje). */
+// zdanie (do kropki, wykrzyknika, pytajnika albo końca wiersza) z pozostałym znacznikiem
+const UNFILLED_SENTENCE = new RegExp(`[^.!?\\n\\s][^.!?\\n]*\\{(?:${TERM_KEYS.join('|')})\\}[^.!?\\n]*[.!?]?[ \\t]*`, 'g')
+
+/**
+ * Podmienia znane znaczniki. Zdanie ze znacznikiem bez wartości znika z publicznej strony
+ * (np. IceColdRes nie podaje dni bezpłatnej rezygnacji, gdy oferta jej nie ma); w panelu tekst zostaje bez zmian.
+ */
 export function fillText(text: string, vars: TermVars) {
-  return text.replace(MARK, (m, key: keyof TermVars) => vars[key] ?? m)
+  const filled = text.replace(MARK, (m, key: keyof TermVars) => vars[key] ?? m)
+  return hasMarks(filled) ? filled.replace(UNFILLED_SENTENCE, '').trimEnd() : filled
 }
 
 export const hasMarks = (text: string) => new RegExp(MARK.source).test(text)

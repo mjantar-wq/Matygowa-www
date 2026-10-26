@@ -21,7 +21,9 @@ function gtag(..._args: unknown[]): void {
 }
 
 const SAVED_EVENT = 'mo:zgody-zapisane'
-const readRaw = () => document.cookie.match(new RegExp(`(?:^|; )${CONSENT_COOKIE}=([^;]*)`))?.[1] ?? ''
+/** Wybór z tej wizyty, gdy przeglądarka nie zapisała ciasteczka (blokada cookies): baner i tak się zamyka. */
+let unsaved = ''
+const readRaw = () => document.cookie.match(new RegExp(`(?:^|; )${CONSENT_COOKIE}=([^;]*)`))?.[1] ?? unsaved
 const subscribe = (cb: () => void) => {
   window.addEventListener(SAVED_EVENT, cb)
   return () => window.removeEventListener(SAVED_EVENT, cb)
@@ -52,7 +54,10 @@ export function ConsentBanner({ t, policyHref }: Props) {
 
   function save(choice: { analytics: boolean; marketing: boolean }) {
     const value = encodeURIComponent(JSON.stringify({ v: CONSENT_VERSION, ...choice, ts: new Date().toISOString() }))
-    document.cookie = `${CONSENT_COOKIE}=${value}; max-age=${CONSENT_MAX_AGE}; path=/; samesite=lax; secure${cookieDomain()}`
+    // „secure” tylko przez https: przez http przeglądarka odrzuciłaby całe ciasteczko
+    const secure = window.location.protocol === 'https:' ? '; secure' : ''
+    document.cookie = `${CONSENT_COOKIE}=${value}; max-age=${CONSENT_MAX_AGE}; path=/; samesite=lax${secure}${cookieDomain()}`
+    unsaved = value
     gtag('consent', 'update', consentSignals(choice))
     dataLayer().push({ event: 'consent_update', consent_analytics: choice.analytics, consent_marketing: choice.marketing })
     window.dispatchEvent(new Event(SAVED_EVENT))

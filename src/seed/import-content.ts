@@ -39,14 +39,14 @@ async function main() {
     const describe = stem.replace(/^[A-Z]+\d+_/, '').replace(/_(\d+x\d+_)?cgi$/, '').replace(/[_-]+/g, ' ')
     const found = await payload.find({ collection: 'media', where: { filename: { equals: filename } }, limit: 1, depth: 0 })
     let id = found.docs[0]?.id
+    const series = [
+      /_lato_/.test(stem) ? 'summer' : /^[KT]/.test(stem) ? 'winter' : null,
+      /_noc_|gwiazdy/.test(stem) ? 'night' : null,
+      /^[VW]\d/.test(stem) ? 'interiors' : null,
+      /^B\d/.test(stem) ? 'rituals' : null,
+      /^A_/.test(stem) ? 'surroundings' : null,
+    ].filter(Boolean)
     if (!id) {
-      const series = [
-        /_lato_/.test(stem) ? 'summer' : /^[KT]/.test(stem) ? 'winter' : null,
-        /_noc_|gwiazdy/.test(stem) ? 'night' : null,
-        /^[VW]\d/.test(stem) ? 'interiors' : null,
-        /^B\d/.test(stem) ? 'rituals' : null,
-        /^A_/.test(stem) ? 'surroundings' : null,
-      ].filter(Boolean)
       const real = item.placeholder === false
       id = (
         await payload.create({
@@ -59,7 +59,11 @@ async function main() {
         } as never) as Any
       ).id
       await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}`, ...(real && item.credit ? { caption: item.credit.en } : {}) } })
-    } else if (item.rights && found.docs[0]?.rights !== item.rights) {
+    } else if (!found.docs[0]?.series?.length && series.length) {
+      // plik wgrany przed dodaniem serii: galeria grupuje zdjęcia po seriach, więc uzupełniamy je bez ponownego wgrywania
+      await payload.update({ collection: 'media', id, locale: 'pl', data: { series } as never })
+    }
+    if (id && found.docs[0] && item.rights && found.docs[0].rights !== item.rights) {
       // zgoda obiektu przyszła po wgraniu pliku: manifest zmienia prawa i podpis bez ponownego wgrywania
       await payload.update({ collection: 'media', id, locale: 'pl', data: { rights: item.rights, caption: item.credit?.pl } })
       if (item.credit?.en) await payload.update({ collection: 'media', id, locale: 'en', data: { caption: item.credit.en } })

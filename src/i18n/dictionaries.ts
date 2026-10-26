@@ -150,6 +150,8 @@ const pl = {
     privacy: 'Polityka prywatności',
     cookies: 'Polityka cookies',
     cookieSettings: 'Ustawienia cookies',
+    directions: 'Wyznacz trasę',
+    winterRoute: 'Dojazd zimą',
   },
   consent: {
     title: 'Pliki cookies',
@@ -315,6 +317,8 @@ const en: Dictionary = {
     privacy: 'Privacy policy',
     cookies: 'Cookie policy',
     cookieSettings: 'Cookie settings',
+    directions: 'Get directions',
+    winterRoute: 'Driving in winter',
   },
   consent: {
     title: 'Cookies',

@@ -37,6 +37,15 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
         const line = innerHeight * Number(el.dataset.sceneLine ?? 0.5)
         for (const n of el.querySelectorAll<HTMLElement>('[data-scene]')) if (n.getBoundingClientRect().top <= line) el = n
       }
+      // Element z data-scene-next (mapa osady na końcu panoramy): gdy cały jest już na ekranie, tło od razu
+      // przechodzi do sceny następnego rozdziału, zamiast po mapie wracać na chwilę do panoramy.
+      const sec = el?.closest('section')
+      const after = sec?.querySelector<HTMLElement>('[data-scene-next]')
+      if (after && after.getBoundingClientRect().bottom <= innerHeight) {
+        const next = sec!.nextElementSibling as HTMLElement | null
+        const n = next?.dataset.scene ? next : next?.querySelector<HTMLElement>('[data-scene]')
+        if (n) el = n
+      }
       const id = el?.dataset.scene
       if (!id || !scenes.some((s) => s.id === id)) return
       setActive(id)

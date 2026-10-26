@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { CmsPage, getPage } from '@/components/CmsPage'
 import { SettlementMap } from '@/components/SettlementMap'
+import { GuidePopup } from '@/components/GuidePopup'
 import { UnitCard } from '@/components/UnitCard'
 import { findMany, UNIT_ORDER } from '@/lib/cms'
 import { getPricesFrom } from '@/lib/icecoldres'
@@ -38,6 +39,7 @@ export default async function HousesPage({ params }: LocaleParams) {
       <section className="mo-section mo-container">
         <h2 className="mo-h2">{ctx.t.effects.map}</h2>
         <SettlementMap units={units} ctx={ctx} />
+        <GuidePopup ctx={ctx} />
       </section>
     </CmsPage>
   )

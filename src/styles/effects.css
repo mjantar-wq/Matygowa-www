@@ -336,6 +336,8 @@ body:has(.mo-opowiesc) .mo-footer { margin-block-start: 0; padding-block: var(--
 @media (max-width: 767px) {
   .mo-stage__svg[data-pan] { --panorama-trawa: 7svh; --panorama-wys: min(36svh, 22rem); }
   .mo-opowiesc .mo-peak-card .mo-card__media { aspect-ratio: 16 / 9; }
+  /* jeden kafelek na ekranie, u góry, a pod nim wolna panorama z zaznaczonym szczytem (wg Michała) */
+  .mo-opowiesc .mo-peak-cards:has(> [data-step]) { gap: 62svh !important; }
 }
 
 /* Wyróżnienie szczytu i atrakcji: reszta przygasa, wybrany punkt jest większy, w kolorze akcentu i pulsuje */

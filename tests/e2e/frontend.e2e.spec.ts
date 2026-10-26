@@ -9,6 +9,26 @@ test.describe('Szkielet strony', () => {
     await expect(page.getByRole('link', { name: 'Domki i apartamenty' })).toBeVisible()
   })
 
+  test('pasek rezerwacji: liczbę dzieci wpisuje się i kasuje tak samo jak liczbę osób', async ({ page }) => {
+    await page.goto('/')
+    const guests = page.getByRole('combobox', { name: 'Liczba osób' }).first()
+    const children = page.getByRole('combobox', { name: 'W tym dzieci' }).first()
+    // bez domyślnego 0 do kasowania (Michał, 26.10.2026)
+    await expect(children).toHaveValue('')
+    await guests.fill('4')
+    await guests.press('Enter')
+    await children.fill('2')
+    await children.press('Enter')
+    await expect(page.getByRole('group', { name: 'Wiek dzieci' }).first().getByRole('combobox')).toHaveCount(2)
+    await children.fill('1')
+    await children.press('Enter')
+    await expect(page.getByRole('group', { name: 'Wiek dzieci' }).first().getByRole('combobox')).toHaveCount(1)
+    await children.fill('')
+    await children.press('Enter')
+    await expect(children).toHaveValue('')
+    await expect(page.getByRole('group', { name: 'Wiek dzieci' })).toHaveCount(0)
+  })
+
   test('wersja EN i przełącznik języka zachowuje podstronę', async ({ page }) => {
     await page.goto('/domy')
     await page.getByRole('link', { name: /^EN/ }).click()

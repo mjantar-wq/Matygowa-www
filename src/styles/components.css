@@ -138,6 +138,9 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-footer { margin-block-start: var(--sekcja-y); padding-block: var(--space-8); background: var(--color-tlo-2); font: var(--text-body-s--font-weight) var(--text-body-s)/var(--text-body-s--line-height) var(--font-ui); color: var(--color-atrament-2); }
 .mo-footer__grid { display: grid; gap: var(--space-6) var(--rynna); grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 .mo-footer a { color: inherit; }
+/* profile społecznościowe jako logotypy: obszar kliknięcia 44 px bez przesuwania ikon względem kolumny */
+.mo-footer__social { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); list-style: none; padding: 0; margin: var(--space-3) 0 0; }
+.mo-footer__ikona { display: inline-flex; padding: 10px; margin: -10px; }
 /* Deseń Podhale i Tatry (od Michała) na dużych jednolitych tłach: leży pod całą stroną w kolorze linii.
    Zdjęcia, filmy, karty, pola i stopka mają własne kryjące tło, więc deseń nigdy nie wchodzi na zdjęcia ani wideo. */
 :root { --wzor-podhale: url("/ilustracje/G6_wzor_podhale_tatry.svg"); --wzor-podhale-kafel: 240px; --wzor-podhale-krycie: 0.5; --wzor-naglowek-krycie: 0.6; }

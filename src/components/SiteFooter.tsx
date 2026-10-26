@@ -8,6 +8,7 @@ import { ConsentSettingsLink } from './ConsentBanner'
 import { getNewsletterConsent } from '@/lib/icecoldres'
 import { directionsUrl } from '@/lib/maps'
 import { NewsletterForm } from './NewsletterForm'
+import { SocialIcon, socialKind } from './SocialIcon'
 
 export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Dictionary; settings: Setting | null }) {
   const route = directionsUrl(settings)
@@ -36,7 +37,23 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
         {settings?.social?.length ? (
           <div>
             <p className="mo-label">{t.footer.follow}</p>
-            <ul>{settings.social.map((s) => <li key={s.id ?? s.url}><a href={s.url} rel="noopener">{s.label}</a></li>)}</ul>
+            {/* jednobarwne logotypy zamiast nazw (Michał, 26.10.2026); serwis bez ikony zostaje podpisem */}
+            <ul className="mo-footer__social">
+              {settings.social.map((s) => {
+                const kind = socialKind(s.url, s.label)
+                return (
+                  <li key={s.id ?? s.url}>
+                    {kind ? (
+                      <a className="mo-footer__ikona" href={s.url} rel="noopener" aria-label={kind === 'facebook' ? 'Facebook' : 'Instagram'}>
+                        <SocialIcon kind={kind} />
+                      </a>
+                    ) : (
+                      <a href={s.url} rel="noopener">{s.label}</a>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         ) : null}
         {/* osobno w Suspense: wolne albo niedostępne IceColdRes nie wstrzymuje renderu strony */}
@@ -58,7 +75,6 @@ async function Newsletter({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
     <div>
       <p className="mo-label">{t.newsletter.title}</p>
-      <p style={{ marginBlockEnd: 'var(--space-3)' }}>{t.newsletter.lead}</p>
       <NewsletterForm locale={locale} t={t.newsletter} consent={{ ...consent, privacyUrl }} />
     </div>
   )

@@ -194,7 +194,7 @@ async function main() {
     const base = { eyebrow: b.eyebrow?.[l], heading: b.heading?.[l] }
     switch (b.type) {
       case 'hero':
-        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true, image: img('K12_'), video: video('K2_hero_osada_swit_16x9'), videoPortrait: video('K2_hero_osada_swit_9x16'), variants: [{ pora: 'noc', image: img('K2_hero_osada_noc_16x9'), video: video('K2_hero_osada_noc_16x9') }, { sezon: 'lato', image: img('K13_') }] }
+        return { blockType: 'hero', headline: b.headline?.[l], subline: b.sub?.[l], showBookingBar: true, image: img('K12_'), video: video('K2_hero_osada_swit_16x9'), videoPortrait: video('K2_hero_osada_swit_9x16'), variants: [{ pora: 'noc', image: img('K2_hero_osada_noc_16x9'), video: video('K2_hero_osada_noc_16x9') }, { sezon: 'lato', image: img('K14_'), video: video('K14_') }] }
       case 'intro':
         return { blockType: 'intro', ...base, body: md(b.body?.[l]), stats: b.stats?.map((s: Any) => ({ value: s.value, label: s.label?.[l] })) }
       case 'peak_panorama':

@@ -530,6 +530,31 @@
    "source": "widoki-02.jpg"
   },
   {
+   "file": "K14_hero_dron_lato_16x9_foto.webp",
+   "shot": "K14",
+   "width": 1920,
+   "height": 1080,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada z drona jesienią, w tle zielone wzgórza Pogórza Gliczarowskiego",
+    "en": "The settlement from a drone in autumn, with the green hills of the Gliczarów foothills behind"
+   },
+   "source": "DJI_20251012123954_0005_D.MP4, 3:12–3:24: kadr 16:9 wycięty z 4K (bez drogi i aut), spowolnienie 2×, pętla 18 s z przenikaniem 2 s (pierwsza klatka jako poster)"
+  },
+  {
+   "file": "K14_hero_dron_lato_16x9_foto.mp4",
+   "shot": "K14",
+   "width": 1920,
+   "height": 1080,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada z drona jesienią, w tle zielone wzgórza Pogórza Gliczarowskiego",
+    "en": "The settlement from a drone in autumn, with the green hills of the Gliczarów foothills behind"
+   },
+   "source": "DJI_20251012123954_0005_D.MP4, 3:12–3:24: kadr 16:9 wycięty z 4K (bez drogi i aut), spowolnienie 2×, pętla 18 s z przenikaniem 2 s",
+   "note": "Tymczasowo, do czasu letniej sesji; tylko hero w nastroju dzień-lato."
+  },
+  {
    "file": "K1_panorama_tatry_21x9_foto.webp",
    "shot": "K1",
    "width": 2048,
@@ -552,6 +577,32 @@
     "en": "The settlement in mist and the Tatra ridge from a drone"
    },
    "source": "dji_20260121180524_0394_d.jpg"
+  },
+  {
+   "file": "K2_hero_osada_noc_16x9_foto.webp",
+   "shot": "K2",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Ośnieżone Tatry nocą nad doliną, na dole dachy osady",
+    "en": "The snow-covered Tatras at night above the valley, with the settlement roofs below"
+   },
+   "source": "K12_hero_tatry_zima_16x9_foto.webp (DJI_20260121180502_0393_D.jpg), nocny grading samymi parametrami: ekspozycja, balans bieli, nasycenie, klarowność, filtr połówkowy",
+   "note": "Tymczasowo, do czasu nocnego ujęcia z sesji zimowej (photo-plan, ujęcie K2 noc)."
+  },
+  {
+   "file": "T3_noc_gwiazdy_16x9_foto.webp",
+   "shot": "T3",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada i grań Tatr nocą, śnieg na dachach domków",
+    "en": "The settlement and the Tatra ridge at night, snow on the cottage roofs"
+   },
+   "source": "K3_dron_przelot_16x9_foto.webp (dji_20260121180524_0394_d.jpg), nocny grading samymi parametrami: ekspozycja, balans bieli, nasycenie, klarowność, filtr połówkowy",
+   "note": "Tymczasowo, do czasu nocnego ujęcia z sesji zimowej (photo-plan, ujęcie T3)."
   },
   {
    "file": "K4_osada_zmierzch_16x9_foto.webp",

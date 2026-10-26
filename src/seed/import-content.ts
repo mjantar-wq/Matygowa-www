@@ -32,7 +32,6 @@ async function main() {
   // stoją przed CGI, więc byPrefix wybiera je pierwsze. CGI zawsze isPlaceholder = true.
   // Plik o tej samej nazwie nie jest wgrywany drugi raz.
   const media = new Map<string, number | string>()
-  const OUTDOOR: Record<string, string> = { W6_taras_wejscie_3x2_foto: 'winter', V5_lomnica_okno_3x2_foto: 'summer' }
   const manifestPath = path.join(DIR, 'media', 'manifest.json')
   for (const item of fs.existsSync(manifestPath) ? (JSON.parse(fs.readFileSync(manifestPath, 'utf8')).items as Any[]) : []) {
     const filename: string = item.file
@@ -40,14 +39,14 @@ async function main() {
     const describe = stem.replace(/^[A-Z]+\d+_/, '').replace(/_(\d+x\d+_)?cgi$/, '').replace(/[_-]+/g, ' ')
     const found = await payload.find({ collection: 'media', where: { filename: { equals: filename } }, limit: 1, depth: 0 })
     let id = found.docs[0]?.id
-    // zdjęcia z zewnątrz w serii W/V nie są wnętrzami: idą do pory roku ze zdjęcia (Michał, 26.10.2026)
-    const outdoor = OUTDOOR[stem]
-    const series = [
-      outdoor ?? (/_lato_/.test(stem) ? 'summer' : /^[KT]/.test(stem) ? 'winter' : null),
+    // „series” w manifeście zastępuje reguły z nazwy pliku, np. taras i balkon z serii wnętrz idą do pory roku ze zdjęcia
+    // (Michał, 26.10.2026); sauna i bania (także z serii wnętrz i zimy) trafiają do „Sauna i bania”
+    const ritual = /^B\d/.test(stem) || (!/^A_/.test(stem) && /sauna|bani|balia/.test(stem))
+    const series = (item.series as string[] | undefined) ?? [
+      /_lato_/.test(stem) ? 'summer' : /^[KT]/.test(stem) ? 'winter' : null,
       /_noc_|gwiazdy/.test(stem) ? 'night' : null,
-      // sauna i bania (także zdjęcia z serii wnętrz i zimy) trafiają do „Sauna i bania” (Michał, 26.10.2026)
-      /^[VW]\d/.test(stem) && !/sauna/.test(stem) && !outdoor ? 'interiors' : null,
-      /^B\d/.test(stem) || (!/^A_/.test(stem) && /sauna|bani|balia/.test(stem)) ? 'rituals' : null,
+      /^[VW]\d/.test(stem) && !ritual ? 'interiors' : null,
+      ritual ? 'rituals' : null,
       /^A_/.test(stem) ? 'surroundings' : null,
     ].filter(Boolean)
     if (!id) {
@@ -63,14 +62,12 @@ async function main() {
         } as never) as Any
       ).id
       await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}`, ...(real && item.credit ? { caption: item.credit.en } : {}) } })
-    } else {
-      // plik wgrany przed dodaniem serii (albo przed nową regułą): dopisujemy brakujące serie, nie usuwając tych z panelu;
-      // „Wnętrza” zdejmujemy tylko ze zdjęć, które reguły z niej wyjęły (sauna, zdjęcia z zewnątrz)
+    } else if (series.some((x) => !found.docs[0]?.series?.includes(x as never))) {
+      // plik wgrany przed dodaniem serii (albo przed nową regułą): dopisujemy brakujące serie, nie usuwając tych z panelu.
+      // Przy tej jednorazowej zmianie zdejmujemy „Wnętrza” ze zdjęć, które reguły z niej wyjęły; dodane później w panelu zostają.
       const existing = (found.docs[0]?.series ?? []) as string[]
-      const next = [...new Set([...existing.filter((s) => s !== 'interiors' || !/^[VW]\d/.test(stem) || series.includes(s)), ...series])]
-      if (next.length !== existing.length || next.some((s) => !existing.includes(s))) {
-        await payload.update({ collection: 'media', id, locale: 'pl', data: { series: next } as never })
-      }
+      const kept = existing.filter((x) => x !== 'interiors' || !/^[VW]\d/.test(stem) || series.includes(x))
+      await payload.update({ collection: 'media', id, locale: 'pl', data: { series: [...new Set([...kept, ...series])] } as never })
     }
     if (id && found.docs[0] && item.rights && found.docs[0].rights !== item.rights) {
       // zgoda obiektu przyszła po wgraniu pliku: manifest zmienia prawa i podpis bez ponownego wgrywania
@@ -192,18 +189,21 @@ async function main() {
     }
   }
 
-  // Aktualności: opublikowane z datą z news.json. Wcześniej import zapisywał je jako szkice z publikacją 11.01.2027,
-  // więc każdy import chował wpisy opublikowane w panelu (Michał, 26.10.2026: mają być widoczne na stronie testowej).
+  // Aktualności: opublikowane. Wcześniej import zapisywał je jako szkice z publikacją 11.01.2027 i każdy import chował
+  // wpisy opublikowane w panelu (Michał, 26.10.2026: mają być widoczne na stronie testowej). Data z news.json, ale nie
+  // z przyszłości (lista i mapa strony pomijają przyszłe daty); datę z przeszłości ustawioną w panelu import zostawia.
+  const today = new Date().toISOString().slice(0, 10)
+  const covers: Record<string, string> = { 'apartamenty-wiosna-2027': 'V7_', 'ferie-2027': 'K9_' }
   for (const n of want('news') && fs.existsSync(path.join(DIR, 'news.json')) ? (read('news.json') as Any[]) : []) {
     const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
-    let id = found.docs[0]?.id
-    for (const locale of LOCALES) {
-      const cover = img(({ 'apartamenty-wiosna-2027': 'V7_', 'ferie-2027': 'K9_' } as Record<string, string>)[n.slug] ?? 'K2_hero_osada_swit_16x9')
-      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, cover, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'published' }
-      if (id) await payload.update({ collection: 'news', id, locale, data, draft: false } as never)
-      else id = ((await payload.create({ collection: 'news', locale, data, draft: false } as never)) as Any).id
-    }
-    payload.logger.info(`news: ${n.slug} (opublikowany, data ${n.publish})`)
+    const saved = found.docs[0]?.publishedAt
+    const cover = img(covers[n.slug] ?? 'K2_hero_osada_swit_16x9')
+    await upsert(
+      'news',
+      n.slug,
+      (l) => ({ title: n.title?.[l], publishedAt: n.publish < today ? n.publish : today, cover, excerpt: n.body?.[l]?.split('\n')[0], content: md(n.body?.[l]) }),
+      saved && saved.slice(0, 10) <= today ? ['publishedAt'] : [],
+    )
   }
 
   if (!want('pages')) {
@@ -346,7 +346,6 @@ async function main() {
     }
     payload.logger.info(`seo: ${slug}`)
   }
-
 
   const s = read('settings.json')
   for (const locale of LOCALES) {

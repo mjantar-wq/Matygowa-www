@@ -702,6 +702,7 @@
   },
   {
    "file": "W6_taras_wejscie_3x2_foto.webp",
+   "series": ["winter"],
    "shot": "W6",
    "width": 1600,
    "height": 1067,
@@ -822,6 +823,7 @@
   },
   {
    "file": "V5_lomnica_okno_3x2_foto.webp",
+   "series": ["summer"],
    "shot": "V5",
    "width": 1536,
    "height": 1024,
@@ -1021,6 +1023,7 @@
   },
   {
    "file": "V5_lomnica_okno_3x2_cgi.webp",
+   "series": ["summer"],
    "shot": "V5",
    "width": 884,
    "height": 590,
@@ -1084,6 +1087,7 @@
   },
   {
    "file": "W6_taras_wejscie_3x2_cgi.webp",
+   "series": ["winter"],
    "shot": "W6",
    "width": 884,
    "height": 590,

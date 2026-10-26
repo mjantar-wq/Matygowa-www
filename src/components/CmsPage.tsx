@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import type { RouteKey } from '@/i18n/routes'
-import { findBySlug, findMany } from '@/lib/cms'
+import { findBySlug, findMany, isDraft } from '@/lib/cms'
 import { buildScenes } from '@/lib/scenes'
 import { engineSettings } from '@/lib/booking'
 import { BookingBar } from './BookingBar'
@@ -48,7 +48,8 @@ export async function CmsPage({ route, slug, ctx, fallback, children, required, 
       {children}
       {!blocks?.length && !children ? (
         <div className="mo-section mo-container">
-          <Placeholder label={ctx.t.placeholder} note={`Panel → Strony i sekcje → adres „${slug ?? route}”`} />
+          {/* wskazówka dla redaktora tylko w podglądzie z panelu, gość widzi sam napis */}
+          <Placeholder label={ctx.t.placeholder} note={(await isDraft()) ? `Panel → Strony i sekcje → adres „${slug ?? route}”` : undefined} />
         </div>
       ) : null}
     </>

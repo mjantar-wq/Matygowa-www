@@ -42,6 +42,13 @@ test.describe('Szkielet strony', () => {
     expect(await sitemap.text()).toContain('/domy/hawran')
   })
 
+  test('galeria pokazuje serie zdjęć, bez notatek dla redaktora', async ({ page }) => {
+    await page.goto('/galeria')
+    await expect(page.getByRole('heading', { level: 2, name: 'Zima' })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: 'Wnętrza' })).toBeVisible()
+    await expect(page.locator('main')).not.toContainText('Panel →')
+  })
+
   test('wewnętrzny adres /pl/houses przekierowuje na /domy', async ({ request }) => {
     const res = await request.get('/pl/houses', { maxRedirects: 0 })
     expect(res.status()).toBe(308)

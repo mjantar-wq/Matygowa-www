@@ -9,6 +9,7 @@ import { SettlementMap } from '@/components/SettlementMap'
 import { PhotoGallery } from '@/components/PhotoGallery'
 import { AttractionEntry } from '@/components/Attraction'
 import { AttractionPopup } from '@/components/effects/AttractionPopup'
+import { CountUp } from '@/components/effects/CountUp'
 import { HeroStage } from '@/components/effects/HeroStage'
 import { ReviewShuffle } from '@/components/effects/ReviewShuffle'
 import { ScrollSteps } from '@/components/effects/ScrollSteps'
@@ -85,7 +86,7 @@ function Intro({ block }: Props<'intro'>) {
           {block.stats.map((s) => (
             <div key={s.id}>
               <dt className="mo-label">{s.label}</dt>
-              <dd className="mo-price">{s.value}</dd>
+              <dd className="mo-price"><CountUp value={s.value} /></dd>
             </div>
           ))}
         </dl>
@@ -322,11 +323,11 @@ function SourceMark({ source, rating }: { source?: Testimonial['source']; rating
   return (
     <p className="mo-review__source" data-source={source ?? 'other'}>
       {source === 'google' ? (
-        <span className="mo-review__logo" aria-label="Google">
+        <span className="mo-review__logo" role="img" aria-label="Google">
           {['G', 'o', 'o', 'g', 'l', 'e'].map((c, i) => <span key={i} aria-hidden="true">{c}</span>)}
         </span>
       ) : source === 'booking' ? (
-        <span className="mo-review__logo" aria-label="Booking.com">
+        <span className="mo-review__logo" role="img" aria-label="Booking.com">
           <span aria-hidden="true">Booking</span>
           <span aria-hidden="true">.com</span>
         </span>

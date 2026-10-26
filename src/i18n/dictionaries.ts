@@ -112,6 +112,7 @@ const pl = {
     plan: 'Plan',
   },
   news: { readMore: 'Czytaj dalej', empty: 'Wkrótce pierwsze wpisy.' },
+  gallery: { winter: 'Zima', summer: 'Lato', interiors: 'Wnętrza', rituals: 'Sauna i bania', night: 'Noc' },
   attractions: {
     distance: (km: number) => `${km.toLocaleString('pl-PL')} km`,
     drive: (min: number) => `${min} min samochodem`,
@@ -276,6 +277,7 @@ const en: Dictionary = {
     plan: 'Floor plan',
   },
   news: { readMore: 'Read more', empty: 'First posts coming soon.' },
+  gallery: { winter: 'Winter', summer: 'Summer', interiors: 'Inside the house', rituals: 'Sauna and hot tub', night: 'Night' },
   attractions: {
     distance: (km: number) => `${km.toLocaleString('en-GB')} km`,
     drive: (min: number) => `${min} min by car`,

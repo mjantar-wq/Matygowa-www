@@ -11,7 +11,7 @@ import type { Locale } from '@/i18n/locales'
  */
 export const payload = cache(() => getPayload({ config }))
 
-async function isDraft() {
+export async function isDraft() {
   try {
     return (await draftMode()).isEnabled
   } catch {

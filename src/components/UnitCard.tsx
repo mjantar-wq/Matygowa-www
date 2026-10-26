@@ -8,14 +8,13 @@ import { Media } from './Media'
 
 /**
  * Kafelek domu albo apartamentu w tym samym rozmiarze i układzie co wyniki „Sprawdź termin” (Michał, 25.10.2026):
- * zdjęcie, nazwa, rodzaj, wysokość, osoby i metraż, cena „od” (z IceColdRes, gdy jest). Siatka: `.mo-tiles` w `.mo-tiles-wrap`.
+ * zdjęcie, nazwa z wysokością obok (Michał, 26.10.2026), rodzaj, osoby i metraż, cena „od” (z IceColdRes, gdy jest). Siatka: `.mo-tiles` w `.mo-tiles-wrap`.
  */
 export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContext; priceFrom?: number | null }) {
   const t = ctx.t
   const see = unit.kind === 'apartment' ? t.effects.seeApartment : t.effects.seeHouse
   const facts = [
     t.house.kind[unit.kind],
-    unit.peak?.elevation ? t.house.elevation(unit.peak.elevation) : null,
     unit.maxGuests ? t.house.guests(unit.maxGuests) : null,
     unit.area ? `${unit.area} m²` : null,
   ].filter(Boolean)
@@ -28,7 +27,10 @@ export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContex
         </span>
         <span className="mo-tile__body">
           <span className="mo-tile__head">
-            <span className="mo-tile__name">{unit.name}</span>
+            <span className="mo-tile__name">
+              {unit.name}
+              {unit.peak?.elevation ? <span className="mo-tile__elev"> {t.house.elevation(unit.peak.elevation)}</span> : null}
+            </span>
           </span>
           <span className="mo-body-s mo-tile__text">{facts.join(' · ')}</span>
           <span className="mo-tile__foot">

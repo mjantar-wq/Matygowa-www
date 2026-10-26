@@ -82,6 +82,7 @@
 .mo-tile__body > * { margin: 0; }
 .mo-tile__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); }
 .mo-tile__name { margin: 0; font: var(--text-h3--font-weight) var(--text-h3)/var(--text-h3--line-height) var(--font-display); font-variation-settings: "opsz" 36; letter-spacing: -0.005em; }
+.mo-tile__elev { font: var(--text-body-s--font-weight) var(--text-body-s)/1 var(--font-ui); letter-spacing: 0; white-space: nowrap; color: var(--color-wyciszony); }
 .mo-tile__text { color: var(--color-wyciszony); }
 .mo-tile__foot { margin-block-start: var(--space-2); padding-block-start: var(--space-3); border-block-start: 1px solid var(--color-linia); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); }
 .mo-tile__foot p { margin: 0; }

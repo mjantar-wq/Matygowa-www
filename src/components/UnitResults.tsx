@@ -80,7 +80,10 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
               </button>
               <div className="mo-tile__body">
                 <div className="mo-tile__head">
-                  <h4 className="mo-tile__name">{name(r)}</h4>
+                  <h4 className="mo-tile__name">
+                    {name(r)}
+                    {!off && u?.elevation ? <span className="mo-tile__elev"> {elevation(u.elevation)}</span> : null}
+                  </h4>
                   {off ? null : (
                     <button type="button" className="mo-link mo-tile__toggle" aria-haspopup="dialog" onClick={show}>
                       {t.details}
@@ -92,7 +95,6 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                     ? (t.reasons[r.reason ?? ''] ?? t.unavailable)
                     : [
                         u ? t.kind[u.kind] : null,
-                        u?.elevation ? elevation(u.elevation) : null,
                         u?.maxGuests ? `${t.upTo} ${u.maxGuests} ${t.people}` : null,
                         u?.area ? `${u.area} m²` : null,
                       ]

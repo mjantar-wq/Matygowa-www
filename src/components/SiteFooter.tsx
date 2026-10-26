@@ -4,9 +4,10 @@ import type { Locale } from '@/i18n/locales'
 import { href } from '@/i18n/routes'
 import type { Setting } from '@/payload-types'
 import { ConsentSettingsLink } from './ConsentBanner'
-import { directionsUrl } from './ContactDetails'
+import { directionsUrl } from '@/lib/maps'
 
 export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Dictionary; settings: Setting | null }) {
+  const route = directionsUrl(settings)
   return (
     <footer className="mo-footer">
       <div className="mo-footer__wzor" aria-hidden="true" />
@@ -16,7 +17,7 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
           {settings?.phone ? <p><a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a></p> : null}
           {settings?.email ? <p><a href={`mailto:${settings.email}`}>{settings.email}</a></p> : null}
           {settings?.address ? <p style={{ whiteSpace: 'pre-line' }}>{settings.address}</p> : null}
-          {settings?.address ? <p><a href={directionsUrl(settings.address)} rel="noopener" target="_blank">{t.footer.directions}</a></p> : null}
+          {route ? <p><a href={route} rel="noopener">{t.footer.directions}</a></p> : null}
         </div>
         <nav aria-label={t.menu}>
           <ul>

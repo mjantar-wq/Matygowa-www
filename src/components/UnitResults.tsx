@@ -188,9 +188,10 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                 </dl>
               ) : null}
               {open.unit?.amenities.length ? (
-                <p className="mo-body-s">
-                  <span className="mo-label">{t.facts.amenities}</span> {open.unit.amenities.join(', ')}
-                </p>
+                <div className="mo-unit-dialog__amenities">
+                  <p className="mo-label">{t.facts.amenities}</p>
+                  <p className="mo-body-s">{capitalize(open.unit.amenities.join(', '))}</p>
+                </div>
               ) : null}
               <ul className="mo-tile__offers">
                 {open.offers.map((o) => (
@@ -218,3 +219,6 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
     </>
   )
 }
+
+/** Lista udogodnień zaczyna się wielką literą (wg Michała), reszta bez zmian. */
+const capitalize = (text: string) => text.charAt(0).toLocaleUpperCase('pl') + text.slice(1)

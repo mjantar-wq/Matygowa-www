@@ -175,6 +175,7 @@ const pl = {
   newsletter: {
     title: 'Newsletter',
     lead: 'Oferty tylko dla zapisanych i wieści z osady, kilka razy w roku.',
+    open: 'Zapisz się',
     email: 'Adres e-mail',
     submit: 'Zapisuję się',
     sending: 'Wysyłam…',
@@ -382,6 +383,7 @@ const en: Dictionary = {
   newsletter: {
     title: 'Newsletter',
     lead: 'Subscriber-only offers and news from the settlement, a few times a year.',
+    open: 'Sign up',
     email: 'E-mail address',
     submit: 'Subscribe',
     sending: 'Sending…',

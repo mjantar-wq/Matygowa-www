@@ -6,6 +6,8 @@ import 'server-only'
  * IceColdRes jest jedynym źródłem prawdy o cenach i dostępności: strona nic nie liczy, tylko pokazuje.
  * Błąd lub brak API nie może zepsuć strony: funkcje zwracają null, a widok chowa ceny.
  */
+import { sign } from './webhook'
+
 const API = process.env.ICECOLDRES_API_URL ?? 'https://icecoldres.audiowizard.pl'
 export const ICECOLDRES_SLUG = process.env.ICECOLDRES_SLUG ?? 'booking'
 
@@ -202,4 +204,35 @@ export async function getCalendar(from: string, days: number) {
 
 export async function getPricesFromDays(from: string, days: number) {
   return get<{ from: string; types: (PriceFrom & { days: (number | null)[] })[] }>(`/prices-from?from=${from}&days=${days}`, 600, ['pricing'])
+}
+
+/** Aktualny tekst zgody na newsletter (strona pokazuje dokładnie ten tekst i odsyła jego `id` przy zapisie). */
+export interface NewsletterConsent {
+  id: string
+  lang: string
+  text: string
+  privacyUrl: string
+}
+
+export const getNewsletterConsent = (lang: string) => get<NewsletterConsent>(`/newsletter/consent?lang=${lang === 'pl' ? 'pl' : 'en'}`, 600, ['property'])
+
+/**
+ * Zapis na newsletter (docs/newsletter-propozycja.md w IceColdRes): wysyłkę, potwierdzenie mailem i wypisanie robi IceColdRes
+ * (Amazon SES). Z sekretem SITE_API_SECRET zapytanie jest podpisane i niesie adres IP gościa do limitów; bez sekretu
+ * IceColdRes liczy limit po adresie Workera strony (działa, ale wszyscy goście dzielą jeden limit).
+ */
+export async function subscribeNewsletter(body: { email: string; lang: string; consentId: string; source: string; utm?: Record<string, string> }, clientIp: string | null) {
+  const raw = JSON.stringify(body)
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  const secret = process.env.SITE_API_SECRET
+  if (secret && clientIp) {
+    headers['X-IceColdRes-Signature'] = await sign(raw, secret)
+    headers['X-Client-IP'] = clientIp
+  }
+  try {
+    const res = await fetch(`${API}/api/public/${ICECOLDRES_SLUG}/newsletter`, { method: 'POST', headers, body: raw, signal: AbortSignal.timeout(8000) })
+    return res.status
+  } catch {
+    return 503
+  }
 }

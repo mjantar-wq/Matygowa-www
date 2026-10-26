@@ -1,10 +1,13 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 import type { Dictionary } from '@/i18n/dictionaries'
 import type { Locale } from '@/i18n/locales'
 import { href } from '@/i18n/routes'
 import type { Setting } from '@/payload-types'
 import { ConsentSettingsLink } from './ConsentBanner'
+import { getNewsletterConsent } from '@/lib/icecoldres'
 import { directionsUrl } from '@/lib/maps'
+import { NewsletterForm } from './NewsletterForm'
 
 export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Dictionary; settings: Setting | null }) {
   const route = directionsUrl(settings)
@@ -36,8 +39,27 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
             <ul>{settings.social.map((s) => <li key={s.id ?? s.url}><a href={s.url} rel="noopener">{s.label}</a></li>)}</ul>
           </div>
         ) : null}
+        {/* osobno w Suspense: wolne albo niedostępne IceColdRes nie wstrzymuje renderu strony */}
+        <Suspense fallback={null}>
+          <Newsletter locale={locale} t={t} />
+        </Suspense>
         <p className="mo-muted">© {new Date().getFullYear()} {t.siteName}. {t.footer.rights}.</p>
       </div>
     </footer>
+  )
+}
+
+/** Bez tekstu zgody z IceColdRes (API niedostępne) formularza nie pokazujemy: zgoda musi mieć wersję. */
+async function Newsletter({ locale, t }: { locale: Locale; t: Dictionary }) {
+  const consent = await getNewsletterConsent(locale)
+  if (!consent) return null
+  // link do polityki pochodzi z zewnętrznego API: tylko https, inaczej nasza strona polityki
+  const privacyUrl = /^https:\/\//.test(consent.privacyUrl ?? '') ? consent.privacyUrl : href(locale, 'documents', 'prywatnosc')
+  return (
+    <div>
+      <p className="mo-label">{t.newsletter.title}</p>
+      <p style={{ marginBlockEnd: 'var(--space-3)' }}>{t.newsletter.lead}</p>
+      <NewsletterForm locale={locale} t={t.newsletter} consent={{ ...consent, privacyUrl }} />
+    </div>
   )
 }

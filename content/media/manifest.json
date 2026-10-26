@@ -617,6 +617,19 @@
    "source": "widoki-05.jpg"
   },
   {
+   "file": "K4_osada_zmierzch_zima_16x9_foto.webp",
+   "shot": "K4",
+   "width": 2048,
+   "height": 1152,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada i grań Tatr o zimowym zmierzchu, śnieg na dachach domków",
+    "en": "The settlement and the Tatra ridge at winter dusk, snow on the cottage roofs"
+   },
+   "source": "K3_dron_przelot_16x9_foto.webp (dji_20260121180524_0394_d.jpg), zmierzch samymi parametrami: ekspozycja, chłodne cienie i ciepłe światła, mniej nasycenia, ciepła poświata nad granią, winieta",
+   "note": "Tymczasowo, do czasu zimowego ujęcia o zmierzchu z sesji zimowej (photo-plan, ujęcie K4). Letni zmierzch (widoki-05.jpg) jest bez śniegu."
+  },
+  {
    "file": "K6_dom_orbita_16x9_foto.webp",
    "shot": "K6",
    "width": 2048,

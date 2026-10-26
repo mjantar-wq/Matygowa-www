@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { AMBIENCE_INIT_SCRIPT, assignSlots, defaultAmbience } from '@/lib/ambience'
+import { buildScenes } from '@/lib/scenes'
+import type { Media, Page } from '@/payload-types'
 
 describe('Nastroje hero (assignSlots)', () => {
   it('sam kadr główny obsługuje wszystkie cztery nastroje', () => {
@@ -37,5 +39,19 @@ describe('Domyślny nastrój (defaultAmbience)', () => {
   })
   it('skrypt przed malowaniem jest poprawnym JS', () => {
     expect(() => new Function(AMBIENCE_INIT_SCRIPT)).not.toThrow()
+  })
+})
+
+describe('Sceny Dnia w osadzie (buildScenes)', () => {
+  const m = (id: number, filename: string) => ({ id, filename, url: `/m/${filename}`, mimeType: 'image/webp', alt: '' }) as Media
+  const lato = m(1, 'K4_osada_zmierzch_16x9_foto.webp')
+  const zima = m(2, 'K4_osada_zmierzch_zima_16x9_foto.webp')
+  it('zimą zmierzch pokazuje kadr ze śniegiem, latem letni', () => {
+    const blocks = [{ blockType: 'dayInSettlement', id: 'd', scenes: [{ time: 'dusk', image: lato }] }] as unknown as NonNullable<Page['layout']>
+    const [scene] = buildScenes(blocks, [lato, zima])
+    const at = (slot: string) => scene.slides?.find((s) => s.slots.includes(slot))?.image?.url
+    expect(at('dzien-zima')).toBe(zima.url)
+    expect(at('noc-zima')).toBe(zima.url)
+    expect(at('dzien-lato')).toBe(lato.url)
   })
 })

@@ -63,7 +63,8 @@ function defaults(pick: ReturnType<typeof libraryPicker>) {
     day: {
       dawn: [v('T1_swit_gran'), lato('L28_')],
       day: [v('K3_dron_przelot'), lato('L26_')],
-      dusk: [v('K4_osada_zmierzch')],
+      // letni zmierzch (widoki-05) jest bez śniegu; zimą przyciemniony przelot drona ze śniegiem
+      dusk: [v('K4_osada_zmierzch_zima', { sezon: 'zima' }), lato('K4_osada_zmierzch_16x9')],
       // nocny krok opowieści: ten sam przyciemniony letni kadr w obu porach dnia
       night: [v('T3_noc_gwiazdy'), v('K2_hero_osada_noc_16x9', { sezon: 'zima' }), v('L21_', { sezon: 'lato', nocny: true })],
     } as Record<string, Variant[]>,

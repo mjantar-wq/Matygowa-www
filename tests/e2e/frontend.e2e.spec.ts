@@ -65,9 +65,10 @@ test.describe('Efekty i interakcje', () => {
     await expect(page.locator('.mo-stage__scene[data-active]')).toHaveAttribute('data-kind', 'panorama')
   })
 
-  test('hero: ruch tła bez filmu i bez przycisku pauzy', async ({ page }) => {
+  test('hero: film tylko latem za dnia, bez przycisku pauzy', async ({ page }) => {
     await page.goto('/')
-    await expect(page.locator('.mo-hero__slide video')).toHaveCount(0)
+    await expect(page.locator('.mo-hero__slide:not(.is-dzien-lato) video')).toHaveCount(0)
+    await expect(page.locator('.mo-hero__slide.is-dzien-lato video')).toHaveCount(1)
     await expect(page.locator('.mo-hero__pause')).toHaveCount(0)
   })
 

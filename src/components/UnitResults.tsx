@@ -152,11 +152,15 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
               </div>
             ) : null}
             <div className="mo-unit-dialog__text">
-              <p className="mo-card__eyebrow">
-                {open.unit ? <span className="mo-label">{t.kind[open.unit.kind]}</span> : null}
-                {open.unit?.elevation ? <span className="mo-figure">{elevation(open.unit.elevation)}</span> : null}
-              </p>
-              <h3 className="mo-unit-dialog__name">{name(open)}</h3>
+              {open.unit ? (
+                <p className="mo-card__eyebrow">
+                  <span className="mo-label">{t.kind[open.unit.kind]}</span>
+                </p>
+              ) : null}
+              <h3 className="mo-unit-dialog__name">
+                {name(open)}
+                {open.unit?.elevation ? <span className="mo-tile__elev"> {elevation(open.unit.elevation)}</span> : null}
+              </h3>
               {open.unit?.tagline ? <p className="mo-unit-dialog__lede">{open.unit.tagline}</p> : null}
               {open.unit ? (
                 <dl className="mo-tile__facts">

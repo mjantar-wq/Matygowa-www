@@ -92,6 +92,7 @@
 /* okno bywa w hero (wyniki z paska rezerwacji): bez białych etykiet i cieni tekstu z hero */
 .mo-unit-dialog .mo-unit-dialog__text .mo-label { color: var(--color-wyciszony); }
 .mo-unit-dialog .mo-unit-dialog__inner * { text-shadow: none; }
+.mo-unit-dialog__name .mo-tile__elev { font-size: var(--text-body); }
 .mo-unit-dialog__amenities { display: grid; gap: var(--space-1); }
 .mo-unit-dialog::backdrop { background: rgba(8, 12, 10, 0.7); }
 .mo-unit-dialog__inner { position: relative; display: grid; gap: var(--space-6); padding: var(--space-6); }

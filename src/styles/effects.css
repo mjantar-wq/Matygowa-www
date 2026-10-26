@@ -132,6 +132,8 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 
 /* Mapa osady */
 .mo-map { margin: var(--space-8) 0 0; }
+/* na głównej mapa wyraźnie odsunięta od ostatniego kafelka szczytu (wg Michała) */
+.mo-opowiesc .mo-section > .mo-container > .mo-map { margin-block-start: 14svh; }
 
 /* Opowieść o bani i saunie: sticky zdjęcia na szerokim ekranie, kroki przewijane obok */
 .mo-steps { display: grid; gap: var(--space-8); }

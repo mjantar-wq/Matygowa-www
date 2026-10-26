@@ -4,6 +4,7 @@ import { draftMode } from 'next/headers'
 import { getPayload, type CollectionSlug, type TypedLocale, type Where } from 'payload'
 import { cache } from 'react'
 import type { Locale } from '@/i18n/locales'
+import { markCmsError } from '@/edge/version'
 
 /**
  * Odczyt treści z Payload (Local API, bez HTTP). Podgląd wersji roboczych: tryb draft Next.js.
@@ -40,6 +41,7 @@ export async function findMany<T>(collection: CollectionSlug, locale: Locale, op
     })
     return res.docs as T[]
   } catch (err) {
+    markCmsError()
     console.error(JSON.stringify({ level: 'error', msg: 'cms_find_failed', collection, err: String(err) }))
     return [] as T[]
   }
@@ -54,6 +56,7 @@ export const getSettings = cache(async (locale: Locale) => {
   try {
     return await (await payload()).findGlobal({ slug: 'settings', locale: locale as TypedLocale, fallbackLocale: 'pl', depth: 1 })
   } catch (err) {
+    markCmsError()
     console.error(JSON.stringify({ level: 'error', msg: 'cms_settings_failed', err: String(err) }))
     return null
   }

@@ -68,6 +68,18 @@ export function setMotionPaused(paused: boolean) {
 }
 
 /** Czy wolno odtwarzać ruch: bez prefers-reduced-motion i bez trybu oszczędzania danych. */
+/** Film w tle tylko na szybszym łączu: na 2G/3G (Chrome podaje to w navigator.connection) zostaje sam kadr. */
+export function videoAllowed() {
+  const type = (navigator as Navigator & { connection?: { effectiveType?: string } }).connection?.effectiveType
+  return !type || type === '4g'
+}
+
+/** Słabe łącze albo tryb oszczędzania danych: mniej zdjęć pobieranych z wyprzedzeniem. */
+export function slowConnection() {
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+  return !videoAllowed() || !!conn?.saveData
+}
+
 export function motionAllowed() {
   const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
   return !matchMedia('(prefers-reduced-motion: reduce)').matches && !conn?.saveData

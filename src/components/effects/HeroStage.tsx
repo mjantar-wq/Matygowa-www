@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motionAllowed, useAmbience, useMotionPaused } from './ambience'
+import { SIZES_FULL, srcSet } from '@/lib/images'
+import { motionAllowed, useAmbience, useMotionPaused, videoAllowed } from './ambience'
 
 export type HeroImage = { url: string; alt?: string | null; width?: number | null; height?: number | null; focusX?: number | null; focusY?: number | null }
 /** Jeden kadr hero; `slots` to nastroje (np. "noc-zima"), w których ten kadr się pokazuje; `nocny` przyciemnia dzienny kadr na noc. */
@@ -21,7 +22,7 @@ export function HeroStage({ slides, active: shown = true, eager = true }: { slid
   const [playing, setPlaying] = useState<number | null>(null)
 
   useEffect(() => {
-    if (!motionAllowed()) return
+    if (!motionAllowed() || !videoAllowed()) return
     const start = () => setReady(true)
     if (document.readyState === 'complete') {
       const id = window.setTimeout(start, 300)
@@ -54,14 +55,18 @@ export function HeroStage({ slides, active: shown = true, eager = true }: { slid
         return (
           <div key={i} className={`mo-hero__slide ${s.slots.map((x) => `is-${x}`).join(' ')}${s.nocny ? ' is-nocny' : ''}`} data-playing={playing === i || undefined} data-paused={paused || !shown || undefined}>
             {s.image?.url ? (
-              // eslint-disable-next-line @next/next/no-img-element -- kadr startowy, rozmiary robi Cloudflare
+              // eslint-disable-next-line @next/next/no-img-element -- kadr startowy, mniejsze kopie robi Worker (src/edge/media.ts)
               <img
                 src={s.image.url}
+                srcSet={srcSet(s.image.url, s.image.width)}
+                sizes={SIZES_FULL}
                 alt={s.image.alt ?? ''}
                 width={s.image.width ?? undefined}
                 height={s.image.height ?? undefined}
-                loading={eager && i === 0 ? 'eager' : 'lazy'}
-                fetchPriority={eager && i === 0 ? 'high' : undefined}
+                // Nastrój (pora dnia i roku) zna dopiero przeglądarka, a kadry innych nastrojów mają display: none.
+                // „lazy” pobiera tylko widoczny kadr; „eager” na pierwszym kadrze ściągał go zawsze, także nocą czy latem.
+                loading="lazy"
+                fetchPriority={eager ? 'high' : undefined}
                 decoding="async"
                 style={{ objectPosition: position }}
               />

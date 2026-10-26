@@ -1,18 +1,18 @@
 import base from '../../content/structured-data.json'
-import { cleared } from '@/components/Media'
 import { getSettings } from '@/lib/cms'
 import { getProperty } from '@/lib/icecoldres'
-import { DEFAULT_OG_IMAGE } from '@/lib/page'
+import { DEFAULT_OG_IMAGE, imageUrl, siteUrl as site } from '@/lib/page'
 import { href } from '@/i18n/routes'
 import type { Locale } from '@/i18n/locales'
 import type { Media, News, Unit } from '@/payload-types'
 
-const site = () => process.env.NEXT_PUBLIC_SITE_URL ?? 'https://matygowa.audiowizard.pl'
-
 /** Pełny adres (dane strukturalne nie przyjmują ścieżek względnych). */
 export const absolute = (path: string) => (/^https?:\/\//.test(path) ? path : `${site()}${path}`)
 
-const imageOf = (media?: Media | number | string | null) => (media && typeof media === 'object' && media.url && !media.mimeType?.startsWith('video/') && cleared(media) ? absolute(media.url) : undefined)
+const imageOf = (media?: Media | number | string | null) => {
+  const url = imageUrl(media)
+  return url ? absolute(url) : undefined
+}
 
 /** Znacznik JSON-LD; „<” w danych nie może zamknąć znacznika script. */
 export function JsonLd({ data }: { data: object }) {
@@ -60,7 +60,8 @@ export function UnitStructuredData({ unit, locale }: { unit: Unit; locale: Local
           numberOfBedrooms: unit.bedrooms || undefined,
           numberOfBathroomsTotal: unit.bathrooms || undefined,
           floorSize: unit.area ? { '@type': 'QuantitativeValue', value: unit.area, unitCode: 'MTK' } : undefined,
-          amenityFeature: base.amenityFeature,
+          // sauna, bania i kominek z content/structured-data.json opisują domy; apartamenty dostaną własną listę
+          amenityFeature: unit.kind === 'house' ? base.amenityFeature : undefined,
         },
       }}
     />
@@ -90,13 +91,17 @@ export function NewsStructuredData({ post, locale }: { post: News; locale: Local
 
 type LexicalNode = { type?: string; text?: string; children?: LexicalNode[] }
 
-/** Zwykły tekst z treści Lexical (akapity rozdzielone spacją), np. do odpowiedzi w FAQPage. */
+const BLOCKS = new Set(['paragraph', 'heading', 'quote', 'list', 'listitem'])
+
+/** Zwykły tekst z treści Lexical (akapity, punkty listy i złamania wiersza rozdzielone spacją), np. do odpowiedzi w FAQPage. */
 export function plainText(node?: LexicalNode | { root?: LexicalNode } | null): string {
   if (!node) return ''
   if ('root' in node) return plainText(node.root)
   const n = node as LexicalNode
   if (typeof n.text === 'string') return n.text
-  return (n.children ?? []).map(plainText).join(n.type === 'root' ? ' ' : '').replace(/\s+/g, ' ').trim()
+  if (n.type === 'linebreak') return ' '
+  const text = (n.children ?? []).map((c) => plainText(c) + (c.type && BLOCKS.has(c.type) ? ' ' : '')).join('')
+  return text.replace(/\s+/g, ' ').trim()
 }
 
 /** Pytania i odpowiedzi z bloku FAQ (przewodnik gościa) jako FAQPage. */

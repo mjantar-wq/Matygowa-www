@@ -25,10 +25,14 @@ export type PageContext = Awaited<ReturnType<typeof pageContext>>
 type Seo = { title?: string | null; description?: string | null; image?: Media | string | number | null } | null | undefined
 type Image = Media | string | number | null | undefined
 
+/** Adres strony (produkcja ustawia NEXT_PUBLIC_SITE_URL w wrangler.jsonc). */
+export const siteUrl = () => process.env.NEXT_PUBLIC_SITE_URL ?? 'https://matygowa.audiowizard.pl'
+
+/** Obraz z biblioteki, który można pokazać poza stroną (bez filmów i zdjęć czekających na zgodę na produkcji). */
+export const imageUrl = (image: Image) => (image && typeof image === 'object' && image.url && !image.mimeType?.startsWith('video/') && cleared(image) ? image.url : undefined)
+
 /** Domyślny obraz do udostępnień (1200×630, kadr osady o świcie), gdy ani strona, ani Ustawienia go nie mają. */
 export const DEFAULT_OG_IMAGE = '/og.jpg'
-
-const imageUrl = (image: Image) => (image && typeof image === 'object' && image.url && !image.mimeType?.startsWith('video/') && cleared(image) ? image.url : undefined)
 
 /**
  * Metadane z hreflang dla wszystkich włączonych języków i obrazem do udostępnień (koncepcja F6).

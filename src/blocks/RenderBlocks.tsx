@@ -361,7 +361,7 @@ function Gallery({ block, ctx }: Props<'gallery'>) {
 
 async function Faq({ block, ctx }: Props<'faq'>) {
   const vars = await termVars(ctx.locale)
-  const faq = (block.items ?? []).map((i) => ({ question: i.question ?? '', answer: fillText(plainText(i.answer as Parameters<typeof plainText>[0]), vars) }))
+  const faq = (block.items ?? []).map((i) => ({ question: fillText(i.question ?? '', vars), answer: fillText(plainText(i.answer as Parameters<typeof plainText>[0]), vars) }))
   return (
     <Section block={block}>
       <FaqStructuredData items={faq} />

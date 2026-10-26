@@ -13,6 +13,8 @@ describe('znaczniki warunków z IceColdRes', async () => {
   it('zdanie ze znacznikiem bez wartości znika, reszta tekstu zostaje', () => {
     expect(fillText('Zaliczka {deposit}. Rezygnacja jest bezpłatna do {freeCancellation} dni przed przyjazdem. Pełny opis: {terms}', vars)).toBe('Zaliczka 30%.')
     expect(fillText('Zaliczka {deposit}, rezygnacja do {freeCancellation} dni! Cisza nocna od 23:00.', vars)).toBe('Cisza nocna od 23:00.')
+    // kropka w liczbie nie kończy zdania, a spacja przed następnym węzłem (linkiem) zostaje
+    expect(fillText('Deposit 12.5% and cancellation up to {freeCancellation} days. See ', vars)).toBe('See ')
   })
 
   it('w drzewie Lexical tylko w polach text, bez zmiany oryginału', () => {

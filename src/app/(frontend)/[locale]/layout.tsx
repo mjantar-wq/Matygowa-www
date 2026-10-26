@@ -9,7 +9,7 @@ import { AMBIENCE_INIT_SCRIPT } from '@/lib/ambience'
 import { dirOf } from '@/i18n/locales'
 import { href } from '@/i18n/routes'
 import { engineHosts } from '@/lib/booking'
-import { pageContext, type LocaleParams } from '@/lib/page'
+import { pageContext, siteUrl, type LocaleParams } from '@/lib/page'
 import '@/styles/globals.css'
 
 /** Sezon domyślny z daty (koncepcja: Dwie pory roku); zapamiętany wybór gościa nadpisuje go skrypt nastroju. */
@@ -21,7 +21,7 @@ function seasonOf(date = new Date()) {
 export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
   const { t, settings } = await pageContext(params)
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://matygowa.audiowizard.pl'),
+    metadataBase: new URL(siteUrl()),
     title: { default: settings?.seoTitle || t.siteName, template: `%s · ${t.siteName}` },
     description: settings?.seoDescription || undefined,
   }

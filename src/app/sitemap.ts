@@ -1,16 +1,15 @@
 import type { MetadataRoute } from 'next'
 import { ENABLED_LOCALES } from '@/i18n/locales'
-import { href, type RouteKey } from '@/i18n/routes'
+import { href, ROUTES, type RouteKey } from '@/i18n/routes'
 import { findMany } from '@/lib/cms'
+import { siteUrl as site } from '@/lib/page'
 import type { Attraction, News, Page, Unit } from '@/payload-types'
 
 // treści z panelu: budowana przy każdym żądaniu, nie przy wdrożeniu (baza z budowania jest pusta)
 export const dynamic = 'force-dynamic'
 
-const site = () => process.env.NEXT_PUBLIC_SITE_URL ?? 'https://matygowa.audiowizard.pl'
-
-/** Podstrony z menu i stopki; dokumenty, domy, aktualności i atrakcje dochodzą z panelu. */
-const STATIC: RouteKey[] = ['home', 'houses', 'rituals', 'surroundings', 'offers', 'news', 'settlement', 'gallery', 'guide', 'contact']
+/** Wszystkie podstrony z ROUTES; dokumenty (bez strony zbiorczej), domy, aktualności i atrakcje dochodzą z panelu. */
+const STATIC = (Object.keys(ROUTES) as RouteKey[]).filter((r) => r !== 'documents')
 
 /** Mapa witryny XML z wersjami językowymi każdej podstrony (koncepcja F6). */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

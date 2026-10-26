@@ -8,13 +8,21 @@
   .mo-booking .mo-field:nth-child(2n of .mo-field) { border-inline-end: 0; }
   .mo-booking .mo-btn--glowny { grid-column: 1 / -1; min-height: 56px; border-radius: 0 0 1px 1px; }
 }
-.mo-booking-ages { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(7.5rem, 100%), 1fr)); margin: 0; padding: 0; border: 1px solid var(--color-linia); border-block-start: 0; background: var(--color-powierzchnia); min-inline-size: 0; }
-/* Osiem okienek w jednym rzędzie na pełnym pasku (64rem / 7,5rem) */
-.mo-booking-ages__title { grid-column: 1 / -1; float: inline-start; inline-size: 100%; padding: var(--space-3) var(--space-2) 0; }
-.mo-booking-ages .mo-field { min-height: 3.5rem; padding: 0 var(--space-1) 0 var(--space-2); min-inline-size: 0; }
-/* Własna, wąska strzałka zamiast systemowej, żeby „nie chcę podawać” mieściło się w 1/8 paska */
-.mo-booking-ages select { appearance: none; inline-size: 100%; min-inline-size: 0; padding-inline-end: 0.5rem; text-overflow: ellipsis; font: var(--text-body-s--font-weight) 0.75rem/1.2 var(--font-ui); background: no-repeat right center / 0.5rem url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/%3E%3C/svg%3E"); cursor: pointer; }
-[dir="rtl"] .mo-booking-ages select { background-position: left center; padding-inline-end: 0; padding-inline-start: 0.5rem; }
+.mo-booking-ages { display: flex; flex-wrap: wrap; margin: 0; padding: 0; border: 1px solid var(--color-linia); border-block-start: 0; background: var(--color-powierzchnia); min-inline-size: 0; }
+.mo-booking-ages__title { flex: 1 0 100%; float: inline-start; padding: var(--space-3) var(--space-5) 0; }
+.mo-booking-ages .mo-field { flex: 1 1 10rem; }
+/* Od 5 dzieci okienka się zwężają, żeby 8 mieściło się w jednym rzędzie pełnego paska */
+.mo-booking-ages:has(> .mo-field:nth-of-type(5)) .mo-field { flex: 1 1 7.5rem; min-inline-size: 0; padding: 0 var(--space-1) 0 var(--space-2); }
+.mo-booking-ages:has(> .mo-field:nth-of-type(5)) .mo-booking-ages__title { padding-inline: var(--space-2); }
+.mo-booking-ages:has(> .mo-field:nth-of-type(5)) select { appearance: none; padding-inline-end: 0.5rem; text-overflow: ellipsis; font-size: 0.75rem; background: no-repeat right center / 0.5rem url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/%3E%3C/svg%3E"); }
+[dir="rtl"] .mo-booking-ages:has(> .mo-field:nth-of-type(5)) select { background-position: left center; padding-inline-end: 0; padding-inline-start: 0.5rem; }
+/* Na telefonie (dwa okienka w rzędzie) tak samo, żeby „nie chcę podawać” się mieściło */
+@container booking (max-width: 30rem) {
+  .mo-booking-ages .mo-field { flex: 1 1 7.5rem; min-inline-size: 0; padding: 0 var(--space-1) 0 var(--space-2); }
+  .mo-booking-ages .mo-booking-ages__title { padding-inline: var(--space-2); }
+  .mo-booking-ages select { appearance: none; padding-inline-end: 0.5rem; text-overflow: ellipsis; font-size: 0.75rem; background: no-repeat right center / 0.5rem url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/%3E%3C/svg%3E"); }
+  [dir="rtl"] .mo-booking-ages select { background-position: left center; padding-inline-end: 0; padding-inline-start: 0.5rem; }
+}
 
 .mo-calendar { scroll-margin-block: calc(var(--naglowek-wys) + var(--space-3)) var(--space-4); position: absolute; z-index: 20; inset-inline: 0; inset-block-start: calc(var(--pole-wys) + var(--space-2)); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); }
 .mo-calendar__head, .mo-calendar__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }

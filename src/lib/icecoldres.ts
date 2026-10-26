@@ -35,12 +35,21 @@ export interface PublicProperty {
   eur: number | null
 }
 
+/** Warunki płatności i rezygnacji (liczby z IceColdRes); partialRefund: zwrot `share` (bp) wpłaty najpóźniej `days` dni przed przyjazdem. */
+export interface OfferTerms {
+  depositBp: number
+  balanceDueDaysBeforeArrival: number | null
+  freeCancellationDays: number | null
+  partialRefund?: { days: number; share: number } | null
+  text?: { pl?: string; en?: string }
+}
+
 export interface PublicOffer {
   id: string
   name: string
   cancellationPolicy: string | null
   en: { name?: string | null; cancellationPolicy?: string | null }
-  terms?: { depositBp: number; balanceDueDaysBeforeArrival: number | null; freeCancellationDays: number | null; text?: { pl?: string; en?: string } }
+  terms?: OfferTerms
 }
 
 export interface PriceFrom {
@@ -77,6 +86,8 @@ export interface Promotion {
   fromNight?: number | null
   minLeadDays?: number | null
   maxLeadDays?: number | null
+  /** warunki złożone już przez IceColdRes (promocja > oferta > ustawienia), po id oferty; null: jak w ofercie */
+  terms?: Record<string, OfferTerms> | null
 }
 
 export interface Service {

@@ -147,6 +147,9 @@ const pl = {
     deposit: (pct: number) => `zaliczka ${pct}% ceny pobytu przy rezerwacji`,
     balance: (days: number) => `reszta najpóźniej ${days} dni przed przyjazdem`,
     online: 'płatność online przy rezerwacji',
+    freeCancel: (days: number) => `bezpłatna rezygnacja najpóźniej ${days} dni przed przyjazdem`,
+    partialRefund: (pct: number, days: number) => `przy rezygnacji najpóźniej ${days} dni przed przyjazdem zwracamy ${pct}% wpłaty`,
+    noRefund: 'przy rezygnacji wpłaty nie są zwracane',
   },
   effects: {
     ambience: 'Nastrój strony',
@@ -338,6 +341,9 @@ const en: Dictionary = {
     deposit: (pct: number) => `deposit of ${pct}% of the price when booking`,
     balance: (days: number) => `the rest no later than ${days} days before arrival`,
     online: 'online payment when booking',
+    freeCancel: (days: number) => `free cancellation up to ${days} days before arrival`,
+    partialRefund: (pct: number, days: number) => `cancel up to ${days} days before arrival and we refund ${pct}% of your payment`,
+    noRefund: 'payments are not refunded on cancellation',
   },
   effects: {
     ambience: 'Page mood',

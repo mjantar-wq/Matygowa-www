@@ -62,7 +62,7 @@ OBIEKTY = [
      "Nacieki w Bielskiej Jaskini", "Dripstone formations in Belianska Cave"),
     ("A_bielska-jaskinia_2", "https://www.ssj.sk/sk/photoloader/105/11.jpg/0x0", "https://www.ssj.sk/sk/jaskyna/2-belianska-jaskyna", "Správa slovenských jaskýň", "pending", .5,
      "Ściana nacieków w Bielskiej Jaskini", "A wall of flowstone in Belianska Cave"),
-    # 25.10 (decyzja Michała): koleje z wagonikiem, Morskie Oko ze schroniskiem nad brzegiem, balon z Tatrami w tle, szlaki
+    # 25.10 (decyzja Michała): koleje z wagonikiem, Morskie Oko ze schroniskiem nad brzegiem, balon z Tatrami w tle, szlaki (26.10: bez zdjęć schroniska Głodówka i schroniska nad Morskim Okiem, Michał nie prosi ich o zgodę)
     ("A_kasprowy-wierch_w1", "https://www.pkl.pl/data/pages/28/1600x0px__n4a0359a.jpg", "https://www.pkl.pl/kasprowy-wierch/kasprowy.html", "Polskie Koleje Linowe", "pending", .5,
      "Wagonik kolei na Kasprowy Wierch nad doliną, w tle Tatry", "The Kasprowy Wierch cable car above the valley, the Tatras behind"),
     ("A_kasprowy-wierch_w2", "https://www.pkl.pl/data/pages/28/1600x0px_kasprowy-15-.jpg", "https://www.pkl.pl/kasprowy-wierch/kasprowy.html", "Polskie Koleje Linowe", "pending", .5,
@@ -83,8 +83,6 @@ OBIEKTY = [
      "Tatry Zachodnie i Giewont widziane z balonu", "The Western Tatras and Giewont seen from the balloon"),
     ("A_szlaki-rowery_1", "https://velodunajec.pl/wp-content/uploads/2021/04/1-43-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
      "Trasa rowerowa Velo Dunajec wśród łąk, w dali Jezioro Czorsztyńskie", "The Velo Dunajec cycle route through meadows, Lake Czorsztyn in the distance"),
-    ("A_szlaki-rowery_2", "https://glodowka.com.pl/uploads/albums/l/66227a2ecdbae0c71025148312572fb8.jpg", "https://glodowka.com.pl", "Schronisko Głodówka", "pending", .5,
-     "Punkt widokowy na Głodówce, panorama Tatr Wysokich i Bielskich", "The Głodówka viewpoint, a panorama of the High and Belianske Tatras"),
     ("A_szlaki-rowery_3", "https://velodunajec.pl/wp-content/uploads/2021/04/Group-5-DJI_0609-HDR5_DJI_0649-HDR5-9-images-scaled.jpg", "https://velodunajec.pl", "Velo Dunajec", "pending", .5,
      "Droga przez łąki Podhala w porannej mgle", "A track across the Podhale meadows in the morning mist"),
     ("A_murzasichle_1", "https://www.modrzewiowybor.pl/files/images//1/15/156/1560/2_1.jpg", "https://www.modrzewiowybor.pl", "Park Linowy Murzasichle", "pending", .5,

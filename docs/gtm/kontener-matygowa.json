@@ -52,7 +52,6 @@
           }
         ],
         "firingTriggerId": [
-          "2147479573",
           "100"
         ],
         "tagFiringOption": "ONCE_PER_LOAD",
@@ -240,7 +239,6 @@
           }
         ],
         "firingTriggerId": [
-          "2147479573",
           "101"
         ],
         "tagFiringOption": "ONCE_PER_LOAD",

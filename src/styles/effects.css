@@ -291,12 +291,11 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 .mo-opowiesc .mo-steps__list { gap: 45svh; margin-block-start: 25svh; }
 .mo-opowiesc .mo-steps__step { opacity: 1; min-block-size: 0; }
 
-/* Przypięty przycisk rezerwacji: pojawia się, gdy żaden pasek nie jest na ekranie */
-.mo-dock__open { position: fixed; z-index: 9; inset-block-end: calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); inset-inline-end: var(--margines); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); opacity: 0; translate: 0 var(--space-4); pointer-events: none; transition: opacity var(--ruch-sredni) var(--ease-mgla), translate var(--ruch-sredni) var(--ease-mgla); }
+/* „Sprawdź termin” (Michał, 26.10.2026): większy i wyróżniony; od tabletu w prawym górnym rogu pod przełącznikami dzień/noc i lato/zima, na telefonie na dole na całą szerokość */
+.mo-dock__open { position: fixed; z-index: 19; inset-block-end: calc(var(--space-5) + env(safe-area-inset-bottom, 0px)); inset-inline-end: var(--margines); min-height: 3.5rem; padding-inline: var(--space-6); font-size: var(--text-body); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; box-shadow: 0 0 0 2px var(--color-na-cta), 0 0 0 4px var(--color-cta), 0 10px 28px rgba(0, 0, 0, 0.28); opacity: 0; translate: 0 var(--space-4); pointer-events: none; transition: opacity var(--ruch-sredni) var(--ease-mgla), translate var(--ruch-sredni) var(--ease-mgla); }
 .mo-dock[data-shown] .mo-dock__open { opacity: 1; translate: none; pointer-events: auto; }
 @media (max-width: 767px) { .mo-dock__open { inset-inline: var(--margines); } }
-/* Okno przewija się samo (wyniki z rozwiniętym kafelkiem bywają wyższe niż ekran); minimalna wysokość
-   mieści kalendarz z cenami (ok. 26rem pod polami), który przesuwa się razem z treścią */
+@media (min-width: 768px) { .mo-dock__open { inset-block: calc(var(--naglowek-wys) + var(--space-4) + var(--przelacznik-wys) + var(--space-3)) auto; inset-inline-end: var(--space-5); translate: 0 calc(-1 * var(--space-3)); } }
 .mo-dock__dialog { --dock-gora: 12svh; inline-size: min(100% - 2 * var(--margines), 64rem); max-inline-size: none; max-block-size: none; margin: var(--dock-gora) auto auto; padding: 0; border: 0; background: none; overflow: visible; color: var(--color-atrament); }
 .mo-dock__dialog::backdrop { background: var(--color-zaslona); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .mo-dock__body { --dock-max: calc(100dvh - var(--dock-gora) - var(--space-5)); position: relative; max-block-size: var(--dock-max); min-block-size: min(var(--dock-max), 36rem); overflow-y: auto; overscroll-behavior: contain; padding: var(--space-7) var(--space-5) var(--space-5); background: var(--color-tlo); border: 1px solid var(--color-linia); }

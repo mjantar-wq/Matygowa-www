@@ -19,9 +19,9 @@ type Loc = (typeof LOCALES)[number]
 const read = (file: string) => JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'))
 
 // Import partiami: IMPORT_ONLY=attractions (albo np. units,offers) wgrywa nowe pliki z manifestu i tylko te kolekcje.
-// „pages” to strony, opinie, dokumenty, aktualności i ustawienia. Bez zmiennej import obejmuje wszystko.
+// „pages” to strony, opinie, dokumenty, aktualności i ustawienia; „news” same aktualności. Bez zmiennej import obejmuje wszystko.
 const only = new Set((process.env.IMPORT_ONLY ?? '').split(',').map((k) => k.trim()).filter(Boolean))
-const want = (key: 'units' | 'attractions' | 'offers' | 'pages') => !only.size || only.has(key)
+const want = (key: 'units' | 'attractions' | 'offers' | 'pages' | 'news') => !only.size || only.has(key) || (key === 'news' && only.has('pages'))
 
 async function main() {
   const payload = await getPayload({ config })
@@ -32,6 +32,7 @@ async function main() {
   // stoją przed CGI, więc byPrefix wybiera je pierwsze. CGI zawsze isPlaceholder = true.
   // Plik o tej samej nazwie nie jest wgrywany drugi raz.
   const media = new Map<string, number | string>()
+  const OUTDOOR: Record<string, string> = { W6_taras_wejscie_3x2_foto: 'winter', V5_lomnica_okno_3x2_foto: 'summer' }
   const manifestPath = path.join(DIR, 'media', 'manifest.json')
   for (const item of fs.existsSync(manifestPath) ? (JSON.parse(fs.readFileSync(manifestPath, 'utf8')).items as Any[]) : []) {
     const filename: string = item.file
@@ -39,11 +40,14 @@ async function main() {
     const describe = stem.replace(/^[A-Z]+\d+_/, '').replace(/_(\d+x\d+_)?cgi$/, '').replace(/[_-]+/g, ' ')
     const found = await payload.find({ collection: 'media', where: { filename: { equals: filename } }, limit: 1, depth: 0 })
     let id = found.docs[0]?.id
+    // zdjęcia z zewnątrz w serii W/V nie są wnętrzami: idą do pory roku ze zdjęcia (Michał, 26.10.2026)
+    const outdoor = OUTDOOR[stem]
     const series = [
-      /_lato_/.test(stem) ? 'summer' : /^[KT]/.test(stem) ? 'winter' : null,
+      outdoor ?? (/_lato_/.test(stem) ? 'summer' : /^[KT]/.test(stem) ? 'winter' : null),
       /_noc_|gwiazdy/.test(stem) ? 'night' : null,
-      /^[VW]\d/.test(stem) ? 'interiors' : null,
-      /^B\d/.test(stem) ? 'rituals' : null,
+      // sauna i bania (także zdjęcia z serii wnętrz i zimy) trafiają do „Sauna i bania” (Michał, 26.10.2026)
+      /^[VW]\d/.test(stem) && !/sauna/.test(stem) && !outdoor ? 'interiors' : null,
+      /^B\d/.test(stem) || (!/^A_/.test(stem) && /sauna|bani|balia/.test(stem)) ? 'rituals' : null,
       /^A_/.test(stem) ? 'surroundings' : null,
     ].filter(Boolean)
     if (!id) {
@@ -59,9 +63,14 @@ async function main() {
         } as never) as Any
       ).id
       await payload.update({ collection: 'media', id, locale: 'en', data: { alt: real ? item.alt.en : `Temporary visualisation: ${describe}`, ...(real && item.credit ? { caption: item.credit.en } : {}) } })
-    } else if (!found.docs[0]?.series?.length && series.length) {
-      // plik wgrany przed dodaniem serii: galeria grupuje zdjęcia po seriach, więc uzupełniamy je bez ponownego wgrywania
-      await payload.update({ collection: 'media', id, locale: 'pl', data: { series } as never })
+    } else {
+      // plik wgrany przed dodaniem serii (albo przed nową regułą): dopisujemy brakujące serie, nie usuwając tych z panelu;
+      // „Wnętrza” zdejmujemy tylko ze zdjęć, które reguły z niej wyjęły (sauna, zdjęcia z zewnątrz)
+      const existing = (found.docs[0]?.series ?? []) as string[]
+      const next = [...new Set([...existing.filter((s) => s !== 'interiors' || !/^[VW]\d/.test(stem) || series.includes(s)), ...series])]
+      if (next.length !== existing.length || next.some((s) => !existing.includes(s))) {
+        await payload.update({ collection: 'media', id, locale: 'pl', data: { series: next } as never })
+      }
     }
     if (id && found.docs[0] && item.rights && found.docs[0].rights !== item.rights) {
       // zgoda obiektu przyszła po wgraniu pliku: manifest zmienia prawa i podpis bez ponownego wgrywania
@@ -181,6 +190,20 @@ async function main() {
       await payload.delete({ collection: 'offers', id: o.id })
       console.log(`oferta ${o.slug} usunięta: brak promocji w IceColdRes`)
     }
+  }
+
+  // Aktualności: opublikowane z datą z news.json. Wcześniej import zapisywał je jako szkice z publikacją 11.01.2027,
+  // więc każdy import chował wpisy opublikowane w panelu (Michał, 26.10.2026: mają być widoczne na stronie testowej).
+  for (const n of want('news') && fs.existsSync(path.join(DIR, 'news.json')) ? (read('news.json') as Any[]) : []) {
+    const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
+    let id = found.docs[0]?.id
+    for (const locale of LOCALES) {
+      const cover = img(({ 'apartamenty-wiosna-2027': 'V7_', 'ferie-2027': 'K9_' } as Record<string, string>)[n.slug] ?? 'K2_hero_osada_swit_16x9')
+      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, cover, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'published' }
+      if (id) await payload.update({ collection: 'news', id, locale, data, draft: false } as never)
+      else id = ((await payload.create({ collection: 'news', locale, data, draft: false } as never)) as Any).id
+    }
+    payload.logger.info(`news: ${n.slug} (opublikowany, data ${n.publish})`)
   }
 
   if (!want('pages')) {
@@ -324,18 +347,6 @@ async function main() {
     payload.logger.info(`seo: ${slug}`)
   }
 
-  // Aktualności na start: szkice z planowaną publikacją (pole publish), widoczne dopiero po publikacji
-  for (const n of fs.existsSync(path.join(DIR, 'news.json')) ? (read('news.json') as Any[]) : []) {
-    const found = await payload.find({ collection: 'news', where: { slug: { equals: n.slug } }, limit: 1, depth: 0, draft: true })
-    let id = found.docs[0]?.id
-    for (const locale of LOCALES) {
-      const cover = img(({ 'apartamenty-wiosna-2027': 'V7_', 'ferie-2027': 'K9_' } as Record<string, string>)[n.slug] ?? 'K2_hero_osada_swit_16x9')
-      const data = { slug: n.slug, title: n.title?.[locale], publishedAt: n.publish, cover, excerpt: n.body?.[locale]?.split('\n')[0], content: md(n.body?.[locale]), _status: 'draft' }
-      if (id) await payload.update({ collection: 'news', id, locale, data, draft: true } as never)
-      else id = ((await payload.create({ collection: 'news', locale, data, draft: true } as never)) as Any).id
-    }
-    payload.logger.info(`news: ${n.slug} (szkic, publikacja ${n.publish})`)
-  }
 
   const s = read('settings.json')
   for (const locale of LOCALES) {

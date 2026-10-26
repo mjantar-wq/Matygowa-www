@@ -29,7 +29,18 @@ export interface PublicProperty {
   property: { name: string; currency: string; today: string; checkInTime?: string; checkOutTime?: string }
   unitTypes: PublicUnitType[]
   bookingsEnabled: boolean
+  onlinePayments?: boolean
+  /** oferty silnika z warunkami płatności i rezygnacji */
+  offers?: PublicOffer[]
   eur: number | null
+}
+
+export interface PublicOffer {
+  id: string
+  name: string
+  cancellationPolicy: string | null
+  en: { name?: string | null; cancellationPolicy?: string | null }
+  terms?: { depositBp: number; balanceDueDaysBeforeArrival: number | null; freeCancellationDays: number | null; text?: { pl?: string; en?: string } }
 }
 
 export interface PriceFrom {
@@ -44,7 +55,9 @@ export interface Promotion {
   description: string
   /** dłuższy opis promocji (Markdown) z IceColdRes */
   story?: string | null
-  en: { badge?: string; description?: string; story?: string | null }
+  /** nazwa promocji w cenniku (tytuł karty oferty); plakietka to zwykle rabat */
+  name?: string | null
+  en: { name?: string | null; badge?: string; description?: string; story?: string | null }
   stayFrom: string | null
   stayTo: string | null
   bookFrom: string | null
@@ -56,6 +69,14 @@ export interface Promotion {
   arrivalDays?: number[] | null
   excludedWeekdays?: number[] | null
   excludedPeriods?: { from: string; to: string }[] | null
+  /** warunki rabatu (szczegóły oferty na stronie) */
+  discountBp?: number | null
+  amountOff?: number | null
+  freeNights?: number | null
+  minNights?: number | null
+  fromNight?: number | null
+  minLeadDays?: number | null
+  maxLeadDays?: number | null
 }
 
 export interface Service {

@@ -17,6 +17,7 @@ export function AttractionPopup({
   linkClassName = 'mo-card mo-card--poziom',
   focus,
   after,
+  season,
 }: {
   slug: string
   href: string
@@ -30,6 +31,8 @@ export function AttractionPopup({
   focus?: string
   /** treść pod linkiem, np. rozwijany krótki opis na głównej */
   after?: ReactNode
+  /** sezon promocji (oferty): przełącznik lato/zima chowa pozycję w CSS */
+  season?: 'lato' | 'zima'
 }) {
   const dialog = useRef<HTMLDialogElement>(null)
 
@@ -43,7 +46,7 @@ export function AttractionPopup({
   }, [slug])
 
   return (
-    <li className={className} data-scene-focus={focus}>
+    <li className={className} data-scene-focus={focus} data-sezon-promo={season}>
       <a
         href={href}
         className={linkClassName}

@@ -18,7 +18,7 @@ import { href } from '@/i18n/routes'
 import { findMany, UNIT_ORDER } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getServices, promoSeason } from '@/lib/icecoldres'
-import { getPromoCards } from '@/lib/promo-cards'
+import { getPromoCards, promoText } from '@/lib/promo-cards'
 import { fillText, termVars } from '@/lib/terms'
 import type { PageContext } from '@/lib/page'
 import type { Attraction, News, Page, Testimonial, Unit } from '@/payload-types'
@@ -346,13 +346,14 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
         {cards.map(({ promotion: p, image }) => (
-          <article key={p.id} className="mo-card" data-sezon-promo={promoSeason(p.season)}>
+          // karta prowadzi do oferty na stronie Oferty, gdzie od razu otwiera się jej okienko z opisem
+          <Link key={p.id} href={`${href(ctx.locale, 'offers')}#${p.id}`} className="mo-card" data-sezon-promo={promoSeason(p.season)}>
             {/* zdjęcie z panelu, a bez niego prawdziwe zdjęcie domku */}
             <div className="mo-card__media"><Media media={image} /></div>
-            <p className="mo-label">{ctx.t.offers.onlyHere}</p>
-            <h3 className="mo-h3">{ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}</h3>
-            <p>{ctx.locale === 'pl' ? p.description : p.en.description || p.description}</p>
-          </article>
+            <p className="mo-label">{promoText(p, ctx.locale).badge ?? ctx.t.offers.onlyHere}</p>
+            <h3 className="mo-h3">{promoText(p, ctx.locale).title}</h3>
+            <p>{promoText(p, ctx.locale).description}</p>
+          </Link>
         ))}
         {news.map((n) => (
           <Link key={n.id} href={href(ctx.locale, 'news', n.slug)} className="mo-card">

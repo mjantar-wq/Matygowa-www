@@ -19,16 +19,20 @@ export const sceneId = (blockId: string | null | undefined, step?: number) => `s
 const asImage = (m?: MediaRef): HeroImage | null =>
   m && typeof m === 'object' && m.url ? { url: m.url, alt: m.alt, width: m.width, height: m.height, focusX: m.focusX, focusY: m.focusY } : null
 
+const asVideo = (m?: MediaRef): string | null => (m && typeof m === 'object' && m.url ? m.url : null)
+
 /**
  * Warianty → kadry z przypisanymi nastrojami; pomija warianty bez kadru.
- * Filmy na razie pomijamy: zastępcze ujęcia drżały i źle się zapętlały, więc kadr dostaje wolny ruch kamery
- * w CSS. Gdy będzie prawdziwe, stabilne ujęcie z płynną pętlą, wystarczy przywrócić tu `video` i `videoPortrait`.
+ * Filmy tylko w dniu latem (pętla z drona K14): zastępcze ujęcia zimowe i nocne drżały i źle się zapętlały,
+ * więc tam kadr dostaje wolny ruch kamery w CSS. Gdy dojdą stabilne ujęcia z sesji, wystarczy poluzować `film`.
  */
+const film = (v: Variant) => v.sezon === 'lato' && v.pora !== 'noc' && !v.nocny
+
 export function slidesOf(variants: Variant[]): HeroSlide[] {
   const usable = variants.filter((v) => asImage(v.image))
   const slots = assignSlots(usable)
   return usable
-    .map((v, i): HeroSlide => ({ image: asImage(v.image), slots: slots[i], nocny: v.nocny }))
+    .map((v, i): HeroSlide => ({ image: asImage(v.image), video: film(v) ? asVideo(v.video) : null, slots: slots[i], nocny: v.nocny }))
     .filter((s) => s.slots.length)
 }
 
@@ -55,7 +59,7 @@ function defaults(pick: ReturnType<typeof libraryPicker>) {
   const lato = (prefix: string): Variant => v(prefix, { sezon: 'lato' })
   const latoNoc = (prefix: string): Variant => v(prefix, { pora: 'noc', sezon: 'lato', nocny: true })
   return {
-    hero: [v('K12_'), v('K2_hero_osada_noc_16x9', { pora: 'noc' }), lato('K13_'), latoNoc('K13_')],
+    hero: [v('K12_'), v('K2_hero_osada_noc_16x9', { pora: 'noc' }), lato('K14_'), latoNoc('K13_')],
     day: {
       dawn: [v('T1_swit_gran'), lato('L28_')],
       day: [v('K3_dron_przelot'), lato('L26_')],

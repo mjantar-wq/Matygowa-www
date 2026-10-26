@@ -530,6 +530,31 @@
    "source": "widoki-02.jpg"
   },
   {
+   "file": "K14_hero_dron_lato_16x9_foto.webp",
+   "shot": "K14",
+   "width": 1920,
+   "height": 1080,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada z drona jesienią, w tle zielone wzgórza Pogórza Gliczarowskiego",
+    "en": "The settlement from a drone in autumn, with the green hills of the Gliczarów foothills behind"
+   },
+   "source": "DJI_20251012123954_0005_D.MP4, 3:12–3:24: kadr 16:9 wycięty z 4K (bez drogi i aut), spowolnienie 2×, pętla 18 s z przenikaniem 2 s (pierwsza klatka jako poster)"
+  },
+  {
+   "file": "K14_hero_dron_lato_16x9_foto.mp4",
+   "shot": "K14",
+   "width": 1920,
+   "height": 1080,
+   "placeholder": false,
+   "alt": {
+    "pl": "Osada z drona jesienią, w tle zielone wzgórza Pogórza Gliczarowskiego",
+    "en": "The settlement from a drone in autumn, with the green hills of the Gliczarów foothills behind"
+   },
+   "source": "DJI_20251012123954_0005_D.MP4, 3:12–3:24: kadr 16:9 wycięty z 4K (bez drogi i aut), spowolnienie 2×, pętla 18 s z przenikaniem 2 s",
+   "note": "Tymczasowo, do czasu letniej sesji; tylko hero w nastroju dzień-lato."
+  },
+  {
    "file": "K1_panorama_tatry_21x9_foto.webp",
    "shot": "K1",
    "width": 2048,

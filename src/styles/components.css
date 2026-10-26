@@ -157,9 +157,10 @@ body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-e
 .mo-hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--color-zaslona), transparent 45%, var(--color-zaslona)); }
 .mo-hero__content { position: relative; padding-block: var(--space-10) var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); justify-items: start; }
 .mo-hero .mo-label, .mo-hero .mo-lede { color: var(--color-na-zdjeciu); }
-.mo-hero .mo-booking .mo-label { color: var(--color-wyciszony); }
+.mo-hero .mo-booking .mo-label, .mo-hero .mo-booking-ages .mo-label { color: var(--color-wyciszony); }
 .mo-hero__content > * { min-inline-size: 0; max-inline-size: 100%; }
 .mo-hero .mo-booking { color: var(--color-atrament); inline-size: 100%; }
+.mo-hero .mo-booking-ages { color: var(--color-atrament); }
 
 /* Panorama szczytów */
 .mo-panorama { position: relative; aspect-ratio: 21 / 9; max-inline-size: 100%; background: var(--color-tlo-2); overflow: hidden; }

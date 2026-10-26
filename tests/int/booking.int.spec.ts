@@ -5,6 +5,7 @@ import { promoInSeason, promoSeason } from '@/lib/icecoldres'
 
 vi.mock('server-only', () => ({}))
 vi.mock('@/lib/cms', () => ({
+  UNIT_ORDER: ['order', 'name'],
   findMany: async () => [
     { slug: 'hawran', name: 'Hawrań', kind: 'house', tagline: 'Widok na Hawrań', hero: { url: '/media/hawran.jpg', alt: 'Hawrań', focusX: 30 }, area: 120, bedrooms: 4, peak: { elevation: 2152 } },
   ],
@@ -94,9 +95,10 @@ describe('pośrednik /api/booking', () => {
     const api: Record<string, unknown> = {
       '': { unitTypes: [{ id: 'u1', code: 'hawran', name: 'Hawrań', stdOccupancy: 8, maxOccupancy: 8, amenities: ['sauna'], amenitiesEn: ['sauna'], photos: [] }, { id: 'u2', code: 'gerlach', name: 'Gerlach', content: { en: { name: 'Gerlach cottage' } }, photos: [] }] },
       '/search': {
+        // IceColdRes podaje gerlach pierwszy; strona układa domy jak w panelu (hawran jest w panelu, gerlach nie)
         results: [
-          { unitTypeId: 'u1', free: 1, offers: [{ offerId: 'standard', name: 'Standard', available: true, total: 300000, items: [{ nights: 3, total: 300000, promotion: { id: 'p', display: { badge: 'Zima', en: { badge: 'Winter' } } } }] }] },
           { unitTypeId: 'u2', free: 1, offers: [{ offerId: 'standard', name: 'Standard', available: false, unavailable: [{ index: 0, reasons: [{ code: 'over_capacity' }] }] }] },
+          { unitTypeId: 'u1', free: 1, offers: [{ offerId: 'standard', name: 'Standard', available: true, total: 300000, items: [{ nights: 3, total: 300000, promotion: { id: 'p', display: { badge: 'Zima', en: { badge: 'Winter' } } } }] }] },
         ],
       },
     }

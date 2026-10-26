@@ -70,6 +70,11 @@ async function search(url: URL) {
   if (!results || !property) return unavailable()
   const tiles = await getUnitTiles(locale, property.unitTypes)
   const nights = daysBetween(arrival, departure)
+  // domy w kolejności z panelu (kafelki powstają w tej kolejności); nieznane w panelu na końcu
+  const rank = (code: string) => {
+    const i = Object.keys(tiles).indexOf(code)
+    return i < 0 ? Infinity : i
+  }
   return Response.json(
     {
       nights,
@@ -86,7 +91,7 @@ async function search(url: URL) {
         // pierwszy powód, dla którego dom nie pasuje (np. za dużo osób, za krótki pobyt)
         const reason = r.free < 1 ? 'occupied' : offers.length ? null : (r.offers.flatMap((o) => o.unavailable ?? []).flatMap((u) => u.reasons)[0]?.code ?? 'unknown')
         return [{ code: type.code, name: type.name, nameEn: type.content?.en?.name ?? null, free: r.free, offers: r.free > 0 ? offers : [], reason, unit: tiles[type.code] ?? null }]
-      }),
+      }).sort((a, b) => rank(a.code) - rank(b.code)),
     },
     { headers: CACHE },
   )

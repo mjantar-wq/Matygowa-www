@@ -1,7 +1,7 @@
 import 'server-only'
 import type { Locale } from '@/i18n/locales'
 import type { Media, Offer, Unit } from '@/payload-types'
-import { findMany } from './cms'
+import { findMany, UNIT_ORDER } from './cms'
 import { getPromotions, type Promotion } from './icecoldres'
 
 export interface PromoCard {
@@ -23,7 +23,7 @@ export async function getPromoCards(locale: Locale): Promise<PromoCard[]> {
   const [promotions, offers, units] = await Promise.all([
     getPromotions(),
     findMany<Offer>('offers', locale, { sort: 'order' }),
-    findMany<Unit>('units', locale, { depth: 1, sort: 'order' }),
+    findMany<Unit>('units', locale, { depth: 1, sort: UNIT_ORDER }),
   ])
   const pool = units.flatMap((u) => [u.hero, ...(u.gallery ?? [])]).filter(realPhoto)
   const unique = pool.filter((m, i) => pool.findIndex((x) => x.id === m.id) === i)

@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { Placeholder } from '@/components/Placeholder'
 import { RichText } from '@/components/RichText'
 import { href } from '@/i18n/routes'
-import { findBySlug, findMany } from '@/lib/cms'
+import { findBySlug, findMany, UNIT_ORDER } from '@/lib/cms'
 import { getProperty, getPromotions, promoSeason } from '@/lib/icecoldres'
 import { peakName, peakViewAlt } from '@/lib/peak'
 import { buildMetadata, pageContext, type SlugParams } from '@/lib/page'
@@ -30,7 +30,7 @@ export default async function UnitPage({ params }: SlugParams) {
   if (!unit) notFound()
   const t = ctx.t
   const code = unit.icecoldresCode || unit.slug
-  const [all, property, promotions] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: 'order' }), getProperty(), getPromotions()])
+  const [all, property, promotions] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: UNIT_ORDER }), getProperty(), getPromotions()])
   const others = all.filter((u) => u.id !== unit.id)
   const type = property?.unitTypes.find((u) => u.code === code)
   const amenities = type ? (ctx.locale === 'pl' ? type.amenities : type.amenitiesEn) : []

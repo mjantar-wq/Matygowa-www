@@ -11,7 +11,7 @@ import { ReviewShuffle } from '@/components/effects/ReviewShuffle'
 import { ScrollSteps } from '@/components/effects/ScrollSteps'
 import { heroSlides, sceneId } from '@/lib/scenes'
 import { href } from '@/i18n/routes'
-import { findMany } from '@/lib/cms'
+import { findMany, UNIT_ORDER } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getServices, promoSeason } from '@/lib/icecoldres'
 import { getPromoCards } from '@/lib/promo-cards'
@@ -91,7 +91,7 @@ function Intro({ block }: Props<'intro'>) {
 }
 
 async function Panorama({ block, ctx, immersive }: Props<'peaksPanorama'>) {
-  const units = await findMany<Unit>('units', ctx.locale, { sort: 'order' })
+  const units = await findMany<Unit>('units', ctx.locale, { sort: UNIT_ORDER })
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />

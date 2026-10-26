@@ -3,100 +3,81 @@
   49.34471,
   20.05793
  ],
- "eyeM": 959,
+ "eyeM": 958,
  "azimuthFrom": 124.0,
  "azimuthTo": 240.0,
  "verticalExaggeration": 1.0,
+ "source": "grań ze zrzutów PeakFindera dopasowana do DEM Terrarium z13",
  "peaks": [
   {
    "slug": "kominiarski-wierch",
    "name": "Kominiarski Wierch",
    "height": 1829,
-   "az": 234.59,
-   "dist_km": 19.8,
-   "dem": 1800,
-   "visible": true
+   "az": 234.55,
+   "dist_km": 19.9
   },
   {
    "slug": "ciemniak",
    "name": "Ciemniak",
    "height": 2096,
-   "az": 221.61,
-   "dist_km": 16.9,
-   "dem": 2070,
-   "visible": true
+   "az": 221.58,
+   "dist_km": 16.9
   },
   {
    "slug": "czerwone-wierchy",
    "name": "Czerwone Wierchy",
    "height": 2122,
    "az": 220.49,
-   "dist_km": 16.6,
-   "dem": 2099,
-   "visible": true
+   "dist_km": 16.6
   },
   {
    "slug": "giewont",
    "name": "Giewont",
    "height": 1894,
-   "az": 220.7,
-   "dist_km": 13.8,
-   "dem": 1837,
-   "visible": true
+   "az": 220.62,
+   "dist_km": 13.8
   },
   {
    "slug": "swinica",
    "name": "Świnica",
    "height": 2301,
-   "az": 194.63,
-   "dist_km": 14.3,
-   "dem": 2208,
-   "visible": true
+   "az": 194.56,
+   "dist_km": 14.3
   },
   {
    "slug": "woloszyn",
    "name": "Wołoszyn",
    "height": 2155,
    "az": 183.25,
-   "dist_km": 12.8,
-   "dem": 2122,
-   "visible": true
+   "dist_km": 12.8
   },
   {
    "slug": "gerlach",
    "name": "Gerlach",
    "height": 2655,
-   "az": 164.7,
-   "dist_km": 20.9,
-   "dem": 2605,
-   "visible": true
+   "az": 164.67,
+   "dist_km": 20.9
   },
   {
    "slug": "lodowy",
    "name": "Lodowy Szczyt",
    "height": 2627,
-   "az": 151.21,
-   "dist_km": 18.7,
-   "dem": 2559,
-   "visible": true
+   "az": 151.25,
+   "dist_km": 18.7
   },
   {
    "slug": "lomnica",
    "name": "Łomnica",
    "height": 2634,
-   "az": 146.0,
-   "dist_km": 20.0,
-   "dem": 2584,
-   "visible": true
+   "az": 145.99,
+   "dist_km": 20.1
   },
   {
    "slug": "hawran",
    "name": "Hawrań",
    "height": 2152,
    "az": 136.51,
-   "dist_km": 14.7,
-   "dem": 2084,
-   "visible": true
+   "dist_km": 14.7
   }
  ]
 }

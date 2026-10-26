@@ -4,7 +4,8 @@
 Dla każdego azymutu szukamy najwyższego kąta elewacji w trzech pasmach odległości
 (osada < 2.5 km, Podhale 2.5–9 km, Tatry > 9 km), co daje trzy linie grani do paralaksy.
 Szczyty z listy PEAKS są dosuwane do lokalnego maksimum DEM i sprawdzana jest ich widoczność.
-Wynik: public/ilustracje/G2_panorama.svg (kolory tylko przez klasy).
+Wynik: public/ilustracje/G2_panorama_poprzednia.svg (kolory tylko przez klasy). Na stronie jest wersja
+z panorama_peakfinder/ (drobiazgowa grań z PeakFindera); ten skrypt nadal rysuje też sylwetki G5.
 """
 import io, json, math, pathlib, urllib.request
 import numpy as np
@@ -127,9 +128,9 @@ for g in sorted(groups, key=lambda g: -max(p["height"] for p in g)):
                  f'<text class="peak-name" x="{lx:.0f}" y="{r + 22:.0f}" text-anchor="middle">{p["name"]}</text><text class="peak-h" x="{lx:.0f}" y="{r + 46:.0f}" text-anchor="middle">{p["height"]} m</text></g>')
         cx += 2 * half + 32
 L.append("</g></svg>")
-out = ROOT / "public/ilustracje/G2_panorama.svg"; out.parent.mkdir(parents=True, exist_ok=True)
+out = ROOT / "public/ilustracje/G2_panorama_poprzednia.svg"; out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(z_zapasem("\n".join(L)))
-(ROOT / "public/ilustracje/G2_panorama.json").write_text(json.dumps({"site": SITE, "eyeM": round(H0), "azimuthFrom": AZ0, "azimuthTo": AZ1, "verticalExaggeration": EXAG, "peaks": [{k: v for k, v in p.items() if k not in ("k", "angle")} for p in peaks]}, ensure_ascii=False, indent=1))
+(ROOT / "public/ilustracje/G2_panorama_poprzednia.json").write_text(json.dumps({"site": SITE, "eyeM": round(H0), "azimuthFrom": AZ0, "azimuthTo": AZ1, "verticalExaggeration": EXAG, "peaks": [{k: v for k, v in p.items() if k not in ("k", "angle")} for p in peaks]}, ensure_ascii=False, indent=1))
 for p in peaks: print(p["slug"], p["az"], p["dist_km"], p["dem"], round(p["angle"], 2), "OK" if p["visible"] else "UKRYTY")
 print("H0", H0)
 

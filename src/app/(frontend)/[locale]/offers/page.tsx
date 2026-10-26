@@ -42,17 +42,25 @@ function OfferTerms({ card, ctx }: { card: PromoCard; ctx: PageContext }) {
     p.excludedWeekdays?.length ? t.excludedWeekdays(weekdays(p.excludedWeekdays, l)) : null,
     p.excludedPeriods?.length ? t.excludedPeriods(p.excludedPeriods.map((x) => `${d(x.from)} – ${d(x.to)}`).join(', ')) : null,
   ]
+  // warunki z liczb IceColdRes, bez czytania wpisanych tekstów (Michał, 26.10.2026); promocję z ofertą i ustawieniami składa IceColdRes
+  const terms = (offer && p.terms?.[offer.id]) || offer?.terms
   const payment = [
-    offer?.terms?.depositBp ? t.deposit(offer.terms.depositBp / 100) : null,
-    offer?.terms?.balanceDueDaysBeforeArrival ? t.balance(offer.terms.balanceDueDaysBeforeArrival) : null,
+    terms?.depositBp ? t.deposit(terms.depositBp / 100) : null,
+    terms?.balanceDueDaysBeforeArrival ? t.balance(terms.balanceDueDaysBeforeArrival) : null,
     card.onlinePayments ? t.online : null,
   ]
-  const cancellation = (l === 'pl' ? offer?.cancellationPolicy : offer?.en.cancellationPolicy || offer?.cancellationPolicy) || null
+  const cancellation = terms
+    ? [
+        terms.freeCancellationDays !== null ? t.freeCancel(terms.freeCancellationDays) : null,
+        terms.partialRefund ? t.partialRefund(terms.partialRefund.share / 100, terms.partialRefund.days) : null,
+        terms.freeCancellationDays === null && !terms.partialRefund ? t.noRefund : null,
+      ]
+    : []
   const rows: [string, (string | null)[]][] = [
     [t.period, period],
     [t.conditions, conditions],
     [t.payment, payment],
-    [t.cancellation, [cancellation]],
+    [t.cancellation, cancellation],
   ]
   const shown = rows.map(([k, v]) => [k, v.filter((x): x is string => !!x)] as const).filter(([, v]) => v.length)
   if (!shown.length) return null

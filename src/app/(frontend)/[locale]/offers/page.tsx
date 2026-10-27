@@ -5,6 +5,7 @@ import { Media } from '@/components/Media'
 import { Placeholder } from '@/components/Placeholder'
 import { Markdown } from '@/components/Markdown'
 import type { Locale } from '@/i18n/locales'
+import { departureAfter } from '@/lib/availability'
 import { bookingUrl, engineSettings, formatPrice } from '@/lib/booking'
 import { promoSeason } from '@/lib/icecoldres'
 import { buildMetadata, pageContext, type LocaleParams, type PageContext } from '@/lib/page'
@@ -27,8 +28,10 @@ function OfferTerms({ card, ctx }: { card: PromoCard; ctx: PageContext }) {
   const t = ctx.t.offers
   const l = ctx.locale
   const d = (x: string) => fmtDate(x, l)
+  // IceColdRes podaje ostatnią noc; gość widzi dzień wyjazdu po niej
+  const out = (lastNight: string) => d(departureAfter(lastNight))
   const period = [
-    p.stayFrom && p.stayTo ? t.stay(d(p.stayFrom), d(p.stayTo)) : p.stayFrom ? t.stayFrom(d(p.stayFrom)) : p.stayTo ? t.stayTo(d(p.stayTo)) : null,
+    p.stayFrom && p.stayTo ? t.stay(d(p.stayFrom), out(p.stayTo)) : p.stayFrom ? t.stayFrom(d(p.stayFrom)) : p.stayTo ? t.stayTo(out(p.stayTo)) : null,
     p.bookFrom || p.bookTo ? t.booking(p.bookFrom ? d(p.bookFrom) : '…', p.bookTo ? d(p.bookTo) : '…') : null,
   ]
   const conditions = [
@@ -40,7 +43,7 @@ function OfferTerms({ card, ctx }: { card: PromoCard; ctx: PageContext }) {
     p.maxLeadDays ? t.maxLead(p.maxLeadDays) : null,
     p.arrivalDays?.length ? t.arrivalDays(weekdays(p.arrivalDays, l)) : null,
     p.excludedWeekdays?.length ? t.excludedWeekdays(weekdays(p.excludedWeekdays, l)) : null,
-    p.excludedPeriods?.length ? t.excludedPeriods(p.excludedPeriods.map((x) => `${d(x.from)} – ${d(x.to)}`).join(', ')) : null,
+    p.excludedPeriods?.length ? t.excludedPeriods(p.excludedPeriods.map((x) => `${d(x.from)} – ${out(x.to)}`).join(', ')) : null,
   ]
   // warunki z liczb IceColdRes, bez czytania wpisanych tekstów (Michał, 26.10.2026); promocję z ofertą i ustawieniami składa IceColdRes
   const terms = (offer && p.terms?.[offer.id]) || offer?.terms

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { arrivalInfo, departureInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
+import { arrivalInfo, departureAfter, departureInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
 import { bookingUrl } from '@/lib/booking'
 import { promoInSeason, promoSeason } from '@/lib/icecoldres'
 
@@ -61,6 +61,11 @@ describe('kalendarz dostępności', () => {
     expect(promoOn(p, '2026-12-05', 'x')).toBe(false)
     expect(promoOn({ ...p, unitTypeIds: ['y'] }, '2026-12-04', 'x')).toBe(false)
     expect(promoOn({ ...p, bookableNow: false }, '2026-12-04', 'x')).toBe(false)
+  })
+
+  it('okres promocji dla gościa: „do” to dzień wyjazdu po ostatniej nocy (Michał, 27.10.2026)', () => {
+    expect(departureAfter('2026-12-20')).toBe('2026-12-21')
+    expect(departureAfter('2026-12-31')).toBe('2027-01-01')
   })
 })
 

@@ -91,6 +91,11 @@ describe('przekazanie do silnika', () => {
     )
     expect(url).toBe('https://icecoldres.audiowizard.pl/pl/booking?arrival=2026-12-04&departure=2026-12-07&adults=2&children=2&ages=4%2C9&unit=gerlach&offer=standard&utm_source=google&utm_campaign=zima')
   })
+
+  it('karta oferty: promocja w linku (kalendarz silnika na okresie promocji)', () => {
+    const url = bookingUrl({ bookingEngine: 'icecoldres', icecoldresUrl: 'https://icecoldres.audiowizard.pl', slug: 'booking' }, 'en', { offer: 'standard', promotion: 'ferie' })
+    expect(url).toBe('https://icecoldres.audiowizard.pl/en/booking?offer=standard&promotion=ferie')
+  })
 })
 
 describe('pośrednik /api/booking', () => {

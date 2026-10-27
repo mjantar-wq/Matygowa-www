@@ -105,7 +105,7 @@ export default async function OffersPage({ params }: LocaleParams) {
             const { promotion: p, image, offerId } = card
             const x = promoText(p, ctx.locale)
             const book = (
-              <a href={bookingUrl(engine, ctx.locale, { offer: offerId || undefined })} data-track="offers" className="mo-btn mo-btn--glowny">
+              <a href={bookingUrl(engine, ctx.locale, { offer: offerId || undefined, promotion: p.id })} data-track="offers" className="mo-btn mo-btn--glowny">
                 {ctx.t.booking.book}
               </a>
             )

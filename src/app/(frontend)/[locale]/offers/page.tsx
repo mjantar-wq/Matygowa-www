@@ -3,6 +3,7 @@ import { CmsPage, getPage } from '@/components/CmsPage'
 import { AttractionPopup as OfferPopup } from '@/components/effects/AttractionPopup'
 import { Media } from '@/components/Media'
 import { Placeholder } from '@/components/Placeholder'
+import { SeasonOffersEmpty } from '@/components/SeasonOffersEmpty'
 import { Markdown } from '@/components/Markdown'
 import type { Locale } from '@/i18n/locales'
 import { bookingUrl, engineSettings, formatPrice } from '@/lib/booking'
@@ -149,7 +150,7 @@ export default async function OffersPage({ params }: LocaleParams) {
             )
           })}
         </ul>
-        {cards.length ? null : <Placeholder label={ctx.t.offers.empty} />}
+        {cards.length ? <SeasonOffersEmpty seasons={cards.map((c) => c.promotion.season)} ctx={ctx} /> : <Placeholder label={ctx.t.offers.empty} />}
       </section>
     </CmsPage>
   )

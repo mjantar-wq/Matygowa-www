@@ -139,6 +139,13 @@ export const Units: CollectionConfig = {
                 { label: 'Na piętrze', value: 'upper' },
               ],
             },
+            {
+              name: 'beds',
+              label: 'Łóżka',
+              type: 'textarea',
+              localized: true,
+              admin: { description: 'Rodzaje łóżek w sypialniach i w salonie, jednym lub dwoma zdaniami.' },
+            },
           ],
         },
       ],

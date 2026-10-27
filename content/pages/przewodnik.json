@@ -32,19 +32,16 @@
         "en": "How do payment and cancellation work?"
       },
       "a": {
-        "pl": "Przy rezerwacji wpłacacie zaliczkę {deposit}, a resztę na {balance} dni przed przyjazdem. Rezygnacja jest bezpłatna do {freeCancellation} dni przed przyjazdem. Warunki mogą się różnić między ofertami, pełny opis: {terms}",
-        "en": "You pay a deposit of {deposit} when booking and the balance {balance} days before arrival. Cancellation is free up to {freeCancellation} days before arrival. Terms may differ between offers; full details: {terms}"
+        "pl": "{terms} Warunki mogą się różnić między ofertami.",
+        "en": "{terms} Terms may differ between offers."
       },
       "dynamic": {
         "source": "icecoldres",
         "placeholders": [
-          "deposit",
-          "balance",
-          "freeCancellation",
           "terms"
         ]
       },
-      "note": "Warunki zaliczki, dopłaty i rezygnacji są zmienne, więc tekst nie podaje liczb. Nazwy pól API do potwierdzenia z wątkiem IceColdRes."
+      "note": "Pełny opis warunków z IceColdRes i dopisek o różnicach między ofertami, bez skrótu z liczbami, który go dublował (Michał, 27.10.2026)."
     },
     {
       "q": {

@@ -123,9 +123,9 @@
 .mo-booking-error { margin-block-start: var(--space-3); color: var(--color-bursztyn-tekst); }
 .mo-field:has([aria-invalid]) { outline: 2px solid var(--color-bursztyn); outline-offset: -2px; }
 
-/* promocje z sezonem (IceColdRes: lato/zima) widać zawsze; te z pory roku przełącznika strony stoją pierwsze (Michał, 27.10.2026) */
+/* promocje z sezonem (IceColdRes: lato/zima) widać tylko przy tej porze roku przełącznika strony */
 html[data-sezon="zima"] [data-sezon-promo="lato"],
-html[data-sezon="lato"] [data-sezon-promo="zima"] { order: 1; }
+html[data-sezon="lato"] [data-sezon-promo="zima"] { display: none; }
 
 /* Liczba osób: pole z listą, która rośnie przy przewijaniu (CountPicker, Michał 26.10.2026) */
 .mo-picker { position: relative; display: flex; flex-direction: column; }

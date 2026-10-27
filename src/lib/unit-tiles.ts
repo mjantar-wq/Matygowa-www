@@ -23,6 +23,7 @@ export interface UnitTile {
   elevation: number | null
   stdGuests: number | null
   maxGuests: number | null
+  beds: string | null
   amenities: string[]
 }
 
@@ -64,6 +65,7 @@ export async function getUnitTiles(locale: Locale, types: PublicUnitType[]): Pro
       elevation: u.peak?.elevation ?? null,
       stdGuests: type?.stdOccupancy ?? null,
       maxGuests: type?.maxOccupancy ?? u.maxGuests ?? null,
+      beds: u.beds ?? null,
       amenities: (locale === 'pl' ? type?.amenities : type?.amenitiesEn) ?? [],
     }
   }

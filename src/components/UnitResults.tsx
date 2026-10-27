@@ -193,6 +193,12 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                   ) : null}
                 </dl>
               ) : null}
+              {open.unit?.beds ? (
+                <div className="mo-unit-dialog__amenities">
+                  <p className="mo-label">{t.facts.beds}</p>
+                  <p className="mo-body-s">{open.unit.beds}</p>
+                </div>
+              ) : null}
               {open.unit?.amenities.length ? (
                 <div className="mo-unit-dialog__amenities">
                   <p className="mo-label">{t.facts.amenities}</p>

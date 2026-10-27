@@ -132,6 +132,7 @@ async function main() {
       bathrooms: u.facts?.bathrooms,
       separateWc: !!u.facts?.separate_wc,
       ensuiteUpstairs: !!u.facts?.ensuite_upstairs,
+      beds: u.beds?.[l],
       livingRoom: u.facts?.living_room === 'upper' || u.facts?.living_room === 'first' ? 'upper' : u.facts?.living_room ? 'ground' : undefined,
       seo: { title: u.seo?.title?.[l], description: u.seo?.description?.[l] },
     }), ['order'])

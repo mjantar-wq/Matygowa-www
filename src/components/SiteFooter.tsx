@@ -21,7 +21,7 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
           {settings?.phone ? <p><a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a></p> : null}
           {settings?.email ? <p><a href={`mailto:${settings.email}`}>{settings.email}</a></p> : null}
           {settings?.address ? <p style={{ whiteSpace: 'pre-line' }}>{settings.address}</p> : null}
-          {route ? <p><a href={route} rel="noopener">{t.footer.directions}</a></p> : null}
+          {route ? <p><a href={route} rel="noopener" target="_blank">{t.footer.directions}</a></p> : null}
         </div>
         <nav aria-label={t.menu}>
           <ul>

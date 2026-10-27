@@ -197,6 +197,7 @@ const pl = {
     cookieSettings: 'Ustawienia cookies',
     directions: 'Wyznacz trasę',
     winterRoute: 'Dojazd zimą',
+    winterRouteText: 'Tą samą drogą co latem. Górska zima wymaga jednak szczególnej uwagi: zabierzcie łańcuchy śniegowe, a parkując przy domu, zawsze zaciągajcie hamulec postojowy.',
   },
   consent: {
     title: 'Pliki cookies',
@@ -408,6 +409,7 @@ const en: Dictionary = {
     cookieSettings: 'Cookie settings',
     directions: 'Get directions',
     winterRoute: 'Driving in winter',
+    winterRouteText: 'By the same road as in summer. Mountain winters call for extra care, though: bring snow chains, and always apply the handbrake when you park by the house.',
   },
   consent: {
     title: 'Cookies',

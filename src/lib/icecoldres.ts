@@ -74,6 +74,8 @@ export interface Promotion {
   bookFrom: string | null
   bookTo: string | null
   bookableNow: boolean
+  /** false: promocja bez korzyści (np. „Ferie” jako oferta sezonu): karta na stronie, bez znaczka w kalendarzu; brak pola: starsze API */
+  hasBenefit?: boolean
   /** sezon wyświetlania na stronie (IceColdRes); null albo brak: oba */
   season?: 'summer' | 'winter' | null
   unitTypeIds: string[] | null

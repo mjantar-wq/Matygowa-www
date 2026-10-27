@@ -38,6 +38,7 @@ const weekday = (d: string) => new Date(`${d}T00:00:00Z`).getUTCDay()
 
 export interface PromoRules {
   bookableNow: boolean
+  hasBenefit?: boolean
   unitTypeIds: string[] | null
   stayFrom: string | null
   stayTo: string | null
@@ -48,7 +49,7 @@ export interface PromoRules {
 
 /** Promocja strony obejmująca przyjazd tego dnia (min. noce i wyprzedzenie sprawdza dopiero wyszukiwanie). */
 export function promoOn(p: PromoRules, date: string, unitTypeId: string) {
-  if (!p.bookableNow) return false
+  if (!p.bookableNow || p.hasBenefit === false) return false
   if (p.unitTypeIds && !p.unitTypeIds.includes(unitTypeId)) return false
   if ((p.stayFrom && date < p.stayFrom) || (p.stayTo && date > p.stayTo)) return false
   if (p.arrivalDays?.length && !p.arrivalDays.includes(weekday(date))) return false

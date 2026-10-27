@@ -7,6 +7,8 @@ import type { RouteKey } from './routes'
  */
 const pl = {
   siteName: 'Matygowa Osada',
+  // etykieta w H1 strony głównej: hasło z panelu jest obrazowe, a Google szuka w H1 tego, czym jest strona
+  heroKicker: 'Domki z sauną i banią w Tatrach',
   nav: {
     home: 'Strona główna',
     houses: 'Domki i apartamenty',
@@ -104,6 +106,7 @@ const pl = {
   },
   house: {
     kind: { house: 'Domek', apartment: 'Apartament' },
+    groups: { house: 'Domki z sauną i banią', apartment: 'Apartamenty · otwarcie 2027' },
     comingSoon: 'W budowie · otwarcie 2027',
     guests: (n: number) => `do ${n} osób`,
     peak: 'Szczyt',
@@ -223,6 +226,7 @@ export type Dictionary = typeof pl
 
 const en: Dictionary = {
   siteName: 'Matygowa Osada',
+  heroKicker: 'Cottages with sauna and hot tub in the Tatras',
   nav: {
     home: 'Home',
     houses: 'Cottages & apartments',
@@ -319,6 +323,7 @@ const en: Dictionary = {
   },
   house: {
     kind: { house: 'Cottage', apartment: 'Apartment' },
+    groups: { house: 'Cottages with sauna and hot tub', apartment: 'Apartments · opening 2027' },
     comingSoon: 'Under construction · opening 2027',
     guests: (n: number) => `up to ${n} guests`,
     peak: 'Peak',

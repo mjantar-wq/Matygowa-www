@@ -50,7 +50,7 @@ export function Lightbox({ items, t }: { items: LightboxItem[]; t: Dictionary['e
           <li key={m.url + i}>
             <button type="button" className="mo-gallery__thumb" onClick={() => open(i)} aria-label={`${t.enlarge}: ${m.alt || i + 1}`}>
               {/* eslint-disable-next-line @next/next/no-img-element -- mniejsze kopie robi Worker (src/edge/media.ts) */}
-              <img src={m.url} srcSet={srcSet(m.url, m.width)} sizes="(min-width: 768px) 33vw, 50vw" alt="" width={m.width ?? undefined} height={m.height ?? undefined} loading="lazy" decoding="async" style={{ objectPosition: `${m.focusX ?? 50}% ${m.focusY ?? 50}%` }} />
+              <img src={m.url} srcSet={srcSet(m.url, m.width)} sizes="(min-width: 768px) 33vw, 50vw" alt={m.alt ?? ''} width={m.width ?? undefined} height={m.height ?? undefined} loading="lazy" decoding="async" style={{ objectPosition: `${m.focusX ?? 50}% ${m.focusY ?? 50}%` }} />
             </button>
           </li>
         ))}

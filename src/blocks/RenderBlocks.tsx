@@ -58,6 +58,8 @@ function Hero({ block, ctx, immersive }: Props<'hero'>) {
       )}
       <div className="mo-container mo-hero__content">
         <h1 className="mo-display-xl mo-hero__title">
+          {/* małą etykietą nad hasłem H1 mówi wyszukiwarce, czym jest strona (koncepcja F6) */}
+          <span className="mo-label mo-hero__kicker">{ctx.t.heroKicker}</span>{' '}
           <span className="mo-sr">{block.headline}</span>
           {words.map((w, i) => (
             <Fragment key={i}>

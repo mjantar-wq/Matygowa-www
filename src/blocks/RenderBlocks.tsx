@@ -7,6 +7,7 @@ import { FaqStructuredData, plainText } from '@/components/StructuredData'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
 import { SettlementMap } from '@/components/SettlementMap'
 import { GuidePopup } from '@/components/GuidePopup'
+import { SeasonOffersEmpty } from '@/components/SeasonOffersEmpty'
 import { PhotoGallery } from '@/components/PhotoGallery'
 import { AttractionEntry } from '@/components/Attraction'
 import { AttractionPopup } from '@/components/effects/AttractionPopup'
@@ -358,6 +359,7 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
           </Link>
         ))}
       </div>
+      <SeasonOffersEmpty seasons={cards.map((c) => c.promotion.season)} ctx={ctx} />
       <p>
         <Link href={href(ctx.locale, 'offers')}>{ctx.t.nav.offers}</Link>
       </p>

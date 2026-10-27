@@ -129,6 +129,8 @@ const pl = {
   offers: {
     onlyHere: 'Tylko na naszej stronie',
     empty: 'Aktualne oferty pojawią się wkrótce.',
+    // pusty sezon: przycisk przełącza stronę na drugą porę roku (Michał, 27.10.2026)
+    seeSeason: { zima: 'Sprawdź oferty na Zimę', lato: 'Sprawdź oferty na Lato' },
     // szczegóły oferty w okienku (Michał, 26.10.2026): warunki promocji i oferty z IceColdRes
     terms: 'Warunki oferty',
     period: 'Okres obowiązywania',
@@ -342,6 +344,7 @@ const en: Dictionary = {
   offers: {
     onlyHere: 'Only on our website',
     empty: 'Current offers coming soon.',
+    seeSeason: { zima: 'See winter offers', lato: 'See summer offers' },
     terms: 'Offer terms',
     period: 'Valid for',
     conditions: 'Conditions',

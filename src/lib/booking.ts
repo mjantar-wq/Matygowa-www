@@ -8,6 +8,8 @@ export interface BookingQuery {
   ages?: number[]
   unit?: string
   offer?: string
+  /** promocja z karty oferty: silnik otwiera kalendarz na jej okresie i pokazuje jej warunki (Michał, 27.10.2026) */
+  promotion?: string
 }
 
 export interface EngineSettings {
@@ -38,6 +40,7 @@ export function bookingUrl(settings: EngineSettings | null, locale: Locale, q: B
       ages: q.ages?.length ? q.ages.join(',') : undefined,
       unit: q.unit,
       offer: q.offer,
+      promotion: q.promotion,
       ...Object.fromEntries(Object.entries(utm).filter(([k]) => (UTM_KEYS as readonly string[]).includes(k))),
     }
     for (const [k, v] of Object.entries(params)) if (v) url.searchParams.set(k, v)

@@ -1,5 +1,6 @@
 import { SelectField } from '@payloadcms/ui'
 import type { TextFieldServerComponent } from 'payload'
+import { departureAfter } from '@/lib/availability'
 import { getAllPromotions } from '@/lib/icecoldres'
 
 /**
@@ -10,7 +11,8 @@ export const PromotionField: TextFieldServerComponent = async ({ clientField, pa
   const { promotions } = await getAllPromotions()
   const options = promotions.map((p) => ({
     value: p.id,
-    label: `${p.badge}${p.stayFrom || p.stayTo ? ` (${p.stayFrom ?? '…'} – ${p.stayTo ?? '…'})` : ''}${p.bookableNow ? '' : ' · nieaktywna'}`,
+    // okres jak dla gościa: od dnia przyjazdu do dnia wyjazdu (stayTo to ostatnia noc)
+    label: `${p.badge}${p.stayFrom || p.stayTo ? ` (${p.stayFrom ?? '…'} – ${p.stayTo ? departureAfter(p.stayTo) : '…'})` : ''}${p.bookableNow ? '' : ' · nieaktywna'}`,
   }))
   // promocja usunięta w IceColdRes: zostaje widoczna, żeby było wiadomo, co zmienić
   if (typeof value === 'string' && value && !options.some((o) => o.value === value)) {

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { arrivalInfo, departureInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
+import { arrivalInfo, departureAfter, departureInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
 import { bookingUrl } from '@/lib/booking'
 import { promoInSeason, promoSeason } from '@/lib/icecoldres'
 
@@ -62,6 +62,11 @@ describe('kalendarz dostępności', () => {
     expect(promoOn({ ...p, unitTypeIds: ['y'] }, '2026-12-04', 'x')).toBe(false)
     expect(promoOn({ ...p, bookableNow: false }, '2026-12-04', 'x')).toBe(false)
   })
+
+  it('okres promocji dla gościa: „do” to dzień wyjazdu po ostatniej nocy (Michał, 27.10.2026)', () => {
+    expect(departureAfter('2026-12-20')).toBe('2026-12-21')
+    expect(departureAfter('2026-12-31')).toBe('2027-01-01')
+  })
 })
 
 describe('sezon promocji', () => {
@@ -85,6 +90,11 @@ describe('przekazanie do silnika', () => {
       { utm_source: 'google', utm_campaign: 'zima', gclid: 'x' },
     )
     expect(url).toBe('https://icecoldres.audiowizard.pl/pl/booking?arrival=2026-12-04&departure=2026-12-07&adults=2&children=2&ages=4%2C9&unit=gerlach&offer=standard&utm_source=google&utm_campaign=zima')
+  })
+
+  it('karta oferty: promocja w linku (kalendarz silnika na okresie promocji)', () => {
+    const url = bookingUrl({ bookingEngine: 'icecoldres', icecoldresUrl: 'https://icecoldres.audiowizard.pl', slug: 'booking' }, 'en', { offer: 'standard', promotion: 'ferie' })
+    expect(url).toBe('https://icecoldres.audiowizard.pl/en/booking?offer=standard&promotion=ferie')
   })
 })
 

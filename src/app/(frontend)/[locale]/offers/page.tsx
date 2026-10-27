@@ -3,6 +3,7 @@ import { CmsPage, getPage } from '@/components/CmsPage'
 import { AttractionPopup as OfferPopup } from '@/components/effects/AttractionPopup'
 import { Media } from '@/components/Media'
 import { Placeholder } from '@/components/Placeholder'
+import { SeasonOffersEmpty } from '@/components/SeasonOffersEmpty'
 import { Markdown } from '@/components/Markdown'
 import type { Locale } from '@/i18n/locales'
 import { bookingUrl, engineSettings, formatPrice } from '@/lib/booking'
@@ -149,14 +150,7 @@ export default async function OffersPage({ params }: LocaleParams) {
             )
           })}
         </ul>
-        {/* pusty sezon: wszystkie promocje są z drugiej pory roku (przełącznik lato/zima chowa je w CSS) */}
-        {(['lato', 'zima'] as const).map((sezon) =>
-          cards.some((c) => (promoSeason(c.promotion.season) ?? sezon) === sezon) ? null : (
-            <div key={sezon} data-sezon-promo={sezon}>
-              <Placeholder label={ctx.t.offers.empty} />
-            </div>
-          ),
-        )}
+        {cards.length ? <SeasonOffersEmpty seasons={cards.map((c) => c.promotion.season)} ctx={ctx} /> : <Placeholder label={ctx.t.offers.empty} />}
       </section>
     </CmsPage>
   )

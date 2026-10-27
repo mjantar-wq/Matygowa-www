@@ -63,7 +63,8 @@ export default async function UnitPage({ params }: SlugParams) {
         {unit.beds ? (
           <div style={{ marginBlockStart: 'var(--space-6)' }}>
             <p className="mo-label">{t.house.beds}</p>
-            <p>{unit.beds}</p>
+            {/* ten sam krój i rozmiar co opowieść o domu powyżej */}
+            <div className="mo-prose"><p>{unit.beds}</p></div>
           </div>
         ) : null}
       </section>

@@ -19,6 +19,10 @@
       "max_guests": 8,
       "living_room": "ground"
     },
+    "beds": {
+      "pl": "Trzy sypialnie z łóżkiem dwuosobowym (160 cm) i jedna z dwoma łóżkami jednoosobowymi.",
+      "en": "Three bedrooms with a double bed (160 cm) and one with two single beds."
+    },
     "facts_line": {
       "pl": "120 m² · 4 sypialnie · 2 łazienki + WC · do 8 osób · salon na parterze",
       "en": "120 m² · 4 bedrooms · 2 bathrooms + WC · up to 8 guests · living room on the ground floor"
@@ -62,6 +66,10 @@
       "ensuite_upstairs": false,
       "max_guests": 8,
       "living_room": "ground"
+    },
+    "beds": {
+      "pl": "Trzy sypialnie z łóżkiem dwuosobowym (160 cm) i jedna z dwoma łóżkami jednoosobowymi.",
+      "en": "Three bedrooms with a double bed (160 cm) and one with two single beds."
     },
     "facts_line": {
       "pl": "120 m² · 4 sypialnie · 2 łazienki + WC · do 8 osób · salon na parterze",
@@ -107,6 +115,10 @@
       "max_guests": 8,
       "living_room": "ground"
     },
+    "beds": {
+      "pl": "Trzy sypialnie z łóżkiem dwuosobowym (160 cm) i jedna z dwoma łóżkami jednoosobowymi.",
+      "en": "Three bedrooms with a double bed (160 cm) and one with two single beds."
+    },
     "facts_line": {
       "pl": "120 m² · 4 sypialnie · 2 łazienki + WC · do 8 osób · salon na parterze",
       "en": "120 m² · 4 bedrooms · 2 bathrooms + WC · up to 8 guests · living room on the ground floor"
@@ -150,6 +162,10 @@
       "ensuite_upstairs": true,
       "max_guests": 10,
       "living_room": "upper"
+    },
+    "beds": {
+      "pl": "Trzy sypialnie z łóżkiem dwuosobowym (160 cm) i jedna z dwoma łóżkami jednoosobowymi. W salonie rozkładana dwuosobowa sofa.",
+      "en": "Three bedrooms with a double bed (160 cm) and one with two single beds. Plus a double sofa bed in the living room."
     },
     "facts_line": {
       "pl": "120 m² · 4 sypialnie · 3 łazienki (w tym prywatna przy sypialni) + WC · do 10 osób · salon na piętrze",
@@ -198,6 +214,10 @@
       "max_guests": 10,
       "living_room": "upper"
     },
+    "beds": {
+      "pl": "Trzy sypialnie z łóżkiem dwuosobowym (160 cm) i jedna z dwoma łóżkami jednoosobowymi. W salonie rozkładana dwuosobowa sofa.",
+      "en": "Three bedrooms with a double bed (160 cm) and one with two single beds. Plus a double sofa bed in the living room."
+    },
     "facts_line": {
       "pl": "120 m² · 4 sypialnie · 3 łazienki (w tym prywatna przy sypialni) + WC · do 10 osób · salon na piętrze",
       "en": "120 m² · 4 bedrooms · 3 bathrooms (one en-suite) + WC · up to 10 guests · living room upstairs"
@@ -245,6 +265,10 @@
       "max_guests": 10,
       "living_room": "upper"
     },
+    "beds": {
+      "pl": "Trzy sypialnie z łóżkiem dwuosobowym (160 cm) i jedna z dwoma łóżkami jednoosobowymi. W salonie rozkładana dwuosobowa sofa.",
+      "en": "Three bedrooms with a double bed (160 cm) and one with two single beds. Plus a double sofa bed in the living room."
+    },
     "facts_line": {
       "pl": "120 m² · 4 sypialnie · 3 łazienki (w tym prywatna przy sypialni) + WC · do 10 osób · salon na piętrze",
       "en": "120 m² · 4 bedrooms · 3 bathrooms (one en-suite) + WC · up to 10 guests · living room upstairs"
@@ -290,6 +314,10 @@
       "en": "Czerwone Wierchy Apartment"
     },
     "facts": null,
+    "beds": {
+      "pl": "Sypialnia z łóżkiem dwuosobowym (160 cm) i rozkładana sofa w salonie.",
+      "en": "A bedroom with a double bed (160 cm) and a sofa bed in the living room."
+    },
     "facts_line": null,
     "lead": {
       "pl": "Apartament z widokiem na Czerwone Wierchy. Otwieramy wiosną 2027.",
@@ -329,6 +357,10 @@
       "en": "Kominiarski Wierch Apartment"
     },
     "facts": null,
+    "beds": {
+      "pl": "Sypialnia z łóżkiem dwuosobowym (160 cm) i rozkładana sofa w salonie.",
+      "en": "A bedroom with a double bed (160 cm) and a sofa bed in the living room."
+    },
     "facts_line": null,
     "lead": {
       "pl": "Apartament z widokiem na Kominiarski Wierch. Otwieramy wiosną 2027.",
@@ -368,6 +400,10 @@
       "en": "Giewont Apartment"
     },
     "facts": null,
+    "beds": {
+      "pl": "Sypialnia z łóżkiem dwuosobowym (160 cm) i rozkładana sofa w salonie.",
+      "en": "A bedroom with a double bed (160 cm) and a sofa bed in the living room."
+    },
     "facts_line": null,
     "lead": {
       "pl": "Apartament z widokiem na Giewont. Otwieramy wiosną 2027.",
@@ -407,6 +443,10 @@
       "en": "Ciemniak Apartment"
     },
     "facts": null,
+    "beds": {
+      "pl": "Sypialnia z łóżkiem dwuosobowym (160 cm) i rozkładana sofa w salonie.",
+      "en": "A bedroom with a double bed (160 cm) and a sofa bed in the living room."
+    },
     "facts_line": null,
     "lead": {
       "pl": "Apartament z widokiem na Ciemniak. Otwieramy wiosną 2027.",

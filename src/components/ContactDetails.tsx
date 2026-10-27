@@ -1,25 +1,29 @@
-import Link from 'next/link'
-import { href } from '@/i18n/routes'
+import { getPage } from '@/components/CmsPage'
+import { plainText } from '@/components/StructuredData'
 import { bookingUrl, engineSettings } from '@/lib/booking'
 import { directionsUrl } from '@/lib/maps'
 import type { PageContext } from '@/lib/page'
+import { fillText, termVars } from '@/lib/terms'
+import { SocialIcon, socialKind } from './SocialIcon'
 
-/** Monochromatyczne logo (currentColor), żeby pasowały do przycisku z obrysem w każdej porze dnia. */
-const ICONS: Record<string, React.ReactNode> = {
-  facebook: <path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8Z" />,
-  instagram: (
-    <>
-      <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="17.4" cy="6.6" r="1.3" />
-    </>
-  ),
+/**
+ * Opis „Dojazd zimą” pod przyciskiem trasy: odpowiedź z pytania o zimę w FAQ Przewodnika (jedno miejsce do edycji
+ * w panelu), a bez niego tekst ze słownika.
+ */
+async function winterRouteText(ctx: PageContext) {
+  const [page, vars] = await Promise.all([getPage('guide', ctx), termVars(ctx.locale)])
+  const faq = page?.layout?.find((b) => b.blockType === 'faq')
+  const items = faq?.blockType === 'faq' ? (faq.items ?? []) : []
+  const item = items.find((i) => /zim|winter/i.test(i.question ?? ''))
+  const text = item ? fillText(plainText(item.answer as Parameters<typeof plainText>[0]), vars).trim() : ''
+  return text || ctx.t.footer.winterRouteText
 }
 
-/** Strona Kontakt: te same dane co w stopce, przycisk do rezerwacji i profile społecznościowe. */
-export function ContactDetails({ ctx }: { ctx: PageContext }) {
+/** Strona Kontakt: te same dane co w stopce, przycisk trasy z opisem dojazdu zimą, rezerwacja i profile społecznościowe. */
+export async function ContactDetails({ ctx }: { ctx: PageContext }) {
   const s = ctx.settings
   const route = directionsUrl(s)
+  const winter = route ? await winterRouteText(ctx) : null
   return (
     <section className="mo-section mo-container mo-kontakt">
       <div>
@@ -27,10 +31,13 @@ export function ContactDetails({ ctx }: { ctx: PageContext }) {
         {s?.email ? <p className="mo-h3"><a href={`mailto:${s.email}`}>{s.email}</a></p> : null}
         {s?.address ? <p style={{ whiteSpace: 'pre-line' }}>{s.address}</p> : null}
         {route ? (
-          <p style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--space-4)', marginBlockStart: 'var(--space-4)' }}>
-            <a className="mo-btn mo-btn--glowny mo-btn--maly" href={route} rel="noopener">{ctx.t.footer.directions}</a>
-            <Link href={href(ctx.locale, 'guide')} prefetch={false}>{ctx.t.footer.winterRoute}</Link>
-          </p>
+          <div style={{ marginBlockStart: 'var(--space-4)' }}>
+            <p>
+              <a className="mo-btn mo-btn--glowny mo-btn--maly" href={route} rel="noopener" target="_blank">{ctx.t.footer.directions}</a>
+            </p>
+            <p className="mo-label" style={{ marginBlockStart: 'var(--space-4)' }}>{ctx.t.footer.winterRoute}</p>
+            <p>{winter}</p>
+          </div>
         ) : null}
       </div>
       <p>
@@ -40,14 +47,17 @@ export function ContactDetails({ ctx }: { ctx: PageContext }) {
         <div>
           <p className="mo-label">{ctx.t.footer.follow}</p>
           <ul className="mo-kontakt__social">
-            {s.social.map((x) => (
-              <li key={x.id ?? x.url}>
-                <a className="mo-btn mo-btn--glowny mo-btn--maly" href={x.url} rel="noopener" target="_blank">
-                  {ICONS[x.label.toLowerCase()] ? <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">{ICONS[x.label.toLowerCase()]}</svg> : null}
-                  <span>{x.label.toLowerCase() === 'facebook' ? 'Facebook' : x.label.toLowerCase() === 'instagram' ? 'Instagram' : x.label}</span>
-                </a>
-              </li>
-            ))}
+            {s.social.map((x) => {
+              const kind = socialKind(x.url, x.label)
+              return (
+                <li key={x.id ?? x.url}>
+                  <a className="mo-btn mo-btn--glowny mo-btn--maly" href={x.url} rel="noopener" target="_blank">
+                    {kind ? <SocialIcon kind={kind} size={20} /> : null}
+                    <span>{kind === 'facebook' ? 'Facebook' : kind === 'instagram' ? 'Instagram' : x.label}</span>
+                  </a>
+                </li>
+              )
+            })}
           </ul>
         </div>
       ) : null}

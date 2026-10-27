@@ -80,7 +80,10 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
               </button>
               <div className="mo-tile__body">
                 <div className="mo-tile__head">
-                  <h4 className="mo-tile__name">{name(r)}</h4>
+                  <h4 className="mo-tile__name">
+                    {name(r)}
+                    {!off && u?.elevation ? <span className="mo-tile__elev"> {elevation(u.elevation)}</span> : null}
+                  </h4>
                   {off ? null : (
                     <button type="button" className="mo-link mo-tile__toggle" aria-haspopup="dialog" onClick={show}>
                       {t.details}
@@ -92,7 +95,6 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                     ? (t.reasons[r.reason ?? ''] ?? t.unavailable)
                     : [
                         u ? t.kind[u.kind] : null,
-                        u?.elevation ? elevation(u.elevation) : null,
                         u?.maxGuests ? `${t.upTo} ${u.maxGuests} ${t.people}` : null,
                         u?.area ? `${u.area} m²` : null,
                       ]
@@ -150,11 +152,15 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
               </div>
             ) : null}
             <div className="mo-unit-dialog__text">
-              <p className="mo-card__eyebrow">
-                {open.unit ? <span className="mo-label">{t.kind[open.unit.kind]}</span> : null}
-                {open.unit?.elevation ? <span className="mo-figure">{elevation(open.unit.elevation)}</span> : null}
-              </p>
-              <h3 className="mo-unit-dialog__name">{name(open)}</h3>
+              {open.unit ? (
+                <p className="mo-card__eyebrow">
+                  <span className="mo-label">{t.kind[open.unit.kind]}</span>
+                </p>
+              ) : null}
+              <h3 className="mo-unit-dialog__name">
+                {name(open)}
+                {open.unit?.elevation ? <span className="mo-tile__elev"> {elevation(open.unit.elevation)}</span> : null}
+              </h3>
               {open.unit?.tagline ? <p className="mo-unit-dialog__lede">{open.unit.tagline}</p> : null}
               {open.unit ? (
                 <dl className="mo-tile__facts">
@@ -187,10 +193,17 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                   ) : null}
                 </dl>
               ) : null}
+              {open.unit?.beds ? (
+                <div className="mo-unit-dialog__amenities">
+                  <p className="mo-label">{t.facts.beds}</p>
+                  <p className="mo-body-s">{open.unit.beds}</p>
+                </div>
+              ) : null}
               {open.unit?.amenities.length ? (
-                <p className="mo-body-s">
-                  <span className="mo-label">{t.facts.amenities}</span> {open.unit.amenities.join(', ')}
-                </p>
+                <div className="mo-unit-dialog__amenities">
+                  <p className="mo-label">{t.facts.amenities}</p>
+                  <p className="mo-body-s">{capitalize(open.unit.amenities.join(', '))}</p>
+                </div>
               ) : null}
               <ul className="mo-tile__offers">
                 {open.offers.map((o) => (
@@ -218,3 +231,6 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
     </>
   )
 }
+
+/** Lista udogodnień zaczyna się wielką literą (wg Michała), reszta bez zmian. */
+const capitalize = (text: string) => text.charAt(0).toLocaleUpperCase('pl') + text.slice(1)

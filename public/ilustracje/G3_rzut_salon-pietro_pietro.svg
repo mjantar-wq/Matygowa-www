@@ -39,7 +39,7 @@
 <text class="nazwa" x="500" y="516" text-anchor="middle">Salon z kuchnią</text>
 <text class="dopisek" x="500" y="544" text-anchor="middle">i jadalnią · ok. 38 m²</text>
 </g>
-<rect class="pokoj" x="726" y="323" width="141" height="9"/>
-<rect class="pokoj" x="717" y="190" width="9" height="134"/>
-<rect class="pokoj" x="582" y="323" width="136" height="9"/>
+<rect class="pokoj" x="726" y="321.5" width="141" height="12"/>
+<rect class="pokoj" x="715.5" y="190" width="12" height="134"/>
+<rect class="pokoj" x="582" y="321.5" width="136" height="12"/>
 </svg>

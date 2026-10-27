@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Dictionary } from '@/i18n/dictionaries'
+import { srcSet } from '@/lib/images'
 
 export type LightboxItem = { url: string; alt?: string | null; width?: number | null; height?: number | null; focusX?: number | null; focusY?: number | null; credit?: string | null }
 
@@ -48,8 +49,8 @@ export function Lightbox({ items, t }: { items: LightboxItem[]; t: Dictionary['e
         {items.map((m, i) => (
           <li key={m.url + i}>
             <button type="button" className="mo-gallery__thumb" onClick={() => open(i)} aria-label={`${t.enlarge}: ${m.alt || i + 1}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- rozmiary robi Cloudflare */}
-              <img src={m.url} alt="" width={m.width ?? undefined} height={m.height ?? undefined} loading="lazy" decoding="async" style={{ objectPosition: `${m.focusX ?? 50}% ${m.focusY ?? 50}%` }} />
+              {/* eslint-disable-next-line @next/next/no-img-element -- mniejsze kopie robi Worker (src/edge/media.ts) */}
+              <img src={m.url} srcSet={srcSet(m.url, m.width)} sizes="(min-width: 768px) 33vw, 50vw" alt="" width={m.width ?? undefined} height={m.height ?? undefined} loading="lazy" decoding="async" style={{ objectPosition: `${m.focusX ?? 50}% ${m.focusY ?? 50}%` }} />
             </button>
           </li>
         ))}
@@ -74,8 +75,10 @@ export function Lightbox({ items, t }: { items: LightboxItem[]; t: Dictionary['e
       >
         {current ? (
           <figure className="mo-lightbox__figure">
-            {/* eslint-disable-next-line @next/next/no-img-element -- pełny rozmiar z biblioteki */}
-            <img key={current.url} src={current.url} alt={current.alt ?? ''} width={current.width ?? undefined} height={current.height ?? undefined} />
+            {/* Zamknięte okno ma display: none, a „lazy” nie pobiera wtedy zdjęcia. Bez tego React dodawał preload
+                pierwszego powiększenia każdej galerii i strona główna ściągała je na starcie (ok. 1,5 MB). */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- powiększenie: kopia na szerokość ekranu */}
+            <img key={current.url} src={current.url} srcSet={srcSet(current.url, current.width)} sizes="100vw" loading="lazy" alt={current.alt ?? ''} width={current.width ?? undefined} height={current.height ?? undefined} />
             <figcaption className="mo-lightbox__caption">
               {current.alt ? <span>{current.alt}</span> : null}
               {current.credit ? <span className="mo-lightbox__credit">{current.credit}</span> : null}

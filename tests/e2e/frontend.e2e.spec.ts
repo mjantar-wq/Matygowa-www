@@ -71,8 +71,11 @@ test.describe('Szkielet strony', () => {
 
   test('kontakt prowadzi do trasy dojazdu i wskazówek na zimę', async ({ page }) => {
     await page.goto('/kontakt')
-    await expect(page.locator('main').getByRole('link', { name: 'Wyznacz trasę' })).toHaveAttribute('href', /google\.com\/maps\/dir\/.*Matyg%C3%B3wka/)
-    await expect(page.locator('main').getByRole('link', { name: 'Dojazd zimą' })).toHaveAttribute('href', '/przewodnik')
+    const route = page.locator('main').getByRole('link', { name: 'Wyznacz trasę' })
+    await expect(route).toHaveAttribute('href', /google\.com\/maps\/dir\/.*Matyg%C3%B3wka/)
+    await expect(route).toHaveAttribute('target', '_blank')
+    await expect(page.locator('main')).toContainText('Dojazd zimą')
+    await expect(page.locator('main')).toContainText('łańcuchy śniegowe')
   })
 
   test('wewnętrzny adres /pl/houses przekierowuje na /domy', async ({ request }) => {

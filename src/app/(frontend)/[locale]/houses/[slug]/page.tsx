@@ -11,7 +11,7 @@ import { RichText } from '@/components/RichText'
 import { UnitStructuredData } from '@/components/StructuredData'
 import { href } from '@/i18n/routes'
 import { findBySlug, findMany, UNIT_ORDER } from '@/lib/cms'
-import { getProperty, getPromotions, promoSeason } from '@/lib/icecoldres'
+import { getProperty } from '@/lib/icecoldres'
 import { peakName, peakViewAlt } from '@/lib/peak'
 import { buildMetadata, pageContext, type SlugParams } from '@/lib/page'
 import type { Unit } from '@/payload-types'
@@ -31,11 +31,10 @@ export default async function UnitPage({ params }: SlugParams) {
   if (!unit) notFound()
   const t = ctx.t
   const code = unit.icecoldresCode || unit.slug
-  const [all, property, promotions] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: UNIT_ORDER }), getProperty(), getPromotions()])
+  const [all, property] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: UNIT_ORDER }), getProperty()])
   const others = all.filter((u) => u.id !== unit.id)
   const type = property?.unitTypes.find((u) => u.code === code)
   const amenities = type ? (ctx.locale === 'pl' ? type.amenities : type.amenitiesEn) : []
-  const promos = promotions.filter((p) => !p.unitTypeIds || (type && p.unitTypeIds.includes(type.id)))
   const facts = [
     unit.area ? `${unit.area} m²` : null,
     unit.bedrooms ? `${unit.bedrooms} ${ctx.locale === 'pl' ? 'sypialnie' : 'bedrooms'}` : null,
@@ -61,6 +60,13 @@ export default async function UnitPage({ params }: SlugParams) {
         {unit.tagline ? <p className="mo-lede" style={{ marginBlock: 'var(--space-5)' }}>{unit.tagline}</p> : null}
         <RichText data={unit.story} />
         {!unit.story ? <Placeholder label={t.placeholder} note="Opowieść o domu" /> : null}
+        {unit.beds ? (
+          <div style={{ marginBlockStart: 'var(--space-6)' }}>
+            <p className="mo-label">{t.house.beds}</p>
+            {/* ten sam krój i rozmiar co opowieść o domu powyżej */}
+            <div className="mo-prose"><p>{unit.beds}</p></div>
+          </div>
+        ) : null}
       </section>
 
       <section className="mo-section mo-container">
@@ -99,11 +105,6 @@ export default async function UnitPage({ params }: SlugParams) {
       {unit.status === 'bookable' ? (
         <section className="mo-section mo-container">
           <h2 className="mo-h2">{t.house.availability}</h2>
-          {promos.map((p) => (
-            <p key={p.id} className="mo-label" style={{ color: 'var(--color-bursztyn-tekst)' }} data-sezon-promo={promoSeason(p.season)}>
-              {ctx.locale === 'pl' ? p.badge : p.en.badge || p.badge}
-            </p>
-          ))}
           <BookingBar locale={ctx.locale} t={t.booking} fx={t.effects} engine={engineSettings(ctx.settings)} unit={code} slogan={ctx.settings?.priceSlogan} />
         </section>
       ) : null}

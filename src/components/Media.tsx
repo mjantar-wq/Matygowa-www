@@ -1,4 +1,5 @@
 import type { Media as MediaDoc } from '@/payload-types'
+import { SIZES_DEFAULT, srcSet } from '@/lib/images'
 
 type Props = { media?: MediaDoc | string | number | null; className?: string; priority?: boolean; sizes?: string; fallback?: string; alt?: string }
 
@@ -9,7 +10,7 @@ type Props = { media?: MediaDoc | string | number | null; className?: string; pr
 /** Zdjęcie bez zgody właściciela (prawa „Czeka na zgodę”) widać tylko na stronie testowej, nie na produkcji. */
 export const cleared = (media?: MediaDoc | string | number | null) => !(typeof media === 'object' && media?.rights === 'pending' && process.env.SITE_INDEXABLE === 'true')
 
-export function Media({ media, className, priority, fallback, alt }: Props) {
+export function Media({ media, className, priority, sizes, fallback, alt }: Props) {
   if (!media || typeof media !== 'object' || !media.url || !cleared(media)) {
     return <div className={`mo-placeholder ${className ?? ''}`} aria-hidden="true">{fallback}</div>
   }
@@ -19,11 +20,14 @@ export function Media({ media, className, priority, fallback, alt }: Props) {
       <video className={className} src={media.url} autoPlay muted loop playsInline preload="none" aria-label={media.alt || alt || undefined} style={{ objectPosition: position }} />
     )
   }
+  const set = srcSet(media.url, media.width)
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- rozmiary AVIF/WebP robi Cloudflare (etap budowy)
+    // eslint-disable-next-line @next/next/no-img-element -- mniejsze kopie AVIF/WebP robi Worker (src/edge/media.ts)
     <img
       className={className}
       src={media.url}
+      srcSet={set}
+      sizes={set ? (sizes ?? SIZES_DEFAULT) : undefined}
       alt={media.alt || alt || ''}
       width={media.width ?? undefined}
       height={media.height ?? undefined}

@@ -1075,6 +1075,10 @@ export interface Unit {
   separateWc?: boolean | null;
   ensuiteUpstairs?: boolean | null;
   livingRoom?: ('ground' | 'upper') | null;
+  /**
+   * Rodzaje łóżek w sypialniach i w salonie, jednym lub dwoma zdaniami.
+   */
+  beds?: string | null;
   seo?: {
     title?: string | null;
     description?: string | null;
@@ -2068,6 +2072,7 @@ export interface UnitsSelect<T extends boolean = true> {
   separateWc?: T;
   ensuiteUpstairs?: T;
   livingRoom?: T;
+  beds?: T;
   seo?:
     | T
     | {

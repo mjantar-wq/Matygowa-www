@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entry = (route: RouteKey, slug?: string, updatedAt?: string | null): MetadataRoute.Sitemap[number] => ({
     url: site() + href(pl, route, slug),
     lastModified: updatedAt ? new Date(updatedAt) : undefined,
-    alternates: { languages: Object.fromEntries(ENABLED_LOCALES.map((l) => [l, site() + href(l, route, slug)])) },
+    alternates: { languages: { ...Object.fromEntries(ENABLED_LOCALES.map((l) => [l, site() + href(l, route, slug)])), 'x-default': site() + href(pl, route, slug) } },
   })
   return [
     ...STATIC.map((route) => entry(route)),

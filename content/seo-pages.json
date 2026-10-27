@@ -5,12 +5,12 @@
       "en": "/en/houses/"
     },
     "title": {
-      "pl": "Domki z sauną i banią w Gliczarowie Górnym | Matygowa Osada",
-      "en": "Cottages with sauna and hot tub in Gliczarów Górny | Matygowa Osada"
+      "pl": "Domki z sauną i banią w Tatrach dla 8–10 osób | Matygowa Osada",
+      "en": "Cottages with sauna and hot tub in the Tatras | Matygowa Osada"
     },
     "description": {
-      "pl": "Sześć domków po 120 m² dla 8–10 osób: cztery sypialnie, kominek, prywatna sauna i gorąca bania z widokiem na Tatry.",
-      "en": "Six 120 m² cottages for 8–10 guests: four bedrooms, a fireplace, a private sauna and a hot tub facing the Tatras."
+      "pl": "Sześć domków po 120 m² na wyłączność koło Zakopanego i Białki Tatrzańskiej: cztery sypialnie, kominek, prywatna sauna i gorąca bania z widokiem na Tatry.",
+      "en": "Six private 120 m² cottages near Zakopane and Białka Tatrzańska: four bedrooms, a fireplace, your own sauna and a hot tub facing the Tatras."
     }
   },
   "rytualy": {
@@ -19,12 +19,12 @@
       "en": "/en/sauna-and-hot-tub/"
     },
     "title": {
-      "pl": "Sauna i bania pod Tatrami | Matygowa Osada",
-      "en": "Sauna and hot tub below the Tatras | Matygowa Osada"
+      "pl": "Sauna i bania pod Tatrami: domowe spa | Matygowa Osada",
+      "en": "Private sauna and hot tub with Tatra views | Matygowa Osada"
     },
     "description": {
-      "pl": "Prywatna sauna w każdym domu i gorąca bania na tarasie z widokiem na Tatry. Zasady i ceny.",
-      "en": "A private sauna in every house and a wood-fired hot tub on the terrace facing the Tatras. Rules and prices."
+      "pl": "Prywatna sauna w każdym domku i gorąca bania (balia) na tarasie z widokiem na Tatry. Domowe spa w górach po nartach i szlaku. Zasady i ceny.",
+      "en": "A private sauna in every cottage and a wood-fired hot tub on the terrace facing the Tatras. Your own mountain spa after skiing or hiking. Rules and prices."
     }
   },
   "osada": {
@@ -33,12 +33,12 @@
       "en": "/en/settlement/"
     },
     "title": {
-      "pl": "O osadzie: w zgodzie z naturą | Matygowa Osada",
-      "en": "About the settlement: in harmony with nature | Matygowa Osada"
+      "pl": "O osadzie: cisza i spokój pod Tatrami | Matygowa Osada",
+      "en": "About us: peace and quiet below the Tatras | Matygowa Osada"
     },
     "description": {
-      "pl": "Historia Matygowej Osady, energia z własnych źródeł i góralszczyzna dziś.",
-      "en": "The story of Matygowa Osada, energy from our own sources, and highland life today."
+      "pl": "Matygowa Osada w Gliczarowie Górnym: cisza, spokój i natura pod Tatrami, energia z własnych źródeł i góralska tradycja Podhala.",
+      "en": "Matygowa Osada in Gliczarów Górny: peace, quiet and nature below the Tatras, energy from our own sources and Podhale highland tradition."
     }
   },
   "okolica": {
@@ -47,12 +47,12 @@
       "en": "/en/surroundings/"
     },
     "title": {
-      "pl": "Okolica: Zakopane, stoki, termy | Matygowa Osada",
-      "en": "Surroundings: Zakopane, ski slopes, thermal pools | Matygowa Osada"
+      "pl": "Narty, szlaki, rowery i termy koło Zakopanego | Matygowa Osada",
+      "en": "Skiing, hiking and thermal pools near Zakopane | Matygowa Osada"
     },
     "description": {
-      "pl": "Zakopane 15 km, Słowacja 13 km, termy 3–15 km. Szlaki, stoki i atrakcje wokół Gliczarowa Górnego.",
-      "en": "Zakopane 15 km, Slovakia 13 km, thermal pools 3–15 km. Trails, slopes and attractions around Gliczarów Górny."
+      "pl": "Stoki w Białce i Bukowinie Tatrzańskiej, szlaki piesze i rowerowe, termy 4–12 km, Zakopane 15 km. Atrakcje na ferie i wakacje wokół Gliczarowa Górnego.",
+      "en": "Ski slopes in Białka and Bukowina Tatrzańska, hiking and cycling trails, thermal pools 4–12 km, Zakopane 15 km. Winter and summer around Gliczarów Górny."
     }
   },
   "oferty": {
@@ -61,12 +61,12 @@
       "en": "/en/offers/"
     },
     "title": {
-      "pl": "Oferty i promocje tylko na naszej stronie | Matygowa Osada",
-      "en": "Offers available only on our website | Matygowa Osada"
+      "pl": "Oferty na ferie, święta i wakacje w Tatrach | Matygowa Osada",
+      "en": "Ski holiday, Christmas and summer offers | Matygowa Osada"
     },
     "description": {
-      "pl": "Najniższa cena tylko u nas. Aktualne oferty na pobyt w domach z sauną i banią pod Tatrami.",
-      "en": "Best rate only on our website. Current offers for houses with sauna and hot tub below the Tatras."
+      "pl": "Najniższa cena tylko u nas. Oferty na ferie zimowe, święta i wakacje w domkach z sauną i banią pod Tatrami, idealne na rodzinny wypoczynek.",
+      "en": "Best rate only on our website. Offers for ski holidays, Christmas and summer in cottages with a sauna and hot tub below the Tatras."
     }
   },
   "aktualnosci": {
@@ -75,12 +75,12 @@
       "en": "/en/news/"
     },
     "title": {
-      "pl": "Aktualności | Matygowa Osada",
-      "en": "News | Matygowa Osada"
+      "pl": "Aktualności z osady pod Tatrami | Matygowa Osada",
+      "en": "News from below the Tatras | Matygowa Osada"
     },
     "description": {
-      "pl": "Nowości z osady i wydarzenia w okolicy.",
-      "en": "News from the settlement and events nearby."
+      "pl": "Nowości z Matygowej Osady i wydarzenia w okolicy Zakopanego i Bukowiny Tatrzańskiej.",
+      "en": "News from Matygowa Osada and events around Zakopane and Bukowina Tatrzańska."
     }
   },
   "galeria": {
@@ -89,12 +89,12 @@
       "en": "/en/gallery/"
     },
     "title": {
-      "pl": "Galeria: zima i lato w osadzie | Matygowa Osada",
-      "en": "Gallery: winter and summer at the settlement | Matygowa Osada"
+      "pl": "Galeria: domki w Tatrach zimą i latem | Matygowa Osada",
+      "en": "Gallery: Tatra cottages in winter and summer | Matygowa Osada"
     },
     "description": {
-      "pl": "Zdjęcia domków, wnętrz, sauny, bani i panoramy Tatr o każdej porze roku.",
-      "en": "Photos of the houses, interiors, sauna, hot tub and the Tatra panorama in every season."
+      "pl": "Zdjęcia domków z sauną i banią, wnętrz z kominkiem i panoramy Tatr zimą i latem, o świcie i nocą.",
+      "en": "Photos of the cottages, sauna, hot tub, fireplace interiors and the Tatra panorama in winter and summer, at dawn and at night."
     }
   },
   "kontakt": {
@@ -103,12 +103,12 @@
       "en": "/en/contact/"
     },
     "title": {
-      "pl": "Kontakt | Matygowa Osada, Gliczarów Górny",
-      "en": "Contact | Matygowa Osada, Gliczarów Górny"
+      "pl": "Kontakt i dojazd: Gliczarów Górny koło Zakopanego | Matygowa Osada",
+      "en": "Contact: Gliczarów Górny near Zakopane | Matygowa Osada"
     },
     "description": {
-      "pl": "ul. Matygówka 30, 34-425 Gliczarów Górny. Tel. +48 788 267 809, info@matygowaosada.pl.",
-      "en": "ul. Matygówka 30, 34-425 Gliczarów Górny, Poland. Phone +48 788 267 809, info@matygowaosada.pl."
+      "pl": "ul. Matygówka 30, 34-425 Gliczarów Górny, 15 km od Zakopanego. Tel. +48 788 267 809, info@matygowaosada.pl.",
+      "en": "ul. Matygówka 30, 34-425 Gliczarów Górny, Poland, 15 km from Zakopane. Phone +48 788 267 809, info@matygowaosada.pl."
     }
   },
   "przewodnik": {
@@ -117,8 +117,8 @@
       "en": "/en/guest-guide/"
     },
     "title": {
-      "pl": "Przewodnik gościa | Matygowa Osada",
-      "en": "Guest guide | Matygowa Osada"
+      "pl": "Przewodnik gościa: przyjazd, dojazd zimą, zasady | Matygowa Osada",
+      "en": "Guest guide: arrival, winter driving, house rules | Matygowa Osada"
     },
     "description": {
       "pl": "Przyjazd, wyjazd, dojazd zimą, zwierzęta, bania i zasady domu.",

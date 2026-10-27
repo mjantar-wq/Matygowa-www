@@ -2,7 +2,7 @@ import 'server-only'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getDictionary } from '@/i18n/dictionaries'
-import { ENABLED_LOCALES, LOCALES, isLocale, type Locale } from '@/i18n/locales'
+import { DEFAULT_LOCALE, ENABLED_LOCALES, LOCALES, isLocale, type Locale } from '@/i18n/locales'
 import { href, type RouteKey } from '@/i18n/routes'
 import { cleared } from '@/components/Media'
 import { getSettings } from './cms'
@@ -35,7 +35,7 @@ export const imageUrl = (image: Image) => (image && typeof image === 'object' &&
 export const DEFAULT_OG_IMAGE = '/og.jpg'
 
 /**
- * Metadane z hreflang dla wszystkich włączonych języków i obrazem do udostępnień (koncepcja F6).
+ * Metadane z hreflang dla wszystkich włączonych języków (x-default: polski) i obrazem do udostępnień (koncepcja F6).
  * Tytuł z nazwą osady (np. z content/seo-pages.json) nie dostaje jej drugi raz z szablonu w layoucie;
  * strona bez tytułu i opisu dziedziczy domyślne z Ustawień strony.
  */
@@ -52,7 +52,7 @@ export async function buildMetadata(locale: Locale, route: RouteKey, opts: { tit
     ...(description ? { description } : {}),
     alternates: {
       canonical: url,
-      languages: Object.fromEntries(ENABLED_LOCALES.map((l) => [l, href(l, route, opts.slug)])),
+      languages: { ...Object.fromEntries(ENABLED_LOCALES.map((l) => [l, href(l, route, opts.slug)])), 'x-default': href(DEFAULT_LOCALE, route, opts.slug) },
     },
     openGraph: {
       type: route === 'news' && opts.slug ? 'article' : 'website',

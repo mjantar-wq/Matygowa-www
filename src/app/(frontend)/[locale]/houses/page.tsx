@@ -25,7 +25,7 @@ export default async function HousesPage({ params }: LocaleParams) {
         const list = units.filter((u) => u.kind === kind)
         return list.length ? (
           <section key={kind} className="mo-section mo-container">
-            <h2 className="mo-h2">{ctx.t.house.kind[kind]}</h2>
+            <h2 className="mo-h2">{ctx.t.house.groups[kind]}</h2>
             {/* ten sam rozmiar i układ co wyniki „Sprawdź termin”: 3 w rzędzie na komputerze, 1 na telefonie */}
             <div className="mo-tiles-wrap">
               <ul className="mo-tiles">

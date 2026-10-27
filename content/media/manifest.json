@@ -715,7 +715,9 @@
   },
   {
    "file": "W6_taras_wejscie_3x2_foto.webp",
-   "series": ["winter"],
+   "series": [
+    "winter"
+   ],
    "shot": "W6",
    "width": 1600,
    "height": 1067,
@@ -836,7 +838,9 @@
   },
   {
    "file": "V5_lomnica_okno_3x2_foto.webp",
-   "series": ["summer"],
+   "series": [
+    "summer"
+   ],
    "shot": "V5",
    "width": 1536,
    "height": 1024,
@@ -1036,7 +1040,9 @@
   },
   {
    "file": "V5_lomnica_okno_3x2_cgi.webp",
-   "series": ["summer"],
+   "series": [
+    "summer"
+   ],
    "shot": "V5",
    "width": 884,
    "height": 590,
@@ -1100,7 +1106,9 @@
   },
   {
    "file": "W6_taras_wejscie_3x2_cgi.webp",
-   "series": ["winter"],
+   "series": [
+    "winter"
+   ],
    "shot": "W6",
    "width": 884,
    "height": 590,
@@ -1727,7 +1735,7 @@
    "width": 1434,
    "height": 956,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
     "pl": "Taras widokowy SkyWalk nad lasem, w tle Tatry",
     "en": "The SkyWalk viewing deck above the forest, the Tatras behind"
@@ -1745,7 +1753,7 @@
    "width": 810,
    "height": 540,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
     "pl": "SkyWalk na Polanie Zgorzelisko z lotu ptaka, za nim panorama Tatr",
     "en": "SkyWalk on Polana Zgorzelisko from the air, the Tatra panorama behind"
@@ -1763,10 +1771,64 @@
    "width": 1434,
    "height": 956,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
     "pl": "Drewniana ścieżka SkyWalk i wieża z lotu ptaka",
     "en": "The wooden SkyWalk path and tower from the air"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_4.webp",
+   "shot": "A_skywalk-poronin_4",
+   "width": 975,
+   "height": 650,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Wieża SkyWalk w świetle zachodzącego słońca, za nią Tatry",
+    "en": "The SkyWalk tower in the evening sun, the Tatras behind"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_5.webp",
+   "shot": "A_skywalk-poronin_5",
+   "width": 1760,
+   "height": 1173,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "SkyWalk wśród lasów, nad nim ośnieżone Tatry",
+    "en": "SkyWalk among the forests, the snowy Tatras above"
+   },
+   "source": "https://skywalk-poronin.pl",
+   "author": "SkyWalk Serce Poronina",
+   "credit": {
+    "pl": "Fot. SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl",
+    "en": "Photo: SkyWalk Serce Poronina · skywalk-poronin.pl https://skywalk-poronin.pl"
+   }
+  },
+  {
+   "file": "A_skywalk-poronin_6.webp",
+   "shot": "A_skywalk-poronin_6",
+   "width": 810,
+   "height": 540,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Ośnieżone Tatry nad ścieżką SkyWalk",
+    "en": "The snowy Tatras above the SkyWalk path"
    },
    "source": "https://skywalk-poronin.pl",
    "author": "SkyWalk Serce Poronina",

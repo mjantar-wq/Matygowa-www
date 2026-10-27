@@ -12,6 +12,12 @@
     "addressLocality": "Gliczarów Górny",
     "addressCountry": "PL"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 49.3445844,
+    "longitude": 20.057937
+  },
+  "hasMap": "https://maps.google.com/?cid=5755737236354873616",
   "checkinTime": "{checkin}",
   "checkoutTime": "{checkout}",
   "petsAllowed": true,
@@ -50,7 +56,8 @@
   ],
   "sameAs": [
     "https://www.facebook.com/matygowa.osada/",
-    "https://www.instagram.com/matygowa.osada"
+    "https://www.instagram.com/matygowa.osada",
+    "https://maps.google.com/?cid=5755737236354873616"
   ],
-  "_note": "openingHours celowo pominięte. geo, image i aggregateRating uzupełnia strona przy renderowaniu."
+  "_note": "openingHours celowo pominięte. geo i hasMap z wizytówki w Mapach Google (link od Michała, 27.10.2026). image, opis, kontakt i godziny przyjazdu uzupełnia strona przy renderowaniu."
 }

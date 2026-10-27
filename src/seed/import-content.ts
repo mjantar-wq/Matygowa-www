@@ -357,6 +357,7 @@ async function main() {
         phone: s.contact?.phone,
         email: s.contact?.email,
         address: s.contact?.address,
+        mapUrl: s.contact?.map_url,
         social: Object.entries(s.social ?? {}).map(([label, url]) => ({ label, url: String(url) })),
         priceSlogan: s.booking_bar?.best_rate?.[locale],
         // import służy środowisku testowemu: testujemy integrację z IceColdRes (produkcja: decyzja Michała w grudniu)

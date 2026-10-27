@@ -1,7 +1,6 @@
 import base from '../../content/structured-data.json'
 import { getSettings } from '@/lib/cms'
 import { getProperty } from '@/lib/icecoldres'
-import { directionsUrl } from '@/lib/maps'
 import { DEFAULT_OG_IMAGE, imageUrl, siteUrl as site } from '@/lib/page'
 import { href } from '@/i18n/routes'
 import type { Locale } from '@/i18n/locales'
@@ -32,7 +31,6 @@ export async function StructuredData({ locale }: { locale: Locale }) {
         url: `${site()}/`,
         image: imageOf(settings?.seoImage) ?? absolute(DEFAULT_OG_IMAGE),
         description: settings?.seoDescription || undefined,
-        hasMap: directionsUrl(settings) ?? undefined,
         telephone: settings?.phone?.replace(/\s/g, '') || data.telephone,
         email: settings?.email || data.email,
         checkinTime: property?.property.checkInTime ?? '16:00',
@@ -56,6 +54,7 @@ export function UnitStructuredData({ unit, locale }: { unit: Unit; locale: Local
         image: images.length ? images : undefined,
         containedInPlace: { '@type': 'LodgingBusiness', '@id': `${site()}/#osada`, name: base.name, address: { ...base.address } },
         address: { ...base.address },
+        geo: { ...base.geo },
         containsPlace: {
           '@type': 'Accommodation',
           additionalType: unit.kind === 'apartment' ? 'Apartment' : 'House',

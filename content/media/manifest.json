@@ -1874,39 +1874,111 @@
    }
   },
   {
-   "file": "A_splyw-dunajcem_1.webp",
-   "shot": "A_splyw-dunajcem_1",
-   "width": 900,
-   "height": 600,
+   "file": "A_splyw-dunajcem_g1.webp",
+   "shot": "A_splyw-dunajcem_g1",
+   "width": 1800,
+   "height": 1200,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
-    "pl": "Tratwa flisacka na Dunajcu jesienią, nad nią Trzy Korony",
-    "en": "A raft on the Dunajec in autumn, the Three Crowns above"
+    "pl": "Tratwa flisacka na Dunajcu pod Trzema Koronami",
+    "en": "A raft on the Dunajec beneath the Three Crowns"
    },
-   "source": "https://flisacy.pl",
-   "author": "Flisacy Pienińscy",
+   "source": "https://flisacy.com.pl",
+   "author": "Grzegorz Chmiel",
    "credit": {
-    "pl": "Fot. Flisacy Pienińscy · flisacy.pl https://flisacy.pl",
-    "en": "Photo: Flisacy Pienińscy · flisacy.pl https://flisacy.pl"
+    "pl": "Fot. Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl",
+    "en": "Photo: Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl"
    }
   },
   {
-   "file": "A_splyw-dunajcem_2.webp",
-   "shot": "A_splyw-dunajcem_2",
-   "width": 900,
-   "height": 600,
+   "file": "A_splyw-dunajcem_g2.webp",
+   "shot": "A_splyw-dunajcem_g2",
+   "width": 1800,
+   "height": 1200,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
-    "pl": "Dunajec pod Trzema Koronami w słoneczny dzień",
-    "en": "The Dunajec beneath the Three Crowns on a sunny day"
+    "pl": "Tratwa w przełomie Dunajca między wapiennymi skałami",
+    "en": "A raft in the Dunajec gorge between limestone cliffs"
    },
-   "source": "https://flisacy.pl",
-   "author": "Flisacy Pienińscy",
+   "source": "https://flisacy.com.pl",
+   "author": "Grzegorz Chmiel",
    "credit": {
-    "pl": "Fot. Flisacy Pienińscy · flisacy.pl https://flisacy.pl",
-    "en": "Photo: Flisacy Pienińscy · flisacy.pl https://flisacy.pl"
+    "pl": "Fot. Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl",
+    "en": "Photo: Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_g3.webp",
+   "shot": "A_splyw-dunajcem_g3",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Tratwy na Dunajcu, w tle ośnieżone Tatry",
+    "en": "Rafts on the Dunajec, the snowy Tatras behind"
+   },
+   "source": "https://flisacy.com.pl",
+   "author": "Grzegorz Chmiel",
+   "credit": {
+    "pl": "Fot. Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl",
+    "en": "Photo: Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_g4.webp",
+   "shot": "A_splyw-dunajcem_g4",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Tratwa w porannej mgle w przełomie Dunajca",
+    "en": "A raft in the morning mist in the Dunajec gorge"
+   },
+   "source": "https://flisacy.com.pl",
+   "author": "Grzegorz Chmiel",
+   "credit": {
+    "pl": "Fot. Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl",
+    "en": "Photo: Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_g5.webp",
+   "shot": "A_splyw-dunajcem_g5",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Flisacy na Dunajcu wśród jesiennych Pienin",
+    "en": "Raftsmen on the Dunajec among the autumn Pieniny"
+   },
+   "source": "https://flisacy.com.pl",
+   "author": "Grzegorz Chmiel",
+   "credit": {
+    "pl": "Fot. Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl",
+    "en": "Photo: Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl"
+   }
+  },
+  {
+   "file": "A_splyw-dunajcem_g6.webp",
+   "shot": "A_splyw-dunajcem_g6",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Tratwy w przełomie Dunajca jesienią",
+    "en": "Rafts in the Dunajec gorge in autumn"
+   },
+   "source": "https://flisacy.com.pl",
+   "author": "Grzegorz Chmiel",
+   "credit": {
+    "pl": "Fot. Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl",
+    "en": "Photo: Grzegorz Chmiel · flisacy.com.pl https://flisacy.com.pl"
    }
   },
   {

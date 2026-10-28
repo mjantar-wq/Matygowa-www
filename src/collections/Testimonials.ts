@@ -28,7 +28,7 @@ export const Testimonials: CollectionConfig = {
         { name: 'date', label: 'Data', type: 'date' },
       ],
     },
-    { name: 'unit', label: 'Dom (opcjonalnie)', type: 'relationship', relationTo: 'units' },
+    { name: 'unit', label: 'Domek (opcjonalnie)', type: 'relationship', relationTo: 'units' },
     {
       name: 'externalId',
       label: 'Id w źródle',

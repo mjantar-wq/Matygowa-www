@@ -6,8 +6,8 @@ import { HomeLink } from './HomeLink'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { AmbienceSwitch } from './effects/AmbienceSwitch'
 
-/** Osiem głównych sekcji menu (koncepcja: Szkielet strony). */
-export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'surroundings', 'offers', 'news', 'settlement', 'gallery', 'contact']
+/** Główne sekcje menu (koncepcja: Szkielet strony); Przewodnik ze stopki za Rytuałami, potem Osada i Galeria (Michał, 28.10.2026). */
+export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'guide', 'settlement', 'gallery', 'surroundings', 'offers', 'news', 'contact']
 
 export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (
@@ -22,7 +22,7 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
         <nav aria-label={t.menu} className="mo-nav" id="menu-glowne" popover="auto">
           {MAIN_NAV.map((key) => (
             <Link key={key} href={href(locale, key)} prefetch={false}>
-              {t.nav[key]}
+              {t.navMenu[key] ?? t.nav[key]}
             </Link>
           ))}
           <AmbienceSwitch t={t.effects} />

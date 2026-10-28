@@ -29,6 +29,13 @@ export const Settings: GlobalConfig = {
             { name: 'hotresUrl', label: 'Adres rezerwacji Hotres', type: 'text', defaultValue: 'https://booking.hotres.pl/v4_step1?oid=5244' },
             { name: 'showPrices', label: 'Pokazuj ceny i dostępność z IceColdRes', type: 'checkbox', defaultValue: true },
             { name: 'priceSlogan', label: 'Hasło przy pasku rezerwacji', type: 'text', localized: true },
+            {
+              name: 'apartmentsLast',
+              label: 'Apartamenty na dole strony Domki i apartamenty, pod przewodnikiem gościa',
+              type: 'checkbox',
+              defaultValue: true,
+              admin: { description: 'Do czasu otwarcia apartamentów. Odznacz po otwarciu: apartamenty wrócą pod domki.' },
+            },
           ],
         },
         {

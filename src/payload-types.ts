@@ -2306,6 +2306,10 @@ export interface Setting {
   hotresUrl?: string | null;
   showPrices?: boolean | null;
   priceSlogan?: string | null;
+  /**
+   * Do czasu otwarcia apartamentów. Odznacz po otwarciu: apartamenty wrócą pod domki.
+   */
+  apartmentsLast?: boolean | null;
   phone?: string | null;
   email?: string | null;
   whatsapp?: string | null;
@@ -2338,6 +2342,7 @@ export interface SettingsSelect<T extends boolean = true> {
   hotresUrl?: T;
   showPrices?: T;
   priceSlogan?: T;
+  apartmentsLast?: T;
   phone?: T;
   email?: T;
   whatsapp?: T;

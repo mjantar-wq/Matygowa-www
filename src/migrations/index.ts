@@ -12,6 +12,7 @@ import * as migration_20261025_182700_okolica_galeria from './20261025_182700_ok
 import * as migration_20261025_190310_zdjecia_prawa from './20261025_190310_zdjecia_prawa';
 import * as migration_20261027_064308_lozka from './20261027_064308_lozka';
 import * as migration_20261027_075500_warunki_platnosci from './20261027_075500_warunki_platnosci';
+import * as migration_20261028_094500_apartamenty_na_dole from './20261028_094500_apartamenty_na_dole';
 
 export const migrations = [
   {
@@ -83,5 +84,10 @@ export const migrations = [
     up: migration_20261027_075500_warunki_platnosci.up,
     down: migration_20261027_075500_warunki_platnosci.down,
     name: '20261027_075500_warunki_platnosci'
+  },
+  {
+    up: migration_20261028_094500_apartamenty_na_dole.up,
+    down: migration_20261028_094500_apartamenty_na_dole.down,
+    name: '20261028_094500_apartamenty_na_dole'
   },
 ];

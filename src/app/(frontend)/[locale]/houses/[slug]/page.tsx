@@ -70,7 +70,7 @@ export default async function UnitPage({ params }: SlugParams) {
       </section>
 
       <section className="mo-section mo-container">
-        <h2 className="mo-h2">{t.house.peak}: {peakName(unit, 'nom', ctx.locale) || unit.name}</h2>
+        <h2 className="mo-h2">{peakName(unit, 'nom', ctx.locale) || unit.name}</h2>
         <RichText data={unit.peak?.story} />
         {!unit.peak?.story ? <Placeholder label={t.placeholder} note="Historia szczytu" /> : null}
       </section>

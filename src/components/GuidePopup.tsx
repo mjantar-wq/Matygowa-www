@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { getPage } from '@/components/CmsPage'
 import { plainText } from '@/components/StructuredData'
 import { GuideDialog } from '@/components/effects/GuideDialog'
@@ -8,7 +7,7 @@ import type { PageContext } from '@/lib/page'
 
 /**
  * Przycisk „Przewodnik gościa” z okienkiem: pytania i odpowiedzi z bloku FAQ strony Przewodnik (z warunkami
- * z IceColdRes), na dole link do pełnej strony. Przycisk w postaci książki; na dole głównej i pod mapą na stronie Domki (wg Michała).
+ * z IceColdRes), bez linku na dole do tej samej strony (wg Michała). Przycisk w postaci książki; na dole głównej i pod mapą na stronie Domki (wg Michała).
  */
 export async function GuidePopup({ ctx }: { ctx: PageContext }) {
   const [page, vars] = await Promise.all([getPage('guide', ctx), termVars(ctx.locale)])
@@ -26,9 +25,6 @@ export async function GuidePopup({ ctx }: { ctx: PageContext }) {
             <p>{fillText(plainText(i.answer as Parameters<typeof plainText>[0]), vars)}</p>
           </details>
         ))}
-        <p style={{ marginBlockStart: 'var(--space-5)' }}>
-          <Link href={link}>{title} →</Link>
-        </p>
       </GuideDialog>
     </div>
   )

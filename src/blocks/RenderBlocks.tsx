@@ -452,7 +452,7 @@ function PeakCards({ units, ctx }: { units: Unit[]; ctx: PageContext }) {
             <div className="mo-card__media"><Media media={u.hero} /></div>
             <p className="mo-label">{[u.peak?.range, u.peak?.elevation ? ctx.t.house.elevation(u.peak.elevation) : null].filter(Boolean).join(' · ')}</p>
             <h3 className="mo-h3">{u.name}</h3>
-            {u.status === 'comingSoon' ? <p className="mo-badge">{ctx.t.effects.opening}</p> : u.tagline ? <p>{u.tagline}</p> : null}
+            {u.status === 'comingSoon' ? <p className="mo-badge">{ctx.t.effects.opening}</p> : null}
           </Link>
         </li>
       ))}

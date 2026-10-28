@@ -344,7 +344,7 @@ function SourceMark({ source, rating }: { source?: Testimonial['source']; rating
 }
 
 async function OffersNews({ block, ctx }: Props<'offersNews'>) {
-  // bez aktualności na głównej (wg Michała)
+  // bez aktualności na głównej i bez linku „Oferty” pod kartami (wg Michała)
   const cards = await getPromoCards(ctx.locale)
   return (
     <Section block={block}>
@@ -362,9 +362,6 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
         ))}
       </div>
       <SeasonOffersEmpty seasons={cards.map((c) => c.promotion.season)} ctx={ctx} />
-      <p>
-        <Link href={href(ctx.locale, 'offers')}>{ctx.t.nav.offers}</Link>
-      </p>
     </Section>
   )
 }

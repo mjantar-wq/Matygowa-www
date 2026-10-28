@@ -606,6 +606,9 @@
   },
   {
    "file": "K4_osada_zmierzch_16x9_foto.webp",
+   "series": [
+    "summer"
+   ],
    "shot": "K4",
    "width": 1918,
    "height": 1079,
@@ -643,6 +646,9 @@
   },
   {
    "file": "K8_punkt_widokowy_16x9_foto.webp",
+   "series": [
+    "summer"
+   ],
    "shot": "K8",
    "width": 1614,
    "height": 908,

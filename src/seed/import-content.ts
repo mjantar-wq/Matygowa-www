@@ -66,7 +66,11 @@ async function main() {
       // plik wgrany przed dodaniem serii (albo przed nową regułą): dopisujemy brakujące serie, nie usuwając tych z panelu.
       // Przy tej jednorazowej zmianie zdejmujemy „Wnętrza” ze zdjęć, które reguły z niej wyjęły; dodane później w panelu zostają.
       const existing = (found.docs[0]?.series ?? []) as string[]
-      const kept = existing.filter((x) => x !== 'interiors' || !/^[VW]\d/.test(stem) || series.includes(x))
+      // Pora roku podana w manifeście też zdejmuje tę z nazwy pliku, np. letni zmierzch K4 i punkt widokowy K8 z Zimy (Michał, 28.10.2026).
+      const season = (x: string) => x === 'winter' || x === 'summer'
+      const kept = existing.filter(
+        (x) => (x !== 'interiors' || !/^[VW]\d/.test(stem) || series.includes(x)) && (!item.series || !season(x) || series.includes(x)),
+      )
       await payload.update({ collection: 'media', id, locale: 'pl', data: { series: [...new Set([...kept, ...series])] } as never })
     }
     if (id && found.docs[0] && item.rights && found.docs[0].rights !== item.rights) {

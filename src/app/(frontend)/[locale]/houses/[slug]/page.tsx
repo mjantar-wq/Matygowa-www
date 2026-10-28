@@ -59,7 +59,7 @@ export default async function UnitPage({ params }: SlugParams) {
         {facts.length ? <p className="mo-label">{facts.join(' · ')}</p> : null}
         {unit.tagline ? <p className="mo-lede" style={{ marginBlock: 'var(--space-5)' }}>{unit.tagline}</p> : null}
         <RichText data={unit.story} />
-        {!unit.story ? <Placeholder label={t.placeholder} note="Opowieść o domu" /> : null}
+        {!unit.story ? <Placeholder label={t.placeholder} note="Opowieść o domku" /> : null}
         {unit.beds ? (
           <div style={{ marginBlockStart: 'var(--space-6)' }}>
             <p className="mo-label">{t.house.beds}</p>

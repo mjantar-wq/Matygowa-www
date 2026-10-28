@@ -61,14 +61,14 @@
         {
           "value": "120 m²",
           "label": {
-            "pl": "każdy dom",
+            "pl": "każdy domek",
             "en": "each house"
           }
         },
         {
           "value": "4",
           "label": {
-            "pl": "sypialnie w domu",
+            "pl": "sypialnie w domku",
             "en": "bedrooms per house"
           }
         },
@@ -115,7 +115,7 @@
       "type": "house_inside",
       "id": "dom",
       "heading": {
-        "pl": "Dom od środka",
+        "pl": "Domek od środka",
         "en": "Inside the house"
       },
       "body": {

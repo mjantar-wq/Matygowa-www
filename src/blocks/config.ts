@@ -131,7 +131,7 @@ export const DayBlock = block('dayInSettlement', 'Dzień w osadzie', [
   },
 ])
 
-export const HouseInsideBlock = block('houseInside', 'Dom od środka', [
+export const HouseInsideBlock = block('houseInside', 'Domek od środka', [
   eyebrow,
   heading,
   body,

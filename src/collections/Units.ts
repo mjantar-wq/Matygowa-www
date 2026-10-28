@@ -9,7 +9,7 @@ import { slugField } from '../fields/slug'
  */
 export const Units: CollectionConfig = {
   slug: 'units',
-  labels: { singular: 'Dom lub apartament', plural: 'Domy i apartamenty' },
+  labels: { singular: 'Domek lub apartament', plural: 'Domki i apartamenty' },
   admin: { useAsTitle: 'name', group: 'Treści', defaultColumns: ['name', 'kind', 'status', 'order', '_status'] },
   access: { read: publishedOrLoggedIn, create: editors, update: editors, delete: editors },
   versions: { drafts: true, maxPerDoc: 50 },
@@ -26,7 +26,7 @@ export const Units: CollectionConfig = {
           required: true,
           defaultValue: 'house',
           options: [
-            { label: 'Dom', value: 'house' },
+            { label: 'Domek', value: 'house' },
             { label: 'Apartament', value: 'apartment' },
           ],
           admin: { width: '25%' },

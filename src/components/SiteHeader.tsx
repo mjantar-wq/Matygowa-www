@@ -6,8 +6,8 @@ import { HomeLink } from './HomeLink'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { AmbienceSwitch } from './effects/AmbienceSwitch'
 
-/** Główne sekcje menu (koncepcja: Szkielet strony); Przewodnik ze stopki za Rytuałami, potem Osada i Galeria (Michał, 28.10.2026). */
-export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'guide', 'settlement', 'gallery', 'surroundings', 'offers', 'news', 'contact']
+/** Główne sekcje menu (koncepcja: Szkielet strony); FAQ (strona Przewodnik) na samym końcu, za Kontaktem (Michał, 29.10.2026). */
+export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'settlement', 'gallery', 'surroundings', 'offers', 'news', 'contact', 'guide']
 
 export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
   return (

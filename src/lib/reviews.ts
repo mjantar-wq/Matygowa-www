@@ -1,13 +1,14 @@
 import type { Payload } from 'payload'
 
 /**
- * Pobieranie opinii ze źródeł do kolekcji testimonials (raz w tygodniu, zadanie zaplanowane w worker.ts).
+ * Pobieranie opinii ze źródeł do kolekcji testimonials (dwa razy w tygodniu, zadanie zaplanowane w worker.ts).
  * Upsert po externalId: nowe opinie dochodzą, istniejące dostają aktualny tekst i ocenę.
  * Wpisów ręcznych (bez externalId) nie dotykamy, a pobranej opinii autora, który ma już ręczny wpis z tego źródła, nie dublujemy.
  *
- * Google: Places API (New), Place Details z polem reviews (do 5 opinii „najtrafniejszych”).
+ * Google: Places API (New), Place Details z polem reviews (do 5 opinii „najtrafniejszych”; kolejne uruchomienia z czasem zbierają ich więcej).
  * Konfiguracja: GOOGLE_PLACES_API_KEY (sekret Workera) i GOOGLE_PLACE_ID (vars). Bez nich źródło jest pomijane.
- * Booking: dojdzie, gdy prawdziwy obiekt będzie podpięty do Booking.com przez Beds24 albo IceColdRes.
+ * Booking: Booking.com nie udostępnia opinii przez publiczne API (tylko partnerom Connectivity), więc na razie wpisuje się je ręcznie w panelu;
+ * próg 9/10 działa też dla nich przy wyświetlaniu. Pół na pół z Google losuje ReviewShuffle przy każdym wejściu.
  */
 export type FetchedReview = {
   externalId: string
@@ -18,8 +19,14 @@ export type FetchedReview = {
   quote: { pl: string; en?: string }
 }
 
-/** Na stronę trafiają tylko opinie z treścią i oceną co najmniej 4/5 (8/10 na Booking). */
-const MIN_RATING = { google: 4, booking: 8 } as const
+/** Na stronę trafiają tylko opinie z treścią: Google tylko 5 gwiazdek, Booking od 9/10. */
+export const MIN_RATING = { google: 5, booking: 9 } as const
+
+/** Czy opinię wolno pokazać. Źródła bez progu (ręczne, inne) i opinie bez oceny przechodzą. */
+export function meetsMinRating(source?: string | null, rating?: number | null): boolean {
+  const min = MIN_RATING[source as keyof typeof MIN_RATING]
+  return min === undefined || rating == null || rating >= min
+}
 
 type PlaceReview = {
   name: string

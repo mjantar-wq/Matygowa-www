@@ -23,7 +23,7 @@ const pl = {
     documents: 'Dokumenty',
   } satisfies Record<RouteKey, string>,
   // krótsze etykiety w górnym menu, żeby na laptopie (1280 px) mieściło się w jednej linii
-  navMenu: { guide: 'Przewodnik' } as Partial<Record<RouteKey, string>>,
+  navMenu: { guide: 'FAQ' } as Partial<Record<RouteKey, string>>,
   skipToContent: 'Przejdź do treści',
   menu: 'Menu',
   language: 'Język',
@@ -243,7 +243,7 @@ const en: Dictionary = {
     contact: 'Contact',
     documents: 'Documents',
   },
-  navMenu: { guide: 'Guide' },
+  navMenu: { guide: 'FAQ' },
   skipToContent: 'Skip to content',
   menu: 'Menu',
   language: 'Language',

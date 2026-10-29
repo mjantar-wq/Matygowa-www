@@ -305,9 +305,10 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 @media (prefers-reduced-motion: reduce) { .mo-dock__open { transition: none; } }
 
 /* Okolica: nazwy atrakcji blisko siebie, opis rozwija się po najechaniu (na dotyku jest zawsze widoczny) */
-.mo-attractions { list-style: none; padding: 0; margin-block: var(--space-6) 0; display: grid; gap: var(--space-2); max-inline-size: var(--plyta-szer); }
+.mo-attractions { list-style: none; padding: 0; margin-block: var(--space-6) 0; display: grid; gap: var(--space-2); max-inline-size: calc(var(--plyta-szer) - var(--space-5)); }
 .mo-attraction__name { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-2); color: inherit; text-decoration: none; border-block-end: 1px solid color-mix(in srgb, currentColor 25%, transparent); }
-.mo-attraction__name .mo-h3 { margin: 0; transition: color var(--ruch-szybki) var(--ease-mgla); }
+.mo-attraction__name .mo-card__meta { flex: none; border: 0; padding: 0; white-space: nowrap; }
+.mo-attraction__name .mo-h3 { flex: 1 1 auto; min-inline-size: 0; margin: 0; transition: color var(--ruch-szybki) var(--ease-mgla); }
 .mo-attraction__desc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--ruch-sredni) var(--ease-mgla); }
 .mo-attraction__desc > div { overflow: hidden; }
 .mo-attraction__desc p { margin: var(--space-2) 0 var(--space-3); }

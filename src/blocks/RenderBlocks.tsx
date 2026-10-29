@@ -20,6 +20,7 @@ import { href } from '@/i18n/routes'
 import { findMany, UNIT_ORDER } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getServices, promoSeason } from '@/lib/icecoldres'
+import { meetsMinRating } from '@/lib/reviews'
 import { getPromoCards, promoText } from '@/lib/promo-cards'
 import { fillText, termVars } from '@/lib/terms'
 import type { PageContext } from '@/lib/page'
@@ -291,7 +292,11 @@ async function Testimonials({ block, ctx }: Props<'testimonials'>) {
   const chosen = (block.items ?? []).filter((x): x is Testimonial => typeof x === 'object')
   // Wszystkie opinie, źródła na zmianę; widać 10 (5 × 2 na komputerze, 6 na telefonie), a ReviewShuffle
   // losuje je przy każdym wejściu pół na pół z Google i Booking
-  const items = interleave(chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 100, sort: '-date' }))
+  const items = interleave(
+    (chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 100, sort: '-date' })).filter((x) =>
+      meetsMinRating(x.source, x.rating),
+    ),
+  )
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />

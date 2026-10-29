@@ -38,7 +38,7 @@ export const Testimonials: CollectionConfig = {
       admin: {
         position: 'sidebar',
         readOnly: true,
-        description: 'Opinie z tym polem pobiera automatycznie raz w tygodniu zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.',
+        description: 'Opinie z tym polem pobiera automatycznie dwa razy w tygodniu zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.',
       },
     },
   ],

@@ -7,8 +7,8 @@
     },
     "min_nights": 4,
     "body": {
-      "pl": "Od czwartej nocy płacicie połowę. Czerwone Wierchy właśnie rdzewieją.",
-      "en": "From the fourth night you pay half. The Red Peaks are just turning rust-red."
+      "pl": "Od czwartej nocy płacicie połowę. Czerwone Wierchy właśnie rdzewieją. Minimum 4 noce, oferta obowiązuje do 18.12.2026 z wyłączeniem 6–14.11 (długi weekend). Rabat nie dotyczy nocy weekendowych.",
+      "en": "From the fourth night you pay half. The Red Peaks are just turning rust-red. Minimum 4 nights, valid until 18 December 2026 except 6–14 November (long weekend). The discount does not apply to weekend nights."
     },
     "active": true,
     "icecoldres_promotion_id": "nowa-promocja",

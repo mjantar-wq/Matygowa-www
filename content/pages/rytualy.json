@@ -56,8 +56,8 @@
       "en": "Sauna"
     },
     "body": {
-      "pl": "Prywatna sauna w każdym domu. Pierwsza sesja dnia (1 godzina) jest w cenie pobytu, każda kolejna kosztuje 50 zł.",
-      "en": "A private sauna in every house. The first session of the day (1 hour) is included in your stay; each further session costs 50 PLN."
+      "pl": "Prywatna sauna w każdym domu. Godzina korzystania kosztuje 50 zł, dodatkowo płatna i po uzgodnieniu z nami.",
+      "en": "A private sauna in every house. One hour costs 50 PLN, charged in addition to your stay and arranged with us beforehand."
     }
   },
   "bania": {
@@ -66,8 +66,8 @@
       "en": "Hot tub"
     },
     "body": {
-      "pl": "Sesja trwa 4 godziny i kosztuje 150 zł. Wodę grzejemy kilka godzin, dlatego banię zamawiacie do 20:00 dnia poprzedniego, przy rezerwacji albo w „Mojej rezerwacji”.",
-      "en": "A session lasts 4 hours and costs 150 PLN. It takes several hours to heat the water, so please book the hot tub by 8 pm the day before, when you book your stay or later in My Booking."
+      "pl": "Sesja trwa 4 godziny i kosztuje 150 zł, dodatkowo płatna i po uzgodnieniu z nami. Wodę grzejemy kilka godzin, dlatego banię zamawiacie do 20:00 dnia poprzedniego, przy rezerwacji albo w „Mojej rezerwacji”.",
+      "en": "A session lasts 4 hours and costs 150 PLN, charged in addition to your stay and arranged with us beforehand. It takes several hours to heat the water, so please book the hot tub by 8 pm the day before, when you book your stay or later in My Booking."
     }
   },
   "rules": {

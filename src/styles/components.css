@@ -130,7 +130,6 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-skip { position: absolute; inset-inline-start: var(--space-2); inset-block-start: -100px; }
 .mo-skip:focus { inset-block-start: var(--space-2); z-index: 100; }
 .mo-header { position: sticky; inset-block-start: env(safe-area-inset-top, 0px); z-index: 10; background: var(--color-tlo); border-block-end: 1px solid var(--color-linia); }
-.mo-header::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: var(--wzor-naglowek-krycie); -webkit-mask: var(--wzor-podhale) 0 -38px / 150px 150px repeat; mask: var(--wzor-podhale) 0 -38px / 150px 150px repeat; } /* deseń w nagłówku, wyraźniejszy niż na tle strony (wg Michała) */
 .mo-header__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-block-size: var(--naglowek-wys); }
 .mo-nav { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); font: var(--text-body-s--font-weight) var(--text-body-s)/var(--text-body-s--line-height) var(--font-ui); }
 .mo-nav a { color: var(--color-atrament-2); text-decoration: none; display: inline-flex; align-items: center; min-block-size: var(--przycisk-maly); }

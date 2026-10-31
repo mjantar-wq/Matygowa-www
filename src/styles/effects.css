@@ -379,3 +379,9 @@ body:has(.mo-opowiesc) .mo-footer { margin-block-start: 0; padding-block: var(--
 /* okno leży w sekcji opowieści, której reguły dziedziczenia koloru i cienia nie mogą go dotyczyć */
 .mo-opowiesc .mo-section .mo-map-dialog :is(p, h3, dt, dd, a, li, .mo-label) { text-shadow: none; }
 .mo-opowiesc .mo-section .mo-map-dialog a.mo-btn--glowny { color: var(--color-na-cta); }
+
+/* Kafle opinii i dolna belka w dzień: jasnoszary (wg Michała, 31.10.2026); lato dopasowane do cieplejszej palety */
+:root[data-pora="dzien"] { --tlo-kafle: #f4f4f4; }
+:root[data-pora="dzien"][data-sezon="lato"] { --tlo-kafle: #f4f4ef; }
+:root[data-pora="dzien"] .mo-footer { background: var(--tlo-kafle); }
+:root[data-pora="dzien"] .mo-opowiesc .mo-section .mo-reviews .mo-review, :root[data-pora="dzien"] .mo-review { background: var(--tlo-kafle); }

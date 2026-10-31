@@ -19,9 +19,10 @@ type Loc = (typeof LOCALES)[number]
 const read = (file: string) => JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'))
 
 // Import partiami: IMPORT_ONLY=attractions (albo np. units,offers) wgrywa nowe pliki z manifestu i tylko te kolekcje.
-// „pages” to strony, opinie, dokumenty, aktualności i ustawienia; „news” same aktualności. Bez zmiennej import obejmuje wszystko.
+// „pages” to strony, opinie, dokumenty, aktualności i ustawienia; „news” same aktualności, „testimonials” same opinie. Bez zmiennej import obejmuje wszystko.
 const only = new Set((process.env.IMPORT_ONLY ?? '').split(',').map((k) => k.trim()).filter(Boolean))
-const want = (key: 'units' | 'attractions' | 'offers' | 'pages' | 'news') => !only.size || only.has(key) || (key === 'news' && only.has('pages'))
+const want = (key: 'units' | 'attractions' | 'offers' | 'pages' | 'news' | 'testimonials') =>
+  !only.size || only.has(key) || ((key === 'news' || key === 'testimonials') && only.has('pages'))
 
 async function main() {
   const payload = await getPayload({ config })
@@ -211,6 +212,20 @@ async function main() {
     )
   }
 
+  // prawdziwe opinie z Google i Booking (bez slugów: rozpoznajemy po autorze)
+  for (const t of want('testimonials') && fs.existsSync(path.join(DIR, 'testimonials.json')) ? (read('testimonials.json') as Any[]) : []) {
+    const found = await payload.find({ collection: 'testimonials', where: { author: { equals: t.author } }, limit: 1, depth: 0 })
+    // opinie pobrane automatycznie (z externalId) mają dosłowny tekst ze źródła, import ich nie nadpisuje
+    if (found.docs[0]?.externalId) continue
+    let id = found.docs[0]?.id
+    for (const locale of LOCALES) {
+      const data = { quote: t.quote?.[locale], author: t.author, source: t.source, rating: t.rating ?? undefined, date: t.date ? `${t.date}-01`.slice(0, 10) : undefined }
+      if (id) await payload.update({ collection: 'testimonials', id, locale, data })
+      else id = (await payload.create({ collection: 'testimonials', locale, data })).id
+    }
+    payload.logger.info(`testimonials: ${t.author}`)
+  }
+
   if (!want('pages')) {
     payload.logger.info(`Import częściowy zakończony (${[...only].join(', ')})`)
     process.exit(0)
@@ -307,18 +322,6 @@ async function main() {
 
   const kontakt = read('pages/kontakt.json')
   await upsertPage(payload, upsert, 'contact', () => kontakt.title, () => [], (l) => kontakt.lead?.[l])
-
-  // prawdziwe opinie z Google (bez slugów: rozpoznajemy po autorze)
-  for (const t of fs.existsSync(path.join(DIR, 'testimonials.json')) ? (read('testimonials.json') as Any[]) : []) {
-    const found = await payload.find({ collection: 'testimonials', where: { author: { equals: t.author } }, limit: 1, depth: 0 })
-    let id = found.docs[0]?.id
-    for (const locale of LOCALES) {
-      const data = { quote: t.quote?.[locale], author: t.author, source: t.source, rating: t.rating ?? undefined, date: t.date ? `${t.date}-01`.slice(0, 10) : undefined }
-      if (id) await payload.update({ collection: 'testimonials', id, locale, data })
-      else id = (await payload.create({ collection: 'testimonials', locale, data })).id
-    }
-    payload.logger.info(`testimonials: ${t.author}`)
-  }
 
   // Regulamin, polityka prywatności i cookies (wspólne z silnikiem IceColdRes); SEO z seo-pages.json poniżej ma pierwszeństwo
   for (const d of read('documents.json') as Any[]) {

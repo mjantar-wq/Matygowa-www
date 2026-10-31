@@ -14,7 +14,7 @@ on:
         type: boolean
         default: false
       import_only:
-        description: 'Tylko wybrane części, np. attractions albo units,offers (puste: wszystko; pages = strony, opinie, dokumenty, ustawienia)'
+        description: 'Tylko wybrane części, np. attractions albo units,offers (puste: wszystko; pages = strony, opinie, dokumenty, ustawienia; testimonials = same opinie)'
         type: string
         default: ''
 

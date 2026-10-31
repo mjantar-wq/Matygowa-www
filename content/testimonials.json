@@ -170,5 +170,194 @@
     },
     "en_is_translation": true,
     "pl_is_translation": true
+  },
+  {
+    "author": "Adam",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "pl",
+    "quote_full": {
+      "pl": "Wszystko nowe, czyste, pachnące"
+    },
+    "quote": {
+      "pl": "Wszystko nowe, czyste, pachnące",
+      "en": "Everything new, clean, fragrant"
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Borno",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "en",
+    "quote_full": {
+      "en": "Stunning, brand-new houses in the Polish mountains, built as if someone truly intended to live in them. Every detail feels intentional, solid, and high-quality, with no expenses spared. A rare place where comfort, design, and craftsmanship come together perfectly."
+    },
+    "quote": {
+      "en": "Stunning, brand-new houses in the Polish mountains, built as if someone truly intended to live in them. Every detail feels intentional, solid, and high-quality, with no expenses spared. A rare place where comfort, design, and craftsmanship come together perfectly.",
+      "pl": "Zachwycające, zupełnie nowe domy w polskich górach, zbudowane tak, jakby ktoś naprawdę zamierzał w nich mieszkać. Każdy szczegół jest przemyślany, solidny i wysokiej jakości, bez oszczędzania na czymkolwiek. Rzadkie miejsce, w którym wygoda, wzornictwo i rzemiosło łączą się idealnie."
+    },
+    "pl_is_translation": true
+  },
+  {
+    "author": "Daniel",
+    "source": "booking",
+    "rating": 9,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "en",
+    "quote_full": {
+      "en": "We stayed here as a family with 2 children and had an excellent experience. The house is new, beautifully finished, spacious, and very safe, with breathtaking Tatra views. Communication with the host was good. A truly high-quality stay, will come again."
+    },
+    "quote": {
+      "en": "We stayed here as a family with 2 children and had an excellent experience. The house is new, beautifully finished, spacious, and very safe, with breathtaking Tatra views. Communication with the host was good. A truly high-quality stay, will come again.",
+      "pl": "Zatrzymaliśmy się tu całą rodziną z dwójką dzieci i było znakomicie. Dom jest nowy, pięknie wykończony, przestronny i bardzo bezpieczny, z zapierającym dech widokiem na Tatry. Kontakt z gospodarzem był dobry. Naprawdę wysokiej jakości pobyt, wrócimy."
+    },
+    "pl_is_translation": true
+  },
+  {
+    "author": "iwona",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "pl",
+    "quote_full": {
+      "pl": "Nowiutenki obiekt - z genialnym widokiem na Tatry ( jak jest pogoda :))). Czysto, komfortowo. Super kontakt z gospodarzem - bardzo fajne byly sugestie co robic i gdzie zjesc. Szczerze polecam"
+    },
+    "quote": {
+      "pl": "Nowiutenki obiekt - z genialnym widokiem na Tatry ( jak jest pogoda :))). Czysto, komfortowo. Super kontakt z gospodarzem - bardzo fajne byly sugestie co robic i gdzie zjesc. Szczerze polecam",
+      "en": "A brand-new place with a wonderful view of the Tatras (when the weather allows :))). Clean, comfortable. Great contact with the host - his suggestions on what to do and where to eat were really nice. I sincerely recommend it"
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Olivier",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "en",
+    "quote_full": {
+      "en": "We stayed here as a couple and loved it — great location, beautifully designed interiors, and stunning Tatra views. A refined, quiet place to relax."
+    },
+    "quote": {
+      "en": "We stayed here as a couple and loved it — great location, beautifully designed interiors, and stunning Tatra views. A refined, quiet place to relax.",
+      "pl": "Byliśmy tu we dwoje i bardzo nam się podobało: świetna lokalizacja, pięknie zaprojektowane wnętrza i wspaniałe widoki na Tatry. Wysmakowane, ciche miejsce do odpoczynku."
+    },
+    "pl_is_translation": true
+  },
+  {
+    "author": "Marek",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "pl",
+    "quote_full": {
+      "pl": "bardzo dziękujemy, świetny kontakt z gospodarzem, wrócimy na pewno"
+    },
+    "quote": {
+      "pl": "bardzo dziękujemy, świetny kontakt z gospodarzem, wrócimy na pewno",
+      "en": "Thank you very much, great contact with the host, we will definitely come back"
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Bernard",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "pl",
+    "quote_full": {
+      "pl": "Świetna lokalizacja, bardzo czysty i wygodny dom. Idealny na pobyt w grupie przyjaciół. pełny widok na Tatry, kontakt z gospodarzem był bezproblemowy."
+    },
+    "quote": {
+      "pl": "Świetna lokalizacja, bardzo czysty i wygodny dom. Idealny na pobyt w grupie przyjaciół. pełny widok na Tatry, kontakt z gospodarzem był bezproblemowy.",
+      "en": "Great location, a very clean and comfortable house. Ideal for a stay with a group of friends. A full view of the Tatras, contact with the host was hassle-free."
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Kamila",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2025-11",
+    "date_approx": false,
+    "original_lang": "en",
+    "quote_full": {
+      "en": "We had a fantastic time here. The house was clean, comfortable, and exactly as described. The location is quiet with beautiful mountain views, and we felt relaxed the whole time. The hosts were friendly and helpful, and everything was easy from check-in to check-out."
+    },
+    "quote": {
+      "en": "We had a fantastic time here. The house was clean, comfortable, and exactly as described. The location is quiet with beautiful mountain views, and we felt relaxed the whole time. The hosts were friendly and helpful, and everything was easy from check-in to check-out.",
+      "pl": "Spędziliśmy tu fantastyczny czas. Dom był czysty, wygodny i dokładnie taki, jak w opisie. Miejsce jest ciche, z pięknymi widokami na góry, przez cały pobyt czuliśmy się zrelaksowani. Gospodarze byli życzliwi i pomocni, a wszystko poszło gładko od zameldowania do wymeldowania."
+    },
+    "pl_is_translation": true
+  },
+  {
+    "author": "Yevhen",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2026-01",
+    "date_approx": false,
+    "original_lang": "ru",
+    "quote_full": {
+      "ru": "Потрясающий дом с видом на горы, шикарный интерьер,гостиприимный владелец, каждый день чистил нам площадку, панорамные окна,камин,сауна, отличная коммуникация,тишина вокруг.\nВсе было супер, вернёмся обязательно еще!"
+    },
+    "quote": {
+      "ru": "Потрясающий дом с видом на горы, шикарный интерьер,гостиприимный владелец, каждый день чистил нам площадку, панорамные окна,камин,сауна, отличная коммуникация,тишина вокруг.\nВсе было супер, вернёмся обязательно еще!",
+      "pl": "Fantastyczny dom z widokiem na góry, wspaniałe wnętrze, gościnny właściciel, który codziennie czyścił nam teren przed domem, panoramiczne okna, kominek, sauna, świetna komunikacja, cisza wokół.\nWszystko było super, na pewno wrócimy jeszcze!",
+      "en": "An amazing house with a mountain view, gorgeous interior, a hospitable owner who cleaned the area in front of the house for us every day, panoramic windows, fireplace, sauna, excellent communication, quiet all around.\nEverything was great, we will definitely come back!"
+    },
+    "pl_is_translation": true,
+    "en_is_translation": true
+  },
+  {
+    "author": "Katarzyna",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2026-01",
+    "date_approx": false,
+    "original_lang": "pl",
+    "quote_full": {
+      "pl": "Dbałość o każdy detal. Dom naprawdę pięknie wykończony, nowy, estetyczny."
+    },
+    "quote": {
+      "pl": "Dbałość o każdy detal. Dom naprawdę pięknie wykończony, nowy, estetyczny.",
+      "en": "Attention to every detail. A truly beautifully finished house, new, tasteful."
+    },
+    "en_is_translation": true
+  },
+  {
+    "author": "Aneta",
+    "source": "booking",
+    "rating": 10,
+    "rating_scale": 10,
+    "date": "2026-10",
+    "date_approx": false,
+    "original_lang": "pl",
+    "quote_full": {
+      "pl": "Niezapomniany pobyt w klimatycznym domku z widokiem, który zapiera dech w piersiach o każdej porze dnia. Poranki z kawą na tarasie naprzeciwko górskiej panoramy to czysta magia. Domek jest urządzony z ogromnym wyczuciem, bardzo czysty, ciepły i w pełni wyposażony"
+    },
+    "quote": {
+      "pl": "Niezapomniany pobyt w klimatycznym domku z widokiem, który zapiera dech w piersiach o każdej porze dnia. Poranki z kawą na tarasie naprzeciwko górskiej panoramy to czysta magia. Domek jest urządzony z ogromnym wyczuciem, bardzo czysty, ciepły i w pełni wyposażony",
+      "en": "An unforgettable stay in an atmospheric cottage with a view that takes your breath away at every time of day. Mornings with coffee on the terrace facing the mountain panorama are pure magic. The cottage is furnished with great sensitivity, very clean, warm and fully equipped"
+    },
+    "en_is_translation": true
   }
 ]

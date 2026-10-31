@@ -29,10 +29,11 @@ mid_d=sm(mid_d,5); near_d=sm(near,31)
 # (15,6 km) i zasłania ich podnóże, więc dostaje własną warstwę: najwyższy kąt terenu w odległości 9–14,2 km,
 # w oknie azymutów wokół masywu, z łagodnym zejściem na brzegach okna.
 GW_D=(9000,14200); GW_AZ=(214.5,227.0); GW_TAPER=2.4; GW_DROP=2.0
-gw_raw=sm(ang[:,(d>=GW_D[0])&(d<GW_D[1])].max(1),9)
+gw_raw=sm(ang[:,(d>=GW_D[0])&(d<GW_D[1])].max(1),3)   # lekko: wierzchołek ma zostać ostry
 def smooth01(t): t=np.clip(t,0,1); return t*t*(3-2*t)
 gw_w=smooth01((azs-GW_AZ[0])/GW_TAPER)*smooth01((GW_AZ[1]-azs)/GW_TAPER)   # 1 w środku okna, 0 poza nim
 gw_d=np.minimum(gw_raw-GW_DROP*(1-gw_w), far_d-0.02)
+gw_k=int(np.argmax(np.where((azs>219.5)&(azs<222.0),gw_d,-9)))                  # wierzchołek Giewontu
 gw_on=gw_w>0.002                                                              # tam rysujemy warstwę
 
 PEAKS=[("kominiarski-wierch","Kominiarski Wierch",1829,49.24081,19.83554),("ciemniak","Ciemniak",2096,49.23101,19.90341),
@@ -81,7 +82,7 @@ def poly(pts): return "M"+fmt(rdp(pts))
 
 def svg(variant):
     st=('.niebo{fill:var(--color-tlo)}.fill-far{fill:var(--color-tlo-2);stroke:var(--color-atrament);stroke-width:1.1;stroke-linejoin:round;vector-effect:non-scaling-stroke}'
-        '.fill-giewont{fill:var(--color-tlo-2);stroke:none}.line-giewont{fill:none;stroke:var(--color-atrament);stroke-width:1.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}'
+        '.fill-giewont{fill:var(--color-tlo-2);stroke:none}.gs{stop-color:var(--color-atrament)}.line-giewont{fill:none;stroke:url(#g2-gw);stroke-width:1.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}'
         '.grzbiet-g{stroke-width:.8;opacity:.6}.fill-mid{fill:var(--color-poziomica);opacity:.35}.fill-near{fill:var(--color-poziomica);opacity:.7}'
         '.line{stroke:var(--color-atrament);stroke-width:1;fill:none;vector-effect:non-scaling-stroke}.accent{fill:var(--color-bursztyn)}'
         '.grzbiet{stroke:var(--color-atrament);fill:none;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}'
@@ -111,12 +112,15 @@ def svg(variant):
             if len(cur)>=10: tgt.append(cur)
         L.append('<g id="grzbiety-tatry" class="grzbiet grzbiet-t">'+''.join(f'<path d="{poly(s[::2]+[s[-1]])}"/>' for s in segs_t)+'</g>')
         L.append('</g>')
+        gw_line=[(x,y(a)) for x,a,m in zip(xs,gw_d,gw_on&(gw_d>cover_t+0.05)) if m]
+        gx0,gx1,gxs=gw_line[0][0],gw_line[-1][0],xs[gw_k]
+        # kontur: wyraźny do wierzchołka, za nim zanika (jak grań za szczytem na zrzucie z PeakFindera)
+        stops=[(gx0,0),(gx0+(gxs-gx0)*.45,.85),(gxs-30,1),(gxs+10,1),(gxs+70,.3),(gxs+200,.08),(gx1,0)]
+        L.append('<defs><linearGradient id="g2-gw" gradientUnits="userSpaceOnUse" x1="%.1f" x2="%.1f" y1="0" y2="0">'%(gx0,gx1)+''.join('<stop offset="%.3f" stop-opacity="%s" class="gs"/>'%((x-gx0)/(gx1-gx0),o) for x,o in stops)+'</linearGradient></defs>')
         L.append(f'<g id="warstwa-giewont"><path class="fill-giewont" d="{path(gw_d,mask=gw_on)}"/>'
                  f'<g class="grzbiet grzbiet-g">'+''.join(f'<path d="{poly(s[::2]+[s[-1]])}"/>' for s in segs_g)+'</g>'
-                 f'<path class="line-giewont" d="{poly([(x,y(a)) for x,a,m in zip(xs,gw_d,gw_on&(gw_d>cover_t+0.05)) if m])}"/></g>')
+                 f'<path class="line-giewont" d="{poly(gw_line)}"/></g>')
         L.append(f'<g id="warstwa-podhale"><path class="fill-mid" d="{path(mid_d)}"/></g>')
-    else:
-        L.append('</g>'); L.append(f'<g id="warstwa-podhale"><path class="fill-mid" d="{path(mid_d)}"/></g>')
     L.append(f'<g id="warstwa-osada"><path class="fill-near" d="{path(near_d)}"/></g>')
     L.append('<g id="szczyty">')
     boxes=[]

@@ -2,7 +2,8 @@
 
 Kolejność (uruchamiać w tym katalogu): compute.py (kąty z DEM Terrarium z13) → trace.py (linia grani ze zrzutów
 PeakFindera; wynik trace_raw.json jest już zapisany) → fuse.py (grań PeakFindera dopasowana do DEM) → edges.py
-(linie grzbietów wewnątrz masywu) → gen.py. Wynik: G2_panorama_wariant_B.svg i G2_panorama.json, kopiowane do
+(linie grzbietów wewnątrz masywu) → gen.py. Giewont (jako jedyny poza linią grani Tatr, niższy i bliższy niż Czerwone Wierchy) ma własną warstwę „warstwa-giewont”.
+Łamane są upraszczane (RDP, 0,3 px), żeby SVG ważył kilkadziesiąt KB. Wynik: G2_panorama_wariant_B.svg i G2_panorama.json, kopiowane do
 public/ilustracje/G2_panorama.*. Poprzednia, gładka wersja: public/ilustracje/G2_panorama_poprzednia.svg (../panorama.py).
 """
 import sys, math, json, pickle, numpy as np
@@ -24,6 +25,16 @@ far_d=np.where(far>=sky-0.02,far+delta,far)
 mid_d=np.where((mid>=sky-0.02),mid+delta,mid)
 mid_d=sm(mid_d,5); near_d=sm(near,31)
 
+# Giewont: jako jedyny nie leży w linii grani Tatr. Z osady (ok. 13,8 km) jest niższy i bliższy niż Czerwone Wierchy
+# (15,6 km) i zasłania ich podnóże, więc dostaje własną warstwę: najwyższy kąt terenu w odległości 9–14,2 km,
+# w oknie azymutów wokół masywu, z łagodnym zejściem na brzegach okna.
+GW_D=(9000,14200); GW_AZ=(214.5,227.0); GW_TAPER=2.4; GW_DROP=2.0
+gw_raw=sm(ang[:,(d>=GW_D[0])&(d<GW_D[1])].max(1),9)
+def smooth01(t): t=np.clip(t,0,1); return t*t*(3-2*t)
+gw_w=smooth01((azs-GW_AZ[0])/GW_TAPER)*smooth01((GW_AZ[1]-azs)/GW_TAPER)   # 1 w środku okna, 0 poza nim
+gw_d=np.minimum(gw_raw-GW_DROP*(1-gw_w), far_d-0.02)
+gw_on=gw_w>0.002                                                              # tam rysujemy warstwę
+
 PEAKS=[("kominiarski-wierch","Kominiarski Wierch",1829,49.24081,19.83554),("ciemniak","Ciemniak",2096,49.23101,19.90341),
 ("czerwone-wierchy","Czerwone Wierchy",2122,49.23166,19.90949),("giewont","Giewont",1894,49.25095,19.93410),
 ("swinica","Świnica",2301,49.21942,20.00931),("woloszyn","Wołoszyn",2155,49.22833,20.05000),("gerlach","Gerlach",2655,49.16403,20.13406),
@@ -43,20 +54,35 @@ peaks=[]
 for slug,name,h,lat,lon in PEAKS:
     e,la,lo=snap(lat,lon); az,dd=bearing_dist(*SITE,la,lo)
     k=int(round((az-AZ0)/STEP))
-    k=k-6+int(np.argmax(far_d[k-6:k+7]))  # wierzchołek na rysowanej grani (±0,12°)
+    if slug=='giewont': k=k-15+int(np.argmax(gw_d[k-15:k+16]))                 # wierzchołek na własnej warstwie Giewontu
+    else: k=k-6+int(np.argmax(far_d[k-6:k+7]))  # wierzchołek na rysowanej grani (±0,12°)
     peaks.append(dict(slug=slug,name=name,height=h,az=round(az,2),dist_km=round(dd/1000,1),k=k))
 
 W=3200; PX=W/(AZ1-AZ0); xs=(azs-AZ0)*PX; amin=-0.8
 H=407  # jak poprzednia wersja (układ sceny na głównej liczy na 3200×407)
 def y(a): return H-(a-amin)*PX
-def path(row):
-    pts=" ".join(f"{x:.1f},{y(a):.1f}" for x,a in zip(xs,np.maximum(row,amin)))
-    return f"M0,{H} L{pts} L{W},{H} Z"
-def poly(pts): return "M"+" L".join(f"{x:.1f},{yy:.1f}" for x,yy in pts)
+EPS=0.3  # tolerancja uproszczenia łamanych w px (SVG ma 3200 px szerokości)
+def rdp(pts,eps=EPS):
+    if len(pts)<3: return pts
+    (x0,y0),(x1,y1)=pts[0],pts[-1]; dx,dy=x1-x0,y1-y0; n=math.hypot(dx,dy) or 1e-9
+    dm,im=0,0
+    for i in range(1,len(pts)-1):
+        dd=abs(dy*(pts[i][0]-x0)-dx*(pts[i][1]-y0))/n
+        if dd>dm: dm,im=dd,i
+    if dm<=eps: return [pts[0],pts[-1]]
+    return rdp(pts[:im+1],eps)[:-1]+rdp(pts[im:],eps)
+def fmt(pts): return " ".join(f"{x:.1f}".rstrip('0').rstrip('.')+","+f"{yy:.1f}".rstrip('0').rstrip('.') for x,yy in pts)
+def path(row,xs_=None,mask=None):
+    pts=[(x,y(a)) for x,a in zip(xs,np.maximum(row,amin))]
+    if mask is not None: pts=[q for q,m in zip(pts,mask) if m]
+    pts=rdp(pts)
+    return f"M{fmt([(pts[0][0],H)])} {fmt(pts)} {fmt([(pts[-1][0],H)])}Z" if mask is not None else f"M0,{H} {fmt(pts)} {W},{H}Z"
+def poly(pts): return "M"+fmt(rdp(pts))
 
 def svg(variant):
     st=('.niebo{fill:var(--color-tlo)}.fill-far{fill:var(--color-tlo-2);stroke:var(--color-atrament);stroke-width:1.1;stroke-linejoin:round;vector-effect:non-scaling-stroke}'
-        '.fill-mid{fill:var(--color-poziomica);opacity:.35}.fill-near{fill:var(--color-poziomica);opacity:.7}'
+        '.fill-giewont{fill:var(--color-tlo-2);stroke:none}.line-giewont{fill:none;stroke:var(--color-atrament);stroke-width:1.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}'
+        '.grzbiet-g{stroke-width:.8;opacity:.6}.fill-mid{fill:var(--color-poziomica);opacity:.35}.fill-near{fill:var(--color-poziomica);opacity:.7}'
         '.line{stroke:var(--color-atrament);stroke-width:1;fill:none;vector-effect:non-scaling-stroke}.accent{fill:var(--color-bursztyn)}'
         '.grzbiet{stroke:var(--color-atrament);fill:none;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}'
         '.grzbiet-t{stroke-width:.8;opacity:.55}.grzbiet-p{stroke-width:.7;opacity:.3}'
@@ -68,21 +94,26 @@ def svg(variant):
        f'<g id="warstwa-tatry"><path class="fill-far" d="{path(far_d)}"/>']
     if variant=='B':
         cover_t=np.maximum(mid_d,near_d)  # Tatry: rysuj tylko nad Podhalem
-        segs_t=[]; segs_p=[]
+        cover_f=np.where(gw_on,np.maximum(cover_t,gw_d),cover_t)  # dalsze grzbiety chowają się za Giewontem
+        segs_t=[]; segs_g=[]; segs_p=[]
         for pts in lines:
-            dist=np.median([p[2] for p in pts]); tatry=dist>=9000
+            dist=np.median([p[2] for p in pts]); tatry=dist>=9000; gw=tatry and dist<GW_D[1] and gw_on[pts[len(pts)//2][0]]
+            tgt=segs_g if gw else segs_t if tatry else segs_p
             cur=[]
             for kk,a,dd in pts:
-                top=far_d[kk] if tatry else mid_d[kk]
-                lim=cover_t[kk] if tatry else near_d[kk]
+                top=gw_d[kk] if gw else far_d[kk] if tatry else mid_d[kk]
+                lim=cover_t[kk] if gw else cover_f[kk] if tatry else near_d[kk]
                 ok=(a<top-0.04) and (a>lim+0.01)
                 if ok: cur.append((xs[kk],y(a)))
                 elif cur:
-                    if len(cur)>=10: (segs_t if tatry else segs_p).append(cur)
+                    if len(cur)>=10: tgt.append(cur)
                     cur=[]
-            if len(cur)>=10: (segs_t if tatry else segs_p).append(cur)
+            if len(cur)>=10: tgt.append(cur)
         L.append('<g id="grzbiety-tatry" class="grzbiet grzbiet-t">'+''.join(f'<path d="{poly(s[::2]+[s[-1]])}"/>' for s in segs_t)+'</g>')
         L.append('</g>')
+        L.append(f'<g id="warstwa-giewont"><path class="fill-giewont" d="{path(gw_d,mask=gw_on)}"/>'
+                 f'<g class="grzbiet grzbiet-g">'+''.join(f'<path d="{poly(s[::2]+[s[-1]])}"/>' for s in segs_g)+'</g>'
+                 f'<path class="line-giewont" d="{poly([(x,y(a)) for x,a,m in zip(xs,gw_d,gw_on&(gw_d>cover_t+0.05)) if m])}"/></g>')
         L.append(f'<g id="warstwa-podhale"><path class="fill-mid" d="{path(mid_d)}"/></g>')
     else:
         L.append('</g>'); L.append(f'<g id="warstwa-podhale"><path class="fill-mid" d="{path(mid_d)}"/></g>')
@@ -100,7 +131,7 @@ def svg(variant):
         else: groups.append([p])
     for g in sorted(groups,key=lambda g:-max(p['height'] for p in g)):
         halfs=[len(p['name'])*9.5+8 for p in g]; total=sum(2*h for h in halfs)+32*(len(g)-1)
-        pxs=[xs[p['k']] for p in g]; pys=[y(far_d[p['k']]) for p in g]
+        pxs=[xs[p['k']] for p in g]; pys=[y((gw_d if p['slug']=='giewont' else far_d)[p['k']]) for p in g]
         x0=max(8,min(W-8-total,sum(pxs)/len(pxs)-total/2)); top=min(pys)-130-(40 if len(g)>1 else 0)
         while top>20 and not free(x0,x0+total,top,top+52,pxs[0],max(pys)): top-=6
         boxes.append((x0,x0+total,top,top+52)); cx=x0

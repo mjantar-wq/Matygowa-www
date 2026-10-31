@@ -388,3 +388,6 @@ body:has(.mo-opowiesc) .mo-footer { margin-block-start: 0; padding-block: var(--
 
 /* Przyciski główne: brąz ze wzoru Michała (#977b53), w dzień przyciemniony do kontrastu 4,5:1; noc bez zmian (31.10.2026); Przewodnik ma własną skórę */
 :root[data-pora="dzien"] .mo-btn--glowny:not(.mo-ksiazka) { background: #866b44; }
+
+/* Parzenice po bokach nie mogą nachodzić na napis (Michał, 31.10.2026): odstęp od brzegu 14px + motyw 26px + oddech */
+.mo-btn--glowny:not(.mo-ksiazka) { padding-inline: max(3.5rem, var(--space-6)); }

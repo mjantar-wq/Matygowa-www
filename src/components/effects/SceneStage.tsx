@@ -133,7 +133,8 @@ type Focus = { a: string; b: string; t: number }
  * Panorama przesuwa się płynnie od szczytu do szczytu, zamiast wracać do środka w przerwie między kartami.
  */
 function focusAt(section: Element, mid: number): Focus | undefined {
-  const cards = [...section.querySelectorAll<HTMLElement>('[data-scene-focus]')].map((n) => {
+  // karty schowane przez przełącznik pory roku nie mają układu i nie liczą się do kolejności
+  const cards = [...section.querySelectorAll<HTMLElement>('[data-scene-focus]')].filter((n) => n.getClientRects().length).map((n) => {
     const r = n.getBoundingClientRect()
     return { id: n.dataset.sceneFocus!, y: r.top + r.height / 2 }
   })

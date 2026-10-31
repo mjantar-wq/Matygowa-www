@@ -1,2 +1,9 @@
 /_next/static/*
   Cache-Control: public,max-age=31536000,immutable
+
+# pliki bez skrótu w nazwie (logo, ilustracje, ikony): doba w przeglądarce, potem odświeżenie w tle
+# (bez tego każda wizyta pytała serwer o te same pliki: max-age=0, must-revalidate)
+/brand/*
+  Cache-Control: public,max-age=86400,stale-while-revalidate=604800
+/ilustracje/*
+  Cache-Control: public,max-age=86400,stale-while-revalidate=604800

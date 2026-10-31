@@ -3,8 +3,8 @@
    Plik generowany przez scripts/build-tokens.py; nie edytuj ręcznie. */
 
 @theme {
-  --color-tlo: #f1f3f2;
-  --color-tlo-2: #e4e9e7;
+  --color-tlo: #ffffff;
+  --color-tlo-2: #f3f5f4;
   --color-powierzchnia: #fbfcfb;
   --color-linia: #d2d9d6;
   --color-linia-mocna: #7f8b86;
@@ -150,8 +150,8 @@
 }
 
 :root[data-sezon="lato"] {
-  --color-tlo: #f2f3ee;
-  --color-tlo-2: #e6e8de;
+  --color-tlo: #fbfbf7;
+  --color-tlo-2: #f0f1ea;
   --color-powierzchnia: #fbfbf8;
   --color-linia: #d5d8cc;
   --color-linia-mocna: #818775;

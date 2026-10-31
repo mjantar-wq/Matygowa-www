@@ -385,3 +385,6 @@ body:has(.mo-opowiesc) .mo-footer { margin-block-start: 0; padding-block: var(--
 :root[data-pora="dzien"][data-sezon="lato"] { --tlo-kafle: #f4f4ef; }
 :root[data-pora="dzien"] .mo-footer { background: var(--tlo-kafle); }
 :root[data-pora="dzien"] .mo-opowiesc .mo-section .mo-reviews .mo-review, :root[data-pora="dzien"] .mo-review { background: var(--tlo-kafle); }
+
+/* Przyciski główne w dzień: ciepły brąz #977b53 (wg Michała, 31.10.2026); Przewodnik ma własną skórę */
+:root[data-pora="dzien"] .mo-btn--glowny:not(.mo-ksiazka) { background: #977b53; }

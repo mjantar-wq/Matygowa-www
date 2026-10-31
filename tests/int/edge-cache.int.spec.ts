@@ -32,11 +32,13 @@ describe('bufor stron dla gości', () => {
 })
 
 describe('mniejsze kopie zdjęć (srcset)', () => {
-  it('daje kopie węższe od oryginału i sam oryginał na końcu', () => {
+  it('daje kopie węższe od oryginału i na końcu kopię w rozmiarze oryginału', () => {
     expect(srcSet('/api/media/file/K12_hero.webp', 2048)).toBe(
-      '/api/media/file/K12_hero.webp?w=480 480w, /api/media/file/K12_hero.webp?w=828 828w, /api/media/file/K12_hero.webp?w=1200 1200w, /api/media/file/K12_hero.webp?w=1600 1600w, /api/media/file/K12_hero.webp 2048w',
+      '/api/media/file/K12_hero.webp?w=480 480w, /api/media/file/K12_hero.webp?w=828 828w, /api/media/file/K12_hero.webp?w=1200 1200w, /api/media/file/K12_hero.webp?w=1600 1600w, /api/media/file/K12_hero.webp?w=2048 2048w',
     )
     expect(srcSet('/api/media/file/sredni.jpg', 1000)).toBe('/api/media/file/sredni.jpg?w=480 480w, /api/media/file/sredni.jpg?w=828 828w, /api/media/file/sredni.jpg 1000w')
+    // oryginał szerszy niż największa kopia zostaje oryginałem (bez utraty jakości)
+    expect(srcSet('/api/media/file/duze.jpg', 3000)?.endsWith(', /api/media/file/duze.jpg 3000w')).toBe(true)
   })
   it('bez kopii dla SVG, filmów, małych plików i adresów spoza biblioteki', () => {
     expect(srcSet('/api/media/file/mapa.svg', 2000)).toBeUndefined()

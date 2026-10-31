@@ -49,5 +49,10 @@ try{var m=document.cookie.match(/(?:^|; )${CONSENT_COOKIE}=([^;]*)/);var c=m&&JS
 if(c&&c.v===${CONSENT_VERSION}){var g=function(b){return b?'granted':'denied'};gtag('consent','update',{analytics_storage:g(c.analytics),ad_storage:g(c.marketing),ad_user_data:g(c.marketing),ad_personalization:g(c.marketing)});dataLayer.push({event:'consent_ready',consent_analytics:!!c.analytics,consent_marketing:!!c.marketing})}}catch(e){}`
 }
 
+/**
+ * GTM startuje po załadowaniu strony (zdarzenie load + chwila bezczynności, najpóźniej po 3 s), żeby jego ~125 KB
+ * i kolejne tagi nie konkurowały z kadrem hero i czcionkami o łącze. Zdarzenia z dataLayer (zgody, kliknięcia)
+ * czekają w kolejce i GTM przetwarza je po starcie; 'gtm.start' zapisujemy od razu, więc czas wizyty się nie przesuwa.
+ */
 export const gtmScript = (id: string) =>
-  `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)})(window,document,'script','dataLayer',${JSON.stringify(id)});`
+  `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var go=function(){if(go.d)return;go.d=1;var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)};var idle=function(){w.requestIdleCallback?w.requestIdleCallback(go,{timeout:3000}):setTimeout(go,1500)};d.readyState==='complete'?idle():w.addEventListener('load',idle);setTimeout(go,6000)})(window,document,'script','dataLayer',${JSON.stringify(id)});`

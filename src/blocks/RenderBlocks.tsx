@@ -9,7 +9,7 @@ import { SettlementMap } from '@/components/SettlementMap'
 import { GuidePopup } from '@/components/GuidePopup'
 import { SeasonOffersEmpty } from '@/components/SeasonOffersEmpty'
 import { PhotoGallery } from '@/components/PhotoGallery'
-import { AttractionEntry } from '@/components/Attraction'
+import { AttractionEntry, attractionSeason } from '@/components/Attraction'
 import { AttractionPopup } from '@/components/effects/AttractionPopup'
 import { CountUp } from '@/components/effects/CountUp'
 import { HeroStage } from '@/components/effects/HeroStage'
@@ -204,6 +204,12 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
   const featured = await findMany<Attraction>('attractions', ctx.locale, { where: { featured: { equals: true } }, limit: block.limit ?? 6 })
   // bez wyróżnionych w panelu: pierwsze z listy, żeby karty prowadziły po mapie
   const attractions = featured.length ? featured : await findMany<Attraction>('attractions', ctx.locale, { limit: block.limit ?? 6 })
+  // punkty na mapie atrakcji tylko na jedną porę roku znikają razem z kartami przy drugiej porze przełącznika
+  const outOfSeason = attractions.flatMap((a) => {
+    const sezon = attractionSeason(a)
+    return sezon && a.mapId && /^[\w-]+$/.test(a.mapId) ? [`html[data-sezon="${sezon === 'lato' ? 'zima' : 'lato'}"] #${a.mapId}`] : []
+  })
+  const mapHidden = outOfSeason.length ? `${outOfSeason.join(',')}{display:none}` : ''
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
@@ -217,6 +223,8 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
       )}
       {immersive ? (
         // Lista nazw: najechanie albo fokus podświetla atrakcję na mapie (SceneStage) i rozwija jej opis
+        <>
+        {mapHidden ? <style>{mapHidden}</style> : null}
         <ul className="mo-attractions">
           {attractions.map((a) => (
             <AttractionPopup
@@ -228,6 +236,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
               className="mo-attraction"
               linkClassName="mo-attraction__name"
               focus={a.mapId || undefined}
+              season={attractionSeason(a)}
               card={
                 <>
                   <span className="mo-h3">{a.name}</span>
@@ -244,6 +253,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
             </AttractionPopup>
           ))}
         </ul>
+        </>
       ) : (
         <ul className="mo-cards mo-atrakcje" role="list">
           {attractions.map((a) => (
@@ -254,6 +264,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
               label={a.name}
               closeLabel={ctx.t.effects.close}
               linkClassName="mo-card"
+              season={attractionSeason(a)}
               card={
                 <>
                   <div className="mo-card__media"><Media media={a.image} /></div>

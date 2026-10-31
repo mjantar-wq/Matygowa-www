@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { AttractionEntry, attractionMeta, sortAttractions } from '@/components/Attraction'
+import { AttractionEntry, attractionMeta, attractionSeason, sortAttractions } from '@/components/Attraction'
 import { CmsPage, getPage } from '@/components/CmsPage'
 import { AttractionPopup } from '@/components/effects/AttractionPopup'
 import { Media } from '@/components/Media'
@@ -35,6 +35,7 @@ export default async function SurroundingsPage({ params }: LocaleParams) {
                   href={href(ctx.locale, 'surroundings', a.slug)}
                   label={a.name}
                   closeLabel={ctx.t.effects.close}
+                  season={attractionSeason(a)}
                   card={
                     <>
                       <div className="mo-card__media">

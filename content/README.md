@@ -23,7 +23,7 @@ testimonials.json: 4 prawdziwe opinie z Google (odczyt z widżetu obecnej strony
 ## Do potwierdzenia przez Michała
 1. Nazwy domów potwierdzone (zdjęcie „Nazwy domków 2026”, zgodne z IceColdRes). Ciemniak bez podpisu na zdjęciu, nazwa wstępna.
 2. Nazwy apartamentów są wstępne. Ciemniak jest jednym z czterech Czerwonych Wierchów, więc dwa apartamenty nazywają się od tego samego masywu; tekst to wykorzystuje, ale warto rozważyć inny szczyt.
-3. Lista lokalnych partnerów, ręczniki do bani.
+3. Lista lokalnych partnerów.
 4. Ceny ofert sezonowych (Boże Narodzenie, ferie) są z obecnej strony; w IceColdRes oznaczone „do potwierdzenia”.
 
 ## Źródła faktów o szczytach

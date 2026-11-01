@@ -8,9 +8,12 @@
   .mo-booking .mo-field:nth-child(2n of .mo-field) { border-inline-end: 0; }
   .mo-booking .mo-btn--glowny { grid-column: 1 / -1; min-height: 56px; border-radius: 0 0 1px 1px; }
 }
-.mo-booking-ages { display: flex; flex-wrap: wrap; margin: 0; padding: 0; border: 1px solid var(--color-linia); border-block-start: 0; background: var(--color-powierzchnia); min-inline-size: 0; }
-.mo-booking-ages__title { flex: 1 0 100%; float: inline-start; padding: var(--space-3) var(--space-5) 0; }
-.mo-booking-ages .mo-field { flex: 1 1 10rem; }
+.mo-booking-ages { display: flex; flex-wrap: wrap; margin: 0; padding: 0; border: 1px solid var(--color-linia); border-block-start: 0; border-radius: 0 0 var(--radius-pole) var(--radius-pole); background: var(--color-powierzchnia); min-inline-size: 0; }
+.mo-booking-ages__title { display: block; flex: 1 0 100%; padding: var(--space-3) var(--space-5) var(--space-1); border-block-end: 1px solid var(--color-linia); }
+.mo-booking-ages .mo-field { flex: 1 1 10rem; border-block-end: 0; }
+.mo-booking-ages .mo-field:last-child { border-inline-end: 0; }
+.mo-booking-ages select { cursor: pointer; }
+.mo-booking-ages select:focus-visible { outline: none; }
 /* Od 5 dzieci okienka się zwężają, żeby 8 mieściło się w jednym rzędzie pełnego paska */
 .mo-booking-ages:has(> .mo-field:nth-of-type(5)) .mo-field { flex: 1 1 7.5rem; min-inline-size: 0; padding: 0 var(--space-1) 0 var(--space-2); }
 .mo-booking-ages:has(> .mo-field:nth-of-type(5)) .mo-booking-ages__title { padding-inline: var(--space-2); }

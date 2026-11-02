@@ -28,37 +28,12 @@
 }
 
 .mo-calendar { scroll-margin-block: calc(var(--naglowek-wys) + var(--space-3)) var(--space-4); position: absolute; z-index: 20; inset-inline: 0; inset-block-start: calc(var(--pole-wys) + var(--space-2)); padding: var(--space-5); background: var(--color-powierzchnia); color: var(--color-atrament); border: 1px solid var(--color-linia); border-radius: var(--radius-pole); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); }
-.mo-calendar__head, .mo-calendar__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
-.mo-calendar__foot { margin-block-start: var(--space-5); }
-.mo-calendar__nav { inline-size: 2.75rem; block-size: 2.75rem; border: 1px solid var(--color-linia); border-radius: var(--radius-pole); background: none; color: inherit; cursor: pointer; }
-.mo-calendar__nav:disabled { opacity: 0.35; cursor: default; }
-[dir="rtl"] .mo-calendar__nav { transform: scaleX(-1); }
-.mo-calendar__months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7); margin-block-start: var(--space-4); }
-.mo-calendar__title { text-transform: capitalize; margin-block-end: var(--space-3); }
-.mo-calendar__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
-.mo-calendar__weekday { text-align: center; font: var(--text-label--font-weight) var(--text-label)/var(--text-label--line-height) var(--font-ui); color: var(--color-wyciszony); padding-block: var(--space-2); }
-.mo-calendar__day { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-block-size: 3rem; padding: 0; border: 0; border-radius: var(--radius-pole); background: none; color: inherit; cursor: pointer; font: var(--text-body-s--font-weight) var(--text-body-s)/1.2 var(--font-ui); font-variant-numeric: tabular-nums; }
-.mo-calendar__day:hover:not([aria-disabled="true"]) { background: var(--color-tlo-2); }
-.mo-calendar__day[aria-disabled="true"] { color: var(--color-linia-mocna); text-decoration: line-through; cursor: default; }
-/* nie na wyjazd, ale można od niego zacząć nowy pobyt */
-.mo-calendar__day[data-soft] { color: var(--color-wyciszony); }
-/* okienko o dostępności i min. pobycie nad dniem (jak w IceColdRes) */
-.mo-calendar__tip { position: absolute; z-index: 2; inline-size: max-content; max-inline-size: min(17.5rem, 100% - 1rem); transform: translate(-50%, calc(-100% - 10px)); display: grid; gap: 2px; padding: var(--space-3) var(--space-4); border-radius: var(--radius-pole); background: var(--color-atrament); color: var(--color-powierzchnia); font: var(--text-body-s--font-weight) var(--text-body-s)/1.35 var(--font-ui); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); pointer-events: none; }
-.mo-calendar__tip::after { content: ""; position: absolute; inset-block-start: 100%; inset-inline-start: calc(50% + var(--strzalka, 0px) - 6px); border: 6px solid transparent; border-block-start-color: var(--color-atrament); }
-[dir="rtl"] .mo-calendar__tip::after { inset-inline-start: auto; left: calc(50% + var(--strzalka, 0px) - 6px); }
-.mo-calendar__tip-date { opacity: 0.7; font-size: 0.8125rem; }
-.mo-calendar__tip strong { font-weight: 600; }
-.mo-calendar__tip[data-tone="no"] strong::before { content: "✕ "; color: var(--color-bursztyn); }
-.mo-calendar__hint { margin-block-start: var(--space-4); color: var(--color-wyciszony); }
-.mo-calendar__day[data-range] { background: var(--color-tlo-2); border-radius: 0; }
-.mo-calendar__day[data-edge], .mo-calendar__day[data-edge]:hover { background: var(--color-cta); color: var(--color-na-cta); }
-.mo-calendar__day:focus-visible { outline: 2px solid var(--color-fokus); outline-offset: -2px; }
+.mo-calendar__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-block-start: var(--space-3); }
+/* kalendarz z IceColdRes w ramce (components/EngineCalendar.tsx): wysokość podaje ramka, tło przezroczyste */
+.mo-calendar--ramka { padding: var(--space-3); }
+.mo-calendar__ramka { display: block; inline-size: 100%; border: 0; background: transparent; color-scheme: normal; }
 @media (max-width: 899px) { .mo-calendar { position: relative; inset: auto; margin-block-start: var(--space-2); } }
-@media (max-width: 767px) {
-  .mo-calendar { padding: var(--space-4); }
-  .mo-calendar__months { grid-template-columns: minmax(0, 1fr); }
-  .mo-calendar__month + .mo-calendar__month { display: none; }
-}
+@media (max-width: 767px) { .mo-calendar--ramka { padding: var(--space-2); } }
 
 .mo-results:empty { display: none; }
 .mo-results { margin-block-start: var(--space-6); }
@@ -122,7 +97,6 @@
 .mo-tile__facts dd { margin: 0; font-variant-numeric: tabular-nums; }
 .mo-tile__offers { list-style: none; padding: var(--space-4) 0 0; margin: 0; border-block-start: 1px solid var(--color-linia); display: grid; gap: var(--space-3); }
 .mo-tile__offers li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: var(--space-4); }
-.mo-calendar__months[aria-busy] { opacity: 0.5; pointer-events: none; transition: opacity var(--ruch-szybki) var(--krzywa-mgla); }
 .mo-booking-error { margin-block-start: var(--space-3); color: var(--color-bursztyn-tekst); }
 .mo-field:has([aria-invalid]) { outline: 2px solid var(--color-bursztyn); outline-offset: -2px; }
 

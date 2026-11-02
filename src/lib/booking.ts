@@ -51,6 +51,19 @@ export function bookingUrl(settings: EngineSettings | null, locale: Locale, q: B
   return url.toString()
 }
 
+/**
+ * Kalendarz dostępności z IceColdRes do osadzenia w ramce (docs/integracja-strony.md w IceColdRes, „Kalendarz do osadzenia”):
+ * ten sam komponent co na stronie rezerwacji i w rezerwacji telefonicznej w panelu (Michał, 2.11.2026: jeden kalendarz
+ * z jednym kodem). Zasady przyjazdów, wyjazdów i minimalnego pobytu są tylko w IceColdRes.
+ */
+export function engineCalendarUrl(settings: EngineSettings | null, locale: Locale, q: { unit?: string; arrival?: string; departure?: string } = {}) {
+  const url = new URL(`/${locale}/${settings?.slug || 'booking'}/kalendarz`, settings?.icecoldresUrl || 'https://icecoldres.audiowizard.pl')
+  for (const [k, v] of Object.entries(q)) if (v) url.searchParams.set(k, v)
+  // niższe dni, a na telefonie jeden miesiąc: kalendarz stoi pod paskiem rezerwacji
+  url.searchParams.set('compact', '1')
+  return url.toString()
+}
+
 /** Kwota w groszach jako tekst, np. 129900 → „1 299 zł”. */
 export function formatPrice(grosze: number, locale: Locale) {
   return new Intl.NumberFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 }).format(grosze / 100)

@@ -14,6 +14,8 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-measure { max-width: var(--miara-tekstu); }
 .mo-muted { color: var(--color-wyciszony); }
 .mo-prose { font: var(--text-story--font-weight) var(--text-story)/var(--text-story--line-height) var(--font-display); font-variation-settings: "opsz" 18; color: var(--color-atrament-2); max-inline-size: var(--miara-tekstu); text-wrap: pretty; }
+/* halo w kolorze tła wokół liter: linie deseniu urywają się przy tekście, a deseń zostaje widoczny wokół akapitów (czytelność, 2.11.2026) */
+.mo-prose { text-shadow: 0 0 3px var(--color-tlo), 0 0 6px var(--color-tlo), 0 0 10px var(--color-tlo), 0 0 14px var(--color-tlo); }
 .mo-prose > * { margin: 0; }
 .mo-prose > * + * { margin-block-start: var(--space-4); }
 .mo-story { font: var(--text-story--font-weight) var(--text-story)/var(--text-story--line-height) var(--font-display); font-variation-settings: "opsz" 18; color: var(--color-atrament-2); max-width: var(--miara-tekstu); text-wrap: pretty; }
@@ -143,7 +145,7 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-footer__ikona { display: inline-flex; align-items: center; justify-content: center; inline-size: 24px; block-size: 24px; padding: 10px; margin: -10px; box-sizing: content-box; line-height: 0; }
 /* Deseń Podhale i Tatry (od Michała) na dużych jednolitych tłach: leży pod całą stroną w kolorze linii.
    Zdjęcia, filmy, karty, pola i stopka mają własne kryjące tło, więc deseń nigdy nie wchodzi na zdjęcia ani wideo. */
-:root { --wzor-podhale: url("/ilustracje/G6_wzor_podhale_tatry.svg"); --wzor-podhale-kafel: 240px; --wzor-podhale-krycie: 0.5; --wzor-naglowek-krycie: 0.6; }
+:root { --wzor-podhale: url("/ilustracje/G6_wzor_podhale_tatry.svg"); --wzor-podhale-kafel: 240px; --wzor-podhale-krycie: 0.4; --wzor-naglowek-krycie: 0.6; }
 @media (max-width: 767px) { :root { --wzor-podhale-kafel: 180px; } }
 body::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-linia); opacity: var(--wzor-podhale-krycie); -webkit-mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; mask: var(--wzor-podhale) 0 0 / var(--wzor-podhale-kafel) var(--wzor-podhale-kafel) repeat; }
 /* Rozeta G6 na górnej krawędzi stopki, w kolorze linii */

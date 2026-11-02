@@ -14,8 +14,9 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-measure { max-width: var(--miara-tekstu); }
 .mo-muted { color: var(--color-wyciszony); }
 .mo-prose { font: var(--text-story--font-weight) var(--text-story)/var(--text-story--line-height) var(--font-display); font-variation-settings: "opsz" 18; color: var(--color-atrament-2); max-inline-size: var(--miara-tekstu); text-wrap: pretty; }
-/* halo w kolorze tła wokół liter: linie deseniu urywają się przy tekście, a deseń zostaje widoczny wokół akapitów (czytelność, 2.11.2026) */
-.mo-prose { text-shadow: 0 0 3px var(--color-tlo), 0 0 6px var(--color-tlo), 0 0 10px var(--color-tlo), 0 0 14px var(--color-tlo); }
+/* akapity leżą na miękkim, kryjącym panelu w kolorze tła: deseń nie przecina tekstu, a wokół bloków zostaje widoczny (czytelność, 2.11.2026); tam, gdzie tło jest własne (mgła, opowieść, okienka, karty), bez panelu */
+.mo-prose { background: var(--color-tlo); box-shadow: 0 0 0 .75rem var(--color-tlo), 0 0 1.25rem 1.25rem var(--color-tlo); }
+.mo-section--mgla .mo-prose, .mo-opowiesc .mo-prose, .mo-popover .mo-prose, .mo-popup .mo-prose, .mo-card .mo-prose { background: none; box-shadow: none; }
 .mo-prose > * { margin: 0; }
 .mo-prose > * + * { margin-block-start: var(--space-4); }
 .mo-story { font: var(--text-story--font-weight) var(--text-story)/var(--text-story--line-height) var(--font-display); font-variation-settings: "opsz" 18; color: var(--color-atrament-2); max-width: var(--miara-tekstu); text-wrap: pretty; }

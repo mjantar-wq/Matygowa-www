@@ -191,19 +191,6 @@ export async function searchStay(q: StayQuery): Promise<SearchResult[] | null> {
   return data?.results ?? null
 }
 
-export interface CalendarDay {
-  free: number
-  open: boolean
-  cta: boolean
-  ctd: boolean
-  minStay: number
-  maxStay: number | null
-}
-
-export async function getCalendar(from: string, days: number) {
-  return get<{ from: string; today: string; types: { unitTypeId: string; days: CalendarDay[] }[] }>(`/calendar?from=${from}&days=${days}`, LIVE)
-}
-
 export async function getPricesFromDays(from: string, days: number) {
   return get<{ from: string; types: (PriceFrom & { days: (number | null)[] })[] }>(`/prices-from?from=${from}&days=${days}`, 600, ['pricing'])
 }

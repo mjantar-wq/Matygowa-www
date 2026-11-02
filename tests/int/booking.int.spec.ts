@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { arrivalInfo, departureAfter, departureInfo, departureOk, monthGrid, nextMonth, promoOn, type CalendarData, type DayInfo, type PromoRules } from '@/lib/availability'
-import { bookingUrl } from '@/lib/booking'
+import { departureAfter } from '@/lib/availability'
+import { bookingUrl, engineCalendarUrl } from '@/lib/booking'
 import { promoInSeason, promoSeason } from '@/lib/icecoldres'
 
 vi.mock('server-only', () => ({}))
@@ -11,56 +11,12 @@ vi.mock('@/lib/cms', () => ({
   ],
 }))
 
-const day = (o: Partial<DayInfo> = {}): DayInfo => ({ free: 1, open: true, cta: false, ctd: false, minStay: 2, maxStay: null, promo: null, ...o })
-// 1–7 grudnia; hawran zajęty 3.12, gerlach wolny, ale 4.12 bez wyjazdów
-const data: CalendarData = {
-  from: '2026-12-01',
-  today: '2026-12-01',
-  types: [
-    { code: 'hawran', days: [day(), day(), day({ free: 0 }), day(), day(), day(), day()] },
-    { code: 'gerlach', days: [day({ minStay: 3 }), day({ cta: true }), day(), day({ ctd: true }), day(), day(), day({ promo: 'Zima −10%' })] },
-  ],
-}
-
-describe('kalendarz dostępności', () => {
-  it('przyjazd: najkrótszy min. pobyt z wolnych domów, zakaz przyjazdu wyklucza dom', () => {
-    expect(arrivalInfo(data, '2026-12-01')).toMatchObject({ ok: true, minStay: 2 })
-    expect(arrivalInfo(data, '2026-12-02', 'gerlach')).toMatchObject({ ok: false, reason: 'noArrival' })
-    expect(arrivalInfo(data, '2026-12-03', 'hawran')).toMatchObject({ ok: false, reason: 'occupied' })
-    expect(arrivalInfo(data, '2026-12-02', 'hawran')).toMatchObject({ ok: false, reason: 'minStay', minStay: 2 })
-    expect(arrivalInfo(data, '2026-11-30')).toMatchObject({ ok: false, reason: 'past' })
-    expect(arrivalInfo(data, '2026-12-02', 'gerlach').ok).toBe(false)
-    expect(arrivalInfo(data, '2026-12-03', 'hawran').ok).toBe(false)
-    expect(arrivalInfo(data, '2026-12-02', 'hawran').ok).toBe(false) // noc 3.12 zajęta, min. 2 noce
-    expect(arrivalInfo(data, '2026-12-07').promo).toBe('Zima −10%')
-    expect(arrivalInfo(data, '2026-11-30').ok).toBe(false)
-  })
-
-  it('wyjazd: ten sam dom wolny przez wszystkie noce, min. pobyt, zakaz wyjazdu', () => {
-    expect(departureOk(data, '2026-12-01', '2026-12-02')).toBe(false) // min. 2 noce
-    expect(departureOk(data, '2026-12-01', '2026-12-03')).toBe(true)
-    expect(departureOk(data, '2026-12-01', '2026-12-05', 'hawran')).toBe(false) // noc 3.12 zajęta
-    expect(departureOk(data, '2026-12-01', '2026-12-04', 'gerlach')).toBe(false) // 4.12 bez wyjazdów
-    expect(departureOk(data, '2026-12-01', '2026-12-05', 'gerlach')).toBe(true)
-    expect(departureInfo(data, '2026-12-01', '2026-12-02')).toMatchObject({ ok: false, reason: 'minStay', minStay: 2 })
-    expect(departureInfo(data, '2026-12-01', '2026-12-04', 'gerlach')).toMatchObject({ ok: false, reason: 'noDeparture' })
-  })
-
-  it('siatka miesiąca od poniedziałku', () => {
-    const grid = monthGrid('2026-12') // 1.12.2026 to wtorek
-    expect(grid[0]).toBeNull()
-    expect(grid[1]).toBe('2026-12-01')
-    expect(grid.filter(Boolean)).toHaveLength(31)
-    expect(nextMonth('2026-12')).toBe('2027-01')
-    expect(nextMonth('2027-01', -1)).toBe('2026-12')
-  })
-
-  it('promocja strony na dzień przyjazdu', () => {
-    const p: PromoRules = { bookableNow: true, unitTypeIds: null, stayFrom: '2026-12-01', stayTo: '2026-12-20', arrivalDays: [5], excludedWeekdays: null, excludedPeriods: null }
-    expect(promoOn(p, '2026-12-04', 'x')).toBe(true) // piątek
-    expect(promoOn(p, '2026-12-05', 'x')).toBe(false)
-    expect(promoOn({ ...p, unitTypeIds: ['y'] }, '2026-12-04', 'x')).toBe(false)
-    expect(promoOn({ ...p, bookableNow: false }, '2026-12-04', 'x')).toBe(false)
+describe('daty pobytu', () => {
+  it('kalendarz z IceColdRes w ramce: ten sam co na stronie rezerwacji, z domem i datami na start (Michał, 2.11.2026)', () => {
+    expect(engineCalendarUrl({ bookingEngine: 'icecoldres', icecoldresUrl: 'https://booking.matygowaosada.pl', slug: 'booking' }, 'pl', { unit: 'hawran', arrival: '2026-12-20', departure: '' })).toBe(
+      'https://booking.matygowaosada.pl/pl/booking/kalendarz?unit=hawran&arrival=2026-12-20&compact=1',
+    )
+    expect(engineCalendarUrl(null, 'en')).toBe('https://icecoldres.audiowizard.pl/en/booking/kalendarz?compact=1')
   })
 
   it('okres promocji dla gościa: „do” to dzień wyjazdu po ostatniej nocy (Michał, 27.10.2026)', () => {

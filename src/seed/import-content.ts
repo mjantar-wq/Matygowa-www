@@ -19,10 +19,10 @@ type Loc = (typeof LOCALES)[number]
 const read = (file: string) => JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'))
 
 // Import partiami: IMPORT_ONLY=attractions (albo np. units,offers) wgrywa nowe pliki z manifestu i tylko te kolekcje.
-// „pages” to strony, opinie, dokumenty, aktualności i ustawienia; „news” same aktualności, „testimonials” same opinie. Bez zmiennej import obejmuje wszystko.
+// „pages” to strony, opinie, dokumenty, aktualności i ustawienia; „news” same aktualności, „testimonials” same opinie, „documents” same dokumenty (regulamin, polityki), „regulamin” sam regulamin. Bez zmiennej import obejmuje wszystko.
 const only = new Set((process.env.IMPORT_ONLY ?? '').split(',').map((k) => k.trim()).filter(Boolean))
-const want = (key: 'units' | 'attractions' | 'offers' | 'pages' | 'news' | 'testimonials') =>
-  !only.size || only.has(key) || ((key === 'news' || key === 'testimonials') && only.has('pages'))
+const want = (key: 'units' | 'attractions' | 'offers' | 'pages' | 'news' | 'testimonials' | 'documents') =>
+  !only.size || only.has(key) || ((key === 'news' || key === 'testimonials' || key === 'documents') && only.has('pages'))
 
 async function main() {
   const payload = await getPayload({ config })
@@ -226,6 +226,19 @@ async function main() {
     payload.logger.info(`testimonials: ${t.author}`)
   }
 
+  // Regulamin, polityka prywatności i cookies (wspólne z silnikiem IceColdRes); SEO z seo-pages.json poniżej ma pierwszeństwo
+  // IMPORT_ONLY=regulamin wgrywa tylko regulamin (bez polityki prywatności i cookies)
+  const documents = (read('documents.json') as Any[]).filter((d) => want('documents') || (only.has('regulamin') && d.slug === 'regulamin'))
+  for (const d of documents) {
+    await upsert('pages', d.slug, (l) => ({
+      title: d.title?.[l],
+      kind: 'document',
+      intro: d.intro?.[l],
+      layout: [{ blockType: 'richText', body: md(d.body?.[l]) }],
+      seo: { title: d.seo?.title?.[l], description: d.seo?.description?.[l] },
+    }))
+  }
+
   if (!want('pages')) {
     payload.logger.info(`Import częściowy zakończony (${[...only].join(', ')})`)
     process.exit(0)
@@ -322,17 +335,6 @@ async function main() {
 
   const kontakt = read('pages/kontakt.json')
   await upsertPage(payload, upsert, 'contact', () => kontakt.title, () => [], (l) => kontakt.lead?.[l])
-
-  // Regulamin, polityka prywatności i cookies (wspólne z silnikiem IceColdRes); SEO z seo-pages.json poniżej ma pierwszeństwo
-  for (const d of read('documents.json') as Any[]) {
-    await upsert('pages', d.slug, (l) => ({
-      title: d.title?.[l],
-      kind: 'document',
-      intro: d.intro?.[l],
-      layout: [{ blockType: 'richText', body: md(d.body?.[l]) }],
-      seo: { title: d.seo?.title?.[l], description: d.seo?.description?.[l] },
-    }))
-  }
 
   // SEO podstron (content/seo-pages.json: klucze wątku treści → adresy stron w panelu)
   const seoPages: Any = read('seo-pages.json')

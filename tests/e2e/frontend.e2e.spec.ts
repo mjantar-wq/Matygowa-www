@@ -86,13 +86,15 @@ test.describe('Szkielet strony', () => {
 })
 
 test.describe('Efekty i interakcje', () => {
-  test('przełącznik Dzień / Noc zmienia nastrój strony i go pamięta', async ({ page }) => {
+  test('przełącznik Dzień / Noc zmienia nastrój strony, ale po przeładowaniu wraca do zegara', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 })
     await page.goto('/')
     await page.getByRole('button', { name: 'Noc' }).first().click()
     await expect(page.locator('html')).toHaveAttribute('data-pora', 'noc')
+    // wybór nie jest zapisywany: po przeładowaniu nastrój znów wynika z daty i godziny (zegar ustawiony na południe)
+    await page.clock.install({ time: new Date('2026-11-02T11:00:00Z') })
     await page.reload()
-    await expect(page.locator('html')).toHaveAttribute('data-pora', 'noc')
+    await expect(page.locator('html')).toHaveAttribute('data-pora', 'dzien')
     await page.getByRole('button', { name: 'Lato' }).first().click()
     await expect(page.locator('html')).toHaveAttribute('data-sezon', 'lato')
   })

@@ -370,8 +370,8 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       ) : null}
 
       {children > 0 ? (
-        <fieldset className="mo-booking-ages">
-          <legend className="mo-label mo-booking-ages__title">{t.childAges}</legend>
+        <div className="mo-booking-ages" role="group" aria-labelledby="mo-booking-ages-title">
+          <span id="mo-booking-ages-title" className="mo-label mo-booking-ages__title">{t.childAges}</span>
           {ages.map((a, i) => (
             <label key={i} className="mo-field">
               <span className="mo-label">
@@ -396,7 +396,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
               </select>
             </label>
           ))}
-        </fieldset>
+        </div>
       ) : null}
 
       {open ? (

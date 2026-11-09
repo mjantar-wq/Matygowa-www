@@ -391,3 +391,9 @@ body:has(.mo-opowiesc) .mo-footer { margin-block-start: 0; padding-block: var(--
 
 /* Parzenice po bokach nie mogą nachodzić na napis (Michał, 31.10.2026): odstęp od brzegu 8px + motyw 22px + 10px oddechu (wg Michała węziej) */
 .mo-btn--glowny:not(.mo-ksiazka) { padding-inline: 2.5rem; }
+
+/* Nagłówek i komunikaty wyników (np. „Wolne w wybranym terminie”) stoją wprost na tle hero, poza kafelkami:
+   kolor i cień z tła sceny (jasny na zdjęciu, ciemny na ilustracji), bo .mo-booking-wrap wyłącza dziedziczenie. */
+.mo-hero .mo-results > :is(h3, p, a),
+.mo-opowiesc .mo-results > :is(h3, p, a) { color: var(--tekst, var(--color-na-zdjeciu)); text-shadow: var(--cien, 0 1px 2px rgba(0, 0, 0, 0.6), 0 2px 20px rgba(0, 0, 0, 0.55)); }
+.mo-dock__dialog .mo-results > :is(h3, p, a) { color: var(--color-atrament); text-shadow: none; }

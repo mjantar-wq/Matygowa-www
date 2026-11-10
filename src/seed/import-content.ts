@@ -291,6 +291,13 @@ async function main() {
   }
   await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => withScene(b, homeBlock(b, l), l)).filter(Boolean))
 
+  // słowniczek gwary: słowo, znaczenie i gdzie się z nim spotkacie (na dole strony Osada)
+  const slowniczekBlock = (s: Any, l: Loc): Any => ({
+    blockType: 'story', anchor: 'goralszczyzna-slowniczek', heading: s.heading?.[l],
+    body: md([s.lead?.[l], s.words?.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
+    image: s.image ? img(s.image) : undefined, imagePosition: 'start',
+  })
+
   // „Góralszczyzna dziś” (strona Sauna i bania): wstęp, potem każdy temat osobno, na przemian zdjęcie i tekst; zdjęcie po id tematu (O_<id>_…)
   // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
   const goralszczyznaBlocks = (s: Any, l: Loc): Any[] => [
@@ -300,12 +307,6 @@ async function main() {
       body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
       image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
     })),
-    // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
-    ...(s.glossary?.words?.length ? [{
-      blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
-      body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
-      image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
-    }] : []),
   ]
 
   // Sauna i bania (Rytuały): narracja Ciepło, Mróz, Para, Cisza, potem Góralszczyzna dziś; ceny są w tekstach Sauny i Bani na Osadzie
@@ -329,6 +330,7 @@ async function main() {
           { blockType: 'richText', body: md(s.rules?.[l]) },
         ]
       }
+      if (s.id === 'slowniczek') return slowniczekBlock(s, l)
       // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
       if (s.id === 'gospodarze') {
         return { blockType: 'hosts', anchor: s.id, heading: s.heading?.[l], intro: s.personal_note?.[l] ?? undefined, people: (s.hosts ?? []).filter((h: Any) => h.name).map((h: Any) => ({ name: h.name, role: h.role?.[l], text: h.bio?.[l] })) }

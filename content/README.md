@@ -19,7 +19,7 @@ Stan: wersja 1, 24.10.2026. Teksty PL i EN, gotowe do importu do Payload CMS.
 | units.json | Domy i apartamenty (6 + 4, apartamenty `coming_soon`), powiązanie `peak` i `icecoldres_code` |
 | pages/home.json | Strona główna jako bloki, w kolejności szkieletu |
 | pages/rytualy.json, osada.json, przewodnik.json | Podstrony |
-| attractions.json, offers.json, testimonials.json | Atrakcje, Oferty, Opinie |
+| attractions.json, testimonials.json | Atrakcje, Opinie (oferty pochodzą z promocji IceColdRes, nie z pliku) |
 
 testimonials.json: 4 prawdziwe opinie z Google (odczyt z widżetu obecnej strony 24.10.2026), daty przybliżone, EN to tłumaczenie. Ocen pojedynczych opinii widżet nie pokazuje (ogólnie 5,0). Później widżet Google.
 

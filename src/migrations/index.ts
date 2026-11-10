@@ -29,6 +29,7 @@ import * as migration_20261110_150000_osada_en_zgodna_z_pl from './20261110_1500
 import * as migration_20261110_160000_dojazd_zima_droga_zamknieta from './20261110_160000_dojazd_zima_droga_zamknieta';
 import * as migration_20261110_170000_en_house_zamiast_cottage from './20261110_170000_en_house_zamiast_cottage';
 import * as migration_20261110_180000_przewodnik_en_zgodny_z_pl from './20261110_180000_przewodnik_en_zgodny_z_pl';
+import * as migration_20261110_190000_en_nazwy_domkow_chalet from './20261110_190000_en_nazwy_domkow_chalet';
 import * as migration_20261110_140700_sauna_bania_platne from './20261110_140700_sauna_bania_platne';
 
 export const migrations = [
@@ -191,5 +192,10 @@ export const migrations = [
     up: migration_20261110_180000_przewodnik_en_zgodny_z_pl.up,
     down: migration_20261110_180000_przewodnik_en_zgodny_z_pl.down,
     name: '20261110_180000_przewodnik_en_zgodny_z_pl'
+  },
+  {
+    up: migration_20261110_190000_en_nazwy_domkow_chalet.up,
+    down: migration_20261110_190000_en_nazwy_domkow_chalet.down,
+    name: '20261110_190000_en_nazwy_domkow_chalet'
   },
 ];

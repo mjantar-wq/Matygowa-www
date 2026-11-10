@@ -78,7 +78,7 @@
       },
       "lead": {
         "pl": "Podhale to nie skansen. To ludzie, którzy wciąż budują z drewna, grają na skrzypcach i robią ser tak, jak ich dziadkowie, i robią to dziś, na co dzień.",
-        "en": "Podhale is not an open-air museum. It is people who still build in wood, play the fiddle and make cheese the way their grandparents did, and do it today, every day."
+        "en": "Podhale is not an open-air museum. It is people who still build in wood, play the fiddle and make cheese the way their grandparents did."
       },
       "glossary": {
         "heading": {
@@ -111,17 +111,6 @@
             "context": {
               "pl": "To u niego kupicie prawdziwy oscypek, od maja do września.",
               "en": "He is the one to buy real oscypek from, May to September."
-            }
-          },
-          {
-            "word": "Wołosi",
-            "meaning": {
-              "pl": "wędrowni pasterze z Karpat",
-              "en": "wandering Carpathian shepherds"
-            },
-            "context": {
-              "pl": "Przynieśli tu owce i pasterski język. Od nich nazwę ma grań Wołoszyna i nasz Domek Wołoszyn.",
-              "en": "They brought sheep and shepherding words here. The Wołoszyn ridge, and our Wołoszyn cottage, are named after them."
             }
           },
           {

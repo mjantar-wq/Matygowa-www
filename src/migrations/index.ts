@@ -14,6 +14,8 @@ import * as migration_20261027_064308_lozka from './20261027_064308_lozka';
 import * as migration_20261027_075500_warunki_platnosci from './20261027_075500_warunki_platnosci';
 import * as migration_20261028_094500_apartamenty_na_dole from './20261028_094500_apartamenty_na_dole';
 
+import * as migration_20261110_090000_angielski_zgodny_z_polskim from './20261110_090000_angielski_zgodny_z_polskim';
+
 export const migrations = [
   {
     up: migration_20261024_222614_initial.up,
@@ -89,5 +91,10 @@ export const migrations = [
     up: migration_20261028_094500_apartamenty_na_dole.up,
     down: migration_20261028_094500_apartamenty_na_dole.down,
     name: '20261028_094500_apartamenty_na_dole'
+  },
+  {
+    up: migration_20261110_090000_angielski_zgodny_z_polskim.up,
+    down: migration_20261110_090000_angielski_zgodny_z_polskim.down,
+    name: '20261110_090000_angielski_zgodny_z_polskim'
   },
 ];

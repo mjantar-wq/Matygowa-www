@@ -15,6 +15,10 @@ export function srcSet(url: string | null | undefined, width: number | null | un
   // Największy wariant to ten sam rozmiar co oryginał, ale w AVIF/WebP z Workera: oryginalny WebP 1600 px ważył ok. 200 KB,
   // kopia AVIF w tych samych wymiarach ok. połowę mniej (ekrany retina i duże monitory). Oryginały spoza listy szerokości
   // (np. 3000 px) zostają bez zmian, żeby nie obniżyć jakości.
+  const list = smaller.map((w) => `${url}?w=${w} ${w}w`)
+  // Oryginał między 1600 a 2048 px (np. zdjęcie z telefonu 1884 px, ok. 2 MB JPEG) nie jest kopią z listy, więc bez tego
+  // retina pobierałaby ciężki JPEG; największy wariant z listy (1600 px, WebP/AVIF) wystarcza.
+  if (width > WIDTHS[WIDTHS.length - 2] && width < WIDTHS[WIDTHS.length - 1]) return list.join(', ')
   const top = (WIDTHS as readonly number[]).includes(width) ? `${url}?w=${width}` : url
-  return [...smaller.map((w) => `${url}?w=${w} ${w}w`), `${top} ${width}w`].join(', ')
+  return [...list, `${top} ${width}w`].join(', ')
 }

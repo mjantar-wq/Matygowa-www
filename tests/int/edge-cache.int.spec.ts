@@ -38,6 +38,10 @@ describe('mniejsze kopie zdjęć (srcset)', () => {
     )
     expect(srcSet('/api/media/file/sredni.jpg', 1000)).toBe('/api/media/file/sredni.jpg?w=480 480w, /api/media/file/sredni.jpg?w=828 828w, /api/media/file/sredni.jpg 1000w')
     // oryginał szerszy niż największa kopia zostaje oryginałem (bez utraty jakości)
+    // oryginał 1600-2048 px poza listą (zdjęcie z telefonu): bez ciężkiego JPEG, największy wariant to 1600 w WebP/AVIF
+    expect(srcSet('/api/media/file/telefon.jpg', 1884)).toBe(
+      '/api/media/file/telefon.jpg?w=480 480w, /api/media/file/telefon.jpg?w=828 828w, /api/media/file/telefon.jpg?w=1200 1200w, /api/media/file/telefon.jpg?w=1600 1600w',
+    )
     expect(srcSet('/api/media/file/duze.jpg', 3000)?.endsWith(', /api/media/file/duze.jpg 3000w')).toBe(true)
   })
   it('bez kopii dla SVG, filmów, małych plików i adresów spoza biblioteki', () => {

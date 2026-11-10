@@ -1,7 +1,7 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { revalidateTag } from 'next/cache'
 import { bumpContentVersion } from '@/edge/version'
-import { TOPICS, topicTag, type Topic } from '@/lib/icecoldres'
+import { getAllPromotions, TOPICS, topicTag, type Topic } from '@/lib/icecoldres'
 import { verify } from '@/lib/webhook'
 import { syncOffers } from '@/lib/offers-sync'
 import { getPayload } from 'payload'
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
   for (const tag of tags) revalidateTag(tag, { expire: 0 })
   // gotowe strony w buforze (src/edge/pages.ts) też mają się złożyć od nowa
   // lista ofert w panelu zgrywa się z promocjami (błąd synchronizacji nie blokuje odświeżenia strony)
-  await syncOffers(await getPayload({ config })).catch(() => {})
+  await syncOffers(await getPayload({ config }), (await getAllPromotions()).promotions).catch(() => {})
   await bumpContentVersion((await getCloudflareContext({ async: true })).env.R2).catch(() => {})
   return Response.json({ ok: true, revalidated: tags })
 }

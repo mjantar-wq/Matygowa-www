@@ -170,7 +170,15 @@ async function main() {
 
   // oferty to promocje z IceColdRes (Michał, 10.11.2026): lista w panelu pochodzi z synchronizacji, nie z pliku
   if (want('offers')) {
-    const res = await syncOffers(payload)
+    const api = process.env.ICECOLDRES_API_URL ?? 'https://icecoldres.audiowizard.pl'
+    let promotions: { id: string; name?: string; badge?: string }[] = []
+    try {
+      const r = await fetch(`${api}/api/public/${process.env.ICECOLDRES_SLUG ?? 'booking'}/promotions`)
+      if (r.ok) promotions = ((await r.json()) as { promotions: typeof promotions }).promotions
+    } catch {
+      promotions = []
+    }
+    const res = await syncOffers(payload, promotions)
     console.log(res ? `oferty: dodano ${res.created}, usunięto ${res.removed}` : 'oferty: IceColdRes nie odpowiada, bez zmian')
   }
 

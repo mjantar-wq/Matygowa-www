@@ -1,12 +1,16 @@
 import type { Payload } from 'payload'
-import { getAllPromotions } from './icecoldres'
+/** Minimalne dane promocji; moduł bez `server-only`, bo używa go też skrypt importu. */
+export interface SyncPromotion {
+  id: string
+  name?: string | null
+  badge?: string | null
+}
 
 /**
  * Zgrywa listę ofert w panelu z promocjami IceColdRes: dodaje brakujące (widoczne na stronie), odświeża nazwy,
  * usuwa te, których już nie ma. Przełącznik „Pokazuj na stronie” zostaje bez zmian.
  */
-export async function syncOffers(payload: Payload): Promise<{ created: number; removed: number } | null> {
-  const { promotions } = await getAllPromotions()
+export async function syncOffers(payload: Payload, promotions: SyncPromotion[]): Promise<{ created: number; removed: number } | null> {
   // IceColdRes nie odpowiada albo nie ma promocji: nic nie ruszamy
   if (!promotions.length) return null
   const existing = await payload.find({ collection: 'offers', limit: 0, pagination: false, depth: 0, overrideAccess: true })

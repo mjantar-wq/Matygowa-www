@@ -34,6 +34,7 @@ export const Pages: CollectionConfig = {
       ],
       admin: { position: 'sidebar' },
     },
+    { name: 'hideTitle', label: 'Ukryj tytuł strony nad sekcjami', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar', description: 'Tytuł zostaje w menu i dla wyszukiwarek, ale nie widać go nad pierwszą sekcją.' } },
     { name: 'intro', label: 'Wstęp', type: 'textarea', localized: true },
     { name: 'layout', label: 'Sekcje', type: 'blocks', blocks: ALL_BLOCKS },
     seoField,

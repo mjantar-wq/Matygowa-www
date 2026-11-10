@@ -26,8 +26,6 @@ export function assignSlots(variants: Variant[]): string[][] {
   return out
 }
 
-export const AMBIENCE_KEYS = { pora: 'mo-pora', sezon: 'mo-sezon' } as const
-
 /**
  * Domyślny nastrój dla chwili `now`: lato w kalendarzową wiosnę i lato (21.03–22.09), zima jesienią i zimą; noc między zmierzchem a świtem nad osadą
  * (49,34° N, 20,05° E; pół godziny po zachodzie i przed wschodem słońca). Funkcja nie korzysta z niczego
@@ -50,8 +48,10 @@ export function defaultAmbience(now: number): { pora: 'dzien' | 'noc'; sezon: 'z
 }
 
 /**
- * Skrypt wstawiany przed treścią: ustawia nastrój według pory roku i dnia, chyba że gość w tej wizycie
- * wybrał inaczej (wybór trzymamy w sessionStorage, więc kolejna wizyta zaczyna się od pory zgodnej z zegarem).
+ * Skrypt wstawiany przed treścią: ustawia nastrój wyłącznie według bieżącej daty i godziny nad osadą.
+ * Ręczny wybór gościa (przełączniki w nagłówku) działa tylko do przeładowania strony i nie jest nigdzie zapisywany,
+ * więc każda wizyta i każde odświeżenie zaczyna od nastroju zgodnego z zegarem. Usuwa też klucze zapisane przez
+ * wcześniejszą wersję, która trzymała wybór w sessionStorage i potrafiła na stałe utrzymać zimową noc w dzień.
  * Działa przed pierwszym malowaniem, więc strona nie mruga.
  */
-export const AMBIENCE_INIT_SCRIPT = `try{var d=document.documentElement,a=(${defaultAmbience.toString()})(Date.now()),p=sessionStorage.getItem('${AMBIENCE_KEYS.pora}'),s=sessionStorage.getItem('${AMBIENCE_KEYS.sezon}');d.dataset.pora=p==='noc'||p==='dzien'?p:a.pora;d.dataset.sezon=s==='zima'||s==='lato'?s:a.sezon}catch(e){}`
+export const AMBIENCE_INIT_SCRIPT = `try{var d=document.documentElement,a=(${defaultAmbience.toString()})(Date.now());d.dataset.pora=a.pora;d.dataset.sezon=a.sezon;try{sessionStorage.removeItem('mo-pora');sessionStorage.removeItem('mo-sezon')}catch(e){}}catch(e){}`

@@ -24,7 +24,7 @@ export function defaultHomeLayout(locale: Locale): NonNullable<Page['layout']> {
     }),
     s('houseInside', pl ? 'Domek od środka' : 'Inside the house'),
     s('rituals', pl ? 'Sauna i bania' : 'Sauna and hot tub', { showPrices: true }),
-    s('seasons', pl ? 'Zima i lato' : 'Winter and summer'),
+    s('seasons', pl ? 'Cztery pory roku' : 'Four seasons'),
     s('surroundings', pl ? 'Okolica' : 'Surroundings', { limit: 6 }),
     s('story', pl ? 'W zgodzie z naturą' : 'In tune with nature'),
     s('testimonials', pl ? 'Opinie gości' : 'Guest reviews'),

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { href } from '@/i18n/routes'
+import { promoSeason } from '@/lib/icecoldres'
 import type { PageContext } from '@/lib/page'
 import type { Attraction } from '@/payload-types'
 import { cleared, Credit, Media } from './Media'
@@ -11,6 +12,15 @@ export const attractionMeta = (a: Attraction, ctx: PageContext) =>
   [a.distanceKm != null ? ctx.t.attractions.distance(a.distanceKm) : null, a.driveMinutes ? ctx.t.attractions.drive(a.driveMinutes) : null, a.place]
     .filter(Boolean)
     .join(' · ')
+
+/**
+ * Pora roku atrakcji dla przełącznika Zima/Lato: tylko zima albo tylko lato chowa ją przy drugiej porze,
+ * obie pory (albo puste pole) zostawiają ją widoczną cały rok.
+ */
+export const attractionSeason = (a: Attraction): 'lato' | 'zima' | undefined => {
+  const seasons = [...new Set(a.seasons ?? [])]
+  return seasons.length === 1 ? promoSeason(seasons[0]) : undefined
+}
 
 /** Kolejność strony Okolica: od najbliższej, atrakcje bez jednego miejsca (szlaki, lot balonem) na końcu. */
 export const sortAttractions = (list: Attraction[]) => [...list].sort((a, b) => (a.distanceKm ?? Infinity) - (b.distanceKm ?? Infinity))

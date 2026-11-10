@@ -48,3 +48,30 @@ describe('mniejsze kopie zdjęć (srcset)', () => {
     expect(srcSet('/api/media/file/a.webp', null)).toBeUndefined()
   })
 })
+
+describe('contentVersion bez czekania na R2', () => {
+  it('po upływie krótkiego czasu oddaje starą wersję od ręki, a nową czyta w tle', async () => {
+    const { contentVersion, VERSION_KEY } = await import('@/edge/version')
+    let stored = 'a'
+    const bucket = {
+      get: async (key: string) => (key === VERSION_KEY ? ({ text: async () => stored } as R2ObjectBody) : null),
+      put: async () => ({}) as R2Object,
+    } as unknown as Pick<R2Bucket, 'get' | 'put'>
+    const t0 = 10_000_000_000_000
+    expect(await contentVersion(bucket, t0)).toBe('a')
+    stored = 'b'
+    const deferred: Promise<unknown>[] = []
+    const defer = (p: Promise<unknown>) => deferred.push(p)
+    // w ciągu 5 s: wartość z pamięci
+    expect(await contentVersion(bucket, t0 + 1000, defer)).toBe('a')
+    expect(deferred).toHaveLength(0)
+    // po 5 s: stara od ręki, odczyt w tle
+    expect(await contentVersion(bucket, t0 + 6000, defer)).toBe('a')
+    expect(deferred).toHaveLength(1)
+    await Promise.all(deferred)
+    expect(await contentVersion(bucket, t0 + 7000, defer)).toBe('b')
+    // po 60 s bez odczytu: czekamy na R2
+    stored = 'c'
+    expect(await contentVersion(bucket, t0 + 7000 + 5500 + 60_000, defer)).toBe('c')
+  })
+})

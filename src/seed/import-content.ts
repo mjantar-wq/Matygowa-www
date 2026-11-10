@@ -292,7 +292,6 @@ async function main() {
 
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
-    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any, i: number) => ({ word: s.word?.[l], text: s.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][i] ?? 'B') })), showPrices: true },
     // same prawdziwe zdjęcia sauny i bani, bez wygenerowanych ludzi (wg Michała)
     { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), image: img('W51_sauna_lawy'), imagePosition: 'end' },
     { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), image: img('B1_bania_lato'), imagePosition: 'start' },
@@ -319,6 +318,10 @@ async function main() {
             image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
           }] : []),
         ]
+      }
+      // opowieść o saunie i bani (etapy Ciepło, Mróz, Para, Cisza); ceny zostają na stronie Sauna i bania
+      if (s.id === 'opowiesc') {
+        return { blockType: 'rituals', anchor: s.id, heading: s.heading?.[l], steps: s.stages?.map((st: Any, j: number) => ({ word: st.word?.[l], text: st.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][j] ?? 'B') })), showPrices: false }
       }
       // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
       if (s.id === 'gospodarze') {

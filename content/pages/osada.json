@@ -62,6 +62,55 @@
       }
     },
     {
+      "id": "opowiesc",
+      "heading": {
+        "pl": "Jak kończy się dzień w osadzie",
+        "en": "How a day here ends"
+      },
+      "stages": [
+        {
+          "word": {
+            "pl": "Ciepło",
+            "en": "Heat"
+          },
+          "body": {
+            "pl": "Zacznijcie od sauny. Kilkanaście minut suchego ciepła, aż zrobi się cicho w głowie.",
+            "en": "Start in the sauna. A quarter of an hour of dry heat, until your head goes quiet."
+          }
+        },
+        {
+          "word": {
+            "pl": "Mróz",
+            "en": "Frost"
+          },
+          "body": {
+            "pl": "Wyjdźcie na taras. Zimą chłodzi śnieg, latem wieczorne powietrze z gór.",
+            "en": "Step out onto the terrace. In winter the snow cools you, in summer the evening mountain air."
+          }
+        },
+        {
+          "word": {
+            "pl": "Para",
+            "en": "Steam"
+          },
+          "body": {
+            "pl": "Zanurzcie się w bani. Gorąca woda, para unosi się nad brzegiem, a przed Wami panorama od Hawrania po Giewont.",
+            "en": "Sink into the hot tub. Hot water, steam drifting over the rim, and the panorama from Havran to Giewont in front of you."
+          }
+        },
+        {
+          "word": {
+            "pl": "Cisza",
+            "en": "Silence"
+          },
+          "body": {
+            "pl": "Na koniec nic. Koc, herbata, gwiazdy. Tak kończy się dzień w osadzie.",
+            "en": "Then nothing at all. A blanket, a cup of tea, the stars. That is how a day here ends."
+          }
+        }
+      ]
+    },
+    {
       "id": "goralszczyzna",
       "heading": {
         "pl": "Góralszczyzna dziś",

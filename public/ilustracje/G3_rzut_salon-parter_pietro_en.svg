@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -131 1080 891" role="img" aria-label="Indicative floor plan of the house, living room on the ground floor: upper floor">
+<style>.bryla{fill:var(--color-atrament,#1c2321);stroke:var(--color-atrament,#1c2321);stroke-width:24;stroke-linejoin:miter}.pokoj{fill:var(--color-tlo,#f1f3f2)}.pokoj.skos{fill:var(--color-tlo-2,#e4e9e7)}.stopnie{stroke:var(--color-linia-mocna,#7f8b86);stroke-width:1.5;vector-effect:non-scaling-stroke}.bieg{fill:none;stroke:var(--color-atrament-2,#37413d);stroke-width:1.5;vector-effect:non-scaling-stroke}#strzalka path{fill:var(--color-atrament-2,#37413d)}.sauna-deski{stroke:var(--color-bursztyn,#c47a2a);stroke-width:1;opacity:.6;vector-effect:non-scaling-stroke}.nazwa{font:500 19px var(--font-ui,sans-serif);letter-spacing:.12em;text-transform:uppercase;fill:var(--color-atrament,#1c2321);paint-order:stroke;stroke:var(--color-tlo,#f1f3f2);stroke-width:8px;stroke-linejoin:round}.dopisek{font:500 18px var(--font-ui,sans-serif);letter-spacing:.06em;font-variant-numeric:tabular-nums;fill:var(--color-wyciszony,#56625e)}.pokoj-g:hover .pokoj,.pokoj-g:focus .pokoj{fill:var(--color-tlo-2,#e4e9e7)}</style>
+<defs><marker id="strzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs>
+<polygon class="bryla" points="128,0 872,0 872,660 128,660"/>
+<g id="r-sypialnia-2" class="pokoj-g" data-nazwa="Bedroom">
+<rect class="pokoj" x="132" y="4" width="303" height="283"/>
+<text class="nazwa" x="284" y="140" text-anchor="middle">Bedroom</text>
+<text class="dopisek" x="284" y="168" text-anchor="middle">13 m²</text>
+</g>
+<g id="r-lazienka-2" class="pokoj-g" data-nazwa="Bathroom">
+<rect class="pokoj" x="444" y="4" width="136" height="283"/>
+<text class="nazwa" x="512" y="154" text-anchor="middle">Bathroom</text>
+</g>
+<g id="r-lazienka-2b" class="pokoj-g" data-nazwa="lazienka-2b">
+<rect class="pokoj" x="590" y="146" width="132" height="142"/>
+</g>
+<g id="r-schody-bieg" class="pokoj-g" data-nazwa="schody-bieg">
+<rect class="pokoj" x="590" y="4" width="132" height="132"/>
+<line class="stopnie" x1="622" y1="4" x2="622" y2="136"/>
+<line class="stopnie" x1="656" y1="4" x2="656" y2="136"/>
+<line class="stopnie" x1="688" y1="4" x2="688" y2="136"/>
+</g>
+<g id="r-schody" class="pokoj-g" data-nazwa="Stairs">
+<rect class="pokoj" x="730" y="4" width="137" height="283"/>
+<line class="stopnie" x1="730" y1="142" x2="868" y2="142"/>
+<line class="stopnie" x1="730" y1="171" x2="868" y2="171"/>
+<line class="stopnie" x1="730" y1="200" x2="868" y2="200"/>
+<line class="stopnie" x1="730" y1="229" x2="868" y2="229"/>
+<line class="stopnie" x1="730" y1="258" x2="868" y2="258"/>
+<line class="stopnie" x1="730" y1="142" x2="792" y2="4"/>
+<line class="stopnie" x1="730" y1="142" x2="868" y2="4"/>
+<line class="stopnie" x1="730" y1="142" x2="868" y2="66"/>
+<polyline class="bieg" marker-end="url(#strzalka)" points="600,73 815,73 815,274"/>
+<text class="nazwa" x="799" y="154" text-anchor="middle">Stairs</text>
+</g>
+<g id="r-hol" class="pokoj-g" data-nazwa="Hall">
+<rect class="pokoj" x="132" y="296" width="735" height="95"/>
+<text class="nazwa" x="500" y="352" text-anchor="middle">Hall</text>
+</g>
+<g id="r-sypialnia-3" class="pokoj-g" data-nazwa="Bedroom">
+<rect class="pokoj" x="132" y="401" width="372" height="255"/>
+<text class="nazwa" x="318" y="522" text-anchor="middle">Bedroom</text>
+<text class="dopisek" x="318" y="550" text-anchor="middle">14.5 m²</text>
+</g>
+<g id="r-sypialnia-4" class="pokoj-g" data-nazwa="Bedroom">
+<rect class="pokoj" x="514" y="401" width="354" height="255"/>
+<text class="nazwa" x="690" y="522" text-anchor="middle">Bedroom</text>
+<text class="dopisek" x="690" y="550" text-anchor="middle">11.3 m²</text>
+</g>
+<rect class="pokoj" x="730" y="285.5" width="137" height="12"/>
+<rect class="pokoj" x="578.5" y="146" width="12" height="142"/>
+<rect class="pokoj" x="719.5" y="4" width="12" height="132"/>
+</svg>

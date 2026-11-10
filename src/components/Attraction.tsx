@@ -54,7 +54,10 @@ export function AttractionEntry({ a, ctx, heading: H = 'h2', link }: { a: Attrac
         <div className="mo-atrakcja__galeria">
           <PhotoGallery media={a.gallery} ctx={ctx} />
           {/* licencje CC wymagają podpisu przy zdjęciu: miniatury mają go w powiększeniu i zbiorczo tutaj */}
-          {a.gallery.map((m) => <Credit key={typeof m === 'object' ? m.id : m} media={m} as="p" />)}
+          {/* ten sam podpis (autor + link) pokazujemy raz, także gdy dotyczy wszystkich zdjęć serii */}
+          {a.gallery
+            .filter((m, i, all) => typeof m === 'object' && all.findIndex((o) => typeof o === 'object' && o.caption === m.caption) === i)
+            .map((m) => <Credit key={typeof m === 'object' ? m.id : m} media={m} as="p" />)}
         </div>
       ) : null}
     </article>

@@ -18,6 +18,7 @@ import * as migration_20261028_094500_apartamenty_na_dole from './20261028_09450
 import * as migration_20261110_083500_cztery_pory_roku from './20261110_083500_cztery_pory_roku';
 import * as migration_20261110_090000_angielski_zgodny_z_polskim from './20261110_090000_angielski_zgodny_z_polskim';
 import * as migration_20261110_100000_sauna_i_bania_na_osade from './20261110_100000_sauna_i_bania_na_osade';
+import * as migration_20261110_110000_slowniczek_na_osade from './20261110_110000_slowniczek_na_osade';
 
 export const migrations = [
   {
@@ -119,5 +120,10 @@ export const migrations = [
     up: migration_20261110_100000_sauna_i_bania_na_osade.up,
     down: migration_20261110_100000_sauna_i_bania_na_osade.down,
     name: '20261110_100000_sauna_i_bania_na_osade'
+  },
+  {
+    up: migration_20261110_110000_slowniczek_na_osade.up,
+    down: migration_20261110_110000_slowniczek_na_osade.down,
+    name: '20261110_110000_slowniczek_na_osade'
   },
 ];

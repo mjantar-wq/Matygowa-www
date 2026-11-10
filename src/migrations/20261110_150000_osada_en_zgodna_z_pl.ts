@@ -10,7 +10,7 @@ import { touchPages } from '../lib/touch-pages'
 
 const para = (children: unknown[]) => ({
   children,
-  direction: null,
+  direction: null as string | null,
   format: '',
   indent: 0,
   type: 'paragraph',
@@ -20,7 +20,7 @@ const para = (children: unknown[]) => ({
 })
 const text = (t: string) => ({ detail: 0, format: 0, mode: 'normal', style: '', text: t, type: 'text', version: 1 })
 const body = (children: unknown[]) =>
-  JSON.stringify({ root: { children: [para(children)], direction: null, format: '', indent: 0, type: 'root', version: 1 } })
+  JSON.stringify({ root: { children: [para(children)], direction: null as string | null, format: '', indent: 0, type: 'root', version: 1 } })
 
 const OLD_BANIA = 'A session lasts 4 hours and costs 150 PLN. It takes several hours to heat the water'
 const NEW_BANIA = body([
@@ -51,7 +51,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ]) {
       await db.run(
         sql.raw(
-          `UPDATE \`${story}_locales\` SET body = ${q(next)} WHERE _locale = 'en' AND body LIKE ${q(`%${needle}%`)} AND _parent_id IN (${pageScope})`,
+          `UPDATE \`${story}_locales\` SET body = ${q(next)} WHERE _locale = 'en' AND instr(body, ${q(needle)}) > 0 AND _parent_id IN (${pageScope})`,
         ),
       )
     }

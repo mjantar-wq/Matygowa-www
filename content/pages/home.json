@@ -45,10 +45,10 @@
       },
       "stats": [
         {
-          "value": "942 m",
+          "value": "942 m n.p.m.",
           "label": {
-            "pl": "n.p.m., tu, w osadzie",
-            "en": "above sea level, right here"
+            "pl": "",
+            "en": ""
           }
         },
         {
@@ -271,16 +271,24 @@
       "type": "seasons",
       "id": "pory-roku",
       "heading": {
-        "pl": "Dwie pory roku, ten sam widok",
-        "en": "Two seasons, the same view"
+        "pl": "Widok, który możesz odkrywać na nowo o każdej porze roku",
+        "en": "A view you can discover anew in every season"
       },
       "winter": {
         "pl": "Zimą Gliczarów jest biały i cichy. Narty kilka minut stąd, kulig, termy, a wieczorem bania w śniegu.",
         "en": "In winter Gliczarów is white and quiet. Ski slopes a few minutes away, sleigh rides, thermal pools, and in the evening a hot tub in the snow."
       },
+      "spring": {
+        "pl": "Wiosną w dolinach kwitną krokusy, a szczyty jeszcze bieleją. Cisza przed sezonem, pierwsze spacery po suchych szlakach, poranna kawa na tarasie.",
+        "en": "In spring crocuses bloom in the valleys while the peaks are still white. Quiet before the season, first walks on dry trails, morning coffee on the terrace."
+      },
       "summer": {
         "pl": "Latem łąki pachną sianem, a szlaki zaczynają się niedaleko. Rowery, spływ Dunajcem, długie wieczory na tarasie.",
         "en": "In summer the meadows smell of hay and the trails start close by. Bikes, rafting on the Dunajec, long evenings on the terrace."
+      },
+      "autumn": {
+        "pl": "Jesienią Czerwone Wierchy rdzewieją, a poranki pachną dymem z kominów. Grzyby w lesie, szlaki bez tłumów, wieczorem sauna i bania.",
+        "en": "In autumn the Red Peaks turn rust-red and the mornings smell of chimney smoke. Mushrooms in the forest, trails without the crowds, and in the evening the sauna and hot tub."
       }
     },
     {

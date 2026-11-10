@@ -40,7 +40,8 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 ## Pierwsze uruchomienie panelu
 
 1. Po pierwszym wdrożeniu otwórz `https://matygowa.audiowizard.pl/panel` i załóż konto administratora (pierwsze konto zakłada się samo).
-2. Treści robocze i obrazy CGI: GitHub → Actions → CI → **Run workflow** z zaznaczonym „Wgraj treści robocze…”. Import nadpisuje te same wpisy w panelu, więc po rozpoczęciu edycji w panelu uruchamiamy go tylko świadomie.
+2. Treści robocze i obrazy CGI: GitHub → Actions → CI → **Run workflow** z zaznaczonym „Wgraj treści robocze…”. Import tylko dopisuje brakujące wpisy, a istniejących (edytowanych w panelu) nie rusza: panel jest źródłem prawdy. Świadome nadpisanie z plików: pole „import_overwrite” (np. `pages:home`, `units` albo `all`) lub zmienna `IMPORT_OVERWRITE`.
+   **Zmiany w treściach, które już są w panelu** (przeniesienie sekcji między stronami, poprawka tekstu) wprowadzamy migracją na żywych danych w `src/migrations/` (patrz `20261110_083000_przenosiny_sekcji_na_zywych_danych.ts`): przenosi istniejące wiersze, więc zostają teksty i edycje z panelu. Migracje uruchamiają się przy wdrożeniu (`deploy:database`), bez ręcznego importu. Pliki w `content/` aktualizujemy równolegle, żeby nowe środowisko wyglądało tak samo.
 3. Ustawienia strony → Rezerwacje: silnik Hotres do czasu decyzji o IceColdRes (grudzień 2026).
 
 ## Integracja z IceColdRes

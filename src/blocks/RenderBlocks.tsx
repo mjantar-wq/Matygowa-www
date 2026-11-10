@@ -90,7 +90,7 @@ function Intro({ block }: Props<'intro'>) {
         <dl className="mo-stats">
           {block.stats.map((s) => (
             <div key={s.id}>
-              <dt className="mo-label">{s.label}</dt>
+              {s.label ? <dt className="mo-label">{s.label}</dt> : null}
               <dd className="mo-price"><CountUp value={s.value} /></dd>
             </div>
           ))}
@@ -188,13 +188,17 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
-        {(['winter', 'summer'] as const).map((key) => (
-          <article key={key} className="mo-card mo-season" data-sezon={key === 'winter' ? 'zima' : 'lato'}>
-            <div className="mo-card__media"><Media media={block[key]?.image} fallback={ctx.t.attractions[key]} /></div>
-            <h3 className="mo-h3">{block[key]?.title || ctx.t.attractions[key]}</h3>
-            <p>{block[key]?.text}</p>
-          </article>
-        ))}
+        {(['winter', 'spring', 'summer', 'autumn'] as const).map((key) => {
+          // przełącznik nastroju zna tylko zimę i lato; wiosna i jesień zostają w stałym miejscu
+          const image = key === 'winter' || key === 'summer' ? block[key]?.image : undefined
+          return (
+            <article key={key} className="mo-card mo-season" data-sezon={key === 'winter' ? 'zima' : key === 'summer' ? 'lato' : undefined}>
+              {image ? <div className="mo-card__media"><Media media={image} fallback={ctx.t.attractions[key]} /></div> : null}
+              <h3 className="mo-h3">{block[key]?.title || ctx.t.attractions[key]}</h3>
+              <p>{block[key]?.text}</p>
+            </article>
+          )
+        })}
       </div>
     </Section>
   )

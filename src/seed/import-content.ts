@@ -290,35 +290,37 @@ async function main() {
   }
   await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => withScene(b, homeBlock(b, l), l)).filter(Boolean))
 
+  // „Góralszczyzna dziś” (strona Sauna i bania): wstęp, potem każdy temat osobno, na przemian zdjęcie i tekst; zdjęcie po id tematu (O_<id>_…)
+  // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
+  const goralszczyznaBlocks = (s: Any, l: Loc): Any[] => [
+    { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), image: s.image ? img(s.image) : undefined, imagePosition: 'end' },
+    ...s.items.map((it: Any, j: number) => ({
+      blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
+      body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
+      image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
+    })),
+    // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
+    ...(s.glossary?.words?.length ? [{
+      blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
+      body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
+      image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
+    }] : []),
+  ]
+
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
     // same prawdziwe zdjęcia sauny i bani, bez wygenerowanych ludzi (wg Michała)
     { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), image: img('W51_sauna_lawy'), imagePosition: 'end' },
     { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), image: img('B1_bania_lato'), imagePosition: 'start' },
     { blockType: 'richText', body: md(rytualy.rules?.[l]) },
+    ...goralszczyznaBlocks(rytualy.goralszczyzna, l),
   ], (l) => rytualy.lead?.[l])
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
     osada.sections.flatMap((s: Any, i: number) => {
-      // „Góralszczyzna dziś”: wstęp, potem każdy temat osobno, na przemian zdjęcie i tekst; zdjęcie po id tematu (O_<id>_…)
-      // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
-      if (s.id === 'goralszczyzna' && s.items?.some((it: Any) => it.id)) {
-        return [
-          { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), image: s.image ? img(s.image) : undefined, imagePosition: 'end' },
-          ...s.items.map((it: Any, j: number) => ({
-            blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
-            body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
-            image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
-          })),
-          // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
-          ...(s.glossary?.words?.length ? [{
-            blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
-            body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
-            image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
-          }] : []),
-        ]
-      }
+      // sekcje wyłączone ("enabled": false) zostają w pliku z treścią, ale nie trafiają na stronę; wyjątek: gospodarze (puste miejsce do uzupełnienia w panelu)
+      if (s.enabled === false && s.id !== 'gospodarze') return []
       // opowieść o saunie i bani (etapy Ciepło, Mróz, Para, Cisza); ceny zostają na stronie Sauna i bania
       if (s.id === 'opowiesc') {
         return { blockType: 'rituals', anchor: s.id, heading: s.heading?.[l], steps: s.stages?.map((st: Any, j: number) => ({ word: st.word?.[l], text: st.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][j] ?? 'B') })), showPrices: false }

@@ -25,6 +25,7 @@ import * as migration_20261110_131000_przywroc_licznik_i_haslo_z_panelu from './
 import * as migration_20261110_140000_woloszyn_8_osob from './20261110_140000_woloszyn_8_osob';
 import * as migration_20261110_140500_balony_link_strona_obiektu from './20261110_140500_balony_link_strona_obiektu';
 import * as migration_20261110_140600_hero_bania from './20261110_140600_hero_bania';
+import * as migration_20261110_150000_osada_en_zgodna_z_pl from './20261110_150000_osada_en_zgodna_z_pl';
 import * as migration_20261110_140700_sauna_bania_platne from './20261110_140700_sauna_bania_platne';
 
 export const migrations = [
@@ -162,6 +163,11 @@ export const migrations = [
     up: migration_20261110_140600_hero_bania.up,
     down: migration_20261110_140600_hero_bania.down,
     name: '20261110_140600_hero_bania'
+  },
+  {
+    up: migration_20261110_150000_osada_en_zgodna_z_pl.up,
+    down: migration_20261110_150000_osada_en_zgodna_z_pl.down,
+    name: '20261110_150000_osada_en_zgodna_z_pl'
   },
   {
     up: migration_20261110_140700_sauna_bania_platne.up,

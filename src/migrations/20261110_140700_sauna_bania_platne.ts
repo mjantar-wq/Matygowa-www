@@ -7,6 +7,7 @@ import { touchPages } from '../lib/touch-pages'
  * dokładnie stare zdanie (treść zmieniona w panelu zostaje). Dotyczy bloków „Historia” z kart Sauna i Bania:
  * treści opublikowanej i najnowszej wersji. Bez importu plików.
  */
+// instr zamiast LIKE: D1 odrzuca wzorce LIKE dłuższe niż 50 bajtów
 const SWAPS: [string, string][] = [
   ['Pierwsza sesja dnia (1 godzina) jest w cenie pobytu, każda kolejna kosztuje 50 zł.', 'Godzina korzystania kosztuje 50 zł, dodatkowo płatna i po uzgodnieniu z nami.'],
   ['The first session of the day (1 hour) is included in your stay; each further session costs 50 PLN.', 'One hour costs 50 PLN, charged in addition to your stay and arranged with us beforehand.'],
@@ -21,7 +22,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       ? sql` AND \`_parent_id\` IN (SELECT s.id FROM \`_pages_v_blocks_story\` s WHERE s._parent_id IN (SELECT id FROM \`_pages_v\` WHERE \`latest\` = 1))`
       : sql``
     for (const [from, to] of SWAPS) {
-      await db.run(sql`UPDATE ${t} SET \`body\` = REPLACE(\`body\`, ${from}, ${to}) WHERE \`body\` LIKE ${'%' + from + '%'}${latest};`)
+      await db.run(sql`UPDATE ${t} SET \`body\` = REPLACE(\`body\`, ${from}, ${to}) WHERE instr(\`body\`, ${from}) > 0${latest};`)
     }
   }
   await touchPages(db)

@@ -9,6 +9,12 @@ import { touchPages } from '../lib/touch-pages'
  */
 const PEAKS = ['Hawrań', 'Gerlach', 'Świnica', 'Wołoszyn', 'Łomnica', 'Lodowy']
 const PHRASES: [string, string][] = PEAKS.map((p) => [`${p} house`, `${p} Chalet`])
+// Opisy zdjęć (media): nazwy domków z „cottage” przechodzą na „Chalet”, reszta na „house” (zdjęcia dotyczą naszych domków).
+const MEDIA_PHRASES: [string, string][] = [
+  ...PEAKS.map((p): [string, string] => [`${p} cottage`, `${p} Chalet`]),
+  ['cottages', 'houses'],
+  ['cottage', 'house'],
+]
 
 const rows = async (db: unknown, query: ReturnType<typeof sql>): Promise<Record<string, unknown>[]> =>
   (await (db as { all: (q: unknown) => Promise<Record<string, unknown>[]> }).all(query)) ?? []
@@ -27,10 +33,10 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     if (!textCols.length) continue
     const sets = textCols.map(({ name: col }) => {
       let expr = `\`${col}\``
-      for (const [from, to] of PHRASES) expr = `replace(${expr}, ${q(from)}, ${q(to)})`
+      for (const [from, to] of table === 'media_locales' ? [...MEDIA_PHRASES, ...PHRASES] : PHRASES) expr = `replace(${expr}, ${q(from)}, ${q(to)})`
       return `\`${col}\` = ${expr}`
     })
-    const any = textCols.map(({ name: col }) => `instr(\`${col}\`, ' house') > 0`).join(' OR ')
+    const any = textCols.map(({ name: col }) => `instr(\`${col}\`, ${table === 'media_locales' ? "'ottage'" : "' house'"}) > 0`).join(' OR ')
     await db.run(sql.raw(`UPDATE \`${table}\` SET ${sets.join(', ')} WHERE \`_locale\` = 'en' AND (${any})`))
   }
   const now = sql`strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`

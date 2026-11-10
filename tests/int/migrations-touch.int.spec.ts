@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest'
 // inaczej panel nie ostrzeże o starej karcie i zapis z niej cofnie migrację.
 describe('migracje treści stron', () => {
   const dir = join(process.cwd(), 'src/migrations')
-  const files = readdirSync(dir).filter((f) => /^\d{8}_\d{6}_.+\.ts$/.test(f) && f >= '20261110_130000')
+  const files = readdirSync(dir).filter((f) => /^\d{8}_\d{6}_.+\.ts$/.test(f) && f >= '20261110_131000')
   for (const f of files) {
     const src = readFileSync(join(dir, f), 'utf8')
     if (!/(UPDATE|INSERT INTO|DELETE FROM)\s+\\?`?\$?\{?[^`]*pages/i.test(src)) continue
@@ -16,7 +16,7 @@ describe('migracje treści stron', () => {
     })
   }
   it('migracja przywracająca licznik jest objęta kontrolą', () => {
-    expect(files).toContain('20261110_130000_przywroc_licznik_i_haslo_z_panelu.ts')
-    expect(readFileSync(join(dir, '20261110_130000_przywroc_licznik_i_haslo_z_panelu.ts'), 'utf8')).toContain('touchPages(')
+    expect(files).toContain('20261110_131000_przywroc_licznik_i_haslo_z_panelu.ts')
+    expect(readFileSync(join(dir, '20261110_131000_przywroc_licznik_i_haslo_z_panelu.ts'), 'utf8')).toContain('touchPages(')
   })
 })

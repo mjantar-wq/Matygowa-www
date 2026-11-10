@@ -24,6 +24,7 @@ import * as migration_20261110_130000_ukryj_tytul_rytualy from './20261110_13000
 import * as migration_20261110_131000_przywroc_licznik_i_haslo_z_panelu from './20261110_131000_przywroc_licznik_i_haslo_z_panelu';
 import * as migration_20261110_140000_woloszyn_8_osob from './20261110_140000_woloszyn_8_osob';
 import * as migration_20261110_140500_balony_link_strona_obiektu from './20261110_140500_balony_link_strona_obiektu';
+import * as migration_20261110_150000_osada_en_zgodna_z_pl from './20261110_150000_osada_en_zgodna_z_pl';
 
 export const migrations = [
   {
@@ -155,5 +156,10 @@ export const migrations = [
     up: migration_20261110_140500_balony_link_strona_obiektu.up,
     down: migration_20261110_140500_balony_link_strona_obiektu.down,
     name: '20261110_140500_balony_link_strona_obiektu'
+  },
+  {
+    up: migration_20261110_150000_osada_en_zgodna_z_pl.up,
+    down: migration_20261110_150000_osada_en_zgodna_z_pl.down,
+    name: '20261110_150000_osada_en_zgodna_z_pl'
   },
 ];

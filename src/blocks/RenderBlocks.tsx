@@ -193,7 +193,7 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
           // przełącznik nastroju zna tylko zimę i lato; wiosna i jesień zostają w stałym miejscu
           const image = key === 'winter' || key === 'summer' ? block[key]?.image : undefined
           return (
-            <article key={key} className="mo-card mo-season" data-sezon={key === 'winter' ? 'zima' : key === 'summer' ? 'lato' : undefined}>
+            <article key={key} className="mo-card mo-season" data-pora-roku={key} data-sezon={key === 'winter' ? 'zima' : key === 'summer' ? 'lato' : undefined}>
               {image ? <div className="mo-card__media"><Media media={image} fallback={ctx.t.attractions[key]} /></div> : null}
               <h3 className="mo-h3">{block[key]?.title || ctx.t.attractions[key]}</h3>
               <p>{block[key]?.text}</p>

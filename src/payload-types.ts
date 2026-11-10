@@ -153,6 +153,7 @@ export interface Page {
    */
   slug: string;
   kind?: ('section' | 'document') | null;
+  hideTitle?: boolean | null;
   intro?: string | null;
   layout?:
     | (

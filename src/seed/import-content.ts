@@ -314,7 +314,7 @@ async function main() {
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
     { blockType: 'rituals', anchor: 'opowiesc', heading: { pl: 'Jak kończy się dzień w osadzie', en: 'How a day here ends' }[l], steps: rytualy.stages?.map((st: Any, j: number) => ({ word: st.word?.[l], text: st.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][j] ?? 'B') })), showPrices: false },
     ...goralszczyznaBlocks(rytualy.goralszczyzna, l),
-  ])
+  ], undefined, true) // tytuł „Sauna i bania” nie wisi nad narracją (Michał, 10.11.2026)
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
@@ -417,8 +417,9 @@ async function upsertPage(
   title: () => L,
   layout: (l: Loc) => Any[],
   intro?: (l: Loc) => string | undefined,
+  hideTitle = false,
 ) {
-  await upsert('pages', slug, (l) => ({ title: title()?.[l] ?? slug, kind: 'section', intro: intro?.(l), layout: layout(l) }))
+  await upsert('pages', slug, (l) => ({ title: title()?.[l] ?? slug, kind: 'section', hideTitle, intro: intro?.(l), layout: layout(l) }))
 }
 
 // `payload run` kończy proces po załadowaniu modułu, więc czekamy na import na najwyższym poziomie

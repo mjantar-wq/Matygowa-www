@@ -1193,7 +1193,7 @@ export interface Attraction {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Lista ofert zaimportowanych z IceColdRes. Tutaj możesz tylko włączyć albo wyłączyć pokazywanie oferty na stronie. Treść i nowe oferty ustawiasz w IceColdRes.
+ * Lista ofert zaimportowanych z IceColdRes. Tutaj możesz włączyć albo wyłączyć pokazywanie oferty na stronie i podmienić jej zdjęcie. Treść i nowe oferty ustawiasz w IceColdRes.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "offers".
@@ -1202,6 +1202,10 @@ export interface Offer {
   id: number;
   title: string;
   published?: boolean | null;
+  /**
+   * Opcjonalnie. Zastępuje zdjęcie z IceColdRes; bez niego strona bierze zdjęcie z promocji w IceColdRes, a gdy go nie ma, losowe zdjęcie domku. Synchronizacja nie zmienia tego pola.
+   */
+  image?: (number | null) | Media;
   icecoldresPromotionId?: string | null;
   slug?: string | null;
   order?: number | null;
@@ -2150,6 +2154,7 @@ export interface AttractionsSelect<T extends boolean = true> {
 export interface OffersSelect<T extends boolean = true> {
   title?: T;
   published?: T;
+  image?: T;
   icecoldresPromotionId?: T;
   slug?: T;
   order?: T;

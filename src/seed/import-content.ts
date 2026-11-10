@@ -263,7 +263,7 @@ async function main() {
         // zapowiedź na stronie głównej: tekst ze zdjęciem bani (pełne kroki i ceny są na stronie Sauna i bania)
         return { blockType: 'story', ...base, body: md(b.body?.[l]), image: img('B1_bania_alpenglow'), imagePosition: 'start' }
       case 'seasons':
-        return { blockType: 'seasons', ...base, winter: { text: b.winter?.[l], image: img('K2_hero_osada_swit_16x9') }, summer: { text: b.summer?.[l], image: img('K2_hero_osada_lato') } }
+        return { blockType: 'seasons', ...base, winter: { text: b.winter?.[l], image: img('K2_hero_osada_swit_16x9') }, spring: { text: b.spring?.[l] }, summer: { text: b.summer?.[l], image: img('K2_hero_osada_lato') }, autumn: { text: b.autumn?.[l] } }
       case 'surroundings':
         return { blockType: 'surroundings', ...base, body: md(b.body?.[l]), limit: b.featured_attractions ?? 6 }
       case 'nature':

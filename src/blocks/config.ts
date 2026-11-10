@@ -158,11 +158,15 @@ export const RitualsBlock = block('rituals', 'Rytuały (sauna i bania)', [
 ])
 
 const season: Field[] = [{ name: 'title', label: 'Tytuł', type: 'text', localized: true }, { name: 'text', label: 'Tekst', type: 'textarea', localized: true }, image]
-export const SeasonsBlock = block('seasons', 'Zima / Lato', [
+// wiosna i jesień bez zdjęć: tło sceny przełącza się tylko między zimą a latem (przełącznik nastroju)
+const seasonText: Field[] = [{ name: 'title', label: 'Tytuł', type: 'text', localized: true }, { name: 'text', label: 'Tekst', type: 'textarea', localized: true }]
+export const SeasonsBlock = block('seasons', 'Cztery pory roku', [
   eyebrow,
   heading,
   { name: 'winter', label: 'Zima', type: 'group', fields: season },
+  { name: 'spring', label: 'Wiosna', type: 'group', fields: seasonText },
   { name: 'summer', label: 'Lato', type: 'group', fields: season },
+  { name: 'autumn', label: 'Jesień', type: 'group', fields: seasonText },
 ])
 
 export const SurroundingsBlock = block('surroundings', 'Okolica (mapa i atrakcje)', [

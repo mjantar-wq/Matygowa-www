@@ -4750,6 +4750,20 @@
           "notNull": false,
           "autoincrement": false
         },
+        "spring_title": {
+          "name": "spring_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "spring_text": {
+          "name": "spring_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "summer_title": {
           "name": "summer_title",
           "type": "text",
@@ -4759,6 +4773,20 @@
         },
         "summer_text": {
           "name": "summer_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "autumn_title": {
+          "name": "autumn_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "autumn_text": {
+          "name": "autumn_text",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -14701,6 +14729,20 @@
           "notNull": false,
           "autoincrement": false
         },
+        "spring_title": {
+          "name": "spring_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "spring_text": {
+          "name": "spring_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "summer_title": {
           "name": "summer_title",
           "type": "text",
@@ -14710,6 +14752,20 @@
         },
         "summer_text": {
           "name": "summer_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "autumn_title": {
+          "name": "autumn_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "autumn_text": {
+          "name": "autumn_text",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -25133,6 +25189,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "76c77927-11a2-46ae-a957-4e800a57a8b4",
+  "id": "5923a364-bad2-4c0a-959c-d2cbe1da1e6d",
   "prevId": "e413748a-d5bc-40ed-91bb-00dc82c8ff04"
 }

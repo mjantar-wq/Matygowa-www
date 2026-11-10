@@ -2,6 +2,9 @@
 
 Stan: wersja 1, 24.10.2026. Teksty PL i EN, gotowe do importu do Payload CMS.
 
+## Zasada: panel jest źródłem prawdy
+`pnpm seed` tylko zakłada brakujące wpisy, nie nadpisuje istniejących (patrz `docs/wdrozenie.md`). Zmiana treści, która już jest w panelu, idzie migracją na żywych danych (`src/migrations/`), a pliki tu aktualizujemy równolegle dla nowych środowisk.
+
 ## Format
 - Jeden plik JSON na kolekcję, `slug` jako klucz, pola lokalizowane `{"pl": "...", "en": "..."}` (gotowe na kolejne języki: sk, ar).
 - Tekst długi to Markdown (tylko *kursywa*), do zamiany na Lexical przy imporcie.
@@ -16,7 +19,7 @@ Stan: wersja 1, 24.10.2026. Teksty PL i EN, gotowe do importu do Payload CMS.
 | units.json | Domy i apartamenty (6 + 4, apartamenty `coming_soon`), powiązanie `peak` i `icecoldres_code` |
 | pages/home.json | Strona główna jako bloki, w kolejności szkieletu |
 | pages/rytualy.json, osada.json, przewodnik.json | Podstrony |
-| attractions.json, offers.json, testimonials.json | Atrakcje, Oferty, Opinie |
+| attractions.json, testimonials.json | Atrakcje, Opinie (oferty pochodzą z promocji IceColdRes, nie z pliku) |
 
 testimonials.json: 4 prawdziwe opinie z Google (odczyt z widżetu obecnej strony 24.10.2026), daty przybliżone, EN to tłumaczenie. Ocen pojedynczych opinii widżet nie pokazuje (ogólnie 5,0). Później widżet Google.
 

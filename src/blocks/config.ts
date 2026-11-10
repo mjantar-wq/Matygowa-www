@@ -87,7 +87,7 @@ export const IntroBlock = block('intro', 'Wstęp z liczbami', [
     maxRows: 6,
     fields: [
       { name: 'value', label: 'Wartość', type: 'text', required: true },
-      { name: 'label', label: 'Opis', type: 'text', localized: true, required: true },
+      { name: 'label', label: 'Opis (może być puste, gdy jednostka jest w wartości)', type: 'text', localized: true },
     ],
   },
 ])

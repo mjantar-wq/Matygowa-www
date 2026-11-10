@@ -12,6 +12,8 @@ import * as migration_20261025_182700_okolica_galeria from './20261025_182700_ok
 import * as migration_20261025_190310_zdjecia_prawa from './20261025_190310_zdjecia_prawa';
 import * as migration_20261027_064308_lozka from './20261027_064308_lozka';
 import * as migration_20261027_075500_warunki_platnosci from './20261027_075500_warunki_platnosci';
+import * as migration_20261110_080900_oferty_tylko_lista from './20261110_080900_oferty_tylko_lista';
+import * as migration_20261110_083000_przenosiny_sekcji_na_zywych_danych from './20261110_083000_przenosiny_sekcji_na_zywych_danych';
 import * as migration_20261028_094500_apartamenty_na_dole from './20261028_094500_apartamenty_na_dole';
 import * as migration_20261110_083500_cztery_pory_roku from './20261110_083500_cztery_pory_roku';
 
@@ -90,6 +92,16 @@ export const migrations = [
     up: migration_20261028_094500_apartamenty_na_dole.up,
     down: migration_20261028_094500_apartamenty_na_dole.down,
     name: '20261028_094500_apartamenty_na_dole'
+  },
+  {
+    up: migration_20261110_080900_oferty_tylko_lista.up,
+    down: migration_20261110_080900_oferty_tylko_lista.down,
+    name: '20261110_080900_oferty_tylko_lista',
+  },
+  {
+    up: migration_20261110_083000_przenosiny_sekcji_na_zywych_danych.up,
+    down: migration_20261110_083000_przenosiny_sekcji_na_zywych_danych.down,
+    name: '20261110_083000_przenosiny_sekcji_na_zywych_danych'
   },
   {
     up: migration_20261110_083500_cztery_pory_roku.up,

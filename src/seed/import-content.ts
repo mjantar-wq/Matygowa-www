@@ -1,11 +1,17 @@
 /**
  * Import treści roboczych z content/ (format wątku treści: pola {pl, en}, długi tekst w Markdown)
  * do panelu. Uruchomienie: pnpm seed (lokalnie) albo z PAYLOAD_REMOTE_BINDINGS=true na środowisku testowym.
- * Import jest idempotentny: wpis o tym samym adresie (slug) jest aktualizowany, nie dublowany.
+ *
+ * Źródłem prawdy jest panel (Michał, 10.11.2026): import tylko ZAKŁADA brakujące wpisy i niczego, co już jest w bazie,
+ * nie nadpisuje, więc ręczne edycje w panelu zostają. Zmiany w istniejących treściach (przeniesienie sekcji,
+ * poprawka tekstu) idą migracją na żywych danych (src/migrations), a nie ponownym importem plików.
+ * Świadome nadpisanie z plików (np. odtworzenie środowiska testowego): IMPORT_OVERWRITE=all albo lista kolekcji
+ * (units, attractions, offers, news, pages, settings) albo wpisów (pages:home, pages:rituals).
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import config from '@payload-config'
+import { syncOffers } from '../lib/offers-sync'
 import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
 import { getPayload, type CollectionSlug, type Payload } from 'payload'
 
@@ -21,6 +27,9 @@ const read = (file: string) => JSON.parse(fs.readFileSync(path.join(DIR, file), 
 // Import partiami: IMPORT_ONLY=attractions (albo np. units,offers) wgrywa nowe pliki z manifestu i tylko te kolekcje.
 // „pages” to strony, opinie, dokumenty, aktualności i ustawienia; „news” same aktualności, „testimonials” same opinie, „documents” same dokumenty (regulamin, polityki), „regulamin” sam regulamin. Bez zmiennej import obejmuje wszystko.
 const only = new Set((process.env.IMPORT_ONLY ?? '').split(',').map((k) => k.trim()).filter(Boolean))
+// Co wolno nadpisać z plików; domyślnie nic (import tylko dopisuje brakujące wpisy).
+const overwrite = new Set((process.env.IMPORT_OVERWRITE ?? '').split(',').map((k) => k.trim()).filter(Boolean))
+const mayOverwrite = (collection: string, slug?: string) => overwrite.has('all') || overwrite.has(collection) || (!!slug && overwrite.has(`${collection}:${slug}`))
 const want = (key: 'units' | 'attractions' | 'offers' | 'pages' | 'news' | 'testimonials' | 'documents') =>
   !only.size || only.has(key) || ((key === 'news' || key === 'testimonials' || key === 'documents') && only.has('pages'))
 
@@ -94,6 +103,10 @@ async function main() {
   async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any, keep: string[] = []) {
     const existing = await payload.find({ collection, where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = existing.docs[0]?.id
+    if (id && !mayOverwrite(collection, slug)) {
+      payload.logger.info(`${collection}: ${slug} już jest w panelu, pomijam (nadpisanie: IMPORT_OVERWRITE=${collection}:${slug})`)
+      return
+    }
     for (const locale of LOCALES) {
       let data = { _status: 'published', ...build(locale), slug } as Any
       if (id) {
@@ -167,32 +180,18 @@ async function main() {
     }))
   }
 
-  let offerIndex = 0
-  for (const o of want('offers') ? (read('offers.json') as Any[]) : []) {
-    // "image" w offers.json (prefiks pliku z content/media) wygrywa z domyślną rotacją okładek
-    const fallback = ['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5]
-    const cover = (o.image ? img(o.image) : undefined) ?? img(fallback)
-    // active: false zostaje szkicem (niewidoczna); kolejność jak w offers.json
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], image: cover, order: offerIndex, icecoldresPromotionId: o.icecoldres_promotion_id || undefined, _status: o.active === false ? 'draft' : 'published' }))
-  }
-
-  // oferty bez promocji w IceColdRes nie są pokazywane, więc usuwamy je z panelu (Michał, 25.10.2026);
-  // gdy IceColdRes nie odpowiada, niczego nie usuwamy
-  const api = process.env.ICECOLDRES_API_URL ?? 'https://icecoldres.audiowizard.pl'
-  let promoIds: string[] | null = null
-  try {
-    const res = await fetch(`${api}/api/public/${process.env.ICECOLDRES_SLUG ?? 'booking'}/promotions`)
-    if (res.ok) promoIds = ((await res.json()) as { promotions: { id: string }[] }).promotions.map((p) => p.id)
-  } catch {
-    promoIds = null
-  }
-  if (promoIds && want('offers')) {
-    const stale = await payload.find({ collection: 'offers', limit: 0, pagination: false, depth: 0, draft: true })
-    for (const o of stale.docs) {
-      if (o.icecoldresPromotionId && promoIds.includes(o.icecoldresPromotionId)) continue
-      await payload.delete({ collection: 'offers', id: o.id })
-      console.log(`oferta ${o.slug} usunięta: brak promocji w IceColdRes`)
+  // oferty to promocje z IceColdRes (Michał, 10.11.2026): lista w panelu pochodzi z synchronizacji, nie z pliku
+  if (want('offers')) {
+    const api = process.env.ICECOLDRES_API_URL ?? 'https://icecoldres.audiowizard.pl'
+    let promotions: { id: string; name?: string; badge?: string }[] = []
+    try {
+      const r = await fetch(`${api}/api/public/${process.env.ICECOLDRES_SLUG ?? 'booking'}/promotions`)
+      if (r.ok) promotions = ((await r.json()) as { promotions: typeof promotions }).promotions
+    } catch {
+      promotions = []
     }
+    const res = await syncOffers(payload, promotions)
+    console.log(res ? `oferty: dodano ${res.created}, usunięto ${res.removed}` : 'oferty: IceColdRes nie odpowiada, bez zmian')
   }
 
   // Aktualności: opublikowane. Wcześniej import zapisywał je jako szkice z publikacją 11.01.2027 i każdy import chował
@@ -217,6 +216,8 @@ async function main() {
     const found = await payload.find({ collection: 'testimonials', where: { author: { equals: t.author } }, limit: 1, depth: 0 })
     // opinie pobrane automatycznie (z externalId) mają dosłowny tekst ze źródła, import ich nie nadpisuje
     if (found.docs[0]?.externalId) continue
+    // opinia już w panelu: jej treść zostaje (zmiany tylko w panelu)
+    if (found.docs[0] && !mayOverwrite('testimonials')) continue
     let id = found.docs[0]?.id
     for (const locale of LOCALES) {
       const data = { quote: t.quote?.[locale], author: t.author, source: t.source, rating: t.rating ?? undefined, date: t.date ? `${t.date}-01`.slice(0, 10) : undefined }
@@ -290,35 +291,40 @@ async function main() {
   }
   await upsertPage(payload, upsert, 'home', () => ({ pl: 'Strona główna', en: 'Home' }), (l) => home.blocks.map((b: Any) => withScene(b, homeBlock(b, l), l)).filter(Boolean))
 
+  // „Góralszczyzna dziś” (strona Sauna i bania): wstęp, potem każdy temat osobno, na przemian zdjęcie i tekst; zdjęcie po id tematu (O_<id>_…)
+  // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
+  const goralszczyznaBlocks = (s: Any, l: Loc): Any[] => [
+    { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), image: s.image ? img(s.image) : undefined, imagePosition: 'end' },
+    ...s.items.map((it: Any, j: number) => ({
+      blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
+      body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
+      image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
+    })),
+    // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
+    ...(s.glossary?.words?.length ? [{
+      blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
+      body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
+      image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
+    }] : []),
+  ]
+
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
-    { blockType: 'rituals', steps: rytualy.stages?.map((s: Any, i: number) => ({ word: s.word?.[l], text: s.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][i] ?? 'B') })), showPrices: true },
     // same prawdziwe zdjęcia sauny i bani, bez wygenerowanych ludzi (wg Michała)
     { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), image: img('W51_sauna_lawy'), imagePosition: 'end' },
     { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), image: img('B1_bania_lato'), imagePosition: 'start' },
     { blockType: 'richText', body: md(rytualy.rules?.[l]) },
+    ...goralszczyznaBlocks(rytualy.goralszczyzna, l),
   ], (l) => rytualy.lead?.[l])
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
-    osada.sections.flatMap((s: Any, i: number) => {
-      // „Góralszczyzna dziś”: wstęp, potem każdy temat osobno, na przemian zdjęcie i tekst; zdjęcie po id tematu (O_<id>_…)
-      // ma podpis autora i licencji z manifestu (CC BY / BY-SA wymaga widocznego podpisu)
-      if (s.id === 'goralszczyzna' && s.items?.some((it: Any) => it.id)) {
-        return [
-          { blockType: 'story', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]), image: s.image ? img(s.image) : undefined, imagePosition: 'end' },
-          ...s.items.map((it: Any, j: number) => ({
-            blockType: 'story', anchor: `${s.id}-${it.id}`, heading: it.heading?.[l],
-            body: md([it.word ? `*${it.word}*: ${it.translation?.[l]}` : null, it.body?.[l]].filter(Boolean).join('\n\n')),
-            image: it.id ? img(`O_${it.id}_`) : undefined, imagePosition: j % 2 ? 'end' : 'start',
-          })),
-          // słowniczek gwary po tematach: słowo, znaczenie i gdzie się z nim spotkacie
-          ...(s.glossary?.words?.length ? [{
-            blockType: 'story', anchor: `${s.id}-slowniczek`, heading: s.glossary.heading?.[l],
-            body: md([s.glossary.lead?.[l], s.glossary.words.map((w: Any) => `- **${w.word}** (${w.meaning?.[l]}). ${w.context?.[l]}`).join('\n')].filter(Boolean).join('\n\n')),
-            image: s.glossary.image ? img(s.glossary.image) : undefined, imagePosition: s.items.length % 2 ? 'end' : 'start',
-          }] : []),
-        ]
+    osada.sections.flatMap((s: Any, i: number): Any => {
+      // sekcje wyłączone ("enabled": false) zostają w pliku z treścią, ale nie trafiają na stronę; wyjątek: gospodarze (puste miejsce do uzupełnienia w panelu)
+      if (s.enabled === false && s.id !== 'gospodarze') return []
+      // opowieść o saunie i bani (etapy Ciepło, Mróz, Para, Cisza); ceny zostają na stronie Sauna i bania
+      if (s.id === 'opowiesc') {
+        return { blockType: 'rituals', anchor: s.id, heading: s.heading?.[l], steps: s.stages?.map((st: Any, j: number) => ({ word: st.word?.[l], text: st.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][j] ?? 'B') })), showPrices: false }
       }
       // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
       if (s.id === 'gospodarze') {
@@ -346,6 +352,10 @@ async function main() {
     const found = await payload.find({ collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = found.docs[0]?.id
     const created = !id
+    if (!created && !mayOverwrite('pages', slug)) {
+      payload.logger.info(`seo: ${slug} już jest w panelu, pomijam`)
+      continue
+    }
     const kind = slug === 'regulamin' || slug === 'prywatnosc' ? 'document' : 'section'
     for (const locale of LOCALES) {
       const seo = { title: entry.title?.[locale], description: entry.description?.[locale] }
@@ -358,7 +368,10 @@ async function main() {
   }
 
   const s = read('settings.json')
-  for (const locale of LOCALES) {
+  // ustawienia: import wypełnia je tylko wtedy, gdy nikt jeszcze niczego w nich nie zapisał
+  const current = (await payload.findGlobal({ slug: 'settings', depth: 0 }).catch(() => ({}))) as Any
+  const settingsExist = !!(current.phone || current.email || current.address)
+  for (const locale of settingsExist && !mayOverwrite('settings') ? [] : LOCALES) {
     await payload.updateGlobal({
       slug: 'settings',
       locale,

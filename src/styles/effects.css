@@ -19,8 +19,8 @@
   .mo-reserve { position: fixed; z-index: 20; margin: 0; inset-block-start: calc(var(--naglowek-wys) + var(--space-4) + var(--przelacznik-wys) + var(--space-3)); inset-inline-end: var(--space-5); box-shadow: var(--cien-wyskakujace, 0 8px 24px rgba(0, 0, 0, 0.18)); }
 }
 
-/* Strona główna ma własny przycisk (Sprawdź termin): bez zmian */
-body:has(.mo-opowiesc) .mo-reserve { display: none; }
+/* Strona główna: na desktopie bez zmian (ma własny przycisk Sprawdź termin), na telefonie Zarezerwuj w nagłówku jak na podstronach */
+@media (min-width: 768px) { body:has(.mo-opowiesc) .mo-reserve { display: none; } }
 
 /* Zmiana nastroju przez View Transitions: przenikanie w tempie mgły */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--ruch-mgla); animation-timing-function: var(--ease-przejscie); }

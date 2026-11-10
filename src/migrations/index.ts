@@ -1,6 +1,7 @@
 import * as migration_20261110_120000_oferty_bez_zdjec_z_importu from './20261110_120000_oferty_bez_zdjec_z_importu';
 import * as migration_20261110_130000_ukryj_tytul_rytualy from './20261110_130000_ukryj_tytul_rytualy';
 import * as migration_20261110_131000_przywroc_licznik_i_haslo_z_panelu from './20261110_131000_przywroc_licznik_i_haslo_z_panelu';
+import * as migration_20261110_140500_balony_link_strona_obiektu from './20261110_140500_balony_link_strona_obiektu';
 import * as migration_20261024_222614_initial from './20261024_222614_initial';
 import * as migration_20261024_223907_role_default from './20261024_223907_role_default';
 import * as migration_20261024_235001_pomiar_zgody from './20261024_235001_pomiar_zgody';
@@ -143,5 +144,10 @@ export const migrations = [
     up: migration_20261110_131000_przywroc_licznik_i_haslo_z_panelu.up,
     down: migration_20261110_131000_przywroc_licznik_i_haslo_z_panelu.down,
     name: '20261110_131000_przywroc_licznik_i_haslo_z_panelu'
+  },
+  {
+    up: migration_20261110_140500_balony_link_strona_obiektu.up,
+    down: migration_20261110_140500_balony_link_strona_obiektu.down,
+    name: '20261110_140500_balony_link_strona_obiektu'
   },
 ];

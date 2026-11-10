@@ -160,7 +160,7 @@
       "bathrooms": 3,
       "separate_wc": true,
       "ensuite_upstairs": true,
-      "max_guests": 10,
+      "max_guests": 8,
       "living_room": "upper"
     },
     "beds": {
@@ -168,8 +168,8 @@
       "en": "Three bedrooms with a double bed (160 cm) and one with two single beds. Plus a double sofa bed in the living room."
     },
     "facts_line": {
-      "pl": "120 m² · 4 sypialnie · 3 łazienki (w tym prywatna przy sypialni) + WC · do 10 osób · salon na piętrze",
-      "en": "120 m² · 4 bedrooms · 3 bathrooms (one en-suite) + WC · up to 10 guests · living room upstairs"
+      "pl": "120 m² · 4 sypialnie · 3 łazienki (w tym prywatna przy sypialni) + WC · do 8 osób · salon na piętrze",
+      "en": "120 m² · 4 bedrooms · 3 bathrooms (one en-suite) + WC · up to 8 guests · living room upstairs"
     },
     "lead": {
       "pl": "Domek z widokiem na Wołoszyn.",
@@ -189,8 +189,8 @@
         "en": "Wołoszyn cottage with sauna and hot tub, Tatras | Matygowa Osada"
       },
       "description": {
-        "pl": "Domek na wyłączność dla 10 osób koło Zakopanego: 120 m², kominek, prywatna sauna, gorąca bania i widok na Wołoszyn. Najniższa cena tylko u nas.",
-        "en": "A private cottage for 10 near Zakopane: 120 m², a fireplace, your own sauna, a hot tub and a view of Wołoszyn. Best rate only on our website."
+        "pl": "Domek na wyłączność dla 8 osób koło Zakopanego: 120 m², kominek, prywatna sauna, gorąca bania i widok na Wołoszyn. Najniższa cena tylko u nas.",
+        "en": "A private cottage for 8 near Zakopane: 120 m², a fireplace, your own sauna, a hot tub and a view of Wołoszyn. Best rate only on our website."
       }
     }
   },

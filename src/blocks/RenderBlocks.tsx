@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { BookingBar } from '@/components/BookingBar'
 import { Credit, Media } from '@/components/Media'
+import { PromoMedia } from '@/components/PromoMedia'
 import { RichText } from '@/components/RichText'
 import { FaqStructuredData, plainText } from '@/components/StructuredData'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
@@ -370,16 +371,19 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
-        {cards.map(({ promotion: p, image }) => (
+        {cards.map((card) => {
+          const p = card.promotion
+          return (
           // karta prowadzi do oferty na stronie Oferty, gdzie od razu otwiera się jej okienko z opisem
           <Link key={p.id} href={`${href(ctx.locale, 'offers')}#${p.id}`} className="mo-card" data-sezon-promo={promoSeason(p.season)}>
             {/* zdjęcie z panelu, a bez niego prawdziwe zdjęcie domku */}
-            <div className="mo-card__media"><Media media={image} /></div>
+            <div className="mo-card__media"><PromoMedia card={card} /></div>
             <p className="mo-label">{promoText(p, ctx.locale).badge ?? ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{promoText(p, ctx.locale).title}</h3>
             <p>{promoText(p, ctx.locale).description}</p>
           </Link>
-        ))}
+          )
+        })}
       </div>
       <SeasonOffersEmpty seasons={cards.map((c) => c.promotion.season)} ctx={ctx} />
     </Section>

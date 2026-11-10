@@ -22,6 +22,7 @@ import * as migration_20261110_083500_cztery_pory_roku from './20261110_083500_c
 import * as migration_20261110_090000_angielski_zgodny_z_polskim from './20261110_090000_angielski_zgodny_z_polskim';
 import * as migration_20261110_100000_sauna_i_bania_na_osade from './20261110_100000_sauna_i_bania_na_osade';
 import * as migration_20261110_110000_slowniczek_na_osade from './20261110_110000_slowniczek_na_osade';
+import * as migration_20261110_140600_hero_bania from './20261110_140600_hero_bania';
 
 export const migrations = [
   {
@@ -143,5 +144,10 @@ export const migrations = [
     up: migration_20261110_131000_przywroc_licznik_i_haslo_z_panelu.up,
     down: migration_20261110_131000_przywroc_licznik_i_haslo_z_panelu.down,
     name: '20261110_131000_przywroc_licznik_i_haslo_z_panelu'
+  },
+  {
+    up: migration_20261110_140600_hero_bania.up,
+    down: migration_20261110_140600_hero_bania.down,
+    name: '20261110_140600_hero_bania'
   },
 ];

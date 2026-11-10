@@ -90,7 +90,7 @@ function Intro({ block }: Props<'intro'>) {
         <dl className="mo-stats">
           {block.stats.map((s) => (
             <div key={s.id}>
-              <dt className="mo-label">{s.label}</dt>
+              {s.label ? <dt className="mo-label">{s.label}</dt> : null}
               <dd className="mo-price"><CountUp value={s.value} /></dd>
             </div>
           ))}

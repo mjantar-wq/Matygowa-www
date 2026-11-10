@@ -2,6 +2,9 @@
 
 Stan: wersja 1, 24.10.2026. Teksty PL i EN, gotowe do importu do Payload CMS.
 
+## Zasada: panel jest źródłem prawdy
+`pnpm seed` tylko zakłada brakujące wpisy, nie nadpisuje istniejących (patrz `docs/wdrozenie.md`). Zmiana treści, która już jest w panelu, idzie migracją na żywych danych (`src/migrations/`), a pliki tu aktualizujemy równolegle dla nowych środowisk.
+
 ## Format
 - Jeden plik JSON na kolekcję, `slug` jako klucz, pola lokalizowane `{"pl": "...", "en": "..."}` (gotowe na kolejne języki: sk, ar).
 - Tekst długi to Markdown (tylko *kursywa*), do zamiany na Lexical przy imporcie.

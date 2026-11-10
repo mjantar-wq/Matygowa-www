@@ -159,9 +159,11 @@ export const promoInSeason = (season: string | null | undefined, sezon: string |
 }
 
 /** Wszystkie promocje z cennika IceColdRes, także przyszłe i nieaktywne (lista do wyboru w panelu). */
+// Promocje niosą zdjęcie główne, więc odświeża je też temat „photos” (wgranie zdjęcia bez publikacji cennika), a zgubiony
+// webhook nadrabia bufor 5 minut zamiast godziny.
 export async function getAllPromotions(): Promise<{ today: string; promotions: Promotion[] }> {
   // raz na godzinę (Michał, 25.10.2026); zmiany w IceColdRes i tak odświeża od razu webhook z tematem pricing
-  const data = await get<{ today?: string; promotions: Promotion[] }>('/promotions', 3600, ['pricing'])
+  const data = await get<{ today?: string; promotions: Promotion[] }>('/promotions', 300, ['pricing', 'photos'])
   return { today: data?.today ?? new Date().toISOString().slice(0, 10), promotions: data?.promotions ?? [] }
 }
 

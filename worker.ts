@@ -1,10 +1,21 @@
 // Worker strony: obsługa żądań z OpenNext plus zadania zaplanowane (crons w wrangler.jsonc).
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- przy typecheck przed budowaniem pliku nie ma, po budowaniu jest
-// @ts-ignore: plik powstaje dopiero przy budowaniu (opennextjs-cloudflare build)
-import { default as handler } from './.open-next/worker.js'
 import { MEDIA_PREFIX, serveMedia } from './src/edge/media'
 import { cacheablePage, servePage } from './src/edge/pages'
 import { CRON_TOKEN } from './src/lib/cron'
+
+type OpenNext = { fetch: (req: Request, env: CloudflareEnv, ctx: ExecutionContext) => Promise<Response> }
+
+// Next + Payload to ciężki pakiet: jego uruchomienie w świeżym izolacie trwa kilka sekund. Ładujemy go dopiero, gdy
+// strony nie ma w buforze (src/edge/pages.ts), więc gość trafiający w bufor nie czeka na rozruch Next.
+let opennext: Promise<OpenNext> | undefined
+const handler: OpenNext = {
+  fetch: async (req, env, ctx) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- przy typecheck przed budowaniem pliku nie ma, po budowaniu jest
+    // @ts-ignore: plik powstaje dopiero przy budowaniu (opennextjs-cloudflare build)
+    opennext ??= import('./.open-next/worker.js').then((m) => m.default as OpenNext)
+    return (await opennext).fetch(req, env, ctx)
+  },
+}
 
 export default {
   // zdjęcia prosto z R2 i strony z bufora (src/edge); reszta jak dotąd przez OpenNext

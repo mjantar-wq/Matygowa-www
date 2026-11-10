@@ -1,4 +1,5 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-d1-sqlite'
+import { touchPages } from './touch-pages'
 
 /**
  * Cofnięcie przypadkowego powrotu starej treści na stronie głównej (10.11.2026).
@@ -21,6 +22,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     await db.run(sql.raw(`UPDATE \`${stats}\` SET value = '942 m n.p.m.' WHERE value = '942 m' AND _parent_id IN (${introIds})`))
     await db.run(sql.raw(`UPDATE \`${seasons}_locales\` SET heading = '${NEW_HEADING}' WHERE _locale = 'pl' AND heading = '${OLD_HEADING}' AND _parent_id IN (SELECT id FROM \`${seasons}\` WHERE 1 = 1${scope})`))
   }
+  await touchPages(db)
 }
 
 export async function down({ db: _db }: MigrateDownArgs): Promise<void> {}

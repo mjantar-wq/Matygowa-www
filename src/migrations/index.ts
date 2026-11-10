@@ -1,3 +1,4 @@
+import * as migration_20261110_120000_oferty_bez_zdjec_z_importu from './20261110_120000_oferty_bez_zdjec_z_importu';
 import * as migration_20261024_222614_initial from './20261024_222614_initial';
 import * as migration_20261024_223907_role_default from './20261024_223907_role_default';
 import * as migration_20261024_235001_pomiar_zgody from './20261024_235001_pomiar_zgody';
@@ -125,5 +126,10 @@ export const migrations = [
     up: migration_20261110_110000_slowniczek_na_osade.up,
     down: migration_20261110_110000_slowniczek_na_osade.down,
     name: '20261110_110000_slowniczek_na_osade'
+  },
+  {
+    up: migration_20261110_120000_oferty_bez_zdjec_z_importu.up,
+    down: migration_20261110_120000_oferty_bez_zdjec_z_importu.down,
+    name: '20261110_120000_oferty_bez_zdjec_z_importu'
   },
 ];

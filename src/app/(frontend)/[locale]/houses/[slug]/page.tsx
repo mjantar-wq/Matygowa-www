@@ -87,7 +87,7 @@ export default async function UnitPage({ params }: SlugParams) {
         <div style={{ display: 'grid', gap: 'var(--rynna)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', marginBlockStart: 'var(--space-6)' }}>
           {unit.plans?.length
             ? unit.plans.map((m) => (typeof m === 'object' ? <Media key={m.id} media={m} /> : null))
-            : planIllustrations(unit).map((src) => (
+            : planIllustrations(unit, ctx.locale).map((src) => (
                 // eslint-disable-next-line @next/next/no-img-element -- rzuty G3 (SVG) z public/
                 <img key={src} src={src} alt={`${t.house.plan}: ${unit.name}`} loading="lazy" style={{ inlineSize: '100%', blockSize: 'auto' }} />
               ))}
@@ -134,7 +134,7 @@ export default async function UnitPage({ params }: SlugParams) {
 }
 
 /** Rzuty G3 z wątku wizualnego (parter i piętro), dopóki w panelu nie ma własnych planów domu. */
-function planIllustrations(unit: Unit): string[] {
+function planIllustrations(unit: Unit, locale: string): string[] {
   const variant = unit.kind === 'apartment' ? 'apartament' : unit.livingRoom === 'upper' ? 'salon-pietro' : 'salon-parter'
-  return ['parter', 'pietro'].map((floor) => `/ilustracje/G3_rzut_${variant}_${floor}.svg`)
+  return ['parter', 'pietro'].map((floor) => `/ilustracje/G3_rzut_${variant}_${floor}${locale === 'pl' ? '' : '_en'}.svg`)
 }

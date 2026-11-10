@@ -153,6 +153,9 @@ export interface Page {
    */
   slug: string;
   kind?: ('section' | 'document') | null;
+  /**
+   * Tytuł zostaje w menu i dla wyszukiwarek, ale nie widać go nad pierwszą sekcją.
+   */
   hideTitle?: boolean | null;
   intro?: string | null;
   layout?:
@@ -1439,6 +1442,7 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   kind?: T;
+  hideTitle?: T;
   intro?: T;
   layout?:
     | T

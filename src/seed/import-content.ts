@@ -318,7 +318,7 @@ async function main() {
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
-    osada.sections.flatMap((s: Any, i: number) => {
+    osada.sections.flatMap((s: Any, i: number): Any => {
       // sekcje wyłączone ("enabled": false) zostają w pliku z treścią, ale nie trafiają na stronę; wyjątek: gospodarze (puste miejsce do uzupełnienia w panelu)
       if (s.enabled === false && s.id !== 'gospodarze') return []
       // opowieść o saunie i bani (etapy Ciepło, Mróz, Para, Cisza); ceny zostają na stronie Sauna i bania

@@ -1,7 +1,12 @@
 /**
  * Import treści roboczych z content/ (format wątku treści: pola {pl, en}, długi tekst w Markdown)
  * do panelu. Uruchomienie: pnpm seed (lokalnie) albo z PAYLOAD_REMOTE_BINDINGS=true na środowisku testowym.
- * Import jest idempotentny: wpis o tym samym adresie (slug) jest aktualizowany, nie dublowany.
+ *
+ * Źródłem prawdy jest panel (Michał, 10.11.2026): import tylko ZAKŁADA brakujące wpisy i niczego, co już jest w bazie,
+ * nie nadpisuje, więc ręczne edycje w panelu zostają. Zmiany w istniejących treściach (przeniesienie sekcji,
+ * poprawka tekstu) idą migracją na żywych danych (src/migrations), a nie ponownym importem plików.
+ * Świadome nadpisanie z plików (np. odtworzenie środowiska testowego): IMPORT_OVERWRITE=all albo lista kolekcji
+ * (units, attractions, offers, news, pages, settings) albo wpisów (pages:home, pages:rituals).
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -21,6 +26,9 @@ const read = (file: string) => JSON.parse(fs.readFileSync(path.join(DIR, file), 
 // Import partiami: IMPORT_ONLY=attractions (albo np. units,offers) wgrywa nowe pliki z manifestu i tylko te kolekcje.
 // „pages” to strony, opinie, dokumenty, aktualności i ustawienia; „news” same aktualności, „testimonials” same opinie, „documents” same dokumenty (regulamin, polityki), „regulamin” sam regulamin. Bez zmiennej import obejmuje wszystko.
 const only = new Set((process.env.IMPORT_ONLY ?? '').split(',').map((k) => k.trim()).filter(Boolean))
+// Co wolno nadpisać z plików; domyślnie nic (import tylko dopisuje brakujące wpisy).
+const overwrite = new Set((process.env.IMPORT_OVERWRITE ?? '').split(',').map((k) => k.trim()).filter(Boolean))
+const mayOverwrite = (collection: string, slug?: string) => overwrite.has('all') || overwrite.has(collection) || (!!slug && overwrite.has(`${collection}:${slug}`))
 const want = (key: 'units' | 'attractions' | 'offers' | 'pages' | 'news' | 'testimonials' | 'documents') =>
   !only.size || only.has(key) || ((key === 'news' || key === 'testimonials' || key === 'documents') && only.has('pages'))
 
@@ -94,6 +102,10 @@ async function main() {
   async function upsert(collection: CollectionSlug, slug: string, build: (l: Loc) => Any, keep: string[] = []) {
     const existing = await payload.find({ collection, where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = existing.docs[0]?.id
+    if (id && !mayOverwrite(collection, slug)) {
+      payload.logger.info(`${collection}: ${slug} już jest w panelu, pomijam (nadpisanie: IMPORT_OVERWRITE=${collection}:${slug})`)
+      return
+    }
     for (const locale of LOCALES) {
       let data = { _status: 'published', ...build(locale), slug } as Any
       if (id) {
@@ -217,6 +229,8 @@ async function main() {
     const found = await payload.find({ collection: 'testimonials', where: { author: { equals: t.author } }, limit: 1, depth: 0 })
     // opinie pobrane automatycznie (z externalId) mają dosłowny tekst ze źródła, import ich nie nadpisuje
     if (found.docs[0]?.externalId) continue
+    // opinia już w panelu: jej treść zostaje (zmiany tylko w panelu)
+    if (found.docs[0] && !mayOverwrite('testimonials')) continue
     let id = found.docs[0]?.id
     for (const locale of LOCALES) {
       const data = { quote: t.quote?.[locale], author: t.author, source: t.source, rating: t.rating ?? undefined, date: t.date ? `${t.date}-01`.slice(0, 10) : undefined }
@@ -351,6 +365,10 @@ async function main() {
     const found = await payload.find({ collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
     let id = found.docs[0]?.id
     const created = !id
+    if (!created && !mayOverwrite('pages', slug)) {
+      payload.logger.info(`seo: ${slug} już jest w panelu, pomijam`)
+      continue
+    }
     const kind = slug === 'regulamin' || slug === 'prywatnosc' ? 'document' : 'section'
     for (const locale of LOCALES) {
       const seo = { title: entry.title?.[locale], description: entry.description?.[locale] }
@@ -363,7 +381,10 @@ async function main() {
   }
 
   const s = read('settings.json')
-  for (const locale of LOCALES) {
+  // ustawienia: import wypełnia je tylko wtedy, gdy nikt jeszcze niczego w nich nie zapisał
+  const current = (await payload.findGlobal({ slug: 'settings', depth: 0 }).catch(() => ({}))) as Any
+  const settingsExist = !!(current.phone || current.email || current.address)
+  for (const locale of settingsExist && !mayOverwrite('settings') ? [] : LOCALES) {
     await payload.updateGlobal({
       slug: 'settings',
       locale,

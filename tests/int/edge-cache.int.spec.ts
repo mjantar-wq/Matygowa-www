@@ -32,11 +32,13 @@ describe('bufor stron dla gości', () => {
 })
 
 describe('mniejsze kopie zdjęć (srcset)', () => {
-  it('daje kopie węższe od oryginału i sam oryginał na końcu', () => {
+  it('daje kopie węższe od oryginału i na końcu kopię w rozmiarze oryginału', () => {
     expect(srcSet('/api/media/file/K12_hero.webp', 2048)).toBe(
-      '/api/media/file/K12_hero.webp?w=480 480w, /api/media/file/K12_hero.webp?w=828 828w, /api/media/file/K12_hero.webp?w=1200 1200w, /api/media/file/K12_hero.webp?w=1600 1600w, /api/media/file/K12_hero.webp 2048w',
+      '/api/media/file/K12_hero.webp?w=480 480w, /api/media/file/K12_hero.webp?w=828 828w, /api/media/file/K12_hero.webp?w=1200 1200w, /api/media/file/K12_hero.webp?w=1600 1600w, /api/media/file/K12_hero.webp?w=2048 2048w',
     )
     expect(srcSet('/api/media/file/sredni.jpg', 1000)).toBe('/api/media/file/sredni.jpg?w=480 480w, /api/media/file/sredni.jpg?w=828 828w, /api/media/file/sredni.jpg 1000w')
+    // oryginał szerszy niż największa kopia zostaje oryginałem (bez utraty jakości)
+    expect(srcSet('/api/media/file/duze.jpg', 3000)?.endsWith(', /api/media/file/duze.jpg 3000w')).toBe(true)
   })
   it('bez kopii dla SVG, filmów, małych plików i adresów spoza biblioteki', () => {
     expect(srcSet('/api/media/file/mapa.svg', 2000)).toBeUndefined()
@@ -44,5 +46,32 @@ describe('mniejsze kopie zdjęć (srcset)', () => {
     expect(srcSet('/api/media/file/ikona.png', 400)).toBeUndefined()
     expect(srcSet('/ilustracje/G2.png', 2000)).toBeUndefined()
     expect(srcSet('/api/media/file/a.webp', null)).toBeUndefined()
+  })
+})
+
+describe('contentVersion bez czekania na R2', () => {
+  it('po upływie krótkiego czasu oddaje starą wersję od ręki, a nową czyta w tle', async () => {
+    const { contentVersion, VERSION_KEY } = await import('@/edge/version')
+    let stored = 'a'
+    const bucket = {
+      get: async (key: string) => (key === VERSION_KEY ? ({ text: async () => stored } as R2ObjectBody) : null),
+      put: async () => ({}) as R2Object,
+    } as unknown as Pick<R2Bucket, 'get' | 'put'>
+    const t0 = 10_000_000_000_000
+    expect(await contentVersion(bucket, t0)).toBe('a')
+    stored = 'b'
+    const deferred: Promise<unknown>[] = []
+    const defer = (p: Promise<unknown>) => deferred.push(p)
+    // w ciągu 5 s: wartość z pamięci
+    expect(await contentVersion(bucket, t0 + 1000, defer)).toBe('a')
+    expect(deferred).toHaveLength(0)
+    // po 5 s: stara od ręki, odczyt w tle
+    expect(await contentVersion(bucket, t0 + 6000, defer)).toBe('a')
+    expect(deferred).toHaveLength(1)
+    await Promise.all(deferred)
+    expect(await contentVersion(bucket, t0 + 7000, defer)).toBe('b')
+    // po 60 s bez odczytu: czekamy na R2
+    stored = 'c'
+    expect(await contentVersion(bucket, t0 + 7000 + 5500 + 60_000, defer)).toBe('c')
   })
 })

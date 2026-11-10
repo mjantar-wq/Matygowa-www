@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { BookingBar } from '@/components/BookingBar'
 import { Credit, Media } from '@/components/Media'
+import { PromoMedia } from '@/components/PromoMedia'
 import { RichText } from '@/components/RichText'
 import { FaqStructuredData, plainText } from '@/components/StructuredData'
 import { PeaksPanorama, peakSvgId } from '@/components/PeaksPanorama'
@@ -9,7 +10,7 @@ import { SettlementMap } from '@/components/SettlementMap'
 import { GuidePopup } from '@/components/GuidePopup'
 import { SeasonOffersEmpty } from '@/components/SeasonOffersEmpty'
 import { PhotoGallery } from '@/components/PhotoGallery'
-import { AttractionEntry } from '@/components/Attraction'
+import { AttractionEntry, attractionSeason } from '@/components/Attraction'
 import { AttractionPopup } from '@/components/effects/AttractionPopup'
 import { CountUp } from '@/components/effects/CountUp'
 import { HeroStage } from '@/components/effects/HeroStage'
@@ -20,6 +21,7 @@ import { href } from '@/i18n/routes'
 import { findMany, UNIT_ORDER } from '@/lib/cms'
 import { engineSettings, formatPrice } from '@/lib/booking'
 import { getServices, promoSeason } from '@/lib/icecoldres'
+import { meetsMinRating } from '@/lib/reviews'
 import { getPromoCards, promoText } from '@/lib/promo-cards'
 import { fillText, termVars } from '@/lib/terms'
 import type { PageContext } from '@/lib/page'
@@ -89,7 +91,7 @@ function Intro({ block }: Props<'intro'>) {
         <dl className="mo-stats">
           {block.stats.map((s) => (
             <div key={s.id}>
-              <dt className="mo-label">{s.label}</dt>
+              {s.label ? <dt className="mo-label">{s.label}</dt> : null}
               <dd className="mo-price"><CountUp value={s.value} /></dd>
             </div>
           ))}
@@ -187,13 +189,17 @@ function Seasons({ block, ctx }: Props<'seasons'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
-        {(['winter', 'summer'] as const).map((key) => (
-          <article key={key} className="mo-card mo-season" data-sezon={key === 'winter' ? 'zima' : 'lato'}>
-            <div className="mo-card__media"><Media media={block[key]?.image} fallback={ctx.t.attractions[key]} /></div>
-            <h3 className="mo-h3">{block[key]?.title || ctx.t.attractions[key]}</h3>
-            <p>{block[key]?.text}</p>
-          </article>
-        ))}
+        {(['winter', 'spring', 'summer', 'autumn'] as const).map((key) => {
+          // przełącznik nastroju zna tylko zimę i lato; wiosna i jesień zostają w stałym miejscu
+          const image = key === 'winter' || key === 'summer' ? block[key]?.image : undefined
+          return (
+            <article key={key} className="mo-card mo-season" data-pora-roku={key} data-sezon={key === 'winter' ? 'zima' : key === 'summer' ? 'lato' : undefined}>
+              {image ? <div className="mo-card__media"><Media media={image} fallback={ctx.t.attractions[key]} /></div> : null}
+              <h3 className="mo-h3">{block[key]?.title || ctx.t.attractions[key]}</h3>
+              <p>{block[key]?.text}</p>
+            </article>
+          )
+        })}
       </div>
     </Section>
   )
@@ -203,6 +209,12 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
   const featured = await findMany<Attraction>('attractions', ctx.locale, { where: { featured: { equals: true } }, limit: block.limit ?? 6 })
   // bez wyróżnionych w panelu: pierwsze z listy, żeby karty prowadziły po mapie
   const attractions = featured.length ? featured : await findMany<Attraction>('attractions', ctx.locale, { limit: block.limit ?? 6 })
+  // punkty na mapie atrakcji tylko na jedną porę roku znikają razem z kartami przy drugiej porze przełącznika
+  const outOfSeason = attractions.flatMap((a) => {
+    const sezon = attractionSeason(a)
+    return sezon && a.mapId && /^[\w-]+$/.test(a.mapId) ? [`html[data-sezon="${sezon === 'lato' ? 'zima' : 'lato'}"] #${a.mapId}`] : []
+  })
+  const mapHidden = outOfSeason.length ? `${outOfSeason.join(',')}{display:none}` : ''
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
@@ -216,6 +228,8 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
       )}
       {immersive ? (
         // Lista nazw: najechanie albo fokus podświetla atrakcję na mapie (SceneStage) i rozwija jej opis
+        <>
+        {mapHidden ? <style>{mapHidden}</style> : null}
         <ul className="mo-attractions">
           {attractions.map((a) => (
             <AttractionPopup
@@ -227,6 +241,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
               className="mo-attraction"
               linkClassName="mo-attraction__name"
               focus={a.mapId || undefined}
+              season={attractionSeason(a)}
               card={
                 <>
                   <span className="mo-h3">{a.name}</span>
@@ -243,6 +258,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
             </AttractionPopup>
           ))}
         </ul>
+        </>
       ) : (
         <ul className="mo-cards mo-atrakcje" role="list">
           {attractions.map((a) => (
@@ -253,6 +269,7 @@ async function Surroundings({ block, ctx, immersive }: Props<'surroundings'>) {
               label={a.name}
               closeLabel={ctx.t.effects.close}
               linkClassName="mo-card"
+              season={attractionSeason(a)}
               card={
                 <>
                   <div className="mo-card__media"><Media media={a.image} /></div>
@@ -291,7 +308,11 @@ async function Testimonials({ block, ctx }: Props<'testimonials'>) {
   const chosen = (block.items ?? []).filter((x): x is Testimonial => typeof x === 'object')
   // Wszystkie opinie, źródła na zmianę; widać 10 (5 × 2 na komputerze, 6 na telefonie), a ReviewShuffle
   // losuje je przy każdym wejściu pół na pół z Google i Booking
-  const items = interleave(chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 100, sort: '-date' }))
+  const items = interleave(
+    (chosen.length ? chosen : await findMany<Testimonial>('testimonials', ctx.locale, { limit: 100, sort: '-date' })).filter((x) =>
+      meetsMinRating(x.source, x.rating),
+    ),
+  )
   return (
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
@@ -350,16 +371,19 @@ async function OffersNews({ block, ctx }: Props<'offersNews'>) {
     <Section block={block}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
       <div className="mo-cards" style={FIT}>
-        {cards.map(({ promotion: p, image }) => (
+        {cards.map((card) => {
+          const p = card.promotion
+          return (
           // karta prowadzi do oferty na stronie Oferty, gdzie od razu otwiera się jej okienko z opisem
           <Link key={p.id} href={`${href(ctx.locale, 'offers')}#${p.id}`} className="mo-card" data-sezon-promo={promoSeason(p.season)}>
             {/* zdjęcie z panelu, a bez niego prawdziwe zdjęcie domku */}
-            <div className="mo-card__media"><Media media={image} /></div>
+            <div className="mo-card__media"><PromoMedia card={card} /></div>
             <p className="mo-label">{promoText(p, ctx.locale).badge ?? ctx.t.offers.onlyHere}</p>
             <h3 className="mo-h3">{promoText(p, ctx.locale).title}</h3>
             <p>{promoText(p, ctx.locale).description}</p>
           </Link>
-        ))}
+          )
+        })}
       </div>
       <SeasonOffersEmpty seasons={cards.map((c) => c.promotion.season)} ctx={ctx} />
     </Section>

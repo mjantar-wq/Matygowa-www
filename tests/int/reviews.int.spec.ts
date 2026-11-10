@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { fetchGoogle, shortAuthor } from '@/lib/reviews'
+import { fetchGoogle, meetsMinRating, shortAuthor } from '@/lib/reviews'
 
 const review = (
   id: string,
@@ -28,6 +28,16 @@ describe('opinie z Google', () => {
     expect(shortAuthor('Jose')).toBe('Jose')
   })
 
+  it('progi: Google tylko 5/5, Booking od 9/10, reszta bez progu', () => {
+    expect(meetsMinRating('google', 5)).toBe(true)
+    expect(meetsMinRating('google', 4)).toBe(false)
+    expect(meetsMinRating('booking', 9)).toBe(true)
+    expect(meetsMinRating('booking', 8.9)).toBe(false)
+    expect(meetsMinRating('booking', 10)).toBe(true)
+    expect(meetsMinRating('other', 3)).toBe(true)
+    expect(meetsMinRating('google', null)).toBe(true)
+  })
+
   it('bez klucza nic nie pobiera', async () => {
     vi.stubEnv('GOOGLE_PLACES_API_KEY', '')
     expect(await fetchGoogle()).toEqual([])
@@ -40,6 +50,7 @@ describe('opinie z Google', () => {
       pl: [
         review('a', 5, 'pl', 'Pięknie'),
         review('b', 3, 'pl', 'Słabo'),
+        review('d', 4, 'pl', 'Dobrze'),
         review('c', 5, 'pl', ''),
       ],
       en: [review('a', 5, 'en', 'Beautiful', 'Pięknie')],

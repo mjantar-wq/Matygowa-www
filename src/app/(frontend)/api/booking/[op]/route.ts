@@ -1,5 +1,5 @@
-import { addDays, daysBetween, promoOn, type CalendarData } from '@/lib/availability'
-import { getCalendar, getPromotions, getProperty, promoInSeason, searchStay } from '@/lib/icecoldres'
+import { daysBetween } from '@/lib/availability'
+import { getProperty, promoInSeason, searchStay } from '@/lib/icecoldres'
 import { MAX_GUESTS } from '@/lib/count-picker'
 import { getUnitTiles } from '@/lib/unit-tiles'
 import { DEFAULT_LOCALE, isLocale } from '@/i18n/locales'
@@ -9,10 +9,10 @@ import { DEFAULT_LOCALE, isLocale } from '@/i18n/locales'
  * docs/integracja-strony.md w IceColdRes). Odpowiedzi są buforowane 45 s, a domy przychodzą
  * od razu z kodem (`code` = slug domu w panelu), więc przeglądarka nie zna identyfikatorów IceColdRes.
  *
- * GET /api/booking/calendar?from=RRRR-MM-DD&days=1..93&season=lato|zima
  * GET /api/booking/search?arrival=&departure=&adults=&children=&ages=4,9&lang=pl&season=lato|zima
  *   (każdy dom z opisem do kafelka: zdjęcia, metraż, wyposażenie)
  * `season` to pora roku z przełącznika strony: promocje innego sezonu nie dają plakietek (rabat w cenie zostaje).
+ * Kalendarz dostępności nie idzie przez pośrednika: to ramka z IceColdRes (components/EngineCalendar.tsx).
  */
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 const CACHE = { 'Cache-Control': 'public, max-age=30, s-maxage=45' }
@@ -23,37 +23,6 @@ function int(v: string | null, min: number, max: number, fallback?: number) {
   if (v === null || v === '') return fallback ?? null
   const n = Number(v)
   return Number.isInteger(n) && n >= min && n <= max ? n : null
-}
-
-async function calendar(url: URL) {
-  const from = url.searchParams.get('from') ?? ''
-  const days = int(url.searchParams.get('days'), 1, 93, 62)
-  if (!DATE.test(from) || days === null) return bad('invalid_input')
-  const [cal, promotions, property] = await Promise.all([getCalendar(from, days), getPromotions(), getProperty()])
-  if (!cal || !property) return unavailable()
-  const lang = url.searchParams.get('lang') === 'pl' ? 'pl' : 'en'
-  const season = url.searchParams.get('season')
-  const shown = promotions.filter((p) => promoInSeason(p.season, season))
-  const data: CalendarData = {
-    from: cal.from,
-    today: cal.today,
-    types: cal.types.flatMap((t) => {
-      const code = property.unitTypes.find((u) => u.id === t.unitTypeId)?.code
-      if (!code) return []
-      return [
-        {
-          code,
-          days: t.days.map((d, i) => {
-            const date = addDays(cal.from, i)
-            const promo = shown.find((p) => promoOn(p, date, t.unitTypeId))
-            // bez cen za noc, jak w kalendarzu IceColdRes (Michał, 25.10.2026)
-            return { ...d, promo: promo ? (lang === 'pl' ? promo.badge : promo.en.badge || promo.badge) : null }
-          }),
-        },
-      ]
-    }),
-  }
-  return Response.json(data, { headers: CACHE })
 }
 
 async function search(url: URL) {
@@ -107,7 +76,6 @@ async function search(url: URL) {
 export async function GET(request: Request, ctx: { params: Promise<{ op: string }> }) {
   const { op } = await ctx.params
   const url = new URL(request.url)
-  if (op === 'calendar') return calendar(url)
   if (op === 'search') return search(url)
   return Response.json({ error: 'not_found' }, { status: 404 })
 }

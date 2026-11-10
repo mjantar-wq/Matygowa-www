@@ -3,18 +3,11 @@
 import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import type { Locale } from '@/i18n/locales'
 import type { Dictionary } from '@/i18n/dictionaries'
-import {
-  arrivalInfo,
-  daysBetween,
-  departureInfo,
-  monthGrid,
-  nextMonth,
-  type CalendarData,
-  type DayReason,
-} from '@/lib/availability'
-import { bookingUrl, type EngineSettings } from '@/lib/booking'
+import { daysBetween } from '@/lib/availability'
+import { bookingUrl, engineCalendarUrl, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
 import { CountPicker } from './CountPicker'
+import { EngineCalendar } from './EngineCalendar'
 import { MAX_GUESTS } from '@/lib/count-picker'
 import { UnitResults, type Result } from './UnitResults'
 import { useAmbience } from './effects/ambience'
@@ -32,30 +25,17 @@ type Props = {
   slogan?: string | null
 }
 
-/** Stan dnia w kalendarzu i treść okienka (jak na stronie rezerwacji IceColdRes, Michał, 25.10.2026). */
-type DayNote = {
-  /** można kliknąć */
-  ok: boolean
-  /** dzień nie nadaje się na wyjazd, ale można od niego zacząć nowy pobyt */
-  soft?: boolean
-  promo: string | null
-  title: string
-  lines: string[]
-  tone: 'ok' | 'no' | 'sel'
-}
-
 type Search =
   | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'error' }
   | { status: 'done'; nights: number; results: Result[] }
 
-const today = () => new Date().toISOString().slice(0, 10)
 const AGES = Array.from({ length: 18 }, (_, i) => i)
 
 /**
- * Pasek rezerwacji (koncepcja S5): kalendarz bez cen, z okienkami o dostępności i min. pobycie jak w IceColdRes
- * oraz plakietkami promocji, osoby i wiek dzieci,
+ * Pasek rezerwacji (koncepcja S5): kalendarz dostępności z IceColdRes w ramce (ten sam co na stronie rezerwacji
+ * i w rezerwacji telefonicznej, Michał 2.11.2026), osoby i wiek dzieci,
  * wyniki z cenami z IceColdRes na stronie, a „Rezerwuj” otwiera silnik z wypełnionymi danymi, domem,
  * ofertą i utm_*. Z silnikiem Hotres albo bez cen (Ustawienia → Rezerwacje) od razu przechodzi do silnika.
  */
@@ -76,33 +56,17 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
   const adults = guests === null ? null : Math.max(1, guests - children)
   const [ages, setAges] = useState<(number | null)[]>([])
   const [open, setOpen] = useState(false)
-  const [month, setMonth] = useState(() => today().slice(0, 7))
-  const [chunks, setChunks] = useState<Record<string, CalendarData | null>>({})
+  // ramka kalendarza powstaje przy pierwszym otwarciu i zostaje (ukryta), żeby nie ładować jej za każdym razem
+  const [opened, setOpened] = useState(false)
+  if (open && !opened) setOpened(true)
   const [search, setSearch] = useState<Search>({ status: 'idle' })
   const root = useRef<HTMLDivElement>(null)
-  const calRef = useRef<HTMLDivElement>(null)
-  const tipId = `${uid}-okienko`
-  const [tip, setTip] = useState<{ date: string; left: number; top: number; arrow: number } | null>(null)
   const plural = new Intl.PluralRules(locale === 'pl' ? 'pl' : 'en')
   const nightsLabel = (n: number) =>
     `${n} ${t.nightForms[plural.select(n) as keyof typeof t.nightForms] ?? t.nightForms.other}`
 
-  // dostępność dwóch widocznych miesięcy (pośrednik strony buforuje ją 45 s)
-  // promocje strony mają sezon (lato/zima/oba), więc plakietki w kalendarzu zależą od przełącznika pory roku
+  // promocje strony mają sezon (lato/zima/oba), więc plakietki w wynikach zależą od przełącznika pory roku
   const { sezon } = useAmbience()
-  const chunkKey = `${sezon}:${month}`
-  const requested = useRef(new Set<string>())
-  useEffect(() => {
-    if (!live || !open || requested.current.has(chunkKey)) return
-    requested.current.add(chunkKey)
-    fetch(`/api/booking/calendar?from=${month}-01&days=62&lang=${locale}&season=${sezon}`)
-      .then((r): Promise<CalendarData | null> | null => (r.ok ? r.json() : null))
-      .catch((): null => null)
-      .then((data) => setChunks((c) => ({ ...c, [chunkKey]: data })))
-  }, [live, open, month, locale, sezon, chunkKey])
-  const seasonChunks = Object.entries(chunks)
-    .filter(([k]) => k.startsWith(`${sezon}:`))
-    .map(([, c]) => c)
 
   // otwarty kalendarz ma być cały na ekranie (Michał, 25.10.2026): przewijamy stronę albo okno, w którym stoi pasek
   useEffect(() => {
@@ -136,73 +100,10 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
     }
   }, [open])
 
-  const chunkFor = (date: string) =>
-    seasonChunks.find((c): c is CalendarData =>
-      Boolean(c && date >= c.from && daysBetween(c.from, date) < (c.types[0]?.days.length ?? 0)),
-    )
-
-  const fill = (text: string, n: number) => text.replace('{n}', nightsLabel(n))
-  const c = t.cal
-  const why = (r: DayReason | undefined, n: number | undefined, departing: boolean): string => {
-    if (r === 'past') return c.past
-    if (r === 'closed') return c.closed
-    if (r === 'noArrival') return c.noArrival
-    if (r === 'noDeparture') return c.noDeparture
-    if (r === 'maxStay' && n) return fill(c.maxStayFrom, n)
-    if (r === 'minStay' && n) return fill(departing ? c.minStayFrom : c.tooShort, n)
-    return departing ? c.occupiedStay : c.occupied
-  }
-
-  function dayNote(date: string): DayNote {
-    // „dziś” obiektu (strefa IceColdRes) może być dniem później niż w przeglądarce
-    const first = seasonChunks.find((x) => x)
-    if (date < today() || (first && date < first.today))
-      return { ok: false, promo: null, title: c.unavailable, lines: [c.past], tone: 'no' }
-    const data = chunkFor(date) ?? chunkFor(arrival)
-    const arr = data ? arrivalInfo(data, date, unit) : null
-    const promo = arr?.promo ?? null
-    if (date === arrival) {
-      const lines = [arr?.minStay ? fill(c.minStay, arr.minStay) : null, departure ? null : c.pickDeparture]
-      return { ok: true, promo, title: c.yourArrival, lines: lines.filter((l): l is string => !!l), tone: 'sel' }
-    }
-    if (date === departure) return { ok: true, promo, title: c.yourDeparture, lines: [fill(c.stay, daysBetween(arrival, departure))], tone: 'sel' }
-    if (arrival && !departure && date > arrival) {
-      const dep = data ? departureInfo(data, arrival, date, unit) : { ok: true }
-      if (dep.ok) return { ok: true, promo, title: c.departureOk, lines: [fill(c.stay, daysBetween(arrival, date))], tone: 'ok' }
-      const n = 'reason' in dep && dep.reason === 'maxStay' ? dep.maxStay : 'minStay' in dep ? dep.minStay : undefined
-      const lines = [why('reason' in dep ? dep.reason : undefined, n, true)]
-      if (arr?.ok) lines.push(c.startHere)
-      return { ok: !!arr?.ok, soft: !!arr?.ok, promo, title: c.departureNo, lines, tone: 'no' }
-    }
-    if (!arr || !arr.known) return { ok: true, promo, title: '', lines: [], tone: 'ok' }
-    if (!arr.ok) return { ok: false, promo: null, title: c.unavailable, lines: [why(arr.reason, arr.minStay, false)], tone: 'no' }
-    const lines = [promo, arr.minStay ? fill(c.minStay, arr.minStay) : null, c.pickArrival]
-    return { ok: true, promo, title: c.free, lines: lines.filter((l): l is string => !!l), tone: 'ok' }
-  }
-
-  const arrivalData = arrival ? chunkFor(arrival) : undefined
-  const arrivalMinStay = (arrivalData && arrivalInfo(arrivalData, arrival, unit).minStay) || 1
-
-  // okienko nad dniem: w obrębie kalendarza, strzałka nad środkiem dnia
-  function showTip(date: string, el: HTMLElement) {
-    const box = calRef.current?.getBoundingClientRect()
-    if (!box) return
-    const r = el.getBoundingClientRect()
-    const center = r.left + r.width / 2 - box.left
-    const half = Math.min(140, box.width / 2)
-    const left = Math.min(Math.max(center, half), box.width - half)
-    setTip({ date, left, top: r.top - box.top, arrow: center - left })
-  }
-
-  function pickDay(date: string, note: DayNote) {
-    if (!note.ok) return
-    if (arrival && !departure && date > arrival && !note.soft) {
-      setDeparture(date)
-      setOpen(false)
-    } else {
-      setArrival(date)
-      setDeparture('')
-    }
+  function pickDates(a: string, d: string) {
+    setArrival(a)
+    setDeparture(d)
+    if (a && d) setOpen(false)
   }
 
   function setChildCount(n: number) {
@@ -279,18 +180,6 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       month: 'short',
       timeZone: 'UTC',
     }).format(new Date(`${d}T00:00:00Z`))
-  const monthName = (m: string) =>
-    new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
-      month: 'long',
-      year: 'numeric',
-      timeZone: 'UTC',
-    }).format(new Date(`${m}-01T00:00:00Z`))
-  const weekdays = Array.from({ length: 7 }, (_, i) =>
-    new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
-      weekday: 'narrow',
-      timeZone: 'UTC',
-    }).format(new Date(Date.UTC(2024, 0, 1 + i))),
-  )
   const available = search.status === 'done' ? search.results.filter((r) => r.offers.length) : []
 
   return (
@@ -370,8 +259,8 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       ) : null}
 
       {children > 0 ? (
-        <fieldset className="mo-booking-ages">
-          <legend className="mo-label mo-booking-ages__title">{t.childAges}</legend>
+        <div className="mo-booking-ages" role="group" aria-labelledby="mo-booking-ages-title">
+          <span id="mo-booking-ages-title" className="mo-label mo-booking-ages__title">{t.childAges}</span>
           {ages.map((a, i) => (
             <label key={i} className="mo-field">
               <span className="mo-label">
@@ -396,109 +285,24 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
               </select>
             </label>
           ))}
-        </fieldset>
+        </div>
       ) : null}
 
-      {open ? (
+      {opened ? (
         <div
-          ref={calRef}
-          className="mo-calendar"
+          className="mo-calendar mo-calendar--ramka"
           id={calendarId}
           role="dialog"
           aria-label={arrival && !departure ? t.chooseDeparture : t.chooseArrival}
+          hidden={!open}
         >
-          <div className="mo-calendar__head">
-            <button
-              type="button"
-              className="mo-calendar__nav"
-              onClick={() => setMonth((m) => nextMonth(m, -1))}
-              disabled={month <= today().slice(0, 7)}
-              aria-label={t.prevMonth}
-            >
-              ←
-            </button>
-            <p className="mo-label">
-              {arrival && !departure ? t.chooseDeparture : t.chooseArrival}
-            </p>
-            <button
-              type="button"
-              className="mo-calendar__nav"
-              onClick={() => setMonth((m) => nextMonth(m))}
-              aria-label={t.nextMonth}
-            >
-              →
-            </button>
-          </div>
-          <div
-            className="mo-calendar__months"
-            aria-busy={live && !chunks[chunkKey] ? true : undefined}
-          >
-            {[month, nextMonth(month)].map((m) => (
-              <div key={m} className="mo-calendar__month">
-                <p className="mo-h3 mo-calendar__title">{monthName(m)}</p>
-                <div className="mo-calendar__grid" role="grid">
-                  {weekdays.map((w, i) => (
-                    <span key={i} className="mo-calendar__weekday" aria-hidden="true">
-                      {w}
-                    </span>
-                  ))}
-                  {monthGrid(m).map((d, i) => {
-                    if (!d) return <span key={i} />
-                    const s = dayNote(d)
-                    const inRange = arrival && departure && d > arrival && d < departure
-                    const edge = d === arrival || d === departure
-                    return (
-                      <button
-                        key={d}
-                        type="button"
-                        className="mo-calendar__day"
-                        data-range={inRange || undefined}
-                        data-edge={edge || undefined}
-                        data-soft={s.soft || undefined}
-                        aria-disabled={!s.ok || undefined}
-                        aria-pressed={edge}
-                        aria-label={[fmt(d), s.title, ...s.lines].filter(Boolean).join(', ')}
-                        aria-describedby={tip?.date === d ? tipId : undefined}
-                        onClick={(e) => {
-                          pickDay(d, s)
-                          showTip(d, e.currentTarget)
-                        }}
-                        onMouseEnter={(e) => showTip(d, e.currentTarget)}
-                        onFocus={(e) => showTip(d, e.currentTarget)}
-                        onMouseLeave={() => setTip(null)}
-                        onBlur={() => setTip(null)}
-                      >
-                        <span>{Number(d.slice(8))}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-          {(() => {
-            const n = tip ? dayNote(tip.date) : null
-            return n && (n.title || n.lines.length) ? (
-              <div
-                id={tipId}
-                role="tooltip"
-                className="mo-calendar__tip"
-                data-tone={n.tone}
-                style={{ left: tip!.left, top: tip!.top, ['--strzalka' as string]: `${tip!.arrow}px` }}
-              >
-                <span className="mo-calendar__tip-date">{fmt(tip!.date)}</span>
-                {n.title ? <strong>{n.title}</strong> : null}
-                {n.lines.map((l) => (
-                  <span key={l}>{l}</span>
-                ))}
-              </div>
-            ) : null
-          })()}
-          <p className="mo-body-s mo-calendar__hint">
-            {arrival && !departure
-              ? fill(c.hintDeparture, arrivalMinStay)
-              : c.hintArrival}
-          </p>
+          <EngineCalendar
+            src={engineCalendarUrl(engine, locale, { unit, arrival, departure })}
+            title={t.chooseArrival}
+            arrival={arrival}
+            departure={departure}
+            onPick={pickDates}
+          />
           <div className="mo-calendar__foot">
             <button
               type="button"

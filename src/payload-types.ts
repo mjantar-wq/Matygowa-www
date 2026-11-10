@@ -153,6 +153,7 @@ export interface Page {
    */
   slug: string;
   kind?: ('section' | 'document') | null;
+  hideTitle?: boolean | null;
   intro?: string | null;
   layout?:
     | (
@@ -227,7 +228,7 @@ export interface Page {
             stats?:
               | {
                   value: string;
-                  label: string;
+                  label?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -516,10 +517,18 @@ export interface Page {
               text?: string | null;
               image?: (number | null) | Media;
             };
+            spring?: {
+              title?: string | null;
+              text?: string | null;
+            };
             summer?: {
               title?: string | null;
               text?: string | null;
               image?: (number | null) | Media;
+            };
+            autumn?: {
+              title?: string | null;
+              text?: string | null;
             };
             /**
              * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
@@ -997,7 +1006,7 @@ export interface Testimonial {
   date?: string | null;
   unit?: (number | null) | Unit;
   /**
-   * Opinie z tym polem pobiera automatycznie raz w tygodniu zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.
+   * Opinie z tym polem pobiera automatycznie dwa razy w tygodniu zadanie z src/lib/reviews.ts. Wpisy ręczne go nie mają.
    */
   externalId?: string | null;
   updatedAt: string;
@@ -1185,7 +1194,7 @@ export interface Attraction {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Oferty na stronie to promocje z cennika IceColdRes: tytuł, opisy (także dłuższy), daty i sezon ustawiasz w IceColdRes. Tu wybierasz promocję z listy i dodajesz do niej zdjęcie.
+ * Lista ofert zaimportowanych z IceColdRes. Tutaj możesz włączyć albo wyłączyć pokazywanie oferty na stronie i podmienić jej zdjęcie. Treść i nowe oferty ustawiasz w IceColdRes.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "offers".
@@ -1193,28 +1202,16 @@ export interface Attraction {
 export interface Offer {
   id: number;
   title: string;
+  published?: boolean | null;
   /**
-   * Np. „hawran”. Zmiana adresu wymaga przekierowania ze starego.
-   */
-  slug: string;
-  order?: number | null;
-  /**
-   * Bez zdjęcia strona pokaże zdjęcie jednego z domków.
+   * Opcjonalnie. Zastępuje zdjęcie z IceColdRes; bez niego strona bierze zdjęcie z promocji w IceColdRes, a gdy go nie ma, losowe zdjęcie domku. Synchronizacja nie zmienia tego pola.
    */
   image?: (number | null) | Media;
-  /**
-   * Lista promocji z cennika IceColdRes. Bez wybranej promocji oferta nie pojawi się na stronie.
-   */
   icecoldresPromotionId?: string | null;
-  icecoldresOfferId?: string | null;
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
+  slug?: string | null;
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1712,12 +1709,24 @@ export interface PagesSelect<T extends boolean = true> {
                     text?: T;
                     image?: T;
                   };
+              spring?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                  };
               summer?:
                 | T
                 | {
                     title?: T;
                     text?: T;
                     image?: T;
+                  };
+              autumn?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
                   };
               scene?:
                 | T
@@ -2145,21 +2154,13 @@ export interface AttractionsSelect<T extends boolean = true> {
  */
 export interface OffersSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
-  order?: T;
+  published?: T;
   image?: T;
   icecoldresPromotionId?: T;
-  icecoldresOfferId?: T;
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
+  slug?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2381,15 +2382,10 @@ export interface TaskSchedulePublish {
   input: {
     type?: ('publish' | 'unpublish') | null;
     locale?: string | null;
-    doc?:
-      | ({
-          relationTo: 'news';
-          value: number | News;
-        } | null)
-      | ({
-          relationTo: 'offers';
-          value: number | Offer;
-        } | null);
+    doc?: {
+      relationTo: 'news';
+      value: number | News;
+    } | null;
     global?: string | null;
     user?: {
       relationTo: 'users';

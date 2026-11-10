@@ -1,7 +1,6 @@
 'use client'
 
 import { useSyncExternalStore } from 'react'
-import { AMBIENCE_KEYS as KEYS } from '@/lib/ambience'
 
 /** Nastrój strony: pora dnia i pora roku jako atrybuty <html>, na które reagują tokeny kolorów i efekty. */
 export type Pora = 'dzien' | 'noc'
@@ -31,17 +30,13 @@ export function useAmbience() {
   return useSyncExternalStore(subscribe, getSnapshot, () => SERVER)
 }
 
-/** Zmiana nastroju: płynne przejście kolorów (klasa mo-przejscie z tokenów) albo View Transition, jeśli jest. */
+/** Zmiana nastroju (tylko do przeładowania strony, bez zapisu): płynne przejście kolorów (klasa mo-przejscie z tokenów) albo View Transition, jeśli jest. */
 export function setAmbience(next: Partial<Ambience>) {
   const root = document.documentElement
   const apply = () => {
     if (next.pora) root.dataset.pora = next.pora
     if (next.sezon) root.dataset.sezon = next.sezon
   }
-  try {
-    if (next.pora) sessionStorage.setItem(KEYS.pora, next.pora)
-    if (next.sezon) sessionStorage.setItem(KEYS.sezon, next.sezon)
-  } catch {}
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
   const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown }
   if (!calm && doc.startViewTransition) {

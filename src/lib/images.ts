@@ -12,5 +12,9 @@ export function srcSet(url: string | null | undefined, width: number | null | un
   if (!url || !width || !url.startsWith('/api/media/file/') || url.includes('?') || !/\.(jpe?g|png|webp|avif)$/i.test(url)) return undefined
   const smaller = WIDTHS.filter((w) => w < width * 0.9)
   if (!smaller.length) return undefined
-  return [...smaller.map((w) => `${url}?w=${w} ${w}w`), `${url} ${width}w`].join(', ')
+  // Największy wariant to ten sam rozmiar co oryginał, ale w AVIF/WebP z Workera: oryginalny WebP 1600 px ważył ok. 200 KB,
+  // kopia AVIF w tych samych wymiarach ok. połowę mniej (ekrany retina i duże monitory). Oryginały spoza listy szerokości
+  // (np. 3000 px) zostają bez zmian, żeby nie obniżyć jakości.
+  const top = (WIDTHS as readonly number[]).includes(width) ? `${url}?w=${width}` : url
+  return [...smaller.map((w) => `${url}?w=${w} ${w}w`), `${top} ${width}w`].join(', ')
 }

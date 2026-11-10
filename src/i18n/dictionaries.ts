@@ -207,7 +207,7 @@ const en: Dictionary = {
   heroKicker: 'Private houses with sauna and hot tub in the Tatras',
   nav: {
     home: 'Home',
-    houses: 'Houses & apartments',
+    houses: 'Houses & Apartments',
     rituals: 'Rituals',
     surroundings: 'Surroundings',
     offers: 'Offers',

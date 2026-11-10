@@ -8,7 +8,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { AMBIENCE_INIT_SCRIPT } from '@/lib/ambience'
 import { dirOf } from '@/i18n/locales'
 import { href } from '@/i18n/routes'
-import { engineHosts } from '@/lib/booking'
+import { bookingUrl, engineHosts, engineSettings } from '@/lib/booking'
 import { pageContext, siteUrl, type LocaleParams } from '@/lib/page'
 import '@/styles/globals.css'
 
@@ -35,7 +35,7 @@ export default async function LocaleLayout({ children, params }: LocaleParams & 
         <script dangerouslySetInnerHTML={{ __html: AMBIENCE_INIT_SCRIPT }} />
         <Analytics gtmId={ctx.settings?.gtmId} />
         <a className="mo-skip mo-btn mo-btn--glowny" href="#tresc">{ctx.t.skipToContent}</a>
-        <SiteHeader locale={ctx.locale} t={ctx.t} />
+        <SiteHeader locale={ctx.locale} t={ctx.t} bookingHref={bookingUrl(engineSettings(ctx.settings), ctx.locale)} />
         <main id="tresc">{children}</main>
         <SiteFooter locale={ctx.locale} t={ctx.t} settings={ctx.settings} />
         <ConsentBanner t={ctx.t.consent} policyHref={href(ctx.locale, 'documents', 'cookies')} />

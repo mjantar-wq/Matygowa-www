@@ -9,13 +9,17 @@ import { AmbienceSwitch } from './effects/AmbienceSwitch'
 /** Główne sekcje menu (koncepcja: Szkielet strony); FAQ (strona Przewodnik) na samym końcu, za Kontaktem (Michał, 29.10.2026). */
 export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'settlement', 'gallery', 'surroundings', 'offers', 'news', 'contact', 'guide']
 
-export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary }) {
+export function SiteHeader({ locale, t, bookingHref }: { locale: Locale; t: Dictionary; bookingHref: string }) {
   return (
     <header className="mo-header">
       <div className="mo-container mo-header__inner">
         <HomeLink href={href(locale, 'home')} className="mo-logo">
           <span className="mo-sr">{t.siteName}</span>
         </HomeLink>
+        {/* na każdej stronie: telefon w pasku nagłówka, tablet i desktop pod przełącznikami (stale widoczny) */}
+        <a href={bookingHref} className="mo-btn mo-btn--glowny mo-btn--maly mo-reserve" data-track="header_reserve">
+          {t.booking.reserve}
+        </a>
         <button type="button" className="mo-menu-btn mo-btn mo-btn--obrys mo-btn--maly" popoverTarget="menu-glowne">
           {t.menu}
         </button>

@@ -63,7 +63,8 @@ const storable = (res: Response) => {
 
 function toResponse(s: Stored, state: string) {
   const headers = new Headers(s.headers)
-  headers.set('cache-control', 'private, no-cache, no-store, max-age=0, must-revalidate')
+  // bez no-store: przeglądarka może przywrócić stronę przy powrocie (bfcache), a i tak ją sprawdza przy zwykłym wejściu
+  headers.set('cache-control', 'private, no-cache, max-age=0, must-revalidate')
   headers.set('x-bufor', state)
   return new Response(s.body, { status: s.status, headers })
 }
@@ -105,7 +106,7 @@ export async function servePage(req: Request, env: Env, ctx: ExecutionContext, h
   let deploy: string
   let key: PageKey
   try {
-    version = await contentVersion(env.R2)
+    version = await contentVersion(env.R2, Date.now(), (p) => ctx.waitUntil(p))
     deploy = env.CF_VERSION_METADATA?.id ?? 'dev'
     key = await pageKey(req, version, deploy)
   } catch {

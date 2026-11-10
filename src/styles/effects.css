@@ -19,7 +19,15 @@
 /* Treści tylko dla jednej pory roku */
 :root[data-sezon="zima"] [data-tylko="lato"], :root[data-sezon="lato"] [data-tylko="zima"] { display: none; }
 :root[data-pora="dzien"] [data-tylko="noc"], :root[data-pora="noc"] [data-tylko="dzien"] { display: none; }
-:root[data-sezon="lato"] .mo-season[data-sezon="lato"], :root[data-sezon="zima"] .mo-season[data-sezon="zima"] { order: -1; }
+/* Kolejność kart pór roku zaczyna się od aktualnego nastroju: lato → Lato, Jesień, Zima, Wiosna; zima → Zima, Wiosna, Lato, Jesień */
+:root[data-sezon="lato"] .mo-season[data-pora-roku="summer"] { order: 1; }
+:root[data-sezon="lato"] .mo-season[data-pora-roku="autumn"] { order: 2; }
+:root[data-sezon="lato"] .mo-season[data-pora-roku="winter"] { order: 3; }
+:root[data-sezon="lato"] .mo-season[data-pora-roku="spring"] { order: 4; }
+:root[data-sezon="zima"] .mo-season[data-pora-roku="winter"] { order: 1; }
+:root[data-sezon="zima"] .mo-season[data-pora-roku="spring"] { order: 2; }
+:root[data-sezon="zima"] .mo-season[data-pora-roku="summer"] { order: 3; }
+:root[data-sezon="zima"] .mo-season[data-pora-roku="autumn"] { order: 4; }
 
 /* Hero: kadry nastrojów nałożone na siebie, widać ten, który pasuje do <html data-pora data-sezon> */
 .mo-hero__slide { position: absolute; inset: 0; display: none; }

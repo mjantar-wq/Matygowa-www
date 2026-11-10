@@ -10,11 +10,15 @@ on:
   workflow_dispatch:
     inputs:
       import_content:
-        description: 'Wgraj treści robocze i obrazy CGI z content/ do bazy na Cloudflare (nadpisuje te same wpisy w panelu)'
+        description: 'Wgraj z content/ do bazy na Cloudflare tylko BRAKUJĄCE wpisy i obrazy CGI (istniejące wpisy z panelu zostają; nadpisanie: pole poniżej)'
         type: boolean
         default: false
       import_only:
         description: 'Tylko wybrane części, np. attractions albo units,offers (puste: wszystko; pages = strony, opinie, dokumenty, ustawienia; testimonials = same opinie; documents = regulamin i polityki; regulamin = sam regulamin)'
+        type: string
+        default: ''
+      import_overwrite:
+        description: 'Świadome nadpisanie istniejących wpisów z plików: all albo lista, np. pages:home,units (puste: nic nie jest nadpisywane, panel jest źródłem prawdy)'
         type: string
         default: ''
 
@@ -166,6 +170,15 @@ jobs:
           done
           echo "::error::matygowa.audiowizard.pl nie odpowiada po wdrożeniu"
           exit 1
+      # Nowe wdrożenie ma nowy klucz bufora stron, więc bez rozgrzewki pierwszy gość każdej strony czekałby na pełne
+      # złożenie (kilka sekund). Odwiedzamy strony z mapy witryny: kopia trafia do R2, wspólnej dla wszystkich centrów.
+      - name: Rozgrzewka bufora stron
+        if: steps.secrets.outputs.ready == 'true'
+        continue-on-error: true
+        run: |
+          base=https://matygowa.audiowizard.pl
+          { echo "$base/"; echo "$base/en"; curl -fsS "$base/sitemap.xml" | grep -oE 'https://[^<]+' | head -80; } | sort -u \
+            | xargs -P 4 -I{} curl -sS -o /dev/null -w "%{http_code} %{time_starttransfer}s {}\n" {}
 
   import:
     name: Import treści do bazy na Cloudflare
@@ -188,3 +201,4 @@ jobs:
       - run: pnpm seed
         env:
           IMPORT_ONLY: ${{ inputs.import_only }}
+          IMPORT_OVERWRITE: ${{ inputs.import_overwrite }}

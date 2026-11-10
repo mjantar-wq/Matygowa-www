@@ -60,6 +60,22 @@ export interface PriceFrom {
   lowest: { nightly: number; arrival: string; nights: number; offerId: string } | null
 }
 
+/** Zdjęcie z panelu IceColdRes (zdjęcia domków i zdjęcie główne promocji): pliki `${src}/${szerokość}.webp|jpg`, punkt ostrości to ułamek 0–1. */
+export interface PublicPhoto {
+  id: string
+  src: string
+  width?: number | null
+  height?: number | null
+  widths?: number[]
+  format?: string
+  focusX?: number | null
+  focusY?: number | null
+  /** rozmyty podgląd (adres danych) */
+  placeholder?: string | null
+  /** opis zdjęcia: mapa język → tekst (jsonb, domyślnie {}); starsze dane mogą być zwykłym tekstem */
+  alt?: Record<string, string | null | undefined> | string | null
+}
+
 export interface Promotion {
   id: string
   badge: string
@@ -69,6 +85,8 @@ export interface Promotion {
   /** nazwa promocji w cenniku (tytuł karty oferty); plakietka to zwykle rabat */
   name?: string | null
   en: { name?: string | null; badge?: string; description?: string; story?: string | null }
+  /** zdjęcie główne z panelu IceColdRes (10.11.2026, punkt 32 kontraktu); null albo brak pola (starsze API): strona dobiera własne */
+  photo?: PublicPhoto | null
   stayFrom: string | null
   stayTo: string | null
   bookFrom: string | null
@@ -141,9 +159,11 @@ export const promoInSeason = (season: string | null | undefined, sezon: string |
 }
 
 /** Wszystkie promocje z cennika IceColdRes, także przyszłe i nieaktywne (lista do wyboru w panelu). */
+// Promocje niosą zdjęcie główne, więc odświeża je też temat „photos” (wgranie zdjęcia bez publikacji cennika), a zgubiony
+// webhook nadrabia bufor 5 minut zamiast godziny.
 export async function getAllPromotions(): Promise<{ today: string; promotions: Promotion[] }> {
   // raz na godzinę (Michał, 25.10.2026); zmiany w IceColdRes i tak odświeża od razu webhook z tematem pricing
-  const data = await get<{ today?: string; promotions: Promotion[] }>('/promotions', 3600, ['pricing'])
+  const data = await get<{ today?: string; promotions: Promotion[] }>('/promotions', 300, ['pricing', 'photos'])
   return { today: data?.today ?? new Date().toISOString().slice(0, 10), promotions: data?.promotions ?? [] }
 }
 

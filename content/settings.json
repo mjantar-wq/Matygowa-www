@@ -49,7 +49,7 @@
       "slug": "domy",
       "label": {
         "pl": "Domki i apartamenty",
-        "en": "Cottages & apartments"
+        "en": "Houses & Apartments"
       }
     },
     {
@@ -131,11 +131,11 @@
   "seo_default": {
     "title": {
       "pl": "Domki i apartamenty w Tatrach z sauną i banią | Matygowa Osada",
-      "en": "Tatra cottages with sauna and hot tub near Zakopane | Matygowa Osada"
+      "en": "Private houses with sauna and hot tub near Zakopane | Matygowa Osada"
     },
     "description": {
       "pl": "Domki na wyłączność koło Zakopanego i Bukowiny Tatrzańskiej: prywatna sauna, balia z jacuzzi, kominek i panorama Tatr. Na ferie, wakacje, święta i rodzinne chwile.",
-      "en": "Private cottages near Zakopane and Bukowina Tatrzańska: your own sauna, hot tub, fireplace and the full Tatra panorama. For ski trips, summer and Christmas."
+      "en": "Private houses and chalets near Zakopane and Bukowina Tatrzańska: your own sauna, hot tub, fireplace and the full Tatra panorama. For ski trips, summer and Christmas."
     }
   }
 }

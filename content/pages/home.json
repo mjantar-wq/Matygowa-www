@@ -24,7 +24,7 @@
       },
       "sub": {
         "pl": "Domki w Gliczarowie Górnym, każdy nazwany od szczytu, który widać z jego okien. Własna sauna, bania i cała panorama Tatr.",
-        "en": "Cottages in Gliczarów Górny, each named after the peak you see from its windows. Your own sauna, a hot tub and the whole Tatra panorama."
+        "en": "Mountain chalets in Gliczarów Górny, each named after the peak you see from its windows. Your own sauna, a hot tub and the whole Tatra panorama."
       },
       "media": "hero-panorama-swit"
     },
@@ -55,7 +55,7 @@
           "value": "6",
           "label": {
             "pl": "domków",
-            "en": "cottages"
+            "en": "houses"
           }
         },
         {

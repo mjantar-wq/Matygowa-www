@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { CmsPage, getPage } from '@/components/CmsPage'
 import { AttractionPopup as OfferPopup } from '@/components/effects/AttractionPopup'
-import { Media } from '@/components/Media'
+import { PromoMedia } from '@/components/PromoMedia'
 import { Placeholder } from '@/components/Placeholder'
 import { SeasonOffersEmpty } from '@/components/SeasonOffersEmpty'
 import { Markdown } from '@/components/Markdown'
@@ -102,7 +102,7 @@ export default async function OffersPage({ params }: LocaleParams) {
         <p className="mo-label">{ctx.settings?.priceSlogan || ctx.t.booking.lowestPrice}</p>
         <ul className="mo-cards" role="list">
           {cards.map((card) => {
-            const { promotion: p, image, offerId } = card
+            const { promotion: p, photo, image, offerId } = card
             const x = promoText(p, ctx.locale)
             const book = (
               <a href={bookingUrl(engine, ctx.locale, { offer: offerId || undefined, promotion: p.id })} data-track="offers" className="mo-btn mo-btn--glowny">
@@ -121,7 +121,7 @@ export default async function OffersPage({ params }: LocaleParams) {
                 season={promoSeason(p.season)}
                 card={
                   <>
-                    <div className="mo-card__media"><Media media={image} /></div>
+                    <div className="mo-card__media"><PromoMedia card={card} /></div>
                     <p className="mo-card__eyebrow">
                       <span className="mo-badge">{x.badge ?? ctx.t.offers.onlyHere}</span>
                     </p>
@@ -135,9 +135,9 @@ export default async function OffersPage({ params }: LocaleParams) {
                 }
               >
                 <article className="mo-atrakcja">
-                  {image ? (
+                  {photo || image ? (
                     <figure className="mo-zdjecie mo-atrakcja__zdjecie">
-                      <Media media={image} />
+                      <PromoMedia card={card} />
                     </figure>
                   ) : null}
                   <div className="mo-atrakcja__tekst">

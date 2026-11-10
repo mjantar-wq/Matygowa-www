@@ -17,6 +17,9 @@ export const getPage = (slug: string, ctx: PageContext) => findBySlug<Page>('pag
  * Strona złożona z bloków z panelu. Bez wpisu w panelu pokazuje tytuł z menu i zastępnik
  * (albo `fallback`, np. domyślny układ strony głównej), żeby szkielet był kompletny od pierwszego dnia.
  */
+/** Tytuł ukryty w panelu zostaje w kodzie strony (nagłówek h1 dla czytników i wyszukiwarek), tylko niewidoczny. */
+const SR_ONLY: React.CSSProperties = { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clipPath: 'inset(50%)', whiteSpace: 'nowrap' }
+
 export async function CmsPage({ route, slug, ctx, fallback, children, required, immersive }: { route: RouteKey; slug?: string; ctx: PageContext; fallback?: Page['layout']; children?: React.ReactNode; required?: boolean; immersive?: boolean }) {
   const page = await getPage(slug ?? route, ctx)
   if (!page && required) notFound()
@@ -40,7 +43,7 @@ export async function CmsPage({ route, slug, ctx, fallback, children, required, 
     <>
       {!hasHero ? (
         <header className="mo-section mo-container" style={{ paddingBlockEnd: 0 }}>
-          <h1 className="mo-h1">{page?.title ?? ctx.t.nav[route]}</h1>
+          <h1 className="mo-h1" style={page?.hideTitle ? SR_ONLY : undefined}>{page?.title ?? ctx.t.nav[route]}</h1>
           {page?.intro ? <p className="mo-lede">{page.intro}</p> : null}
         </header>
       ) : null}

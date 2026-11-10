@@ -14,7 +14,6 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
   const route = directionsUrl(settings)
   return (
     <footer className="mo-footer">
-      <div className="mo-footer__wzor" aria-hidden="true" />
       <div className="mo-container mo-footer__grid">
         <div>
           <p className="mo-label">{t.footer.contact}</p>

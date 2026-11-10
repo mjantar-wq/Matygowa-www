@@ -1,11 +1,10 @@
 import type { CollectionConfig } from 'payload'
-import { editors, publishedOrLoggedIn } from '../access'
-import { seoField } from '../fields/seo'
-import { slugField } from '../fields/slug'
+import { anyone, editors } from '../access'
 
 /**
- * Zdjęcie do promocji z IceColdRes (Michał, 25.10.2026: oferty i ich opisy pochodzą tylko z promocji w cenniku
- * IceColdRes). Łączone po ID promocji; oferta bez pasującej, aktywnej promocji nie jest pokazywana.
+ * Oferty na stronie to promocje z cennika IceColdRes (Michał, 10.11.2026: oferty dodajemy w IceColdRes). Panel pokazuje
+ * tylko listę zaimportowanych promocji z przełącznikiem „Pokazuj na stronie” i opcją podmiany zdjęcia. Wpisy zakłada i usuwa synchronizacja
+ * (src/lib/offers-sync.ts); tytuł, opisy, daty i sezon ustawia się w IceColdRes.
  */
 export const Offers: CollectionConfig = {
   slug: 'offers',
@@ -13,32 +12,25 @@ export const Offers: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Treści',
-    defaultColumns: ['title', 'icecoldresPromotionId', '_status'],
-    description: 'Oferty na stronie to promocje z cennika IceColdRes: tytuł, opisy (także dłuższy), daty i sezon ustawiasz w IceColdRes. Tu wybierasz promocję z listy i dodajesz do niej zdjęcie.',
+    defaultColumns: ['title', 'icecoldresPromotionId', 'published'],
+    description: 'Lista ofert zaimportowanych z IceColdRes. Tutaj możesz włączyć albo wyłączyć pokazywanie oferty na stronie i podmienić jej zdjęcie. Treść i nowe oferty ustawiasz w IceColdRes.',
+    components: { beforeList: ['/components/admin/OffersSync#OffersSync'] },
   },
-  access: { read: publishedOrLoggedIn, create: editors, update: editors, delete: editors },
-  versions: { drafts: { schedulePublish: true }, maxPerDoc: 20 },
+  // tylko synchronizacja zakłada i usuwa wpisy (Local API z pominięciem reguł dostępu)
+  access: { read: anyone, create: () => false, update: editors, delete: () => false },
   defaultSort: 'order',
   fields: [
-    { name: 'title', label: 'Tytuł', type: 'text', required: true, localized: true },
-    slugField(),
-    { name: 'order', label: 'Kolejność', type: 'number', defaultValue: 0, admin: { position: 'sidebar' } },
-    { name: 'image', label: 'Zdjęcie', type: 'upload', relationTo: 'media', admin: { description: 'Bez zdjęcia strona pokaże zdjęcie jednego z domków.' } },
+    { name: 'title', label: 'Oferta (z IceColdRes)', type: 'text', required: true, localized: true, admin: { readOnly: true } },
+    { name: 'published', label: 'Pokazuj na stronie', type: 'checkbox', defaultValue: true },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'icecoldresPromotionId',
-          label: 'Promocja w IceColdRes',
-          type: 'text',
-          admin: {
-            description: 'Lista promocji z cennika IceColdRes. Bez wybranej promocji oferta nie pojawi się na stronie.',
-            components: { Field: '/components/admin/PromotionField#PromotionField' },
-          },
-        },
-        { name: 'icecoldresOfferId', label: 'ID oferty w IceColdRes', type: 'text' },
-      ],
+      name: 'image',
+      label: 'Własne zdjęcie',
+      type: 'upload',
+      relationTo: 'media',
+      admin: { description: 'Opcjonalnie. Zastępuje zdjęcie z IceColdRes; bez niego strona bierze zdjęcie z promocji w IceColdRes, a gdy go nie ma, losowe zdjęcie domku. Synchronizacja nie zmienia tego pola.' },
     },
-    seoField,
+    { name: 'icecoldresPromotionId', label: 'ID promocji w IceColdRes', type: 'text', unique: true, index: true, admin: { readOnly: true } },
+    { name: 'slug', type: 'text', admin: { hidden: true } },
+    { name: 'order', type: 'number', defaultValue: 0, admin: { hidden: true } },
   ],
 }

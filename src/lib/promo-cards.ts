@@ -2,11 +2,14 @@ import 'server-only'
 import type { Locale } from '@/i18n/locales'
 import type { Media, Offer, Unit } from '@/payload-types'
 import { findMany, UNIT_ORDER } from './cms'
+import { promoPhoto, type PromoPhoto } from './promo-photo'
 import { getPromotions, getProperty, type PublicOffer, type Promotion } from './icecoldres'
 
 export interface PromoCard {
   promotion: Promotion
-  /** prawdziwe zdjęcie domku */
+  /** zdjęcie główne z panelu IceColdRes (ma pierwszeństwo przed `image`) */
+  photo: PromoPhoto | null
+  /** prawdziwe zdjęcie domku z galerii strony (gdy promocja nie ma własnego zdjęcia) */
   image: Media | null
   /** oferta IceColdRes, na którą prowadzi „Rezerwuj” */
   offerId: string | null
@@ -47,9 +50,10 @@ export async function getPromoCards(locale: Locale): Promise<PromoCard[]> {
   // oferta wyłączona w panelu (Treści → Oferty) nie ma karty; promocja bez wpisu jest pokazywana
   const hidden = new Set(offers.filter((o) => o.published === false).map((o) => o.icecoldresPromotionId))
   return promotions.filter((p) => !hidden.has(p.id)).map((promotion, i) => {
+    const photo = promoPhoto(promotion.photo, promoText(promotion, locale).title)
     const image = unique.length ? unique[(hash(promotion.id) + i) % unique.length] : null
     const offerId: string | null = null
     const offer = property?.offers?.find((o) => o.id === offerId) ?? property?.offers?.[0] ?? null
-    return { promotion, image, offerId, offer, onlinePayments: !!property?.onlinePayments }
+    return { promotion, photo, image, offerId, offer, onlinePayments: !!property?.onlinePayments }
   })
 }

@@ -22,19 +22,21 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     if (/testimonial|review/i.test(table)) continue
     const cols = await rows(db, sql.raw(`SELECT name, type FROM pragma_table_info(${q(table)})`))
     if (!cols.some((c) => c.name === '_locale')) continue
-    for (const c of cols) {
-      const col = String(c.name)
-      if (col === '_locale' || col === 'id' || col === '_parent_id' || !/^(text|varchar)/i.test(String(c.type))) continue
-      const C = `\`${table}\`.\`${col}\``
-      for (const [from, to] of EN_NAMING_PHRASES) {
-        await db.run(
-          sql.raw(`UPDATE \`${table}\` SET \`${col}\` = replace(${C}, ${q(from)}, ${q(to)}) WHERE \`_locale\` = 'en' AND instr(${C}, ${q(from)}) > 0`),
-        )
-      }
-      for (const [from, to] of EN_NAMING_EXACT) {
-        await db.run(sql.raw(`UPDATE \`${table}\` SET \`${col}\` = ${q(to)} WHERE \`_locale\` = 'en' AND ${C} = ${q(from)}`))
-      }
-    }
+    const textCols = cols
+      .map((c) => ({ name: String(c.name), type: String(c.type) }))
+      .filter((c) => !['_locale', 'id', '_parent_id'].includes(c.name) && /^(text|varchar)/i.test(c.type))
+    if (!textCols.length) continue
+    // Jedno zapytanie na tabelę (zdalna D1 jest wolna przy tysiącach zapytań): wszystkie kolumny naraz, łańcuch replace().
+    // Każda fraza zawiera „ottage”, więc wiersze bez niego pomijamy.
+    const sets = textCols.map(({ name: col }) => {
+      const C = `\`${col}\``
+      let expr = C
+      for (const [from, to] of EN_NAMING_PHRASES) expr = `replace(${expr}, ${q(from)}, ${q(to)})`
+      for (const [from, to] of EN_NAMING_EXACT) expr = `CASE WHEN ${C} = ${q(from)} THEN ${q(to)} ELSE ${expr} END`
+      return `${C} = ${expr}`
+    })
+    const any = textCols.map(({ name: col }) => `instr(\`${col}\`, 'ottage') > 0`).join(' OR ')
+    await db.run(sql.raw(`UPDATE \`${table}\` SET ${sets.join(', ')} WHERE \`_locale\` = 'en' AND (${any})`))
   }
   const now = sql`strftime('%Y-%m-%dT%H:%M:%fZ', 'now')`
   await db.run(sql`UPDATE \`units\` SET \`updated_at\` = ${now}`)

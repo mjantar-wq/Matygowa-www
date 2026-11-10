@@ -7,8 +7,8 @@ type Props = { media?: MediaDoc | string | number | null; className?: string; pr
  * Zdjęcie albo film z biblioteki. Bez pliku pokazuje zastępnik, żeby szkielet był kompletny.
  * Punkt ostrości z panelu ustawia kadrowanie (object-position) na telefonie.
  */
-/** Zdjęcie bez zgody właściciela (prawa „Czeka na zgodę”) widać tylko na stronie testowej, nie na produkcji. */
-export const cleared = (media?: MediaDoc | string | number | null) => !(typeof media === 'object' && media?.rights === 'pending' && process.env.SITE_INDEXABLE === 'true')
+/** Status praw w panelu to tylko informacja wewnętrzna: zdjęcia „Czeka na zgodę” pokazujemy też na produkcji (z podpisem autora). */
+export const cleared = (_media?: MediaDoc | string | number | null) => true
 
 export function Media({ media, className, priority, sizes, fallback, alt }: Props) {
   if (!media || typeof media !== 'object' || !media.url || !cleared(media)) {

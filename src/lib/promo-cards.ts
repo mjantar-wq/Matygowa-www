@@ -50,7 +50,7 @@ export async function getPromoCards(locale: Locale): Promise<PromoCard[]> {
   // oferta wyłączona w panelu (Treści → Oferty) nie ma karty; promocja bez wpisu jest pokazywana
   const hidden = new Set(offers.filter((o) => o.published === false).map((o) => o.icecoldresPromotionId))
   return promotions.filter((p) => !hidden.has(p.id)).map((promotion, i) => {
-    const photo = promoPhoto(promotion.photo, promoText(promotion, locale).title)
+    const photo = promoPhoto(promotion.photo, promoText(promotion, locale).title, locale)
     const image = unique.length ? unique[(hash(promotion.id) + i) % unique.length] : null
     const offerId: string | null = null
     const offer = property?.offers?.find((o) => o.id === offerId) ?? property?.offers?.[0] ?? null

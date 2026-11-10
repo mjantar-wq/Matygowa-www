@@ -4,6 +4,14 @@
  */
 import type { PublicPhoto } from './icecoldres'
 
+/** Opis zdjęcia: mapa język → tekst z zapasem po polsku (albo zwykły tekst); pusty to null. */
+export function photoAlt(alt: PublicPhoto['alt'], locale: string): string | null {
+  const pick = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim() : null)
+  if (typeof alt === 'string') return pick(alt)
+  if (!alt || typeof alt !== 'object') return null
+  return pick(alt[locale]) ?? pick(alt.pl)
+}
+
 export interface PromoPhoto {
   src: string
   srcSet: string | undefined
@@ -17,7 +25,7 @@ export interface PromoPhoto {
 
 const clamp = (n: number | null | undefined) => (typeof n === 'number' && Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 0.5)
 
-export function promoPhoto(photo: PublicPhoto | null | undefined, alt: string): PromoPhoto | null {
+export function promoPhoto(photo: PublicPhoto | null | undefined, alt: string, locale = 'pl'): PromoPhoto | null {
   if (!photo || typeof photo.src !== 'string' || !photo.src) return null
   const widths = [...new Set((photo.widths ?? []).filter((w) => Number.isFinite(w) && w > 0))].sort((a, b) => a - b)
   if (!widths.length) return null
@@ -32,7 +40,7 @@ export function promoPhoto(photo: PublicPhoto | null | undefined, alt: string): 
     srcSet: widths.length > 1 ? widths.map((w) => `${file(w)} ${w}w`).join(', ') : undefined,
     width: aspect ? main : undefined,
     height: aspect ? Math.round(main * aspect) : undefined,
-    alt: photo.alt?.trim() || alt,
+    alt: photoAlt(photo.alt, locale) ?? alt,
     position: `${clamp(photo.focusX) * 100}% ${clamp(photo.focusY) * 100}%`,
     placeholder: photo.placeholder?.startsWith('data:image/') ? photo.placeholder : null,
   }

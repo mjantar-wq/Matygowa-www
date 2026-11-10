@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { promoPhoto } from '@/lib/promo-photo'
 
-const photo = { id: 'p1', src: 'https://cdn.example/photos/p1', width: 3000, height: 2000, widths: [2000, 480, 1200, 828], format: 'webp', focusX: 0.25, focusY: 0.8, placeholder: 'data:image/jpeg;base64,AAAA', alt: 'Zima w Matygowej' }
+const photo = { id: 'p1', src: 'https://cdn.example/photos/p1', width: 3000, height: 2000, widths: [2000, 480, 1200, 828], format: 'webp', focusX: 0.25, focusY: 0.8, placeholder: 'data:image/jpeg;base64,AAAA', alt: { pl: 'Zima w Matygowej', en: 'Winter in Matygowa' } }
 
 describe('zdjęcie główne promocji z IceColdRes', () => {
   it('buduje src, srcset i punkt ostrości z pola photo', () => {
@@ -15,8 +15,17 @@ describe('zdjęcie główne promocji z IceColdRes', () => {
     expect(p.placeholder).toBe(photo.placeholder)
   })
 
+  it('alt to mapa języków: wybór po locale, zapas po polsku, a pusta mapa daje tytuł promocji', () => {
+    expect(promoPhoto(photo, 'Tytuł', 'en')!.alt).toBe('Winter in Matygowa')
+    expect(promoPhoto({ ...photo, alt: { pl: 'Zima' } }, 'Tytuł', 'en')!.alt).toBe('Zima')
+    expect(promoPhoto({ ...photo, alt: {} }, 'Tytuł', 'en')!.alt).toBe('Tytuł')
+    expect(promoPhoto({ ...photo, alt: { pl: '  ', en: null } }, 'Tytuł', 'en')!.alt).toBe('Tytuł')
+    expect(promoPhoto({ ...photo, alt: 'Zwykły tekst' }, 'Tytuł')!.alt).toBe('Zwykły tekst')
+    expect(promoPhoto({ ...photo, alt: null }, 'Tytuł')!.alt).toBe('Tytuł')
+  })
+
   it('JPEG dostaje rozszerzenie jpg, brak alt bierze tytuł promocji, brak ostrości to środek', () => {
-    const p = promoPhoto({ ...photo, format: 'jpeg', alt: '', focusX: null, focusY: undefined, width: null, height: null }, 'Tytuł promocji')!
+    const p = promoPhoto({ ...photo, format: 'jpeg', alt: {}, focusX: null, focusY: undefined, width: null, height: null }, 'Tytuł promocji')!
     expect(p.src).toBe('https://cdn.example/photos/p1/1200.jpg')
     expect(p.alt).toBe('Tytuł promocji')
     expect(p.position).toBe('50% 50%')

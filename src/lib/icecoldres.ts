@@ -72,7 +72,8 @@ export interface PublicPhoto {
   focusY?: number | null
   /** rozmyty podgląd (adres danych) */
   placeholder?: string | null
-  alt?: string | null
+  /** opis zdjęcia: mapa język → tekst (jsonb, domyślnie {}); starsze dane mogą być zwykłym tekstem */
+  alt?: Record<string, string | null | undefined> | string | null
 }
 
 export interface Promotion {

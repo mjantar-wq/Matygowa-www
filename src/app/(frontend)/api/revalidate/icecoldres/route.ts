@@ -3,6 +3,9 @@ import { revalidateTag } from 'next/cache'
 import { bumpContentVersion } from '@/edge/version'
 import { TOPICS, topicTag, type Topic } from '@/lib/icecoldres'
 import { verify } from '@/lib/webhook'
+import { syncOffers } from '@/lib/offers-sync'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
 /**
  * Webhook IceColdRes „treść zmieniona” (kontrakt: docs/integracja-strony.md w IceColdRes, sekcja Webhook).
@@ -28,6 +31,8 @@ export async function POST(request: Request) {
   const tags = topics.length ? topics.map(topicTag) : ['icecoldres']
   for (const tag of tags) revalidateTag(tag, { expire: 0 })
   // gotowe strony w buforze (src/edge/pages.ts) też mają się złożyć od nowa
+  // lista ofert w panelu zgrywa się z promocjami (błąd synchronizacji nie blokuje odświeżenia strony)
+  await syncOffers(await getPayload({ config })).catch(() => {})
   await bumpContentVersion((await getCloudflareContext({ async: true })).env.R2).catch(() => {})
   return Response.json({ ok: true, revalidated: tags })
 }

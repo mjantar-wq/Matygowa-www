@@ -6,6 +6,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import config from '@payload-config'
+import { syncOffers } from '../lib/offers-sync'
 import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
 import { getPayload, type CollectionSlug, type Payload } from 'payload'
 
@@ -167,32 +168,10 @@ async function main() {
     }))
   }
 
-  let offerIndex = 0
-  for (const o of want('offers') ? (read('offers.json') as Any[]) : []) {
-    // "image" w offers.json (prefiks pliku z content/media) wygrywa z domyślną rotacją okładek
-    const fallback = ['K6_', 'K9_', 'K2_hero_osada_noc_16x9', 'K8_', 'B6_'][offerIndex++ % 5]
-    const cover = (o.image ? img(o.image) : undefined) ?? img(fallback)
-    // active: false zostaje szkicem (niewidoczna); kolejność jak w offers.json
-    await upsert('offers', o.slug, (l) => ({ title: o.title?.[l], image: cover, order: offerIndex, icecoldresPromotionId: o.icecoldres_promotion_id || undefined, _status: o.active === false ? 'draft' : 'published' }))
-  }
-
-  // oferty bez promocji w IceColdRes nie są pokazywane, więc usuwamy je z panelu (Michał, 25.10.2026);
-  // gdy IceColdRes nie odpowiada, niczego nie usuwamy
-  const api = process.env.ICECOLDRES_API_URL ?? 'https://icecoldres.audiowizard.pl'
-  let promoIds: string[] | null = null
-  try {
-    const res = await fetch(`${api}/api/public/${process.env.ICECOLDRES_SLUG ?? 'booking'}/promotions`)
-    if (res.ok) promoIds = ((await res.json()) as { promotions: { id: string }[] }).promotions.map((p) => p.id)
-  } catch {
-    promoIds = null
-  }
-  if (promoIds && want('offers')) {
-    const stale = await payload.find({ collection: 'offers', limit: 0, pagination: false, depth: 0, draft: true })
-    for (const o of stale.docs) {
-      if (o.icecoldresPromotionId && promoIds.includes(o.icecoldresPromotionId)) continue
-      await payload.delete({ collection: 'offers', id: o.id })
-      console.log(`oferta ${o.slug} usunięta: brak promocji w IceColdRes`)
-    }
+  // oferty to promocje z IceColdRes (Michał, 10.11.2026): lista w panelu pochodzi z synchronizacji, nie z pliku
+  if (want('offers')) {
+    const res = await syncOffers(payload)
+    console.log(res ? `oferty: dodano ${res.created}, usunięto ${res.removed}` : 'oferty: IceColdRes nie odpowiada, bez zmian')
   }
 
   // Aktualności: opublikowane. Wcześniej import zapisywał je jako szkice z publikacją 11.01.2027 i każdy import chował

@@ -15,7 +15,8 @@ const rows = async (db: unknown, query: ReturnType<typeof sql>): Promise<Record<
 const q = (v: string) => `'${v.replace(/'/g, "''")}'`
 
 export async function up({ db }: MigrateUpArgs): Promise<void> {
-  const tables = await rows(db, sql`SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE '%\_locales' ESCAPE '\'`)
+  const all = await rows(db, sql`SELECT name FROM sqlite_master WHERE type = 'table'`)
+  const tables = all.filter((t) => String(t.name).endsWith('_locales'))
   for (const { name } of tables) {
     const table = String(name)
     if (/testimonial|review/i.test(table)) continue

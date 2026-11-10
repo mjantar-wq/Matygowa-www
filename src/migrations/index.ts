@@ -15,6 +15,7 @@ import * as migration_20261027_075500_warunki_platnosci from './20261027_075500_
 import * as migration_20261110_080900_oferty_tylko_lista from './20261110_080900_oferty_tylko_lista';
 import * as migration_20261110_083000_przenosiny_sekcji_na_zywych_danych from './20261110_083000_przenosiny_sekcji_na_zywych_danych';
 import * as migration_20261028_094500_apartamenty_na_dole from './20261028_094500_apartamenty_na_dole';
+import * as migration_20261110_083500_cztery_pory_roku from './20261110_083500_cztery_pory_roku';
 
 export const migrations = [
   {
@@ -101,5 +102,10 @@ export const migrations = [
     up: migration_20261110_083000_przenosiny_sekcji_na_zywych_danych.up,
     down: migration_20261110_083000_przenosiny_sekcji_na_zywych_danych.down,
     name: '20261110_083000_przenosiny_sekcji_na_zywych_danych'
+  },
+  {
+    up: migration_20261110_083500_cztery_pory_roku.up,
+    down: migration_20261110_083500_cztery_pory_roku.down,
+    name: '20261110_083500_cztery_pory_roku'
   },
 ];

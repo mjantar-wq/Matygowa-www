@@ -516,10 +516,18 @@ export interface Page {
               text?: string | null;
               image?: (number | null) | Media;
             };
+            spring?: {
+              title?: string | null;
+              text?: string | null;
+            };
             summer?: {
               title?: string | null;
               text?: string | null;
               image?: (number | null) | Media;
+            };
+            autumn?: {
+              title?: string | null;
+              text?: string | null;
             };
             /**
              * Tło, które przenika się, gdy ta część jest na środku ekranu. Bez sceny zostaje poprzednia.
@@ -1696,12 +1704,24 @@ export interface PagesSelect<T extends boolean = true> {
                     text?: T;
                     image?: T;
                   };
+              spring?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                  };
               summer?:
                 | T
                 | {
                     title?: T;
                     text?: T;
                     image?: T;
+                  };
+              autumn?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
                   };
               scene?:
                 | T

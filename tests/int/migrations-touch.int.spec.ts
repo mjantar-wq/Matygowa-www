@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
+// (pomocnik leży w src/lib, bo Payload uruchamia KAŻDY plik z src/migrations jako migrację)
 // Migracje od 10.11.2026 13:00, które zmieniają treść stron SQL-em, muszą podbić datę aktualizacji (touchPages),
 // inaczej panel nie ostrzeże o starej karcie i zapis z niej cofnie migrację.
 describe('migracje treści stron', () => {

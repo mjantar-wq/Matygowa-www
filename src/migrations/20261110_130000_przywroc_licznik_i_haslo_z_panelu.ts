@@ -1,5 +1,5 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-d1-sqlite'
-import { touchPages } from './touch-pages'
+import { touchPages } from '../lib/touch-pages'
 
 /**
  * Cofnięcie przypadkowego powrotu starej treści na stronie głównej (10.11.2026).

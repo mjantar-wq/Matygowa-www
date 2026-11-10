@@ -17,6 +17,7 @@ import * as migration_20261110_083000_przenosiny_sekcji_na_zywych_danych from '.
 import * as migration_20261028_094500_apartamenty_na_dole from './20261028_094500_apartamenty_na_dole';
 import * as migration_20261110_083500_cztery_pory_roku from './20261110_083500_cztery_pory_roku';
 import * as migration_20261110_090000_angielski_zgodny_z_polskim from './20261110_090000_angielski_zgodny_z_polskim';
+import * as migration_20261110_100000_sauna_i_bania_na_osade from './20261110_100000_sauna_i_bania_na_osade';
 
 export const migrations = [
   {
@@ -113,5 +114,10 @@ export const migrations = [
     up: migration_20261110_090000_angielski_zgodny_z_polskim.up,
     down: migration_20261110_090000_angielski_zgodny_z_polskim.down,
     name: '20261110_090000_angielski_zgodny_z_polskim'
+  },
+  {
+    up: migration_20261110_100000_sauna_i_bania_na_osade.up,
+    down: migration_20261110_100000_sauna_i_bania_na_osade.down,
+    name: '20261110_100000_sauna_i_bania_na_osade'
   },
 ];

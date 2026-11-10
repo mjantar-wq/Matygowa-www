@@ -308,23 +308,26 @@ async function main() {
     }] : []),
   ]
 
+  // Sauna i bania (Rytuały): narracja Ciepło, Mróz, Para, Cisza, potem Góralszczyzna dziś; ceny są w tekstach Sauny i Bani na Osadzie
   const rytualy = read('pages/rytualy.json')
   await upsertPage(payload, upsert, 'rituals', () => rytualy.title, (l) => [
-    // same prawdziwe zdjęcia sauny i bani, bez wygenerowanych ludzi (wg Michała)
-    { blockType: 'story', heading: rytualy.sauna?.title?.[l], body: md(rytualy.sauna?.body?.[l]), image: img('W51_sauna_lawy'), imagePosition: 'end' },
-    { blockType: 'story', heading: rytualy.bania?.title?.[l], body: md(rytualy.bania?.body?.[l]), image: img('B1_bania_lato'), imagePosition: 'start' },
-    { blockType: 'richText', body: md(rytualy.rules?.[l]) },
+    { blockType: 'rituals', anchor: 'opowiesc', heading: { pl: 'Jak kończy się dzień w osadzie', en: 'How a day here ends' }[l], steps: rytualy.stages?.map((st: Any, j: number) => ({ word: st.word?.[l], text: st.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][j] ?? 'B') })), showPrices: false },
     ...goralszczyznaBlocks(rytualy.goralszczyzna, l),
-  ], (l) => rytualy.lead?.[l])
+  ])
 
   const osada = read('pages/osada.json')
   await upsertPage(payload, upsert, 'settlement', () => osada.title, (l) =>
     osada.sections.flatMap((s: Any, i: number): Any => {
       // sekcje wyłączone ("enabled": false) zostają w pliku z treścią, ale nie trafiają na stronę; wyjątek: gospodarze (puste miejsce do uzupełnienia w panelu)
       if (s.enabled === false && s.id !== 'gospodarze') return []
-      // opowieść o saunie i bani (etapy Ciepło, Mróz, Para, Cisza); ceny zostają na stronie Sauna i bania
-      if (s.id === 'opowiesc') {
-        return { blockType: 'rituals', anchor: s.id, heading: s.heading?.[l], steps: s.stages?.map((st: Any, j: number) => ({ word: st.word?.[l], text: st.body?.[l], image: img(['W21_sauna_domek', 'K21_balia_zima', 'B1_bania_alpenglow', 'B5_'][j] ?? 'B') })), showPrices: false }
+      // blok Sauna i bania (wstęp, karty Sauna i Bania z cenami, zasady); same prawdziwe zdjęcia, bez wygenerowanych ludzi (wg Michała)
+      if (s.id === 'sauna-i-bania') {
+        return [
+          { blockType: 'richText', anchor: s.id, heading: s.heading?.[l], body: md(s.lead?.[l]) },
+          { blockType: 'story', heading: s.sauna?.title?.[l], body: md(s.sauna?.body?.[l]), image: img('W51_sauna_lawy'), imagePosition: 'end' },
+          { blockType: 'story', heading: s.bania?.title?.[l], body: md(s.bania?.body?.[l]), image: img('B1_bania_lato'), imagePosition: 'start' },
+          { blockType: 'richText', body: md(s.rules?.[l]) },
+        ]
       }
       // miejsce na gospodarzy: redakcja dopisze osoby w panelu, do tego czasu sekcja jest ukryta
       if (s.id === 'gospodarze') {

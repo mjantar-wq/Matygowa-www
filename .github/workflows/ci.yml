@@ -170,6 +170,15 @@ jobs:
           done
           echo "::error::matygowa.audiowizard.pl nie odpowiada po wdrożeniu"
           exit 1
+      # Nowe wdrożenie ma nowy klucz bufora stron, więc bez rozgrzewki pierwszy gość każdej strony czekałby na pełne
+      # złożenie (kilka sekund). Odwiedzamy strony z mapy witryny: kopia trafia do R2, wspólnej dla wszystkich centrów.
+      - name: Rozgrzewka bufora stron
+        if: steps.secrets.outputs.ready == 'true'
+        continue-on-error: true
+        run: |
+          base=https://matygowa.audiowizard.pl
+          { echo "$base/"; echo "$base/en"; curl -fsS "$base/sitemap.xml" | grep -oE 'https://[^<]+' | head -80; } | sort -u \
+            | xargs -P 4 -I{} curl -sS -o /dev/null -w "%{http_code} %{time_starttransfer}s {}\n" {}
 
   import:
     name: Import treści do bazy na Cloudflare

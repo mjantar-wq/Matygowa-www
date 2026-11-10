@@ -227,7 +227,7 @@ export interface Page {
             stats?:
               | {
                   value: string;
-                  label: string;
+                  label?: string | null;
                   id?: string | null;
                 }[]
               | null;

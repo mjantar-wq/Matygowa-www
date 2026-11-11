@@ -24,7 +24,14 @@ async function readVersion(bucket: Bucket, now: number): Promise<string> {
  * Bieżąca wersja. W izolacie pamiętana kilka sekund; po tym czasie odpowiedź idzie od razu ze starej wartości,
  * a odczyt z R2 dzieje się w tle (`defer`), więc odczyt R2 nie wydłuża pierwszej odpowiedzi.
  */
-export async function contentVersion(bucket: Bucket, now = Date.now(), defer?: (p: Promise<unknown>) => void): Promise<string> {
+export async function contentVersion(
+  bucket: Bucket,
+  now = Date.now(),
+  defer?: (p: Promise<unknown>) => void,
+  /** Rozgrzewka po zapisie musi znać nową wersję, więc nie korzysta z pamięci izolatu. */
+  force = false,
+): Promise<string> {
+  if (force) return readVersion(bucket, now)
   if (memo && memo.until > now) return memo.value
   if (memo && defer && now - memo.at < HARD_MS) {
     const stale = memo.value

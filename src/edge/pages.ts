@@ -27,6 +27,45 @@ const RSC_HEADERS = ['rsc', 'next-router-prefetch', 'next-router-state-tree', 'n
 const TRACKING = /^(utm_\w+|gclid|gbraid|wbraid|fbclid|msclkid|_gl)$/
 const DROP_HEADERS = ['set-cookie', 'cache-control', 'vary', 'content-length', 'content-encoding', 'transfer-encoding', 'x-bufor', 'x-bufor-czas']
 
+/** Nagłówek rozgrzewki po zapisie w panelu: strona czyta wtedy nową wersję treści od razu i składa się, jeśli jeszcze jej nie ma. */
+export const WARM_HEADER = 'x-bufor-rozgrzewka'
+/** Strony składane w tle po zapisie w panelu, żeby pierwszy gość nie czekał na ich złożenie. */
+const WARM_PATHS = ['/', '/en', '/domy', '/oferty', '/okolica', '/sauna-i-bania', '/kontakt', '/en/houses', '/en/offers']
+
+let warming: Promise<void> | null = null
+let dirty = false
+
+/**
+ * Po zapisie w panelu składa w tle najważniejsze strony. Kilka zapisów pod rząd daje jedną rozgrzewkę po ostatnim
+ * (zapisy dopiero co zakończone mogą być jeszcze niewidoczne dla innych izolatów, stąd krótka zwłoka).
+ */
+export function scheduleWarm(siteUrl: string | undefined, ctx: Pick<ExecutionContext, 'waitUntil'>) {
+  if (!siteUrl?.startsWith('https://')) return
+  if (warming) {
+    dirty = true
+    return
+  }
+  warming = (async () => {
+    do {
+      dirty = false
+      await new Promise((r) => setTimeout(r, 2500))
+      const queue = [...WARM_PATHS]
+      await Promise.all(
+        Array.from({ length: 3 }, async () => {
+          for (let path = queue.shift(); path; path = queue.shift()) {
+            await fetch(new URL(path, siteUrl), { headers: { [WARM_HEADER]: '1' } })
+              .then((r) => r.arrayBuffer())
+              .catch(() => {})
+          }
+        }),
+      )
+    } while (dirty)
+  })().finally(() => {
+    warming = null
+  })
+  ctx.waitUntil(warming)
+}
+
 export function cacheablePage(req: Request): boolean {
   if (req.method !== 'GET') return false
   const { pathname, protocol } = new URL(req.url)
@@ -106,7 +145,7 @@ export async function servePage(req: Request, env: Env, ctx: ExecutionContext, h
   let deploy: string
   let key: PageKey
   try {
-    version = await contentVersion(env.R2, Date.now(), (p) => ctx.waitUntil(p))
+    version = await contentVersion(env.R2, Date.now(), (p) => ctx.waitUntil(p), req.headers.has(WARM_HEADER))
     deploy = env.CF_VERSION_METADATA?.id ?? 'dev'
     key = await pageKey(req, version, deploy)
   } catch {

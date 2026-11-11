@@ -1,5 +1,6 @@
 'use client'
 
+import { preconnect } from 'react-dom'
 import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import type { Locale } from '@/i18n/locales'
 import type { Dictionary } from '@/i18n/dictionaries'
@@ -56,11 +57,36 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
   const adults = guests === null ? null : Math.max(1, guests - children)
   const [ages, setAges] = useState<(number | null)[]>([])
   const [open, setOpen] = useState(false)
-  // ramka kalendarza powstaje przy pierwszym otwarciu i zostaje (ukryta), żeby nie ładować jej za każdym razem
+  // ramka kalendarza powstaje z wyprzedzeniem (pasek na ekranie w bezruchu, najazd, dotyk, fokus) albo najpóźniej
+  // przy otwarciu i zostaje (ukryta), żeby kalendarz był gotowy, zanim gość kliknie „Przyjazd”
   const [opened, setOpened] = useState(false)
   if (open && !opened) setOpened(true)
   const [search, setSearch] = useState<Search>({ status: 'idle' })
   const root = useRef<HTMLDivElement>(null)
+
+  // połączenie z IceColdRes (DNS, TLS) otwieramy już przy renderze paska
+  if (live) preconnect(new URL(engineCalendarUrl(engine, locale)).origin)
+
+  // rozgrzewka ramki: gdy pasek wejdzie na ekran, w wolnej chwili ładujemy kalendarz (pierwsze otwarcie jest wtedy natychmiastowe)
+  useEffect(() => {
+    const el = root.current
+    if (!live || opened || !el) return
+    let idle: number | undefined
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const warm = () => setOpened(true)
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return
+      io.disconnect()
+      if ('requestIdleCallback' in window) idle = window.requestIdleCallback(warm, { timeout: 2500 })
+      else timer = setTimeout(warm, 800)
+    })
+    io.observe(el)
+    return () => {
+      io.disconnect()
+      if (idle !== undefined) window.cancelIdleCallback(idle)
+      clearTimeout(timer)
+    }
+  }, [live, opened])
   const plural = new Intl.PluralRules(locale === 'pl' ? 'pl' : 'en')
   const nightsLabel = (n: number) =>
     `${n} ${t.nightForms[plural.select(n) as keyof typeof t.nightForms] ?? t.nightForms.other}`
@@ -183,7 +209,13 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
   const available = search.status === 'done' ? search.results.filter((r) => r.offers.length) : []
 
   return (
-    <div className="mo-booking-wrap" ref={root}>
+    <div
+      className="mo-booking-wrap"
+      ref={root}
+      onPointerEnter={live ? () => setOpened(true) : undefined}
+      onTouchStart={live ? () => setOpened(true) : undefined}
+      onFocus={live ? () => setOpened(true) : undefined}
+    >
       <form
         className="mo-booking"
         method="get"

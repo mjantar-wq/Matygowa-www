@@ -1,4 +1,6 @@
 import type { CollectionConfig, GlobalConfig } from 'payload'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
+import { scheduleWarm } from '@/edge/pages'
 import { bumpContentVersion } from '@/edge/version'
 
 /**
@@ -9,6 +11,11 @@ export function contentVersionHooks(bucket: R2Bucket) {
   const bump = async () => {
     try {
       await bumpContentVersion(bucket)
+      // tylko w działającym Workerze (nie w poleceniach Payload ani testach)
+      if (typeof navigator !== 'undefined' && navigator.userAgent === 'Cloudflare-Workers') {
+        const { env, ctx } = await getCloudflareContext({ async: true })
+        scheduleWarm((env as unknown as Record<string, string>).NEXT_PUBLIC_SITE_URL, ctx)
+      }
     } catch (err) {
       console.error(JSON.stringify({ level: 'error', msg: 'content_version_bump_failed', err: String(err) }))
     }

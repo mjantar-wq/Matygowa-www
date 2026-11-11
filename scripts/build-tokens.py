@@ -32,7 +32,7 @@ out += [f"  --color-{c['name']}: {val(c, 0)};" for c in colors]
 out += [
     '  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;',
     '  --font-ui: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;',
-    '  --font-tabliczka: var(--font-rufina), Georgia, serif;',
+    '  --font-tabliczka: var(--font-playfair), Georgia, serif;',
 ]
 # Rozmiary płynne: od wartości „Telefon Npx” z opisu stylu (375px) do wartości desktop (1440px).
 for group in t["type"]["groups"]:

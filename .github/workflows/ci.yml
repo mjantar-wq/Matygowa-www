@@ -177,8 +177,8 @@ jobs:
         continue-on-error: true
         run: |
           base=https://matygowa.audiowizard.pl
-          { echo "$base/"; echo "$base/en"; curl -fsS "$base/sitemap.xml" | grep -oE 'https://[^<]+' | head -80; } | sort -u \
-            | xargs -P 4 -I{} curl -sS -o /dev/null -w "%{http_code} %{time_starttransfer}s {}\n" {}
+          { echo "$base/"; echo "$base/en"; curl -fsS "$base/sitemap.xml" | grep -oE '<loc>https://[^<]+' | sed 's/<loc>//' | head -80; } | sort -u \
+            | xargs -d '\n' -P 4 -I{} curl -sS -o /dev/null -w "%{http_code} %{time_starttransfer}s {}\n" {}
 
   import:
     name: Import treści do bazy na Cloudflare

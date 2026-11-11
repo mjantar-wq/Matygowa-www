@@ -11,5 +11,5 @@ Zasady w kodzie:
 
 - Żadnych kolorów, rozmiarów czcionek ani odstępów wpisanych na sztywno: tylko tokeny (`var(--…)` albo klasy z `@theme`).
 - Tryby ustawiają atrybuty na `<html>`: `data-pora="dzien|noc"`, `data-sezon="zima|lato"`.
-- Kroje przez next/font jako zmienne `--font-fraunces`, `--font-inter`, `--font-rufina` (nie `--font-display`, które definiuje tokens.css).
+- Kroje przez next/font jako zmienne `--font-fraunces`, `--font-inter`, `--font-playfair` (nie `--font-display`, które definiuje tokens.css).
 - Karty zawsze w anatomii `mo-card` (5 rzędów); rząd kart w `mo-cards` wyrównuje się subgridem.

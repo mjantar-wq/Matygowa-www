@@ -204,12 +204,12 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
       svg.style.transform = `translate3d(${shift.current}px, 0, 0)`
       return
     }
-    // Przesunięcie dochodzi do celu płynnie w rytmie klatek (wygładzanie wykładnicze), zamiast restartować
+    // Przesunięcie dochodzi do celu płynnie w rytmie klatek (wygładzanie wykładnicze, stała czasu 90 ms), zamiast restartować
     // przejście CSS przy każdym zdarzeniu przewijania.
     if (raf.current) return
     let last = performance.now()
     const step = (now: number) => {
-      const k = 1 - Math.exp(-(now - last) / 140)
+      const k = 1 - Math.exp(-(now - last) / 90)
       last = now
       shift.current += (target.current - shift.current) * k
       if (Math.abs(target.current - shift.current) < 0.3) shift.current = target.current

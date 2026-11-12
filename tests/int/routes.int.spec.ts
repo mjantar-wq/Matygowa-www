@@ -61,5 +61,6 @@ describe('silnik rezerwacji', () => {
 
   it('ceny w groszach', () => {
     expect(formatPrice(129900, 'pl')).toMatch(/^1\s?299\szł$/)
+    expect(formatPrice(358750, 'pl')).toMatch(/^3\s?587,50\szł$/)
   })
 })

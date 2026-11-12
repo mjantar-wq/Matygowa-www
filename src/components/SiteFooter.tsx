@@ -24,8 +24,8 @@ export function SiteFooter({ locale, t, settings }: { locale: Locale; t: Diction
         </div>
         <nav aria-label={t.menu}>
           <ul>
-            {(['contact', 'news'] as const).map((key) => (
-              <li key={key}><Link href={href(locale, key)} prefetch={false}>{t.nav[key]}</Link></li>
+            {(['contact', 'guide', 'news'] as const).map((key) => (
+              <li key={key}><Link href={href(locale, key)} prefetch={false}>{t.navMenu[key] ?? t.nav[key]}</Link></li>
             ))}
             {(['regulamin', 'prywatnosc', 'cookies'] as const).map((slug, i) => (
               <li key={slug}><Link href={href(locale, 'documents', slug)} prefetch={false}>{[t.footer.terms, t.footer.privacy, t.footer.cookies][i]}</Link></li>

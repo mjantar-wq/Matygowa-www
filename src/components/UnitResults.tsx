@@ -109,7 +109,7 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                         {formatPrice(best.total, locale)} <small>{t.total}</small>
                       </p>
                       <p className="mo-body-s mo-result__nightly">
-                        {formatPrice(Math.round(best.total / nights), locale)} {t.perNight}
+                        {formatPrice(Math.round(best.total / nights / 100) * 100, locale)} {t.perNight}
                       </p>
                     </div>
                     <a className="mo-btn mo-btn--glowny" href={book(r.code, best.offerId)} data-track="booking_results">

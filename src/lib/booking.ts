@@ -66,7 +66,9 @@ export function engineCalendarUrl(settings: EngineSettings | null, locale: Local
 
 /** Kwota w groszach jako tekst, np. 129900 → „1 299 zł”. */
 export function formatPrice(grosze: number, locale: Locale) {
-  return new Intl.NumberFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 }).format(grosze / 100)
+  // kwota z groszami (np. 3 587,50 zł) pokazana w całości, żeby zgadzała się z formularzem rezerwacji (audyt 12.11.2026)
+  const digits = Math.round(grosze) % 100 === 0 ? 0 : 2
+  return new Intl.NumberFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', { style: 'currency', currency: 'PLN', minimumFractionDigits: digits, maximumFractionDigits: digits }).format(grosze / 100)
 }
 
 /** Do komponentu w przeglądarce trafiają tylko pola silnika, nie całe ustawienia. */

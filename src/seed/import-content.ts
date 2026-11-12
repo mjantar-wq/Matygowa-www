@@ -124,7 +124,7 @@ async function main() {
   const peaks: Any[] = read('peaks.json')
   const units: Any[] = read('units.json')
   // własne zdjęcia domków z sesji (Łomnica, Lodowy, Wołoszyn); pozostałe domy mają kadr domu i wspólne wnętrza
-  const unitPhotos: Record<string, { hero: string; gallery: string[] }> = fs.existsSync(path.join(DIR, 'unit-photos.json')) ? read('unit-photos.json') : {}
+  const unitPhotos: Record<string, { hero: string; gallery: string[]; na_zywo?: string }> = fs.existsSync(path.join(DIR, 'unit-photos.json')) ? read('unit-photos.json') : {}
   for (const u of want('units') ? units : []) {
     const peak = peaks.find((p) => p.slug === u.peak) ?? {}
     const slug = u.icecoldres_code || u.peak
@@ -154,6 +154,29 @@ async function main() {
       livingRoom: u.facts?.living_room === 'upper' || u.facts?.living_room === 'first' ? 'upper' : u.facts?.living_room ? 'ground' : undefined,
       seo: { title: u.seo?.title?.[l], description: u.seo?.description?.[l] },
     }), ['order'])
+  }
+
+  // Zdjęcia domków na żywo: IMPORT_ONLY=unit-photos (tylko jawnie, nie w pełnym imporcie). Ustawia wyłącznie hero albo hero i galerię
+  // wg pola „na_zywo” w unit-photos.json; teksty i pozostałe pola domków z panelu zostają bez zmian.
+  if (only.has('unit-photos')) {
+    for (const [slug, p] of Object.entries(unitPhotos) as [string, Any][]) {
+      const found = await payload.find({ collection: 'units', where: { slug: { equals: slug } }, limit: 1, depth: 0, draft: true })
+      const id = found.docs[0]?.id
+      if (!id) {
+        payload.logger.warn(`units: ${slug} nie ma w panelu, pomijam zdjęcia`)
+        continue
+      }
+      const hero = media.get(p.hero)
+      if (!hero) throw new Error(`units: brak zdjęcia głównego ${p.hero} w manifeście`)
+      const data: Any = { hero }
+      if (p.na_zywo === 'hero+gallery') {
+        const gallery = [p.hero, ...p.gallery].map((f: string) => media.get(f))
+        if (gallery.some((g) => !g)) throw new Error(`units: ${slug}: brak pliku z galerii w manifeście`)
+        data.gallery = gallery
+      }
+      await payload.update({ collection: 'units', id, data, draft: false } as never)
+      payload.logger.info(`units: ${slug}: ${p.na_zywo === 'hero+gallery' ? 'zdjęcie główne i galeria' : 'zdjęcie główne'}`)
+    }
   }
 
   // Atrakcje: ta sama lista dla sekcji na głównej (featured, krótki opis "summary") i strony Okolica

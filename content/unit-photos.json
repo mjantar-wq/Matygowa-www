@@ -1,7 +1,7 @@
 {
- "_opis": "Zdjęcia domków z sesji Michała (Sesja Domy B / Osada Matygówka Domek-1, podfoldery z nazwą domku). hero: zdjęcie główne, gallery: reszta w kolejności salon, sypialnie, łazienki, na zewnątrz.",
+ "_opis": "Zdjęcia domków z sesji Michała (Sesja Domy B / Osada Matygówka Domek-1, podfoldery z nazwą domku). hero: zdjęcie główne, gallery: reszta w kolejności salon, sypialnie, łazienki, na zewnątrz. Zdjęcia główne (hero) wszystkich sześciu domków są takie jak na dotychczasowej stronie matygowaosada.pl (pliki „Zdjecia glowne domku”: V2 Gerlach, V3 Świnica, V4 Wołoszyn, V5 Łomnica, V6 Lodowy, S1 Hawrań). Galerie Hawrania, Gerlacha i Świnicy odtwarzają karuzele ze starej strony w ich kolejności. Pole „na_zywo”: co import_only=unit-photos ustawia w panelu (hero albo hero+gallery); reszta pól domku zostaje z panelu.",
  "woloszyn": {
-  "hero": "L30_balkon_krzesla_tatry_lato_3x2_foto.webp",
+  "hero": "V4_woloszyn_okno_3x2_foto.webp",
   "gallery": [
    "W56_kuchnia_jadalnia_szczyt_3x2_foto.webp",
    "W22_kuchnia_kominek_3x2_foto.webp",
@@ -38,10 +38,11 @@
    "L20_taras_domu_lato_3x2_foto.webp",
    "L21_laka_widok_osada_lato_3x2_foto.webp",
    "L22_balkon_lato_3x2_foto.webp"
-  ]
+  ],
+  "na_zywo": "hero"
  },
  "lodowy": {
-  "hero": "L24_dachy_osady_lato_3x2_foto.webp",
+  "hero": "V6_lodowy_okno_3x2_foto.webp",
   "gallery": [
    "W56_kuchnia_jadalnia_szczyt_3x2_foto.webp",
    "W22_kuchnia_kominek_3x2_foto.webp",
@@ -75,10 +76,11 @@
    "L20_taras_domu_lato_3x2_foto.webp",
    "L33_balkon_sasiedni_domek_lato_3x2_foto.webp",
    "L34_balkon_lasy_lato_3x2_foto.webp"
-  ]
+  ],
+  "na_zywo": "hero"
  },
  "lomnica": {
-  "hero": "L32_balkon_tatry_parking_lato_3x2_foto.webp",
+  "hero": "V5_lomnica_okno_3x2_foto.webp",
   "gallery": [
    "W56_kuchnia_jadalnia_szczyt_3x2_foto.webp",
    "W22_kuchnia_kominek_3x2_foto.webp",
@@ -110,6 +112,65 @@
    "L20_taras_domu_lato_3x2_foto.webp",
    "L31_balkon_okap_wzgorza_lato_3x2_foto.webp",
    "L34_balkon_lasy_lato_3x2_foto.webp"
+  ],
+  "na_zywo": "hero"
+ },
+ "hawran": {
+  "na_zywo": "hero+gallery",
+  "hero": "S1_hawran_dom_stol_okno_3x2_foto.webp",
+  "gallery": [
+   "W1_salon_kominek_3x2_foto.webp",
+   "W2_kuchnia_stol_3x2_foto.webp",
+   "N2_swieta_stol_zima_3x2_foto.webp",
+   "S2_aneks_kuchenny_3x2_foto.webp",
+   "S3_sypialnia_balkon_wzor_3x2_foto.webp",
+   "S4_sypialnia_drzwi_wzor_3x2_foto.webp",
+   "S5_sypialnia_polki_3x2_foto.webp",
+   "S6_lazienka_prysznic_3x2_foto.webp",
+   "S7_lazienka_sauna_korytarz_3x2_foto.webp",
+   "S8_narciarnia_drzwi_narty_3x2_foto.webp",
+   "W6_taras_wejscie_3x2_foto.webp",
+   "S9_balkon_widok_dolina_3x2_foto.webp",
+   "S18_dom_z_drona_zima_3x2_foto.webp"
+  ]
+ },
+ "gerlach": {
+  "na_zywo": "hero+gallery",
+  "hero": "V2_gerlach_okno_3x2_foto.webp",
+  "gallery": [
+   "W35_kominek_fotel_3x2_foto.webp",
+   "S10_salon_kanapa_okno_3x2_foto.webp",
+   "N2_swieta_stol_zima_3x2_foto.webp",
+   "S11_stol_kieliszki_tatry_3x2_foto.webp",
+   "S13_sypialnia_lustro_zaslona_3x2_foto.webp",
+   "S15_sypialnia_okno_polki_3x2_foto.webp",
+   "S5_sypialnia_polki_3x2_foto.webp",
+   "W3_sypialnia_ranek_3x2_foto.webp",
+   "S6_lazienka_prysznic_3x2_foto.webp",
+   "W5_sauna_3x2_foto.webp",
+   "B1_bania_alpenglow_3x2_foto.webp",
+   "S8_narciarnia_drzwi_narty_3x2_foto.webp",
+   "S18_dom_z_drona_zima_3x2_foto.webp"
+  ]
+ },
+ "swinica": {
+  "na_zywo": "hero+gallery",
+  "hero": "V3_swinica_okno_3x2_foto.webp",
+  "gallery": [
+   "W2_kuchnia_stol_3x2_foto.webp",
+   "V1_hawran_salon_3x2_foto.webp",
+   "S12_hol_jadalnia_3x2_foto.webp",
+   "S2_aneks_kuchenny_3x2_foto.webp",
+   "S13_sypialnia_lustro_zaslona_3x2_foto.webp",
+   "W3_sypialnia_ranek_3x2_foto.webp",
+   "S14_sypialnia_poddasze_telewizor_3x2_foto.webp",
+   "S8_narciarnia_drzwi_narty_3x2_foto.webp",
+   "S15_sypialnia_okno_polki_3x2_foto.webp",
+   "S4_sypialnia_drzwi_wzor_3x2_foto.webp",
+   "S16_sypialnia_szafa_otwarta_3x2_foto.webp",
+   "S17_lazienka_umywalka_sauna_3x2_foto.webp",
+   "W6_taras_wejscie_3x2_foto.webp",
+   "S18_dom_z_drona_zima_3x2_foto.webp"
   ]
  }
 }

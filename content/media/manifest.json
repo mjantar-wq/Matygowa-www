@@ -2,6 +2,18 @@
  "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
   {
+   "file": "S19_lomnica_dom_okno_3x2_foto.webp",
+   "shot": "S19",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Łomnica, wnętrze z widokiem na Tatry",
+    "en": "Łomnica cottage, the interior with a view of the Tatras"
+   },
+   "source": "lomnica_A7V02215-HDR.jpg (zdjęcie główne ze strony matygowaosada.pl)"
+  },
+  {
    "file": "S1_hawran_dom_stol_okno_3x2_foto.webp",
    "shot": "S1",
    "width": 1600,

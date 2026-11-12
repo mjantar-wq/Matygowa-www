@@ -43,7 +43,7 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
   const dialog = useRef<HTMLDialogElement>(null)
   const name = (r: Result) => (locale === 'pl' ? r.name : r.nameEn || r.name)
   const badgeOf = (o: Result['offers'][number]) => (locale === 'pl' ? o.badge : o.badgeEn || o.badge)
-  const elevation = (m: number) => `${m.toLocaleString(locale === 'pl' ? 'pl-PL' : 'en-GB')} ${t.elevationUnit}`
+  const elevation = (m: number) => `${t.peakLabel} ${m.toLocaleString(locale === 'pl' ? 'pl-PL' : 'en-GB')} ${t.elevationUnit}`
   const sorted = [...results.filter((r) => r.offers.length), ...results.filter((r) => !r.offers.length)]
   const open = sorted.find((r) => r.code === chosen && r.offers.length)
 

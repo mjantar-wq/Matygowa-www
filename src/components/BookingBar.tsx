@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import type { Locale } from '@/i18n/locales'
 import type { Dictionary } from '@/i18n/dictionaries'
+import { href } from '@/i18n/routes'
 import { daysBetween } from '@/lib/availability'
 import { bookingUrl, engineCalendarUrl, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
@@ -181,6 +182,8 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       timeZone: 'UTC',
     }).format(new Date(`${d}T00:00:00Z`))
   const available = search.status === 'done' ? search.results.filter((r) => r.offers.length) : []
+  // wszystkie domki odpadły z powodu liczby osób: grupa większa niż największy domek (audyt 12.11.2026)
+  const groupTooBig = search.status === 'done' && search.results.length > 0 && search.results.every((r) => r.reason === 'over_capacity')
 
   return (
     <div className="mo-booking-wrap" ref={root}>
@@ -279,7 +282,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
                 <option value="">{t.ageUnknown}</option>
                 {AGES.map((n) => (
                   <option key={n} value={n}>
-                    {n} {t.years}
+                    {t.ageLabel(n)}
                   </option>
                 ))}
               </select>
@@ -348,6 +351,14 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
               fx={fx}
               book={(code, offer) => go({ unit: code, offer })}
             />
+            {groupTooBig ? (
+              <p className="mo-body-s">
+                {t.groupTooBig}{' '}
+                <a href={href(locale, 'contact')} className="mo-link">
+                  {t.groupContact}
+                </a>
+              </p>
+            ) : null}
             {!available.length ? (
               <a href={go()} data-track="booking_results" className="mo-link">
                 {t.goToEngine}

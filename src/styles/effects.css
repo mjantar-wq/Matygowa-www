@@ -156,7 +156,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 /* Opowieść o bani i saunie: sticky zdjęcia na szerokim ekranie, kroki przewijane obok */
 .mo-steps { display: grid; gap: var(--space-8); }
 .mo-steps__stage { display: none; }
-.mo-steps__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-9, 4rem); }
+.mo-steps__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-5); }
 .mo-steps__inline { margin-block-end: var(--space-5); aspect-ratio: 3 / 2; overflow: hidden; }
 .mo-steps__inline > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
 .mo-steps__word { font-family: var(--font-display); font-style: italic; }
@@ -167,7 +167,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
   .mo-steps__frame[data-active] { opacity: 1; }
   .mo-steps__frame > * { inline-size: 100%; block-size: 100%; object-fit: cover; }
   .mo-steps__inline { display: none; }
-  .mo-steps__step { min-block-size: 70svh; display: grid; align-content: center; opacity: 0.35; transition: opacity var(--ruch-sredni) var(--ease-mgla); }
+  .mo-steps__step { min-block-size: 38svh; display: grid; align-content: center; opacity: 0.35; transition: opacity var(--ruch-sredni) var(--ease-mgla); }
   .mo-steps__step[data-active] { opacity: 1; }
 }
 .mo-steps__steam { position: absolute; inset: 0; pointer-events: none; }
@@ -306,7 +306,7 @@ button.mo-panorama__marker { background: none; border: 0; padding: var(--space-2
 /* Sauna i bania na stałym tle: scena przejmuje zdjęcia, zostają same słowa */
 .mo-opowiesc .mo-steps { display: block; }
 .mo-opowiesc :is(.mo-steps__stage, .mo-steps__inline) { display: none; }
-.mo-opowiesc .mo-steps__list { gap: 45svh; margin-block-start: 25svh; }
+.mo-opowiesc .mo-steps__list { gap: 22svh; margin-block-start: 15svh; }
 .mo-opowiesc .mo-steps__step { opacity: 1; min-block-size: 0; }
 
 /* „Sprawdź termin” (Michał, 26.10.2026): większy i wyróżniony; od tabletu w prawym górnym rogu pod przełącznikami dzień/noc i lato/zima, na telefonie na dole na całą szerokość */

@@ -51,8 +51,6 @@ const pl = {
     child: 'Dziecko',
     ageUnknown: 'nie chcę podawać',
     years: 'lat',
-    /** wiek dziecka z poprawną odmianą: 0 → „poniżej roku”, 1 → „1 rok”, 2-4 → „lata”, reszta „lat” */
-    ageLabel: (n: number) => (n === 0 ? 'poniżej roku' : n === 1 ? '1 rok' : n % 10 >= 2 && n % 10 <= 4 && (n < 12 || n > 14) ? `${n} lata` : `${n} lat`),
     nightForms: { one: 'noc', few: 'noce', many: 'nocy', other: 'nocy' },
     total: 'razem za pobyt',
     loading: 'Sprawdzam dostępność…',
@@ -251,7 +249,6 @@ const en: Dictionary = {
     child: 'Child',
     ageUnknown: 'rather not say',
     years: 'years',
-    ageLabel: (n: number) => (n === 0 ? 'under 1 year' : n === 1 ? '1 year' : `${n} years`),
     nightForms: { one: 'night', few: 'nights', many: 'nights', other: 'nights' },
     total: 'total for the stay',
     loading: 'Checking availability…',

@@ -4,6 +4,7 @@ import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } fro
 import type { Locale } from '@/i18n/locales'
 import type { Dictionary } from '@/i18n/dictionaries'
 import { href } from '@/i18n/routes'
+import { ageLabel } from '@/lib/age'
 import { daysBetween } from '@/lib/availability'
 import { bookingUrl, engineCalendarUrl, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
@@ -282,7 +283,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
                 <option value="">{t.ageUnknown}</option>
                 {AGES.map((n) => (
                   <option key={n} value={n}>
-                    {t.ageLabel(n)}
+                    {ageLabel(n, locale)}
                   </option>
                 ))}
               </select>

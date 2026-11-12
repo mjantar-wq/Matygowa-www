@@ -9,7 +9,7 @@ import { DEFAULT_LOCALE, type Locale } from './locales'
 export const ROUTES = {
   home: { pl: '', en: '', sk: '', ar: '' },
   houses: { pl: 'domy', en: 'houses', sk: 'domy', ar: 'houses' },
-  rituals: { pl: 'sauna-i-bania', en: 'sauna-and-hot-tub', sk: 'sauna-a-kade', ar: 'sauna-and-hot-tub' },
+  rituals: { pl: 'rytualy', en: 'rituals', sk: 'ritualy', ar: 'rituals' },
   surroundings: { pl: 'okolica', en: 'surroundings', sk: 'okolie', ar: 'surroundings' },
   offers: { pl: 'oferty', en: 'offers', sk: 'ponuky', ar: 'offers' },
   news: { pl: 'aktualnosci', en: 'news', sk: 'novinky', ar: 'news' },
@@ -21,6 +21,12 @@ export const ROUTES = {
 } as const satisfies Record<string, Record<Locale, string>>
 
 export type RouteKey = keyof typeof ROUTES
+
+/** Dawne adresy podstron (12.11.2026: „Rytuały” ma adres zgodny z nazwą, bez „sauna i bania”); przekierowanie 301 na nowy. */
+export const RENAMED_ROUTES: { route: RouteKey; locale: Locale; from: string }[] = [
+  { route: 'rituals', locale: 'pl', from: 'sauna-i-bania' },
+  { route: 'rituals', locale: 'en', from: 'sauna-and-hot-tub' },
+]
 
 /**
  * Dokumenty z krótkim adresem w głównym katalogu (jak na obecnej stronie: /regulamin, /en/terms).
@@ -79,6 +85,11 @@ export function localeRedirects(locales: Locale[]) {
       const to = href(locale, key)
       rules.push({ source: from, destination: to, permanent: true })
       rules.push({ source: `${from}/:slug`, destination: `${to}/:slug`, permanent: true })
+    }
+    for (const r of RENAMED_ROUTES.filter((x) => x.locale === locale)) {
+      const from = `${locale === DEFAULT_LOCALE ? '' : `/${locale}`}/${r.from}`
+      rules.push({ source: from, destination: href(locale, r.route), permanent: true })
+      rules.push({ source: `${from}/:slug`, destination: `${href(locale, r.route)}/:slug`, permanent: true })
     }
     for (const slug of Object.keys(DOCUMENT_PATHS)) {
       const to = href(locale, 'documents', slug)

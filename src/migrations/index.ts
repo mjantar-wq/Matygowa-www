@@ -35,6 +35,7 @@ import * as migration_20261110_140700_sauna_bania_platne from './20261110_140700
 
 import * as migration_20261112_110000_tytul_en_apartamenty from './20261112_110000_tytul_en_apartamenty';
 import * as migration_20261112_170000_osada_bania_urwane_obok from './20261112_170000_osada_bania_urwane_obok';
+import * as migration_20261112_180000_rytualy_tytul_i_adres from './20261112_180000_rytualy_tytul_i_adres';
 
 export const migrations = [
   {
@@ -216,5 +217,10 @@ export const migrations = [
     up: migration_20261112_170000_osada_bania_urwane_obok.up,
     down: migration_20261112_170000_osada_bania_urwane_obok.down,
     name: '20261112_170000_osada_bania_urwane_obok'
+  },
+  {
+    up: migration_20261112_180000_rytualy_tytul_i_adres.up,
+    down: migration_20261112_180000_rytualy_tytul_i_adres.down,
+    name: '20261112_180000_rytualy_tytul_i_adres'
   },
 ];

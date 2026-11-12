@@ -33,6 +33,8 @@ import * as migration_20261110_190000_en_nazwy_domkow_chalet from './20261110_19
 import * as migration_20261110_210000_bielska_jaskinia_opisy_en from './20261110_210000_bielska_jaskinia_opisy_en';
 import * as migration_20261110_140700_sauna_bania_platne from './20261110_140700_sauna_bania_platne';
 
+import * as migration_20261112_110000_tytul_en_apartamenty from './20261112_110000_tytul_en_apartamenty';
+
 export const migrations = [
   {
     up: migration_20261024_222614_initial.up,
@@ -203,5 +205,10 @@ export const migrations = [
     up: migration_20261110_210000_bielska_jaskinia_opisy_en.up,
     down: migration_20261110_210000_bielska_jaskinia_opisy_en.down,
     name: '20261110_210000_bielska_jaskinia_opisy_en'
+  },
+  {
+    up: migration_20261112_110000_tytul_en_apartamenty.up,
+    down: migration_20261112_110000_tytul_en_apartamenty.down,
+    name: '20261112_110000_tytul_en_apartamenty'
   },
 ];

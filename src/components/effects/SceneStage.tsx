@@ -56,7 +56,8 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
       const id = el?.dataset.scene
       if (!id || !scenes.some((s) => s.id === id)) return
       setActive(id)
-      setFocus(focusAt(el!.closest('section') ?? el!, mid))
+      // Panorama rusza do kolejnego szczytu wcześniej niż tło: kafel domku liczy się, gdy jest niżej niż środek ekranu.
+      setFocus(focusAt(el!.closest('section') ?? el!, innerHeight * 0.68))
       setReach((r) => Math.max(r, scenes.findIndex((s) => s.id === id) + 1))
     }
     const onScroll = () => {
@@ -204,12 +205,12 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
       svg.style.transform = `translate3d(${shift.current}px, 0, 0)`
       return
     }
-    // Przesunięcie dochodzi do celu płynnie w rytmie klatek (wygładzanie wykładnicze, stała czasu 90 ms), zamiast restartować
+    // Przesunięcie dochodzi do celu płynnie w rytmie klatek (wygładzanie wykładnicze), zamiast restartować
     // przejście CSS przy każdym zdarzeniu przewijania.
     if (raf.current) return
     let last = performance.now()
     const step = (now: number) => {
-      const k = 1 - Math.exp(-(now - last) / 90)
+      const k = 1 - Math.exp(-(now - last) / 140)
       last = now
       shift.current += (target.current - shift.current) * k
       if (Math.abs(target.current - shift.current) < 0.3) shift.current = target.current

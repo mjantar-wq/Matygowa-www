@@ -31,7 +31,8 @@ test.describe('Szkielet strony', () => {
 
   test('wersja EN i przełącznik języka zachowuje podstronę', async ({ page }) => {
     await page.goto('/domy')
-    await page.getByRole('link', { name: /^EN/ }).click()
+    await page.getByRole('button', { name: /Polski/ }).click()
+    await page.getByRole('link', { name: 'English' }).click()
     await expect(page).toHaveURL(/\/en\/houses$/)
     await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   })

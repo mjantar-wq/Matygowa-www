@@ -2,6 +2,234 @@
  "rule": "Pliki *_foto to prawdziwe zdjęcia (placeholder: false) i mają pierwszeństwo przed plikami *_cgi o tym samym kodzie ujęcia. CGI tylko tam, gdzie nie ma prawdziwego materiału; nie publikować CGI bez oznaczenia.",
  "items": [
   {
+   "file": "S19_lomnica_dom_okno_3x2_foto.webp",
+   "shot": "S19",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Łomnica, wnętrze z widokiem na Tatry",
+    "en": "Łomnica cottage, the interior with a view of the Tatras"
+   },
+   "source": "lomnica_A7V02215-HDR.jpg (zdjęcie główne ze strony matygowaosada.pl)"
+  },
+  {
+   "file": "S1_hawran_dom_stol_okno_3x2_foto.webp",
+   "shot": "S1",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Domek Hawrań, nakryty stół i widok na Tatry za oknem",
+    "en": "Hawrań cottage, a laid table and the Tatras in the window"
+   },
+   "source": "main_hawran_A7V08135-HDR.jpg"
+  },
+  {
+   "file": "S2_aneks_kuchenny_3x2_foto.webp",
+   "shot": "S2",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Aneks kuchenny z ekspresem do kawy",
+    "en": "The kitchenette with a coffee machine"
+   },
+   "source": "A7V08065-HDR.jpg"
+  },
+  {
+   "file": "S3_sypialnia_balkon_wzor_3x2_foto.webp",
+   "shot": "S3",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z balkonem i góralskim wzorem na ścianie",
+    "en": "Bedroom with a balcony and a highland pattern on the wall"
+   },
+   "source": "A7V08964-HDR.jpg"
+  },
+  {
+   "file": "S4_sypialnia_drzwi_wzor_3x2_foto.webp",
+   "shot": "S4",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z drewnianymi drzwiami i wzorem na ścianie",
+    "en": "Bedroom with a wooden door and a patterned wall"
+   },
+   "source": "A7V07950-HDR.jpg"
+  },
+  {
+   "file": "S5_sypialnia_polki_3x2_foto.webp",
+   "shot": "S5",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z półkami nad łóżkiem i zasłonami",
+    "en": "Bedroom with shelves above the bed and curtains"
+   },
+   "source": "A7V07965-HDR.jpg"
+  },
+  {
+   "file": "S6_lazienka_prysznic_3x2_foto.webp",
+   "shot": "S6",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z prysznicem i grzejnikiem drabinkowym",
+    "en": "Bathroom with a shower and a towel radiator"
+   },
+   "source": "A7V07865-HDR.jpg"
+  },
+  {
+   "file": "S7_lazienka_sauna_korytarz_3x2_foto.webp",
+   "shot": "S7",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sauna w łazience i widok na korytarz",
+    "en": "The bathroom sauna and a view into the hall"
+   },
+   "source": "A7V08105-HDR.jpg"
+  },
+  {
+   "file": "S8_narciarnia_drzwi_narty_3x2_foto.webp",
+   "shot": "S8",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Narciarnia z drewnianą ścianą i nartami",
+    "en": "The ski room with a wooden wall and skis"
+   },
+   "source": "DSC01949.jpg"
+  },
+  {
+   "file": "S9_balkon_widok_dolina_3x2_foto.webp",
+   "shot": "S9",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Widok z balkonu na ośnieżoną dolinę",
+    "en": "View from the balcony onto the snowy valley"
+   },
+   "source": "DSC02019.jpg"
+  },
+  {
+   "file": "S10_salon_kanapa_okno_3x2_foto.webp",
+   "shot": "S10",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Salon z kanapą i dużym oknem na Tatry",
+    "en": "Living room with a sofa and a large window onto the Tatras"
+   },
+   "source": "A7V08904-HDR.jpg"
+  },
+  {
+   "file": "S11_stol_kieliszki_tatry_3x2_foto.webp",
+   "shot": "S11",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Kieliszki na stole, za oknem śnieg i Tatry",
+    "en": "Glasses on the table, snow and the Tatras outside"
+   },
+   "source": "A7V08923-HDR.jpg"
+  },
+  {
+   "file": "S12_hol_jadalnia_3x2_foto.webp",
+   "shot": "S12",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Hol z widokiem na jadalnię",
+    "en": "The hall looking onto the dining room"
+   },
+   "source": "A7V08939-HDR.jpg"
+  },
+  {
+   "file": "S13_sypialnia_lustro_zaslona_3x2_foto.webp",
+   "shot": "S13",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z lustrem i zasłoną przy balkonie",
+    "en": "Bedroom with a mirror and a curtain by the balcony"
+   },
+   "source": "A7V08959-HDR.jpg"
+  },
+  {
+   "file": "S14_sypialnia_poddasze_telewizor_3x2_foto.webp",
+   "shot": "S14",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia na poddaszu z telewizorem",
+    "en": "Attic bedroom with a TV"
+   },
+   "source": "A7V07895-HDR.jpg"
+  },
+  {
+   "file": "S15_sypialnia_okno_polki_3x2_foto.webp",
+   "shot": "S15",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z oknem i półkami",
+    "en": "Bedroom with a window and shelves"
+   },
+   "source": "A7V07940-HDR.jpg"
+  },
+  {
+   "file": "S16_sypialnia_szafa_otwarta_3x2_foto.webp",
+   "shot": "S16",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Sypialnia z otwartą szafą pod skosem",
+    "en": "Bedroom with an open wardrobe under the eaves"
+   },
+   "source": "A7V08080-HDR.jpg"
+  },
+  {
+   "file": "S17_lazienka_umywalka_sauna_3x2_foto.webp",
+   "shot": "S17",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Łazienka z umywalką, prysznicem i sauną",
+    "en": "Bathroom with a basin, shower and sauna"
+   },
+   "source": "A7V08090-HDR.jpg"
+  },
+  {
+   "file": "S18_dom_z_drona_zima_3x2_foto.webp",
+   "shot": "S18",
+   "width": 1600,
+   "height": 1067,
+   "placeholder": false,
+   "alt": {
+    "pl": "Dom z dużym przeszkleniem szczytu, za nim Tatry",
+    "en": "A house with a glazed gable, the Tatras behind it"
+   },
+   "source": "DJI_20260121180313_0389_D.jpg"
+  },
+  {
    "file": "N2_swieta_stol_zima_3x2_foto.webp",
    "shot": "N2",
    "width": 1800,

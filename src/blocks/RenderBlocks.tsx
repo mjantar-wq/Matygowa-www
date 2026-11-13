@@ -82,7 +82,7 @@ function Hero({ block, ctx, immersive }: Props<'hero'>) {
   )
 }
 
-function Intro({ block }: Props<'intro'>) {
+function Intro({ block, ctx }: Props<'intro'>) {
   return (
     <Section block={block} scene={false}>
       <Heading eyebrow={block.eyebrow} heading={block.heading} />
@@ -92,7 +92,7 @@ function Intro({ block }: Props<'intro'>) {
           {block.stats.map((s) => (
             <div key={s.id}>
               {s.label ? <dt className="mo-label">{s.label}</dt> : null}
-              <dd className="mo-price"><CountUp value={s.value} /></dd>
+              <dd className="mo-price"><CountUp value={ctx.locale === 'en' ? s.value.replace(/ m n\.p\.m\./, ' m above sea level') : s.value} /></dd>
             </div>
           ))}
         </dl>

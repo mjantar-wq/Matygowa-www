@@ -56,7 +56,8 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
       const id = el?.dataset.scene
       if (!id || !scenes.some((s) => s.id === id)) return
       setActive(id)
-      setFocus(focusAt(el!.closest('section') ?? el!, mid))
+      // Panorama rusza do kolejnego szczytu wcześniej niż tło: kafel domku liczy się, gdy jest niżej niż środek ekranu.
+      setFocus(focusAt(el!.closest('section') ?? el!, innerHeight * 0.68))
       setReach((r) => Math.max(r, scenes.findIndex((s) => s.id === id) + 1))
     }
     const onScroll = () => {

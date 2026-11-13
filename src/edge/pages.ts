@@ -30,7 +30,7 @@ const DROP_HEADERS = ['set-cookie', 'cache-control', 'vary', 'content-length', '
 /** Nagłówek rozgrzewki po zapisie w panelu: strona czyta wtedy nową wersję treści od razu i składa się, jeśli jeszcze jej nie ma. */
 export const WARM_HEADER = 'x-bufor-rozgrzewka'
 /** Strony składane w tle po zapisie w panelu, żeby pierwszy gość nie czekał na ich złożenie. */
-const WARM_PATHS = ['/', '/en', '/domy', '/oferty', '/okolica', '/sauna-i-bania', '/kontakt', '/en/houses', '/en/offers']
+const WARM_PATHS = ['/', '/en', '/domy', '/oferty', '/okolica', '/rytualy', '/kontakt', '/en/houses', '/en/offers']
 
 let warming: Promise<void> | null = null
 let dirty = false

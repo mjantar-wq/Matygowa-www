@@ -16,13 +16,19 @@ describe('adresy', () => {
     expect(rules).toContainEqual({ source: '/domy/:slug', destination: '/pl/houses/:slug' })
     // angielski segment = klucz, więc bez reguły; inny segment dostaje regułę
     expect(rules.some((r) => r.source.startsWith('/en/houses'))).toBe(false)
-    expect(rules).toContainEqual({ source: '/en/sauna-and-hot-tub', destination: '/en/rituals' })
+    expect(rules).toContainEqual({ source: '/rytualy', destination: '/pl/rituals' })
   })
 
   it('wewnętrzne /pl/… przekierowuje na adres kanoniczny', () => {
     const rules = localeRedirects(['pl', 'en'])
     expect(rules).toContainEqual({ source: '/pl', destination: '/', permanent: true })
     expect(rules).toContainEqual({ source: '/pl/houses/:slug', destination: '/domy/:slug', permanent: true })
+  })
+
+  it('stare adresy Rytuałów przekierowują na nowe', () => {
+    const rules = localeRedirects(['pl', 'en'])
+    expect(rules).toContainEqual({ source: '/sauna-i-bania', destination: '/rytualy', permanent: true })
+    expect(rules).toContainEqual({ source: '/en/sauna-and-hot-tub', destination: '/en/rituals', permanent: true })
   })
 
   it('dokumenty z krótkim adresem jak na obecnej stronie', () => {
@@ -55,5 +61,6 @@ describe('silnik rezerwacji', () => {
 
   it('ceny w groszach', () => {
     expect(formatPrice(129900, 'pl')).toMatch(/^1\s?299\szł$/)
+    expect(formatPrice(358750, 'pl')).toMatch(/^3\s?587,50\szł$/)
   })
 })

@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
 // Bramka jakości z koncepcji: axe bez błędów poważnych (serious, critical) na kluczowych stronach, WCAG 2.1 AA.
-const PAGES = ['/', '/domy', '/domy/hawran', '/sauna-i-bania', '/okolica', '/oferty', '/osada', '/galeria', '/przewodnik', '/kontakt', '/en']
+const PAGES = ['/', '/domy', '/domy/hawran', '/rytualy', '/okolica', '/oferty', '/osada', '/galeria', '/przewodnik', '/kontakt', '/en']
 
 test.describe('Dostępność (axe)', () => {
   for (const path of PAGES) {

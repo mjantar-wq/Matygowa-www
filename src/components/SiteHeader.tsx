@@ -6,8 +6,8 @@ import { HomeLink } from './HomeLink'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { AmbienceSwitch } from './effects/AmbienceSwitch'
 
-/** Główne sekcje menu (koncepcja: Szkielet strony); FAQ (strona Przewodnik) na samym końcu, za Kontaktem (Michał, 29.10.2026). */
-export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'settlement', 'gallery', 'surroundings', 'offers', 'news', 'contact', 'guide']
+/** Główne sekcje menu (koncepcja: Szkielet strony). Kontakt i FAQ (strona Przewodnik) są tylko na dolnej belce (Michał, 12.11.2026). */
+export const MAIN_NAV: RouteKey[] = ['houses', 'rituals', 'settlement', 'gallery', 'surroundings', 'offers', 'news']
 
 export function SiteHeader({ locale, t, bookingHref }: { locale: Locale; t: Dictionary; bookingHref: string }) {
   return (

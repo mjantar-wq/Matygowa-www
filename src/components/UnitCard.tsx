@@ -18,6 +18,12 @@ export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContex
     unit.maxGuests ? t.house.guests(unit.maxGuests) : null,
     unit.area ? `${unit.area} m²` : null,
   ].filter(Boolean)
+  // dwie najważniejsze różnice między domkami (audyt 12.11.2026): poziom salonu i liczba łazienek
+  const pl = ctx.locale === 'pl'
+  const layout = [
+    unit.livingRoom ? (pl ? (unit.livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : unit.livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null,
+    unit.bathrooms ? `${unit.bathrooms} ${pl ? (unit.bathrooms > 4 ? 'łazienek' : unit.bathrooms === 1 ? 'łazienka' : 'łazienki') : unit.bathrooms === 1 ? 'bathroom' : 'bathrooms'}` : null,
+  ].filter(Boolean)
   return (
     <li className="mo-tile">
       <Link href={href(ctx.locale, 'houses', unit.slug)} className="mo-tile__link">
@@ -33,6 +39,7 @@ export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContex
             </span>
           </span>
           <span className="mo-body-s mo-tile__text">{facts.join(' · ')}</span>
+          {layout.length ? <span className="mo-body-s mo-tile__text">{layout.join(' · ')}</span> : null}
           <span className="mo-tile__foot">
             {priceFrom && unit.status !== 'comingSoon' ? (
               <span className="mo-price">

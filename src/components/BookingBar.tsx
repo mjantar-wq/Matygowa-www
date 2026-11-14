@@ -112,6 +112,27 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
     return () => cancelAnimationFrame(frame)
   }, [open, calendarId])
 
+  // po zamknięciu kalendarza (wybrane daty, „Gotowe”, Esc) pasek wraca na ekran: otwarcie przewinęło stronę do kalendarza,
+  // a zamknięcie go nie cofało, więc pasek zostawał pod nagłówkiem i gość nie widział wybranych dat (uwaga recenzenta 14.11.2026)
+  const wasOpen = useRef(false)
+  useEffect(() => {
+    const was = wasOpen.current
+    wasOpen.current = open
+    if (open || !was) return
+    const frame = requestAnimationFrame(() => {
+      const bar = root.current?.querySelector<HTMLElement>('.mo-booking')
+      // w oknie (dialog) przewija się samo okno, nie strona
+      if (!bar || root.current?.closest('dialog')) return
+      // --naglowek-wys jest w px (tokens.css); 16 px odstępu pod nagłówkiem
+      const margin = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--naglowek-wys')) || 0) + 16
+      const r = bar.getBoundingClientRect()
+      if (r.top >= margin && r.bottom <= window.innerHeight) return
+      const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      window.scrollBy({ top: r.top - margin - Math.max(0, (window.innerHeight - margin - r.height) / 3), behavior: smooth ? 'smooth' : 'auto' })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [open])
+
   useEffect(() => {
     if (!open) return
     const close = (e: MouseEvent | KeyboardEvent) => {

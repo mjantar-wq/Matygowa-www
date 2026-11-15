@@ -225,7 +225,7 @@ INFRA = (pobocza() + '<g id="warstwa-drogi">'
          '<g id="warstwa-parkingi">' + "".join(parking(*q) for q in PARKINGI) + carport() + '</g>'
          + swiatlo() +
          '<g id="warstwa-energia">' + panele(*PV) + odpady(*ODPADY)
-         + podpis(1172, 352, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
+         + podpis(1148, 363, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
          + podpis(1205, 651, "Panele słoneczne", "Solar panels", 118)
          + podpis(1307, 694, "Odpady", "Waste", 58) + '</g>')
 

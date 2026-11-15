@@ -135,6 +135,8 @@ body { position: relative; isolation: isolate; background: var(--color-tlo); col
 .mo-skip:focus { inset-block-start: var(--space-2); z-index: 100; }
 .mo-header { position: sticky; inset-block-start: env(safe-area-inset-top, 0px); z-index: 10; background: var(--color-tlo); border-block-end: 1px solid var(--color-linia); }
 .mo-header__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); min-block-size: var(--naglowek-wys); }
+/* przełącznik języka przy samej prawej krawędzi okna; logo zostaje w osi treści */
+.mo-header__inner { max-inline-size: none; padding-inline-start: max(var(--margines), env(safe-area-inset-left, 0px), calc((100vw - var(--kontener) - 2 * var(--margines)) / 2 + var(--margines))); padding-inline-end: max(var(--space-3), env(safe-area-inset-right, 0px)); }
 .mo-nav { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); font: var(--text-body-s--font-weight) var(--text-body-s)/var(--text-body-s--line-height) var(--font-ui); }
 .mo-nav a { color: var(--color-atrament-2); text-decoration: none; display: inline-flex; align-items: center; min-block-size: var(--przycisk-maly); }
 .mo-nav a:hover, .mo-nav a[aria-current="page"] { color: var(--color-atrament); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.4em; }

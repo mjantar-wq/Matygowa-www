@@ -23,9 +23,9 @@ SCIEZKI = ["M507,301 L507,322 L560,322", "M658,322 L658,425 L628,425", "M874,438
            "M498,726 L498,617 L489,617", "M750,724 L750,619 L739,619",
            # do wejścia apartamentów (środek dłuższego boku): równolegle do kalenicy, potem krótki łuk do drogi
            "M941,150 L953,139 L1025,222 C1048,250 1048,320 1012,362"]
-CARPORT = [(1082.2, 337), (1123.8, 336), (1140.8, 627), (1099.2, 628)]  # 41,6 x 291,5: panel 2:1 (10,4 x 20,8), 4 x 14
-PV = (1163.6, 671.4, 135.2, 62.4, 4.8)  # (x, y, szer, wys, obrot wzdluz drogi glownej) - 13 x 3 paneli o wymiarze jak w carporcie (50/4 x 291,5/14)
-ODPADY = (1318, 703, 42, 40, 4.3)
+CARPORT = [(1070.3, 368.5), (1111.9, 367.5), (1120.6, 660), (1079, 661)]  # 41,6 x 291,5: panel 2:1 (10,4 x 20,8), 4 x 14
+PV = (1121.2, 667.5, 135.2, 62.4, 4.8)  # (x, y, szer, wys, obrot wzdluz drogi glownej) - 13 x 3 paneli o wymiarze jak w carporcie (50/4 x 291,5/14)
+ODPADY = (1275, 698, 42, 40, 4.3)
 
 SAMOCHODY = {  # kolory karoserii (stałe, bo nie ma ich w tokenach): srebrny, biały, grafit, granat, bordo, zieleń, piaskowy
     "s": "#aab3b6", "b": "#eceeea", "g": "#3b4240", "n": "#2f4d6b", "r": "#8a3030", "z": "#4f7048", "p": "#b8a88a"}
@@ -225,9 +225,9 @@ INFRA = (pobocza() + '<g id="warstwa-drogi">'
          '<g id="warstwa-parkingi">' + "".join(parking(*q) for q in PARKINGI) + carport() + '</g>'
          + swiatlo() +
          '<g id="warstwa-energia">' + panele(*PV) + odpady(*ODPADY)
-         + podpis(1215, 462, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
-         + podpis(1228, 653, "Panele słoneczne", "Solar panels", 118)
-         + podpis(1339, 697, "Odpady", "Waste", 58) + '</g>')
+         + podpis(1222, 462, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
+         + podpis(1195, 650, "Panele słoneczne", "Solar panels", 118)
+         + podpis(1296, 692, "Odpady", "Waste", 58) + '</g>')
 
 
 def main():

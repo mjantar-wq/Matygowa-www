@@ -26,7 +26,7 @@ export function SettlementMap({ units, ctx }: { units: Unit[]; ctx: PageContext 
   return (
     <figure className="mo-map" aria-label={t.map} data-scene-next>
       <figcaption className="mo-map__hint mo-h3">{t.mapHint}</figcaption>
-      <SvgHotspots src="/ilustracje/G1_mapa_osady.svg" className="mo-map__stage" targets={targets} listHidden centered />
+      <SvgHotspots src="/ilustracje/G1_mapa_osady.svg?v=20261115" className="mo-map__stage" targets={targets} listHidden centered />
       {buildings.map(({ popoverId, unit: u }, i) => {
         const photos = [u.hero, ...(u.gallery ?? [])]
           .filter((m): m is MediaDoc => !!m && typeof m === 'object' && !!m.url && !m.mimeType?.startsWith('video/'))

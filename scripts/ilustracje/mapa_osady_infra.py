@@ -24,8 +24,8 @@ SCIEZKI = ["M507,301 L507,322 L560,322", "M658,322 L658,425 L628,425", "M874,438
            # do wejścia apartamentów (środek dłuższego boku): równolegle do kalenicy, potem krótki łuk do drogi
            "M941,150 L953,139 L1025,222 C1048,250 1048,320 1012,362"]
 CARPORT = [(1078, 337), (1128, 336), (1145, 627), (1095, 628)]
-PV = (1147, 625, 88, 85)
-ODPADY = (1247, 684, 42, 40)
+PV = (1150, 627, 162.5, 62.4)  # 13 x 3 paneli o wymiarze jak w carporcie (50/4 x 291,5/14)
+ODPADY = (1247, 719, 42, 40)
 
 SAMOCHODY = {  # kolory karoserii (stałe, bo nie ma ich w tokenach): srebrny, biały, grafit, granat, bordo, zieleń, piaskowy
     "s": "#aab3b6", "b": "#eceeea", "g": "#3b4240", "n": "#2f4d6b", "r": "#8a3030", "z": "#4f7048", "p": "#b8a88a"}
@@ -74,17 +74,19 @@ def swiatlo():
     return '<g id="warstwa-swiatlo" class="swiatlo" aria-hidden="true">' + "".join(out) + '</g>'
 
 def carport():
+    """Dach carportu z paneli ułożonych pionowo: 4 w poprzek (krótszy bok) x 14 wzdłuż (dłuższy bok)."""
     (x0, y0), (x1, y1), (x2, y2), (x3, y3) = CARPORT
     pts = f"M{x0},{y0} L{x1},{y1} L{x2},{y2} L{x3},{y3} Z"
-    lin = "".join(f'<path class="pv-linia" d="M{x0 + (x3 - x0) * i / 10:.1f},{y0 + (y3 - y0) * i / 10:.1f} L{x1 + (x2 - x1) * i / 10:.1f},{y1 + (y2 - y1) * i / 10:.1f}"/>' for i in range(1, 10))
-    mid = f'<path class="pv-linia" d="M{(x0 + x1) / 2:.1f},{(y0 + y1) / 2:.1f} L{(x3 + x2) / 2:.1f},{(y3 + y2) / 2:.1f}"/>'
-    return f'<g id="carport" data-miejsc="10"><path class="carport-dach" d="{pts}"/>{lin}{mid}</g>'
+    lin = "".join(f'<path class="pv-linia" d="M{x0 + (x1 - x0) * j / 4:.1f},{y0 + (y1 - y0) * j / 4:.1f} L{x3 + (x2 - x3) * j / 4:.1f},{y3 + (y2 - y3) * j / 4:.1f}"/>' for j in range(1, 4))
+    lin += "".join(f'<path class="pv-linia" d="M{x0 + (x3 - x0) * k / 14:.1f},{y0 + (y3 - y0) * k / 14:.1f} L{x1 + (x2 - x1) * k / 14:.1f},{y1 + (y2 - y1) * k / 14:.1f}"/>' for k in range(1, 14))
+    return f'<g id="carport" data-miejsc="10" data-panele="4x14"><path class="carport-dach" d="{pts}"/>{lin}</g>'
 
 def panele(x, y, w, h):
+    """Pole paneli stojących pionowo: 13 w rzędzie (dłuższy bok) x 3 rzędy (krótszy bok)."""
     o = [f'<rect class="pv-pole" x="{x}" y="{y}" width="{w}" height="{h}" rx="2"/>']
-    o += [f'<path class="pv-linia" d="M{x},{y + h * i / 5:.1f} L{x + w},{y + h * i / 5:.1f}"/>' for i in range(1, 5)]
-    o += [f'<path class="pv-linia" d="M{x + w * i / 6:.1f},{y} L{x + w * i / 6:.1f},{y + h}"/>' for i in range(1, 6)]
-    return f'<g id="panele-sloneczne">{"".join(o)}</g>'
+    o += [f'<path class="pv-linia" d="M{x},{y + h * i / 3:.1f} L{x + w},{y + h * i / 3:.1f}"/>' for i in range(1, 3)]
+    o += [f'<path class="pv-linia" d="M{x + w * i / 13:.1f},{y} L{x + w * i / 13:.1f},{y + h}"/>' for i in range(1, 13)]
+    return f'<g id="panele-sloneczne" data-panele="3x13">{"".join(o)}</g>'
 
 def odpady(x, y, w, h):
     b = "".join(f'<rect class="pojemnik{k}" x="{x + 5 + i * 12}" y="{y + 10}" width="9" height="{h - 18}" rx="1.5"/>' for i, k in enumerate(("", "-2", "-3")))
@@ -224,8 +226,8 @@ INFRA = (pobocza() + '<g id="warstwa-drogi">'
          + swiatlo() +
          '<g id="warstwa-energia">' + panele(*PV) + odpady(*ODPADY)
          + podpis(1215, 462, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
-         + podpis(1191, 614, "Panele słoneczne", "Solar panels", 118)
-         + podpis(1268, 676, "Odpady", "Waste", 58) + '</g>')
+         + podpis(1228, 616, "Panele słoneczne", "Solar panels", 118)
+         + podpis(1268, 713, "Odpady", "Waste", 58) + '</g>')
 
 
 def main():

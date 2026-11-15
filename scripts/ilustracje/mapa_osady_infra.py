@@ -23,9 +23,9 @@ SCIEZKI = ["M507,301 L507,322 L560,322", "M658,322 L658,425 L628,425", "M874,438
            "M498,726 L498,617 L489,617", "M750,724 L750,619 L739,619",
            # do wejścia apartamentów (środek dłuższego boku): równolegle do kalenicy, potem krótki łuk do drogi
            "M941,150 L953,139 L1025,222 C1048,250 1048,320 1012,362"]
-CARPORT = [(1070.3, 368.5), (1111.9, 367.5), (1120.6, 660), (1079, 661)]  # 41,6 x 291,5: panel 2:1 (10,4 x 20,8), 4 x 14
-PV = (1121.2, 667.5, 135.2, 62.4, 4.8)  # (x, y, szer, wys, obrot wzdluz drogi glownej) - 13 x 3 paneli o wymiarze jak w carporcie (50/4 x 291,5/14)
-ODPADY = (1275, 698, 42, 40, 4.3)
+CARPORT = [(1070.3, 368.5), (1122.3, 367.5), (1131, 660), (1079, 661)]  # 52 x 291,5: panel 2:1 (10,4 x 20,8), 5 x 14  # 41,6 x 291,5: panel 2:1 (10,4 x 20,8), 4 x 14
+PV = (1131.6, 668.4, 135.2, 62.4, 4.8)  # (x, y, szer, wys, obrot wzdluz drogi glownej) - 13 x 3 paneli o wymiarze jak w carporcie (50/4 x 291,5/14)
+ODPADY = (1286, 700, 42, 40, 4.3)
 
 SAMOCHODY = {  # kolory karoserii (stałe, bo nie ma ich w tokenach): srebrny, biały, grafit, granat, bordo, zieleń, piaskowy
     "s": "#aab3b6", "b": "#eceeea", "g": "#3b4240", "n": "#2f4d6b", "r": "#8a3030", "z": "#4f7048", "p": "#b8a88a"}
@@ -74,12 +74,12 @@ def swiatlo():
     return '<g id="warstwa-swiatlo" class="swiatlo" aria-hidden="true">' + "".join(out) + '</g>'
 
 def carport():
-    """Dach carportu z paneli ułożonych pionowo: 4 w poprzek (krótszy bok) x 14 wzdłuż (dłuższy bok)."""
+    """Dach carportu z paneli ułożonych pionowo: 5 w poprzek (krótszy bok) x 14 wzdłuż (dłuższy bok)."""
     (x0, y0), (x1, y1), (x2, y2), (x3, y3) = CARPORT
     pts = f"M{x0},{y0} L{x1},{y1} L{x2},{y2} L{x3},{y3} Z"
-    lin = "".join(f'<path class="pv-linia" d="M{x0 + (x1 - x0) * j / 4:.1f},{y0 + (y1 - y0) * j / 4:.1f} L{x3 + (x2 - x3) * j / 4:.1f},{y3 + (y2 - y3) * j / 4:.1f}"/>' for j in range(1, 4))
+    lin = "".join(f'<path class="pv-linia" d="M{x0 + (x1 - x0) * j / 5:.1f},{y0 + (y1 - y0) * j / 5:.1f} L{x3 + (x2 - x3) * j / 5:.1f},{y3 + (y2 - y3) * j / 5:.1f}"/>' for j in range(1, 5))
     lin += "".join(f'<path class="pv-linia" d="M{x0 + (x3 - x0) * k / 14:.1f},{y0 + (y3 - y0) * k / 14:.1f} L{x1 + (x2 - x1) * k / 14:.1f},{y1 + (y2 - y1) * k / 14:.1f}"/>' for k in range(1, 14))
-    return f'<g id="carport" data-miejsc="10" data-panele="4x14"><path class="carport-dach" d="{pts}"/>{lin}</g>'
+    return f'<g id="carport" data-miejsc="10" data-panele="5x14"><path class="carport-dach" d="{pts}"/>{lin}</g>'
 
 def panele(x, y, w, h, kat=0):
     """Pole paneli stojących pionowo: 13 w rzędzie (dłuższy bok) x 3 rzędy (krótszy bok)."""
@@ -225,9 +225,9 @@ INFRA = (pobocza() + '<g id="warstwa-drogi">'
          '<g id="warstwa-parkingi">' + "".join(parking(*q) for q in PARKINGI) + carport() + '</g>'
          + swiatlo() +
          '<g id="warstwa-energia">' + panele(*PV) + odpady(*ODPADY)
-         + podpis(1222, 462, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
-         + podpis(1195, 650, "Panele słoneczne", "Solar panels", 118)
-         + podpis(1296, 692, "Odpady", "Waste", 58) + '</g>')
+         + podpis(1236, 462, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
+         + podpis(1205, 651, "Panele słoneczne", "Solar panels", 118)
+         + podpis(1307, 694, "Odpady", "Waste", 58) + '</g>')
 
 
 def main():

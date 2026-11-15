@@ -4,13 +4,13 @@ Szkic Michała z 15.11.2026. Skrypt nakłada infrastrukturę na gotowy public/il
 (zastępuje warstwę „warstwa-drogi”), bo SVG ma ręczne poprawki nowsze niż generator mapa_osady.py.
 Uruchom: python3 scripts/ilustracje/mapa_osady_infra.py
 """
-import math, re
+import math, random, re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TOKENY = {"tlo": "#ffffff", "tlo-2": "#f3f5f4", "linia-mocna": "#7f8b86", "atrament": "#1c2321", "atrament-2": "#37413d",
           "wyciszony": "#56625e", "swierk": "#1f5c4a", "bursztyn": "#c47a2a", "poziomica": "#6e8b98"}
-CSS = '.droga-podjazd{fill:var(--color-linia-mocna);stroke:none}.sciezka{fill:none;stroke:var(--color-atrament-2);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:.8}.parking{fill:color-mix(in srgb,var(--color-linia-mocna) 38%,var(--color-tlo-2));stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.auto-cien{fill:#000;opacity:.22}.auto-szyba{fill:#27323a;opacity:.85}.auto-dach{opacity:.82;stroke:#000;stroke-opacity:.12;stroke-width:.6}.podzial{fill:none;stroke:var(--color-tlo);stroke-width:1;stroke-dasharray:3 3;opacity:.8;vector-effect:non-scaling-stroke}.latarnia{fill:var(--color-atrament)}.latarnia-rdzen{fill:var(--color-bursztyn)}.carport-dach{fill:#3a4d58}.pv-linia{fill:none;stroke:#cfdbe2;stroke-width:1;opacity:.4;vector-effect:non-scaling-stroke}.pv-pole{fill:#3a4d58;stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.odpady-pole{fill:var(--color-tlo-2);stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.swiatlo{display:none;pointer-events:none}:root[data-pora="noc"] .swiatlo{display:inline}:root[data-pora="noc"] .auto{filter:brightness(.72)}:root[data-pora="noc"] .carport-dach,:root[data-pora="noc"] .pv-pole{fill:#2c3a43}:root[data-sezon="zima"] .carport-dach,:root[data-sezon="zima"] .pv-pole{fill:#e4ecf0}:root[data-sezon="zima"][data-pora="noc"] .carport-dach,:root[data-sezon="zima"][data-pora="noc"] .pv-pole{fill:#7d8e99}:root[data-sezon="zima"] .pv-linia{stroke:#8fa2ad;opacity:.7}.pojemnik{fill:var(--color-swierk);opacity:.85}.pojemnik-2{fill:var(--color-bursztyn)}.pojemnik-3{fill:var(--color-wyciszony)}'
+CSS = '.droga-podjazd{fill:var(--color-linia-mocna);stroke:none}.sciezka{fill:none;stroke:var(--color-atrament-2);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:.8}.parking{fill:color-mix(in srgb,var(--color-linia-mocna) 38%,var(--color-tlo-2));stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.auto-cien{fill:#000;opacity:.22}.auto-szyba{fill:#27323a;opacity:.85}.auto-dach{opacity:.82;stroke:#000;stroke-opacity:.12;stroke-width:.6}.podzial{fill:none;stroke:var(--color-tlo);stroke-width:1;stroke-dasharray:3 3;opacity:.8;vector-effect:non-scaling-stroke}.latarnia{fill:var(--color-atrament)}.latarnia-rdzen{fill:var(--color-bursztyn)}.carport-dach{fill:#3a4d58}.pv-linia{fill:none;stroke:#cfdbe2;stroke-width:1;opacity:.4;vector-effect:non-scaling-stroke}.pv-pole{fill:#3a4d58;stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.odpady-pole{fill:var(--color-tlo-2);stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.snieg{display:none;pointer-events:none}:root[data-sezon="zima"] .snieg{display:inline}.zaspa-tlo{fill:#c3d3de;opacity:.55}.zaspa-bryla{fill:#fff}.snieg-dach{fill:#f7fafc;opacity:.96}.snieg-dach-linia{fill:none;stroke:#9db0bd;stroke-width:1;opacity:.35;vector-effect:non-scaling-stroke}.snieg-auto{fill:#fff;opacity:.9}.snieg-pobocze{fill:none;stroke:#fff;stroke-linecap:round;opacity:.95}:root[data-sezon="zima"] .sezon-zima .zaspa,:root[data-sezon="zima"] .sezon-zima .zaspa-cien{display:none}:root[data-pora="noc"] .zaspa-tlo{fill:#4d5e6b;opacity:.8}:root[data-pora="noc"] .zaspa-bryla,:root[data-pora="noc"] .snieg-dach,:root[data-pora="noc"] .snieg-pobocze{fill:#b4c2cd}:root[data-pora="noc"] .snieg-pobocze{fill:none;stroke:#b4c2cd}:root[data-pora="noc"] .snieg-auto{fill:#b4c2cd}.swiatlo{display:none;pointer-events:none}:root[data-pora="noc"] .swiatlo{display:inline}:root[data-pora="noc"] .auto{filter:brightness(.72)}:root[data-pora="noc"] .carport-dach,:root[data-pora="noc"] .pv-pole{fill:#2c3a43}:root[data-sezon="zima"] .carport-dach,:root[data-sezon="zima"] .pv-pole{fill:#e4ecf0}:root[data-sezon="zima"][data-pora="noc"] .carport-dach,:root[data-sezon="zima"][data-pora="noc"] .pv-pole{fill:#7d8e99}:root[data-sezon="zima"] .pv-linia{stroke:#8fa2ad;opacity:.7}.pojemnik{fill:var(--color-swierk);opacity:.85}.pojemnik-2{fill:var(--color-bursztyn)}.pojemnik-3{fill:var(--color-wyciszony)}'
 
 # --- Infrastruktura: drogi, ścieżki, parkingi, carport, panele, odpady (szkic Michała, 15.11.2026) ---
 # Skala przyjęta z domków: bok domu ok. 108 px ~ 10 m, czyli ok. 11 px na metr (auto ok. 27 x 53 px).
@@ -41,6 +41,7 @@ def auto(x, y, obrot, kolor, typ):
             f'<rect x="{-hw}" y="{-hl}" width="{w}" height="{l}" rx="6" fill="{k}"/>'
             f'<rect class="auto-dach" x="{-hw + 2.5}" y="{-hl * .04:.1f}" width="{w - 5}" height="{hl * .34:.1f}" rx="2" fill="{k}"/>'
             f'{szyba}{tyl}'
+            f'<rect class="snieg snieg-auto" x="{-hw + 4.5}" y="{-hl * .02:.1f}" width="{w - 9}" height="{hl * .24:.1f}" rx="3"/>'
             f'<rect x="{-hw - 1.6}" y="{-hl * .3:.1f}" width="2.4" height="3.2" rx="1" fill="{k}"/><rect x="{hw - 0.8}" y="{-hl * .3:.1f}" width="2.4" height="3.2" rx="1" fill="{k}"/>'
             f'<rect x="{-hw + 2}" y="{-hl + .8}" width="4.2" height="1.8" rx=".8" fill="#fbf3d4"/><rect x="{hw - 6.2}" y="{-hl + .8}" width="4.2" height="1.8" rx=".8" fill="#fbf3d4"/>'
             f'<rect x="{-hw + 2}" y="{hl - 2.6}" width="4.2" height="1.8" rx=".8" fill="#b02424"/><rect x="{hw - 6.2}" y="{hl - 2.6}" width="4.2" height="1.8" rx=".8" fill="#b02424"/></g>')
@@ -109,12 +110,98 @@ def podjazd():
         L.append((x - dy / d * hw, y + dx / d * hw)); R.append((x + dy / d * hw, y - dx / d * hw))
     return "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in L + R[::-1]) + " Z"
 
-INFRA = ('<g id="warstwa-drogi">'
+
+# --- Śnieg (tylko wersje zimowe: data-sezon=zima) ---
+DOMKI = [(457, 250, 108, 112), (581, 397, 106, 110), (828, 396, 106, 110), (431, 572, 116, 116), (681, 572, 116, 116), (934, 572, 116, 116)]
+APT_SRODEK = (905, 184, 212, 94, 47.6)
+
+def blob(rng, cx, cy, r, fx=1.25, fy=.72, lo=.62, hi=1.15):
+    """Nieregularna zaspa: wygładzony wielokąt (Catmull-Rom → Béziery), spłaszczona w poziomie."""
+    n = rng.randint(8, 11)
+    pts = []
+    for i in range(n):
+        a = 2 * math.pi * i / n + rng.uniform(-.2, .2)
+        rr = r * rng.uniform(lo, hi)
+        pts.append((cx + rr * math.cos(a) * fx, cy + rr * math.sin(a) * fy))
+    d = f"M{pts[0][0]:.1f},{pts[0][1]:.1f}"
+    for i in range(n):
+        p0, p1, p2, p3 = pts[i - 1], pts[i], pts[(i + 1) % n], pts[(i + 2) % n]
+        d += (f" C{p1[0] + (p2[0] - p0[0]) / 6:.1f},{p1[1] + (p2[1] - p0[1]) / 6:.1f} "
+              f"{p2[0] - (p3[0] - p1[0]) / 6:.1f},{p2[1] - (p3[1] - p1[1]) / 6:.1f} {p2[0]:.1f},{p2[1]:.1f}")
+    return d + " Z"
+
+def _zajete(x, y, margines):
+    """Czy punkt wypada na budynku, podpisie, parkingu, drodze lub innym obiekcie (wtedy bez zaspy)."""
+    for cx, cy, w, h in DOMKI:
+        if abs(x - cx) < w / 2 + margines + 6 and abs(y - cy) < h / 2 + margines + 6: return True
+        if abs(x - cx) < 78 + margines and cy + h / 2 - 4 < y < cy + h / 2 + 56 + margines: return True  # podpis pod domkiem
+    cx, cy, l, w, rot = APT_SRODEK; r = math.radians(rot)
+    u = (x - cx) * math.cos(r) + (y - cy) * math.sin(r); v = -(x - cx) * math.sin(r) + (y - cy) * math.cos(r)
+    if abs(u) < l / 2 + 28 + margines and abs(v) < w / 2 + 28 + margines: return True
+    for px, py, *_ in PARKINGI:
+        if abs(x - px) < BOK / 2 + 8 + margines and abs(y - py) < BOK / 2 + 8 + margines: return True
+    if 580 < x < 725 and 140 < y < 290: return True      # plac zabaw z podpisem
+    if 900 < x < 1400 and 40 < y < 190: return True      # dymek i naklejka apartamentów
+    if 1060 < x < 1160 and 320 < y < 640: return True    # carport
+    if 1130 < x < 1330 and 440 < y < 740: return True    # panele, odpady i podpisy
+    if 1170 < x < 1330 and 600 < y < 730: return True
+    for t in range(0, 61):                                 # droga wewnętrzna
+        tt = t / 60; m = 1 - tt
+        bx = m**3 * 880 + 3 * m**2 * tt * 985 + 3 * m * tt**2 * 1056 + tt**3 * 1060
+        by = m**3 * 316 + 3 * m**2 * tt * 316 + 3 * m * tt**2 * 390 + tt**3 * 490
+        if (x - bx) ** 2 + (y - by) ** 2 < (20 + margines) ** 2: return True
+    if 555 < x < 890 and abs(y - 316) < 20 + margines: return True
+    if x > 1030 and 480 < y < 735 and abs(x - 1060) < 20 + margines: return True
+    if y > 690 and x < 1300: return True                  # droga główna
+    if y > 715: return True
+    return False
+
+def snieg_grunt():
+    """Zaspy na trawie: łagodne, rozciągnięte poziomo; część na działce (drobniejsze), część na łące wokół."""
+    rng = random.Random(11)
+    out, n = [], 0
+    while n < 230:
+        wewn = n < 120
+        if wewn:
+            y = rng.uniform(100, 690); x0 = 395 - 57 * (y - 105) / 595; x1 = 1080 + 32 * (y - 82) / 618
+            x = rng.uniform(x0 + 8, x1 - 8); r = rng.choice((4, 5, 7, 9, 12)) * rng.uniform(.8, 1.25)
+        else:
+            x, y = rng.uniform(20, 1380), rng.uniform(10, 700); r = rng.choice((7, 9, 12, 16, 22)) * rng.uniform(.8, 1.2)
+            if 330 < x < 1120 and 80 < y < 705: continue
+        if _zajete(x, y, r): continue
+        d = blob(rng, x, y, r, 1.9, .62, .75, 1.1)
+        out.append(f'<path class="zaspa-tlo" transform="translate(.8 1.8)" d="{d}"/><path class="zaspa-bryla" d="{d}"/>')
+        n += 1
+    return '<g id="warstwa-snieg-grunt" class="snieg" aria-hidden="true">' + "".join(out) + '</g>'
+
+def snieg_dachy():
+    """Śnieg na dachach domków (rzut z góry): nieregularna pokrywa, ciemny okap zostaje widoczny przy krawędziach, kalenice jako cienkie linie."""
+    rng = random.Random(5); out = []
+    for cx, cy, w, h in DOMKI:
+        d = blob(rng, cx, cy, w * .4, 1.0, 1.0, .86, 1.05)
+        out.append(f'<path class="snieg-dach" d="{d}"/>'
+                   f'<path class="snieg-dach-linia" d="M{cx - w * .36:.1f},{cy - h * .36:.1f} L{cx + w * .36:.1f},{cy + h * .36:.1f} M{cx + w * .36:.1f},{cy - h * .36:.1f} L{cx - w * .36:.1f},{cy + h * .36:.1f} M{cx},{cy - h * .4:.1f} L{cx},{cy + h * .4:.1f} M{cx - w * .4:.1f},{cy} L{cx + w * .4:.1f},{cy}"/>')
+    return '<g id="warstwa-snieg-dachy" class="snieg" aria-hidden="true">' + "".join(out) + '</g>'
+
+def snieg_apartamenty():
+    cx, cy, l, w, rot = APT_SRODEK
+    return (f'<g class="snieg" aria-hidden="true" transform="translate({cx} {cy}) rotate({rot})"><rect class="snieg-dach" x="{-l * .44}" y="{-w * .36}" width="{l * .88}" height="{w * .72}" rx="9"/>'
+            f'<path class="snieg-dach-linia" d="M{-l * .46},0 L{l * .46},0 M0,{-w * .4} L0,{w * .4}"/></g>')
+
+def pobocza():
+    """Zwałki śniegu po bokach odśnieżonych dróg i podjazdów."""
+    return ('<g class="snieg" aria-hidden="true">'
+            f'<path class="snieg-pobocze" stroke-width="27" d="{DROGA}"/>'
+            '<path class="snieg-pobocze" stroke-width="35" d="M-10,770 C300,722 900,716 1250,748 L1410,760"/>'
+            '<path class="snieg-pobocze" stroke-width="35" d="M530,704 L530,728 M783,704 L783,724 M1004,420 L1034,420"/></g>')
+
+INFRA = (pobocza() + '<g id="warstwa-drogi">'
          '<path class="droga" stroke-width="22" d="M-10,770 C300,722 900,716 1250,748 L1410,760"/>'
          f'<path class="droga" stroke-width="18" d="{DROGA}"/>'
          '<path class="droga" stroke-width="30" d="M530,704 L530,728 M783,704 L783,724 M1004,420 L1034,420"/>'
          '</g>'
          '<g id="warstwa-sciezki">' + "".join(f'<path class="sciezka" d="{d}"/>' for d in SCIEZKI) + '</g>'
+         + snieg_grunt() +
          '<g id="warstwa-parkingi">' + "".join(parking(*q) for q in PARKINGI) + carport() + '</g>'
          + swiatlo() +
          '<g id="warstwa-energia">' + panele(*PV) + odpady(*ODPADY)
@@ -141,6 +228,10 @@ def main():
     m = re.search(r'<g id="warstwa-sciezki">.*?</g>', s, flags=re.S)
     s = s[:m.start()] + s[m.end():]
     s = s.replace("</svg>", m[0] + "</svg>", 1)
+    # śnieg na dachach: domki na wierzchu, apartamenty tuż pod swoimi plakietkami z nazwami
+    s = re.sub(r"<!--snieg-->.*?<!--/snieg-->", "", s, flags=re.S)
+    s = s.replace("</svg>", "<!--snieg-->" + snieg_dachy() + "<!--/snieg--></svg>", 1)
+    s = s.replace('<g class="apt-nazwa"', "<!--snieg-->" + snieg_apartamenty() + '<!--/snieg--><g class="apt-nazwa"', 1)
     p.write_text(s)
     print(p)
 

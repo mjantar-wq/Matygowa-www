@@ -9,8 +9,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TOKENY = {"tlo": "#ffffff", "tlo-2": "#f3f5f4", "linia-mocna": "#7f8b86", "atrament": "#1c2321", "atrament-2": "#37413d",
-          "wyciszony": "#56625e", "swierk": "#1f5c4a", "bursztyn": "#c47a2a", "poziomica": "#6e8b98"}
-CSS = '.droga-podjazd{fill:var(--color-linia-mocna);stroke:none}.sciezka{fill:none;stroke:var(--color-atrament-2);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:.8}.parking{fill:color-mix(in srgb,var(--color-linia-mocna) 38%,var(--color-tlo-2));stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.auto-cien{fill:#000;opacity:.22}.auto-szyba{fill:#27323a;opacity:.85}.auto-dach{opacity:.82;stroke:#000;stroke-opacity:.12;stroke-width:.6}.podzial{fill:none;stroke:var(--color-tlo);stroke-width:1;stroke-dasharray:3 3;opacity:.8;vector-effect:non-scaling-stroke}.latarnia{fill:var(--color-atrament)}.latarnia-rdzen{fill:var(--color-bursztyn)}.carport-dach{fill:#3a4d58}.pv-linia{fill:none;stroke:#cfdbe2;stroke-width:1;opacity:.4;vector-effect:non-scaling-stroke}.pv-pole{fill:#3a4d58;stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.odpady-pole{fill:var(--color-tlo-2);stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.snieg{display:none;pointer-events:none}:root[data-sezon="zima"] .snieg{display:inline}.zaspa-tlo{fill:#c3d3de;opacity:.55}.zaspa-bryla{fill:#fff}.snieg-dach{fill:#f7fafc;opacity:.96}.snieg-dach-linia{fill:none;stroke:#9db0bd;stroke-width:1;opacity:.35;vector-effect:non-scaling-stroke}.snieg-auto{fill:#fff;opacity:.9}.snieg-pobocze{fill:none;stroke:#fff;stroke-linecap:round;opacity:.95}:root[data-sezon="zima"] .sezon-zima .zaspa,:root[data-sezon="zima"] .sezon-zima .zaspa-cien{display:none}:root[data-pora="noc"] .zaspa-tlo{fill:#2a3640;opacity:.8}:root[data-pora="noc"] .zaspa-bryla{fill:#6c7c88}:root[data-pora="noc"] .snieg-dach{fill:#a7b6c1}:root[data-pora="noc"] .snieg-pobocze{fill:none;stroke:#8b9ba7}:root[data-pora="noc"] .snieg-auto{fill:#a7b6c1}.swiatlo{display:none;pointer-events:none}:root[data-pora="noc"] .swiatlo{display:inline}:root[data-pora="noc"] .auto{filter:brightness(.72)}:root[data-pora="noc"] .carport-dach,:root[data-pora="noc"] .pv-pole{fill:#2c3a43}:root[data-sezon="zima"] .carport-dach,:root[data-sezon="zima"] .pv-pole{fill:#e4ecf0}:root[data-sezon="zima"][data-pora="noc"] .carport-dach,:root[data-sezon="zima"][data-pora="noc"] .pv-pole{fill:#7d8e99}:root[data-sezon="zima"] .pv-linia{stroke:#8fa2ad;opacity:.7}.pojemnik{fill:var(--color-swierk);opacity:.85}.pojemnik-2{fill:var(--color-bursztyn)}.pojemnik-3{fill:var(--color-wyciszony)}'
+          "wyciszony": "#56625e", "swierk": "#1f5c4a", "bursztyn": "#c47a2a", "poziomica": "#6e8b98", "powierzchnia": "#fbfcfb"}
+CSS = '.droga-podjazd{fill:var(--color-linia-mocna);stroke:none}.sciezka{fill:none;stroke:var(--color-atrament-2);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:.8}.parking{fill:color-mix(in srgb,var(--color-linia-mocna) 38%,var(--color-tlo-2));stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.auto-cien{fill:#000;opacity:.22}.auto-szyba{fill:#27323a;opacity:.85}.auto-dach{opacity:.82;stroke:#000;stroke-opacity:.12;stroke-width:.6}.podzial{fill:none;stroke:var(--color-tlo);stroke-width:1;stroke-dasharray:3 3;opacity:.8;vector-effect:non-scaling-stroke}.latarnia{fill:var(--color-atrament)}.latarnia-rdzen{fill:var(--color-bursztyn)}.carport-dach{fill:#3a4d58}.pv-linia{fill:none;stroke:#cfdbe2;stroke-width:1;opacity:.4;vector-effect:non-scaling-stroke}.pv-pole{fill:#3a4d58;stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.odpady-pole{fill:var(--color-tlo-2);stroke:var(--color-wyciszony);stroke-width:1;vector-effect:non-scaling-stroke}.snieg{display:none;pointer-events:none}:root[data-sezon="zima"] .snieg{display:inline}.zaspa-tlo{fill:#c3d3de;opacity:.55}.zaspa-bryla{fill:#fff}.snieg-dach{fill:#fff}.snieg-dach{stroke:var(--color-atrament);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}.snieg-dach.s0{fill:#fff}.snieg-dach.s1{fill:var(--color-powierzchnia)}.snieg-dach.s2{fill:color-mix(in srgb,var(--color-powierzchnia) 85%,var(--color-atrament))}.snieg-dach.s3{fill:color-mix(in srgb,var(--color-powierzchnia) 85%,var(--color-atrament))}:root[data-pora="noc"] .snieg-dach.s0{fill:#e9eff3}:root[data-pora="noc"] .snieg-dach.s1{fill:#c9d4dc}:root[data-pora="noc"] .snieg-dach.s2{fill:#a3b1be}:root[data-pora="noc"] .snieg-dach.s3{fill:#8493a3}.mo-hotspot:hover .snieg-dach.snieg-dach,.mo-hotspot.is-lit .snieg-dach.snieg-dach{fill:var(--color-bursztyn)}.mo-hotspot:hover .snieg-dach-linia,.mo-hotspot.is-lit .snieg-dach-linia{opacity:0}:root[data-pora="noc"] .mo-hotspot:not(.is-wkrotce) .snieg-dom{filter:drop-shadow(0 0 6px var(--color-bursztyn))}.snieg-dom{filter:drop-shadow(1px 2px 1.2px rgba(50,75,95,.35))}:root[data-pora="noc"] .snieg-dom{filter:drop-shadow(1.5px 2.5px 1.5px rgba(0,0,0,.7))}.snieg-dach-linia{fill:none;stroke:#8fa3b2;stroke-width:1;opacity:.6;vector-effect:non-scaling-stroke}.snieg-auto{fill:#fff;opacity:.9}.snieg-pobocze{fill:none;stroke:#fff;stroke-linecap:round;opacity:.95}:root[data-sezon="zima"] .sezon-zima .zaspa,:root[data-sezon="zima"] .sezon-zima .zaspa-cien{display:none}:root[data-pora="noc"] .zaspa-tlo{fill:#2a3640;opacity:.8}:root[data-pora="noc"] .zaspa-bryla{fill:#6c7c88}:root[data-pora="noc"] .snieg-pobocze{fill:none;stroke:#8b9ba7}:root[data-pora="noc"] .snieg-auto{fill:#a7b6c1}.swiatlo{display:none;pointer-events:none}:root[data-pora="noc"] .swiatlo{display:inline}:root[data-pora="noc"] .auto{filter:brightness(.72)}:root[data-pora="noc"] .carport-dach,:root[data-pora="noc"] .pv-pole{fill:#2c3a43}:root[data-sezon="zima"] .carport-dach,:root[data-sezon="zima"] .pv-pole{fill:#e4ecf0}:root[data-sezon="zima"][data-pora="noc"] .carport-dach,:root[data-sezon="zima"][data-pora="noc"] .pv-pole{fill:#7d8e99}:root[data-sezon="zima"] .pv-linia{stroke:#8fa2ad;opacity:.7}.pojemnik{fill:var(--color-swierk);opacity:.85}.pojemnik-2{fill:var(--color-bursztyn)}.pojemnik-3{fill:var(--color-wyciszony)}.opis-duzy{font:700 18px var(--font-ui,sans-serif);letter-spacing:.04em;fill:var(--color-atrament)}'
 
 # --- Infrastruktura: drogi, ścieżki, parkingi, carport, panele, odpady (szkic Michała, 15.11.2026) ---
 # Skala przyjęta z domków: bok domu ok. 108 px ~ 10 m, czyli ok. 11 px na metr (auto ok. 27 x 53 px).
@@ -90,9 +90,9 @@ def odpady(x, y, w, h):
     b = "".join(f'<rect class="pojemnik{k}" x="{x + 5 + i * 12}" y="{y + 10}" width="9" height="{h - 18}" rx="1.5"/>' for i, k in enumerate(("", "-2", "-3")))
     return f'<g id="odpady"><rect class="odpady-pole" x="{x}" y="{y}" width="{w}" height="{h}" rx="2"/>{b}</g>'
 
-def podpis(x, y, pl, en, szer):
-    return (f'<g class="podpis-infra" aria-hidden="true"><rect class="etykieta-tlo" x="{x - szer / 2:.0f}" y="{y - 14}" width="{szer}" height="19" rx="2"/>'
-            f'<text class="opis tl" x="{x}" y="{y}" text-anchor="middle"><tspan class="pl">{pl}</tspan><tspan class="en">{en}</tspan></text></g>')
+def podpis(x, y, pl, en, szer, kl="opis", wys=19):
+    return (f'<g class="podpis-infra" aria-hidden="true"><rect class="etykieta-tlo" x="{x - szer / 2:.0f}" y="{y - wys + 5}" width="{szer}" height="{wys}" rx="3"/>'
+            f'<text class="{kl} tl" x="{x}" y="{y}" text-anchor="middle"><tspan class="pl">{pl}</tspan><tspan class="en">{en}</tspan></text></g>')
 
 def podjazd():
     """Wjazd wokół budynku z apartamentami: droga łagodnie poszerza się na zakręcie (do ok. 2,5 razy), potem wraca do zwykłej szerokości."""
@@ -174,19 +174,37 @@ def snieg_grunt():
         n += 1
     return '<g id="warstwa-snieg-grunt" class="snieg" aria-hidden="true">' + "".join(out) + '</g>'
 
-def snieg_dachy():
-    """Śnieg na dachach domków (rzut z góry): nieregularna pokrywa, ciemny okap zostaje widoczny przy krawędziach, kalenice jako cienkie linie."""
-    rng = random.Random(5); out = []
-    for cx, cy, w, h in DOMKI:
-        d = blob(rng, cx, cy, w * .4, 1.0, 1.0, .86, 1.05)
-        out.append(f'<path class="snieg-dach" d="{d}"/>'
-                   f'<path class="snieg-dach-linia" d="M{cx - w * .36:.1f},{cy - h * .36:.1f} L{cx + w * .36:.1f},{cy + h * .36:.1f} M{cx + w * .36:.1f},{cy - h * .36:.1f} L{cx - w * .36:.1f},{cy + h * .36:.1f} M{cx},{cy - h * .4:.1f} L{cx},{cy + h * .4:.1f} M{cx - w * .4:.1f},{cy} L{cx + w * .4:.1f},{cy}"/>')
-    return '<g id="warstwa-snieg-dachy" class="snieg" aria-hidden="true">' + "".join(out) + '</g>'
+SWIATLO = (-0.87, -0.5)  # jak w mapa_osady.py: światło z zachodu-północnego zachodu
+
+def _ton(nx, ny):
+    """Klasa tonu połaci zależna od kierunku, w który opada: 0 najjaśniejsza (od światła) … 3 najciemniejsza."""
+    k = nx * SWIATLO[0] + ny * SWIATLO[1]
+    return 0 if k > .6 else 1 if k > 0 else 3 if k < -.6 else 2
+
+def snieg_dom(cx, cy, w, h):
+    """Dach domku biały z cieniowaniem połaci (rzut z góry, dwa dachy na krzyż: osiem trójkątów plus cztery ganki).
+    Wstawiany do grupy domku, żeby podświetlenie przy wyborze domku (hover, fokus) działało także zimą."""
+    a, b = w * .43, h * .43
+    o = []
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            o.append(f'<path class="snieg-dach s{_ton(0, sy)}" d="M0,0 L{sx * a:.1f},0 L{sx * a:.1f},{sy * b:.1f} Z"/>')
+            o.append(f'<path class="snieg-dach s{_ton(sx, 0)}" d="M0,0 L0,{sy * b:.1f} L{sx * a:.1f},{sy * b:.1f} Z"/>')
+    for sx in (-1, 1):
+        o.append(f'<rect class="snieg-dach s{_ton(sx, 0)}" x="{(a if sx > 0 else -w / 2):.1f}" y="{-h * .14:.1f}" width="{w / 2 - a:.1f}" height="{h * .28:.1f}"/>')
+    for sy in (-1, 1):
+        o.append(f'<rect class="snieg-dach s{_ton(0, sy)}" x="{-w * .14:.1f}" y="{(b if sy > 0 else -h / 2):.1f}" width="{w * .28:.1f}" height="{h / 2 - b:.1f}"/>')
+    o.append(f'<path class="snieg-dach-linia" d="M{-a:.1f},{-b:.1f} L{a:.1f},{b:.1f} M{a:.1f},{-b:.1f} L{-a:.1f},{b:.1f} M0,{-h * .5:.1f} L0,{h * .5:.1f} M{-w * .5:.1f},0 L{w * .5:.1f},0"/>')
+    return f'<g class="snieg snieg-dom" aria-hidden="true" transform="translate({cx} {cy})">{"".join(o)}</g>'
 
 def snieg_apartamenty():
     cx, cy, l, w, rot = APT_SRODEK
-    return (f'<g class="snieg" aria-hidden="true" transform="translate({cx} {cy}) rotate({rot})"><rect class="snieg-dach" x="{-l * .44}" y="{-w * .36}" width="{l * .88}" height="{w * .72}" rx="9"/>'
-            f'<path class="snieg-dach-linia" d="M{-l * .46},0 L{l * .46},0 M0,{-w * .4} L0,{w * .4}"/></g>')
+    r = math.radians(rot)
+    t_gora = _ton(math.sin(r), -math.cos(r)); t_dol = _ton(-math.sin(r), math.cos(r))  # połacie po obu stronach kalenicy
+    return (f'<g class="snieg snieg-dom" aria-hidden="true" transform="translate({cx} {cy}) rotate({rot})">'
+            f'<rect class="snieg-dach s{t_gora}" x="{-l * .5}" y="{-w * .5}" width="{l}" height="{w / 2}"/>'
+            f'<rect class="snieg-dach s{t_dol}" x="{-l * .5}" y="0" width="{l}" height="{w / 2}"/>'
+            f'<path class="snieg-dach-linia" d="M{-l * .5},0 L{l * .5},0 M0,{-w * .5} L0,{w * .5}"/></g>')
 
 def pobocza():
     """Zwałki śniegu po bokach odśnieżonych dróg i podjazdów."""
@@ -205,7 +223,7 @@ INFRA = (pobocza() + '<g id="warstwa-drogi">'
          '<g id="warstwa-parkingi">' + "".join(parking(*q) for q in PARKINGI) + carport() + '</g>'
          + swiatlo() +
          '<g id="warstwa-energia">' + panele(*PV) + odpady(*ODPADY)
-         + podpis(1180, 456, "Carport: 10 miejsc", "Carport: 10 cars", 124)
+         + podpis(1215, 462, "Carport: 10 miejsc", "Carport: 10 cars", 190, "opis-duzy", 28)
          + podpis(1191, 614, "Panele słoneczne", "Solar panels", 118)
          + podpis(1268, 676, "Odpady", "Waste", 58) + '</g>')
 
@@ -218,19 +236,21 @@ def main():
     s = re.sub(r"<style>.*?(?=\.ogrodzenie\{)", lambda m: m[0], s, count=1, flags=re.S)
     s = re.sub(r"\.droga-podjazd\{.*?(?=\.ogrodzenie\{)", "", s, count=1, flags=re.S)  # idempotencja
     s = s.replace(".ogrodzenie{", css + ".ogrodzenie{", 1)
-    s = re.sub(r'<g id="warstwa-sciezki">.*?</g>(?=</svg>)', "", s, flags=re.S)
+    # starsze wersje dopinały ścieżki na końcu pliku; teraz leżą w warstwie infrastruktury, pod podpisami domków
+    if "<!--/infra-->" in s:
+        glowa, ogon = s.split("<!--/infra-->", 1)
+        s = glowa + "<!--/infra-->" + re.sub(r'<g id="warstwa-sciezki">.*?</g>', "", ogon, flags=re.S)
     if "<!--infra-->" in s:
         s, n = re.subn(r"<!--infra-->.*?<!--/infra-->", lambda m: "<!--infra-->" + INFRA + "<!--/infra-->", s, count=1, flags=re.S)
     else:
         s, n = re.subn(r'<g id="warstwa-drogi">.*?</g>', lambda m: "<!--infra-->" + INFRA + "<!--/infra-->", s, count=1, flags=re.S)
     assert n == 1
-    # ścieżki na wierzchu (nad podpisami domków), więc wycinamy je z warstwy infrastruktury i dopinamy na końcu
-    m = re.search(r'<g id="warstwa-sciezki">.*?</g>', s, flags=re.S)
-    s = s[:m.start()] + s[m.end():]
-    s = s.replace("</svg>", m[0] + "</svg>", 1)
     # śnieg na dachach: domki na wierzchu, apartamenty tuż pod swoimi plakietkami z nazwami
     s = re.sub(r"<!--snieg-->.*?<!--/snieg-->", "", s, flags=re.S)
-    s = s.replace("</svg>", "<!--snieg-->" + snieg_dachy() + "<!--/snieg--></svg>", 1)
+    for cx, cy, w, h in DOMKI:
+        znacznik = f'<circle class="znacznik" cx="{cx}" cy="{cy}" r="5"/>'
+        assert znacznik in s, znacznik
+        s = s.replace(znacznik, "<!--snieg-->" + snieg_dom(cx, cy, w, h) + "<!--/snieg-->" + znacznik, 1)
     s = s.replace('<g class="apt-nazwa"', "<!--snieg-->" + snieg_apartamenty() + '<!--/snieg--><g class="apt-nazwa"', 1)
     p.write_text(s)
     print(p)

@@ -25,6 +25,8 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
     () => 1,
   )
 
+  const updateRef = useRef<() => void>(() => {})
+
   useEffect(() => {
     let frame = 0
     const update = () => {
@@ -57,12 +59,13 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
       if (!id || !scenes.some((s) => s.id === id)) return
       setActive(id)
       // Panorama rusza do kolejnego szczytu wcześniej niż tło: kafel domku liczy się, gdy jest niżej niż środek ekranu.
-      setFocus(focusAt(el!.closest('section') ?? el!, innerHeight * 0.68))
+      setFocus(focusAt(el!.closest('section') ?? el!, innerHeight * FOCUS_LINE))
       setReach((r) => Math.max(r, scenes.findIndex((s) => s.id === id) + 1))
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update)
     }
+    updateRef.current = update
     update()
     addEventListener('scroll', onScroll, { passive: true })
     addEventListener('resize', onScroll)
@@ -100,6 +103,14 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
       for (const type of ['pointerover', 'focusin']) document.removeEventListener(type, on)
     }
   }, [])
+  // Przeciągnięcie panoramy przewija stronę do karty domku, którego szczyt jest pod palcem (i odwrotnie robi to
+  // zwykłe przewijanie kart): karta staje tam, gdzie focusAt uznaje panoramę za ustawioną dokładnie na jej szczycie.
+  const scrollToCard = (id: string) => {
+    const card = [...document.querySelectorAll<HTMLElement>(`[data-scene-focus="${CSS.escape(id)}"]`)].find((n) => n.getClientRects().length)
+    if (!card) return
+    const r = card.getBoundingClientRect()
+    scrollBy({ top: r.top + r.height / 2 - innerHeight * FOCUS_LINE, behavior: 'instant' })
+  }
   const shown: Focus | undefined = hover ? { a: hover, b: hover, t: 0 } : focus
 
   const activeKind = scenes.find((s) => s.id === active)?.kind
@@ -116,7 +127,17 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
         return (
           <div key={s.id} className="mo-stage__scene" data-kind={s.kind} data-active={on || undefined}>
             {s.kind === 'media' && s.slides ? <HeroStage slides={s.slides} active={on} eager={i === 0} /> : null}
-            {SVG[s.kind] ? <InlineSvg src={SVG[s.kind]!} focus={on ? shown : undefined} pan={s.kind === 'panorama'} /> : null}
+            {SVG[s.kind] ? <InlineSvg
+                src={SVG[s.kind]!}
+                focus={on ? shown : undefined}
+                pan={s.kind === 'panorama'}
+                active={on}
+                onDragPeak={scrollToCard}
+                onDragEnd={(id) => {
+                  scrollToCard(id)
+                  updateRef.current()
+                }}
+              /> : null}
           </div>
         )
       })}
@@ -125,6 +146,9 @@ export function SceneStage({ scenes }: { scenes: Scene[] }) {
 }
 
 const noSubscribe = () => () => {}
+
+/** Ułamek wysokości ekranu, na którym kafel domku „ustawia” panoramę na swoim szczycie. */
+const FOCUS_LINE = 0.68
 
 /** Dwa sąsiednie elementy ilustracji (szczyty, atrakcje) i postęp przewijania między ich kartami (0–1). */
 type Focus = { a: string; b: string; t: number }
@@ -148,13 +172,104 @@ function focusAt(section: Element, mid: number): Focus | undefined {
 }
 
 /** Ilustracja wstawiona do strony (kolory z tokenów); panorama przesuwa się do wskazanego szczytu. */
-function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: boolean }) {
+function InlineSvg({ src, focus, pan, active, onDragPeak, onDragEnd }: { src: string; focus?: Focus; pan?: boolean; active?: boolean; onDragPeak?: (id: string) => void; onDragEnd?: (id: string) => void }) {
   const host = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
   const target = useRef(0)
   const shift = useRef(0)
   const raf = useRef(0)
+  const dragging = useRef(false)
+  const cb = useRef({ onDragPeak, onDragEnd })
+  useEffect(() => {
+    cb.current = { onDragPeak, onDragEnd }
+  })
   useEffect(() => () => cancelAnimationFrame(raf.current), [])
+
+  // Ręczne przesuwanie panoramy (mysz i dotyk): przeciągnięcie w poziomie w pasie panoramy przesuwa rysunek 1:1,
+  // podświetla najbliższy szczyt i przewija listę kafli do jego domku. Pionowy ruch palca nadal przewija stronę.
+  useEffect(() => {
+    const svg = host.current?.querySelector('svg')
+    if (!pan || !ready || !active || !svg) return
+    let start: { x: number; y: number; shift: number; id: number } | null = null
+    let near: string | undefined
+    const peaks = () => [...document.querySelectorAll<HTMLElement>('[data-scene-focus]')].filter((n) => n.getClientRects().length).map((n) => n.dataset.sceneFocus!)
+    const geometry = () => {
+      const sr = svg.getBoundingClientRect()
+      const scale = sr.width / (svg.viewBox.baseVal?.width || sr.width)
+      const cards = document.querySelector('.mo-peak-cards > [data-step]')?.getBoundingClientRect()
+      const beside = !!cards && cards.right < innerWidth * 0.7
+      return { sr, scale, max: beside ? cards.right : 0, min: Math.min(0, innerWidth - sr.width), anchor: beside ? (cards.right + innerWidth) / 2 : innerWidth / 2 }
+    }
+    const nearest = (shiftNow: number) => {
+      const { scale, anchor } = geometry()
+      let best: string | undefined
+      let d = Infinity
+      for (const id of peaks()) {
+        const m = svg.querySelector<SVGGraphicsElement>(`#${CSS.escape(id)}`)?.transform.baseVal.consolidate()?.matrix
+        if (!m) continue
+        const dist = Math.abs(m.e * scale + shiftNow - anchor)
+        if (dist < d) [best, d] = [id, dist]
+      }
+      return best
+    }
+    const interactive = 'a, button, input, select, textarea, label, summary, dialog, [role="button"], [popover]'
+    const down = (e: PointerEvent) => {
+      if (e.button > 0 || !e.isPrimary || (e.target as Element).closest?.(interactive)) return
+      if (e.clientY < svg.getBoundingClientRect().top) return
+      start = { x: e.clientX, y: e.clientY, shift: shift.current, id: e.pointerId }
+    }
+    const move = (e: PointerEvent) => {
+      if (!start || e.pointerId !== start.id) return
+      const dx = e.clientX - start.x
+      if (!dragging.current) {
+        if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(e.clientY - start.y)) return
+        dragging.current = true
+        cancelAnimationFrame(raf.current)
+        raf.current = 0
+        document.body.classList.add('is-pan-drag')
+      }
+      const { min, max } = geometry()
+      shift.current = target.current = Math.min(max, Math.max(min, start.shift + dx))
+      svg.style.transform = `translate3d(${shift.current.toFixed(2)}px, 0, 0)`
+      const id = nearest(shift.current)
+      if (id && id !== near) {
+        near = id
+        svg.parentElement!.querySelectorAll('.is-lit').forEach((n) => n.classList.remove('is-lit'))
+        svg.querySelector(`#${CSS.escape(id)}`)?.classList.add('is-lit')
+        svg.parentElement!.classList.add('has-lit')
+        cb.current.onDragPeak?.(id)
+      }
+    }
+    const up = () => {
+      const was = dragging.current
+      start = null
+      if (!was) return
+      dragging.current = false
+      document.body.classList.remove('is-pan-drag')
+      // Klik, który kończy przeciągnięcie, nie ma otwierać karty pod kursorem.
+      const swallow = (ev: Event) => ev.stopPropagation()
+      addEventListener('click', swallow, true)
+      setTimeout(() => removeEventListener('click', swallow, true), 0)
+      const id = nearest(shift.current)
+      near = undefined
+      if (id) cb.current.onDragEnd?.(id)
+    }
+    const noSelect = (e: Event) => dragging.current && e.preventDefault()
+    document.addEventListener('pointerdown', down)
+    addEventListener('pointermove', move)
+    addEventListener('pointerup', up)
+    addEventListener('pointercancel', up)
+    document.addEventListener('selectstart', noSelect)
+    return () => {
+      document.removeEventListener('pointerdown', down)
+      removeEventListener('pointermove', move)
+      removeEventListener('pointerup', up)
+      removeEventListener('pointercancel', up)
+      document.removeEventListener('selectstart', noSelect)
+      document.body.classList.remove('is-pan-drag')
+      dragging.current = false
+    }
+  }, [pan, ready, active])
 
   useEffect(() => {
     let cancelled = false
@@ -175,7 +290,7 @@ function InlineSvg({ src, focus, pan }: { src: string; focus?: Focus; pan?: bool
   useEffect(() => {
     const el = host.current
     const svg = el?.querySelector('svg')
-    if (!ready || !el || !svg) return
+    if (!ready || !el || !svg || dragging.current) return
     const find = (id?: string) => (id ? svg.querySelector<SVGGraphicsElement>(`#${CSS.escape(id)}`) : null)
     const lit = find(focus && (focus.t < 0.5 ? focus.a : focus.b))
     if (!lit?.classList.contains('is-lit')) {

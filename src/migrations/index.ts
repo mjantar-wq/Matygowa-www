@@ -37,6 +37,8 @@ import * as migration_20261112_110000_tytul_en_apartamenty from './20261112_1100
 import * as migration_20261112_170000_osada_bania_urwane_obok from './20261112_170000_osada_bania_urwane_obok';
 import * as migration_20261112_180000_rytualy_tytul_i_adres from './20261112_180000_rytualy_tytul_i_adres';
 
+import * as migration_20261118_090000_regulamin_zasady_platnosci from './20261118_090000_regulamin_zasady_platnosci';
+
 export const migrations = [
   {
     up: migration_20261024_222614_initial.up,
@@ -222,5 +224,10 @@ export const migrations = [
     up: migration_20261112_180000_rytualy_tytul_i_adres.up,
     down: migration_20261112_180000_rytualy_tytul_i_adres.down,
     name: '20261112_180000_rytualy_tytul_i_adres'
+  },
+  {
+    up: migration_20261118_090000_regulamin_zasady_platnosci.up,
+    down: migration_20261118_090000_regulamin_zasady_platnosci.down,
+    name: '20261118_090000_regulamin_zasady_platnosci'
   },
 ];

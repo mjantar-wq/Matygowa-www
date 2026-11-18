@@ -39,6 +39,8 @@ import * as migration_20261112_180000_rytualy_tytul_i_adres from './20261112_180
 
 import * as migration_20261118_090000_regulamin_zasady_platnosci from './20261118_090000_regulamin_zasady_platnosci';
 
+import * as migration_20261118_100000_regulamin_obowiazuje_od_dzis from './20261118_100000_regulamin_obowiazuje_od_dzis';
+
 export const migrations = [
   {
     up: migration_20261024_222614_initial.up,
@@ -229,5 +231,10 @@ export const migrations = [
     up: migration_20261118_090000_regulamin_zasady_platnosci.up,
     down: migration_20261118_090000_regulamin_zasady_platnosci.down,
     name: '20261118_090000_regulamin_zasady_platnosci'
+  },
+  {
+    up: migration_20261118_100000_regulamin_obowiazuje_od_dzis.up,
+    down: migration_20261118_100000_regulamin_obowiazuje_od_dzis.down,
+    name: '20261118_100000_regulamin_obowiazuje_od_dzis'
   },
 ];

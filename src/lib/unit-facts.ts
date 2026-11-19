@@ -15,11 +15,19 @@ export function guestsFact(locale: Locale, maxGuests: number, sofaGuests?: numbe
   return pl ? `${base} (w tym ${sofaGuests} na rozkładanej sofie w salonie)` : `${base} (incl. ${sofaGuests} on a sofa bed in the living room)`
 }
 
-/** Dwie najważniejsze różnice między domkami (audyt 12.11.2026): poziom salonu i liczba łazienek. */
-export function layoutFacts(locale: Locale, livingRoom?: 'ground' | 'upper' | null, bathrooms?: number | null): string[] {
+export interface LayoutInput {
+  bedrooms?: number | null
+  bathrooms?: number | null
+  /** osobne WC: w domkach zawsze, w apartamentach tylko gdy zaznaczone w panelu */
+  wc?: boolean | null
+  livingRoom?: 'ground' | 'upper' | null
+}
+
+/** Układ domu na belce kafelka i na stronie domku (audyt 12.11.2026; Michał, 19.11.2026): sypialnie, łazienki (+ WC), poziom salonu. */
+export function layoutFacts(locale: Locale, { bedrooms, bathrooms, wc, livingRoom }: LayoutInput): string[] {
   const pl = locale === 'pl'
-  return [
-    livingRoom ? (pl ? (livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null,
-    bathrooms ? `${bathrooms} ${pl ? (bathrooms > 4 ? 'łazienek' : bathrooms === 1 ? 'łazienka' : 'łazienki') : bathrooms === 1 ? 'bathroom' : 'bathrooms'}` : null,
-  ].filter((x): x is string => Boolean(x))
+  const bed = bedrooms ? `${bedrooms} ${pl ? (bedrooms === 1 ? 'sypialnia' : bedrooms > 4 ? 'sypialni' : 'sypialnie') : bedrooms === 1 ? 'bedroom' : 'bedrooms'}` : null
+  const bath = bathrooms ? `${bathrooms} ${pl ? (bathrooms > 4 ? 'łazienek' : bathrooms === 1 ? 'łazienka' : 'łazienki') : bathrooms === 1 ? 'bathroom' : 'bathrooms'}${wc ? ' + WC' : ''}` : null
+  const living = livingRoom ? (pl ? (livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null
+  return [bed, bath, living].filter((x): x is string => Boolean(x))
 }

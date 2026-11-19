@@ -38,9 +38,7 @@ export default async function UnitPage({ params }: SlugParams) {
   const amenities = type ? (ctx.locale === 'pl' ? type.amenities : type.amenitiesEn) : []
   const facts = [
     unit.area ? `${unit.area} m²` : null,
-    unit.bedrooms ? `${unit.bedrooms} ${ctx.locale === 'pl' ? 'sypialnie' : 'bedrooms'}` : null,
-    layoutFacts(ctx.locale, null, unit.bathrooms)[0] ? `${layoutFacts(ctx.locale, null, unit.bathrooms)[0]}${unit.separateWc ? ' + WC' : ''}` : null,
-    layoutFacts(ctx.locale, unit.livingRoom, null)[0] ?? null,
+    ...layoutFacts(ctx.locale, { bedrooms: unit.bedrooms, bathrooms: unit.bathrooms, wc: unit.kind === 'house' || unit.separateWc, livingRoom: unit.livingRoom }),
     unit.maxGuests ? guestsFact(ctx.locale, unit.maxGuests, type?.sofaBedGuests) : null,
   ].filter(Boolean)
 

@@ -19,7 +19,7 @@ export function UnitCard({ unit, ctx, priceFrom, sofaGuests }: { unit: Unit; ctx
     unit.maxGuests ? guestsFact(ctx.locale, unit.maxGuests, sofaGuests) : null,
     unit.area ? `${unit.area} m²` : null,
   ].filter(Boolean)
-  const layout = layoutFacts(ctx.locale, unit.livingRoom, unit.bathrooms)
+  const layout = layoutFacts(ctx.locale, { bedrooms: unit.bedrooms, bathrooms: unit.bathrooms, wc: unit.kind === 'house' || unit.separateWc, livingRoom: unit.livingRoom })
   return (
     <li className="mo-tile">
       <Link href={href(ctx.locale, 'houses', unit.slug)} className="mo-tile__link">

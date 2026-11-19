@@ -20,6 +20,8 @@ export interface UnitTile {
   area: number | null
   bedrooms: number | null
   bathrooms: number | null
+  /** osobne WC: w domkach zawsze, w apartamentach z ustawienia w panelu */
+  wc: boolean
   elevation: number | null
   stdGuests: number | null
   maxGuests: number | null
@@ -65,6 +67,7 @@ export async function getUnitTiles(locale: Locale, types: PublicUnitType[]): Pro
       area: u.area ?? null,
       bedrooms: u.bedrooms ?? null,
       bathrooms: u.bathrooms ?? null,
+      wc: u.kind === 'house' || !!u.separateWc,
       elevation: u.peak?.elevation ?? null,
       stdGuests: type?.stdOccupancy ?? null,
       maxGuests: type?.maxOccupancy ?? u.maxGuests ?? null,

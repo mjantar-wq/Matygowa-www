@@ -2,28 +2,24 @@ import Link from 'next/link'
 import { href } from '@/i18n/routes'
 import { formatPrice } from '@/lib/booking'
 import { peakViewAlt } from '@/lib/peak'
+import { guestsFact, layoutFacts } from '@/lib/unit-facts'
 import type { PageContext } from '@/lib/page'
 import type { Unit } from '@/payload-types'
 import { Media } from './Media'
 
 /**
  * Kafelek domu albo apartamentu w tym samym rozmiarze i układzie co wyniki „Sprawdź termin” (Michał, 25.10.2026):
- * zdjęcie, nazwa z wysokością obok (Michał, 26.10.2026), rodzaj, osoby i metraż, cena „od” (z IceColdRes, gdy jest). Siatka: `.mo-tiles` w `.mo-tiles-wrap`.
+ * zdjęcie, nazwa z wysokością obok (Michał, 26.10.2026), rodzaj, osoby (z miejscami na sofie) i metraż, cena „od” (z IceColdRes, gdy jest). Siatka: `.mo-tiles` w `.mo-tiles-wrap`.
  */
-export function UnitCard({ unit, ctx, priceFrom }: { unit: Unit; ctx: PageContext; priceFrom?: number | null }) {
+export function UnitCard({ unit, ctx, priceFrom, sofaGuests }: { unit: Unit; ctx: PageContext; priceFrom?: number | null; sofaGuests?: number | null }) {
   const t = ctx.t
   const see = unit.kind === 'apartment' ? t.effects.seeApartment : t.effects.seeHouse
   const facts = [
     t.house.kind[unit.kind],
-    unit.maxGuests ? t.house.guests(unit.maxGuests) : null,
+    unit.maxGuests ? guestsFact(ctx.locale, unit.maxGuests, sofaGuests) : null,
     unit.area ? `${unit.area} m²` : null,
   ].filter(Boolean)
-  // dwie najważniejsze różnice między domkami (audyt 12.11.2026): poziom salonu i liczba łazienek
-  const pl = ctx.locale === 'pl'
-  const layout = [
-    unit.livingRoom ? (pl ? (unit.livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : unit.livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null,
-    unit.bathrooms ? `${unit.bathrooms} ${pl ? (unit.bathrooms > 4 ? 'łazienek' : unit.bathrooms === 1 ? 'łazienka' : 'łazienki') : unit.bathrooms === 1 ? 'bathroom' : 'bathrooms'}` : null,
-  ].filter(Boolean)
+  const layout = layoutFacts(ctx.locale, unit.livingRoom, unit.bathrooms)
   return (
     <li className="mo-tile">
       <Link href={href(ctx.locale, 'houses', unit.slug)} className="mo-tile__link">

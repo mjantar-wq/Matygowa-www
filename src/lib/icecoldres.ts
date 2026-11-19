@@ -20,6 +20,8 @@ export interface PublicUnitType {
   stdOccupancy: number
   maxOccupancy: number
   maxChildren: number
+  /** ile z `maxOccupancy` śpi na rozkładanej sofie w salonie (IceColdRes #510); brak w starszym API = 0 */
+  sofaBedGuests?: number
   amenities: string[]
   amenitiesEn: string[]
   /** plik: `${src}/${szerokość}.${format}` dla jednej z `widths` */

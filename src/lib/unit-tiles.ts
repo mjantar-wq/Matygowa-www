@@ -23,6 +23,9 @@ export interface UnitTile {
   elevation: number | null
   stdGuests: number | null
   maxGuests: number | null
+  /** ile z `maxGuests` śpi na rozkładanej sofie w salonie (IceColdRes) */
+  sofaGuests: number
+  livingRoom: 'ground' | 'upper' | null
   beds: string | null
   amenities: string[]
 }
@@ -65,6 +68,8 @@ export async function getUnitTiles(locale: Locale, types: PublicUnitType[]): Pro
       elevation: u.peak?.elevation ?? null,
       stdGuests: type?.stdOccupancy ?? null,
       maxGuests: type?.maxOccupancy ?? u.maxGuests ?? null,
+      sofaGuests: type?.sofaBedGuests ?? 0,
+      livingRoom: u.livingRoom ?? null,
       beds: u.beds ?? null,
       amenities: (locale === 'pl' ? type?.amenities : type?.amenitiesEn) ?? [],
     }

@@ -4,7 +4,7 @@ import { SettlementMap } from '@/components/SettlementMap'
 import { GuidePopup } from '@/components/GuidePopup'
 import { UnitCard } from '@/components/UnitCard'
 import { findMany, UNIT_ORDER } from '@/lib/cms'
-import { getPricesFrom } from '@/lib/icecoldres'
+import { getPricesFrom, getProperty } from '@/lib/icecoldres'
 import { buildMetadata, pageContext, type LocaleParams } from '@/lib/page'
 import type { Unit } from '@/payload-types'
 
@@ -16,9 +16,11 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
 
 export default async function HousesPage({ params }: LocaleParams) {
   const ctx = await pageContext(params)
-  const [units, prices] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: UNIT_ORDER }), getPricesFrom()])
+  const [units, prices, property] = await Promise.all([findMany<Unit>('units', ctx.locale, { sort: UNIT_ORDER }), getPricesFrom(), getProperty()])
   // ceny „od” z IceColdRes (najtańsza oferta strony z promocją); wyłącznik w Ustawieniach → Rezerwacje
   const priceOf = (u: Unit) => (ctx.settings?.showPrices === false ? null : prices.find((p) => p.code === (u.icecoldresCode || u.slug))?.lowest?.nightly)
+  // miejsca na rozkładanej sofie z ustawień typu kwatery w IceColdRes
+  const sofaOf = (u: Unit) => property?.unitTypes.find((x) => x.code === (u.icecoldresCode || u.slug))?.sofaBedGuests ?? null
   const group = (kind: Unit['kind']) => {
     const list = units.filter((u) => u.kind === kind)
     return list.length ? (
@@ -27,7 +29,7 @@ export default async function HousesPage({ params }: LocaleParams) {
         {/* ten sam rozmiar i układ co wyniki „Sprawdź termin”: 3 w rzędzie na komputerze, 1 na telefonie */}
         <div className="mo-tiles-wrap">
           <ul className="mo-tiles">
-            {list.map((u) => <UnitCard key={u.id} unit={u} ctx={ctx} priceFrom={priceOf(u)} />)}
+            {list.map((u) => <UnitCard key={u.id} unit={u} ctx={ctx} priceFrom={priceOf(u)} sofaGuests={sofaOf(u)} />)}
           </ul>
         </div>
       </section>

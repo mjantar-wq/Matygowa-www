@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { guestsFact } from '@/lib/unit-facts'
 import { notFound } from 'next/navigation'
 import { BookingBar } from '@/components/BookingBar'
 import { engineSettings } from '@/lib/booking'
@@ -40,7 +41,7 @@ export default async function UnitPage({ params }: SlugParams) {
     unit.bedrooms ? `${unit.bedrooms} ${ctx.locale === 'pl' ? 'sypialnie' : 'bedrooms'}` : null,
     unit.bathrooms ? `${unit.bathrooms} ${ctx.locale === 'pl' ? (unit.bathrooms > 4 ? 'łazienek' : 'łazienki') : 'bathrooms'}${unit.separateWc ? ' + WC' : ''}` : null,
     unit.livingRoom ? (ctx.locale === 'pl' ? (unit.livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : unit.livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null,
-    unit.maxGuests ? t.house.guests(unit.maxGuests) : null,
+    unit.maxGuests ? guestsFact(ctx.locale, unit.maxGuests, type?.sofaBedGuests) : null,
   ].filter(Boolean)
 
   return (

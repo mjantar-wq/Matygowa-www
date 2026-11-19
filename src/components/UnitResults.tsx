@@ -6,6 +6,7 @@ import type { Dictionary } from '@/i18n/dictionaries'
 import { href } from '@/i18n/routes'
 import { formatPrice } from '@/lib/booking'
 import type { UnitTile } from '@/lib/unit-tiles'
+import { guestsFact, layoutFacts } from '@/lib/unit-facts'
 import { Lightbox } from './effects/Lightbox'
 
 export interface Result {
@@ -95,12 +96,15 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                     ? (t.reasons[r.reason ?? ''] ?? t.unavailable)
                     : [
                         u ? t.kind[u.kind] : null,
-                        u?.maxGuests ? `${t.upTo} ${u.maxGuests} ${t.people}` : null,
+                        u?.maxGuests ? guestsFact(locale, u.maxGuests, u.sofaGuests) : null,
                         u?.area ? `${u.area} m²` : null,
                       ]
                         .filter(Boolean)
                         .join(' · ')}
                 </p>
+                {!off && u && layoutFacts(locale, u.livingRoom, u.bathrooms).length ? (
+                  <p className="mo-body-s mo-tile__text">{layoutFacts(locale, u.livingRoom, u.bathrooms).join(' · ')}</p>
+                ) : null}
                 {best ? (
                   <div className="mo-tile__foot">
                     <div>

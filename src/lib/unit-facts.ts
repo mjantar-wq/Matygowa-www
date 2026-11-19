@@ -12,7 +12,7 @@ export function guestsFact(locale: Locale, maxGuests: number, sofaGuests?: numbe
   const pl = locale === 'pl'
   const base = pl ? `do ${maxGuests} osób` : `up to ${maxGuests} guests`
   if (!sofaGuests || sofaGuests <= 0) return base
-  return pl ? `${base} (w tym ${sofaGuests} na rozkładanej sofie w salonie)` : `${base} (incl. ${sofaGuests} on a sofa bed in the living room)`
+  return pl ? `${base} (w tym ${sofaGuests} na sofie)` : `${base} (incl. ${sofaGuests} on the sofa bed)`
 }
 
 export interface LayoutInput {

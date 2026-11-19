@@ -2,18 +2,18 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-d1-sqlite'
 import { touchPages } from '../lib/touch-pages'
 
 /**
- * Regulamin (19.11.2026, Michał): termin anulowania rezerwacji po braku dopłaty skrócony z 3 do 2 dni (§ 2 ust. 4),
+ * Regulamin (19.11.2026, Michał): prawo anulowania rezerwacji po braku dopłaty od drugiego dnia po terminie zamiast po 3 dniach (§ 2 ust. 4),
  * a data „Obowiązuje od” to 19.11.2026. Żywe dane z panelu: podmieniamy tylko dotychczasowe, dokładne fragmenty,
  * więc regulamin poprawiony ręcznie w panelu zostaje. Dotyczy treści opublikowanej i wersji.
  */
 const BODY: [from: string, to: string][] = [
   [
     'Wynajmujący ma prawo anulować rezerwację po upływie co najmniej 3 dni od tego terminu',
-    'Wynajmujący ma prawo anulować rezerwację po upływie co najmniej 2 dni od tego terminu',
+    'Wynajmujący ma prawo anulować rezerwację od drugiego dnia po tym terminie',
   ],
   [
     'the Landlord may cancel the booking once at least 3 days have passed after that deadline',
-    'the Landlord may cancel the booking once at least 2 days have passed after that deadline',
+    'the Landlord may cancel the booking from the second day after that deadline',
   ],
 ]
 const INTRO: [locale: string, from: string, to: string][] = [

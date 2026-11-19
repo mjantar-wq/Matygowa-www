@@ -40,6 +40,7 @@ import * as migration_20261112_180000_rytualy_tytul_i_adres from './20261112_180
 import * as migration_20261118_090000_regulamin_zasady_platnosci from './20261118_090000_regulamin_zasady_platnosci';
 
 import * as migration_20261118_100000_regulamin_obowiazuje_od_dzis from './20261118_100000_regulamin_obowiazuje_od_dzis';
+import * as migration_20261119_090000_regulamin_bez_przelewu from './20261119_090000_regulamin_bez_przelewu';
 
 export const migrations = [
   {
@@ -236,5 +237,10 @@ export const migrations = [
     up: migration_20261118_100000_regulamin_obowiazuje_od_dzis.up,
     down: migration_20261118_100000_regulamin_obowiazuje_od_dzis.down,
     name: '20261118_100000_regulamin_obowiazuje_od_dzis'
+  },
+  {
+    up: migration_20261119_090000_regulamin_bez_przelewu.up,
+    down: migration_20261119_090000_regulamin_bez_przelewu.down,
+    name: '20261119_090000_regulamin_bez_przelewu'
   },
 ];

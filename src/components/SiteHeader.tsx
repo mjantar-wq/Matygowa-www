@@ -4,6 +4,7 @@ import type { Locale } from '@/i18n/locales'
 import { href, type RouteKey } from '@/i18n/routes'
 import { HomeLink } from './HomeLink'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { MenuAutoClose } from './MenuAutoClose'
 import { AmbienceSwitch } from './effects/AmbienceSwitch'
 
 /** Główne sekcje menu (koncepcja: Szkielet strony). Kontakt i FAQ (strona Przewodnik) są tylko na dolnej belce (Michał, 12.11.2026). */
@@ -31,6 +32,7 @@ export function SiteHeader({ locale, t, bookingHref }: { locale: Locale; t: Dict
           ))}
           <AmbienceSwitch t={t.effects} />
         </nav>
+        <MenuAutoClose id="menu-glowne" />
         <AmbienceSwitch t={t.effects} />
         <LanguageSwitcher locale={locale} label={t.language} />
       </div>

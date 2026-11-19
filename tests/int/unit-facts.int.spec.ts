@@ -13,10 +13,11 @@ describe('opis domu na kafelku', () => {
     expect(guestsFact('en', 8, null)).toBe('up to 8 guests')
   })
 
-  it('układ domu: poziom salonu i liczba łazienek z odmianą', () => {
-    expect(layoutFacts('pl', 'upper', 3)).toEqual(['salon na piętrze', '3 łazienki'])
-    expect(layoutFacts('pl', 'ground', 5)).toEqual(['salon na parterze', '5 łazienek'])
-    expect(layoutFacts('en', 'ground', 1)).toEqual(['living room on the ground floor', '1 bathroom'])
-    expect(layoutFacts('pl', null, null)).toEqual([])
+  it('układ domu: sypialnie, łazienki (+ WC) i poziom salonu z odmianą', () => {
+    expect(layoutFacts('pl', { bedrooms: 4, bathrooms: 3, wc: true, livingRoom: 'upper' })).toEqual(['4 sypialnie', '3 łazienki + WC', 'salon na piętrze'])
+    expect(layoutFacts('pl', { bedrooms: 5, bathrooms: 5, livingRoom: 'ground' })).toEqual(['5 sypialni', '5 łazienek', 'salon na parterze'])
+    expect(layoutFacts('pl', { bedrooms: 1, bathrooms: 1 })).toEqual(['1 sypialnia', '1 łazienka'])
+    expect(layoutFacts('en', { bedrooms: 3, bathrooms: 1, wc: true, livingRoom: 'ground' })).toEqual(['3 bedrooms', '1 bathroom + WC', 'living room on the ground floor'])
+    expect(layoutFacts('pl', {})).toEqual([])
   })
 })

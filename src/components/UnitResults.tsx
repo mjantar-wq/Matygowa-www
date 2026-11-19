@@ -39,6 +39,8 @@ type Props = {
  * Wyniki „Sprawdź termin” (Michał, 25.10.2026): kafelki bliskie kwadratu, 3 w rzędzie na komputerze i 1 na telefonie;
  * wybrany dom otwiera się w oknie ze zdjęciami do powiększenia (Lightbox), opisem, ofertami i „Rezerwuj”.
  */
+const layoutOf = (locale: Locale, u: UnitTile) => layoutFacts(locale, { bedrooms: u.bedrooms, bathrooms: u.bathrooms, wc: u.wc, livingRoom: u.livingRoom })
+
 export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
   const [chosen, setChosen] = useState<string | null>(null)
   const dialog = useRef<HTMLDialogElement>(null)
@@ -102,9 +104,7 @@ export function UnitResults({ results, nights, locale, t, fx, book }: Props) {
                         .filter(Boolean)
                         .join(' · ')}
                 </p>
-                {!off && u && layoutFacts(locale, u.livingRoom, u.bathrooms).length ? (
-                  <p className="mo-body-s mo-tile__text">{layoutFacts(locale, u.livingRoom, u.bathrooms).join(' · ')}</p>
-                ) : null}
+                {!off && u && layoutOf(locale, u).length ? <p className="mo-body-s mo-tile__text">{layoutOf(locale, u).join(' · ')}</p> : null}
                 {best ? (
                   <div className="mo-tile__foot">
                     <div>

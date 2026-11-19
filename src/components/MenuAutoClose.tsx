@@ -7,10 +7,10 @@ import { usePathname } from 'next/navigation'
  * Zamyka rozwijane menu (popover) na telefonie po wyborze pozycji: także linków do kotwic
  * na tej samej stronie i przełącznika języka. Na desktopie menu nie jest popoverem, więc nic nie robi.
  */
-export function MenuAutoClose({ id }: { id: string }) {
+export function MenuAutoClose({ id }: { id: string }): null {
   const pathname = usePathname()
 
-  const close = () => {
+  const close = (): void => {
     const nav = document.getElementById(id)
     if (nav?.matches(':popover-open')) nav.hidePopover()
   }
@@ -31,6 +31,6 @@ export function MenuAutoClose({ id }: { id: string }) {
   }, [id])
 
   // nawigacja klienta (zmiana adresu) także zamyka menu
-  useEffect(close, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => close(), [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
   return null
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { guestsFact } from '@/lib/unit-facts'
+import { guestsFact, layoutFacts } from '@/lib/unit-facts'
 import { notFound } from 'next/navigation'
 import { BookingBar } from '@/components/BookingBar'
 import { engineSettings } from '@/lib/booking'
@@ -39,8 +39,8 @@ export default async function UnitPage({ params }: SlugParams) {
   const facts = [
     unit.area ? `${unit.area} m²` : null,
     unit.bedrooms ? `${unit.bedrooms} ${ctx.locale === 'pl' ? 'sypialnie' : 'bedrooms'}` : null,
-    unit.bathrooms ? `${unit.bathrooms} ${ctx.locale === 'pl' ? (unit.bathrooms > 4 ? 'łazienek' : 'łazienki') : 'bathrooms'}${unit.separateWc ? ' + WC' : ''}` : null,
-    unit.livingRoom ? (ctx.locale === 'pl' ? (unit.livingRoom === 'upper' ? 'salon na piętrze' : 'salon na parterze') : unit.livingRoom === 'upper' ? 'living room upstairs' : 'living room on the ground floor') : null,
+    layoutFacts(ctx.locale, null, unit.bathrooms)[0] ? `${layoutFacts(ctx.locale, null, unit.bathrooms)[0]}${unit.separateWc ? ' + WC' : ''}` : null,
+    layoutFacts(ctx.locale, unit.livingRoom, null)[0] ?? null,
     unit.maxGuests ? guestsFact(ctx.locale, unit.maxGuests, type?.sofaBedGuests) : null,
   ].filter(Boolean)
 

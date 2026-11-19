@@ -3,8 +3,8 @@ import { guestsFact, layoutFacts } from '@/lib/unit-facts'
 
 describe('opis domu na kafelku', () => {
   it('przy domkach 10-osobowych od razu widać miejsca na rozkładanej sofie (Michał, 19.11.2026)', () => {
-    expect(guestsFact('pl', 10, 2)).toBe('do 10 osób (w tym 2 na rozkładanej sofie w salonie)')
-    expect(guestsFact('en', 10, 2)).toBe('up to 10 guests (incl. 2 on a sofa bed in the living room)')
+    expect(guestsFact('pl', 10, 2)).toBe('do 10 osób (w tym 2 na sofie)')
+    expect(guestsFact('en', 10, 2)).toBe('up to 10 guests (incl. 2 on the sofa bed)')
   })
 
   it('bez sofy (0 albo brak w API) bez dopisku', () => {

@@ -30,10 +30,13 @@
       "pl": "Najbliższe termy, dziesięć minut drogi od osady. Woda termalna o temperaturze 30–38°C płynie z głębokości 2400 m, w dwudziestu basenach wewnątrz i na zewnątrz. Do tego osiem saun, od łagodnej ziołowej po fińską.\n\nNajpiękniej jest zimą o zmierzchu: siedzicie w ciepłej wodzie na zewnątrz, nad taflą unosi się para, a przed Wami ciemnieje grań Tatr. Na deszczowy dzień i po całym dniu na nartach to najprostszy plan.\n\nWarto przyjechać rano albo pod wieczór, w weekendy i ferie w środku dnia bywa tłoczno. Bilety i godziny otwarcia sprawdzicie na stronie obiektu.",
       "en": "The nearest thermal baths, ten minutes from the settlement. Thermal water at 30–38°C rises from 2,400 metres below ground into twenty indoor and outdoor pools, with eight saunas, from gentle herbal to Finnish.\n\nIt is at its most beautiful on a winter evening: you sit in the warm outdoor water, steam drifting over the surface, as the Tatra ridge darkens in front of you. On a rainy day, or after a full day on skis, it is the simplest plan there is.\n\nCome in the morning or towards evening; at weekends and in the school holidays midday can be busy. Tickets and opening hours are on the official website."
     },
-    "image": "A_termy-bukovina_1.webp",
+    "image": "A_termy-bukovina_z1.webp",
     "gallery": [
-      "A_termy-bukovina_2.webp"
-    ]
+      "A_termy-bukovina_z2.webp",
+      "A_termy-bukovina_z3.webp",
+      "A_termy-bukovina_z4.webp"
+    ],
+    "zdjecia_na_zywo": true
   },
   {
     "slug": "terma-bania",

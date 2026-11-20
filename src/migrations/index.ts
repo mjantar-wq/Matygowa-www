@@ -44,6 +44,8 @@ import * as migration_20261119_090000_regulamin_bez_przelewu from './20261119_09
 
 import * as migration_20261119_100000_regulamin_anulowanie_2_dni from './20261119_100000_regulamin_anulowanie_2_dni';
 
+import * as migration_20261120_100000_regulamin_zaliczka_albo_calosc from './20261120_100000_regulamin_zaliczka_albo_calosc';
+
 export const migrations = [
   {
     up: migration_20261024_222614_initial.up,
@@ -249,5 +251,10 @@ export const migrations = [
     up: migration_20261119_100000_regulamin_anulowanie_2_dni.up,
     down: migration_20261119_100000_regulamin_anulowanie_2_dni.down,
     name: '20261119_100000_regulamin_anulowanie_2_dni'
+  },
+  {
+    up: migration_20261120_100000_regulamin_zaliczka_albo_calosc.up,
+    down: migration_20261120_100000_regulamin_zaliczka_albo_calosc.down,
+    name: '20261120_100000_regulamin_zaliczka_albo_calosc'
   },
 ];

@@ -179,6 +179,25 @@ async function main() {
     }
   }
 
+  // Zdjęcia atrakcji na żywo: IMPORT_ONLY=attraction-photos (tylko jawnie, nie w pełnym imporcie). Dla atrakcji z polem
+  // „zdjecia_na_zywo” w attractions.json ustawia wyłącznie zdjęcie główne i galerię; teksty i pozostałe pola z panelu zostają.
+  if (only.has('attraction-photos')) {
+    for (const a of read('attractions.json') as Any[]) {
+      if (!a.zdjecia_na_zywo) continue
+      const found = await payload.find({ collection: 'attractions', where: { slug: { equals: a.slug } }, limit: 1, depth: 0, draft: true })
+      const id = found.docs[0]?.id
+      if (!id) {
+        payload.logger.warn(`attractions: ${a.slug} nie ma w panelu, pomijam zdjęcia`)
+        continue
+      }
+      const files: string[] = [a.image, ...(a.gallery ?? [])]
+      const ids = files.map((f) => media.get(f))
+      if (ids.some((x) => !x)) throw new Error(`attractions: ${a.slug}: brak pliku ze zdjęć w manifeście`)
+      await payload.update({ collection: 'attractions', id, data: { image: ids[0], gallery: ids.slice(1) }, draft: false } as never)
+      payload.logger.info(`attractions: ${a.slug}: zdjęcie główne i galeria (${ids.length})`)
+    }
+  }
+
   // Atrakcje: ta sama lista dla sekcji na głównej (featured, krótki opis "summary") i strony Okolica
   // (opis rozszerzony "body", zdjęcia "image" i "gallery" jako nazwy plików z content/media, z podpisem licencji w manifeście).
   // "retired": true zdejmuje wpis ze strony (szkic), np. dawne zbiorcze „Termy”, zastąpione konkretnymi obiektami.

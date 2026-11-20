@@ -34,10 +34,17 @@ ZDJECIA = []
 
 # plik, adres pliku, strona źródła, obiekt (w podpisie), prawa, kadr w pionie, alt PL, alt EN
 OBIEKTY = [
-    ("A_termy-bukovina_1", "https://u.profitroom.pl/2015.termabukowina.pl/thumb/1920x1080/uploads/zdjciemniejsze.jpg", "https://www.termybukovina.pl", "Termy Bukovina", "pending", .5,
-     "Baseny zewnętrzne i zjeżdżalnie Term Bukovina, w tle Tatry", "The outdoor pools and slides of Termy Bukovina, the Tatras behind"),
-    ("A_termy-bukovina_2", "https://u.profitroom.pl/2015.termabukowina.pl/thumb/1920x1080/uploads/DJI_20260716190832_0673_D-HDR.jpg", "https://www.termybukovina.pl", "Termy Bukovina", "pending", .5,
-     "Termy Bukovina wśród lasów, na horyzoncie Tatry", "Termy Bukovina among the forests, the Tatras on the horizon"),
+    # 20.11: Termy Bukovina zgodziły się mailem (Monika Gustaw, marketing) na użycie wybranych zdjęć na stronie w zakładce „Okolica”,
+    # pod warunkiem podania źródła i linku do termybukovina.pl; tylko ta publikacja, bez przekazywania i użycia w innych materiałach.
+    # Oryginały z WeTransfera zmniejszone do ok. 2700 px i skopiowane do .okolica-cache; z2 to wycięty środek panoramy „Obiekt_Termy_BUKOVINA”.
+    ("A_termy-bukovina_z1", None, "https://www.termybukovina.pl", "Termy Bukovina", "granted", 0.55,
+     "Termy Bukovina zimą: budynek z basenami, nad wodą unosi się para, w tle ośnieżone Tatry", "Termy Bukovina in winter: the main building and pools with steam rising off the water, the snowy Tatras behind"),
+    ("A_termy-bukovina_z2", None, "https://www.termybukovina.pl", "Termy Bukovina", "granted", 0.5,
+     "Baseny zewnętrzne i zjeżdżalnie Term Bukovina latem, z tyłu las i Tatry", "The outdoor pools and slides of Termy Bukovina in summer, forest and the Tatras behind"),
+    ("A_termy-bukovina_z3", None, "https://www.termybukovina.pl", "Termy Bukovina", "granted", 0.5,
+     "Basen zewnętrzny Term Bukovina przed szklaną piramidą i kolorowymi zjeżdżalniami", "The outdoor pool of Termy Bukovina in front of the glass pyramid and the colourful slides"),
+    ("A_termy-bukovina_z4", None, "https://www.termybukovina.pl", "Termy Bukovina", "granted", 0.62,
+     "Szklana piramida Term Bukovina i zjeżdżalnie na tle oszronionego lasu", "The glass pyramid and slides of Termy Bukovina against a frosted forest"),
     ("A_terma-bania_1", "https://u.profitroom.pl/2017.termabania.pl/thumb/1920x980/uploads/TermyBaniaBialka112024_14.jpg", "https://www.termabania.pl", "Terma Bania", "pending", .5,
      "Terma Bania z lotu ptaka, baseny pod gołym niebem przy stoku", "Terma Bania from the air, open-air pools by the slopes"),
     ("A_terma-bania_2", "https://u.profitroom.pl/2017.termabania.pl/thumb/1920x980/uploads/Terma_Bania_062019_17AB.jpg", "https://www.termabania.pl", "Terma Bania", "pending", .5,

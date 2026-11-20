@@ -1874,15 +1874,15 @@
    "source": "https://commons.wikimedia.org/w/index.php?curid=28698983"
   },
   {
-   "file": "A_termy-bukovina_1.webp",
-   "shot": "A_termy-bukovina_1",
-   "width": 1620,
-   "height": 1080,
+   "file": "A_termy-bukovina_z1.webp",
+   "shot": "A_termy-bukovina_z1",
+   "width": 1800,
+   "height": 1200,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
-    "pl": "Baseny zewnętrzne i zjeżdżalnie Term Bukovina, w tle Tatry",
-    "en": "The outdoor pools and slides of Termy Bukovina, the Tatras behind"
+    "pl": "Termy Bukovina zimą: budynek z basenami, nad wodą unosi się para, w tle ośnieżone Tatry",
+    "en": "Termy Bukovina in winter: the main building and pools with steam rising off the water, the snowy Tatras behind"
    },
    "source": "https://www.termybukovina.pl",
    "author": "Termy Bukovina",
@@ -1892,15 +1892,51 @@
    }
   },
   {
-   "file": "A_termy-bukovina_2.webp",
-   "shot": "A_termy-bukovina_2",
-   "width": 1620,
-   "height": 1080,
+   "file": "A_termy-bukovina_z2.webp",
+   "shot": "A_termy-bukovina_z2",
+   "width": 1800,
+   "height": 1200,
    "placeholder": false,
-   "rights": "pending",
+   "rights": "granted",
    "alt": {
-    "pl": "Termy Bukovina wśród lasów, na horyzoncie Tatry",
-    "en": "Termy Bukovina among the forests, the Tatras on the horizon"
+    "pl": "Baseny zewnętrzne i zjeżdżalnie Term Bukovina latem, z tyłu las i Tatry",
+    "en": "The outdoor pools and slides of Termy Bukovina in summer, forest and the Tatras behind"
+   },
+   "source": "https://www.termybukovina.pl",
+   "author": "Termy Bukovina",
+   "credit": {
+    "pl": "Fot. Termy Bukovina · termybukovina.pl https://www.termybukovina.pl",
+    "en": "Photo: Termy Bukovina · termybukovina.pl https://www.termybukovina.pl"
+   }
+  },
+  {
+   "file": "A_termy-bukovina_z3.webp",
+   "shot": "A_termy-bukovina_z3",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Basen zewnętrzny Term Bukovina przed szklaną piramidą i kolorowymi zjeżdżalniami",
+    "en": "The outdoor pool of Termy Bukovina in front of the glass pyramid and the colourful slides"
+   },
+   "source": "https://www.termybukovina.pl",
+   "author": "Termy Bukovina",
+   "credit": {
+    "pl": "Fot. Termy Bukovina · termybukovina.pl https://www.termybukovina.pl",
+    "en": "Photo: Termy Bukovina · termybukovina.pl https://www.termybukovina.pl"
+   }
+  },
+  {
+   "file": "A_termy-bukovina_z4.webp",
+   "shot": "A_termy-bukovina_z4",
+   "width": 1800,
+   "height": 1200,
+   "placeholder": false,
+   "rights": "granted",
+   "alt": {
+    "pl": "Szklana piramida Term Bukovina i zjeżdżalnie na tle oszronionego lasu",
+    "en": "The glass pyramid and slides of Termy Bukovina against a frosted forest"
    },
    "source": "https://www.termybukovina.pl",
    "author": "Termy Bukovina",

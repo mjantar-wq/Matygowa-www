@@ -430,7 +430,7 @@ async function main() {
         priceSlogan: s.booking_bar?.best_rate?.[locale],
         // import służy środowisku testowemu: testujemy integrację z IceColdRes (produkcja: decyzja Michała w grudniu)
         bookingEngine: 'icecoldres',
-        icecoldresUrl: 'https://icecoldres.audiowizard.pl',
+        icecoldresUrl: 'https://booking.matygowaosada.pl',
         seoTitle: s.seo_default?.title?.[locale],
         seoDescription: s.seo_default?.description?.[locale],
       },

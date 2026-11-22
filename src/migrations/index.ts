@@ -43,6 +43,7 @@ import * as migration_20261118_100000_regulamin_obowiazuje_od_dzis from './20261
 import * as migration_20261119_090000_regulamin_bez_przelewu from './20261119_090000_regulamin_bez_przelewu';
 
 import * as migration_20261119_100000_regulamin_anulowanie_2_dni from './20261119_100000_regulamin_anulowanie_2_dni';
+import * as migration_20261122_150000_adres_silnika_booking from './20261122_150000_adres_silnika_booking';
 
 export const migrations = [
   {
@@ -249,5 +250,10 @@ export const migrations = [
     up: migration_20261119_100000_regulamin_anulowanie_2_dni.up,
     down: migration_20261119_100000_regulamin_anulowanie_2_dni.down,
     name: '20261119_100000_regulamin_anulowanie_2_dni'
+  },
+  {
+    up: migration_20261122_150000_adres_silnika_booking.up,
+    down: migration_20261122_150000_adres_silnika_booking.down,
+    name: '20261122_150000_adres_silnika_booking'
   },
 ];

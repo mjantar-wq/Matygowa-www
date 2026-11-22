@@ -25,7 +25,7 @@ export const Settings: GlobalConfig = {
                 { label: 'IceColdRes', value: 'icecoldres' },
               ],
             },
-            { name: 'icecoldresUrl', label: 'Adres silnika IceColdRes', type: 'text', defaultValue: 'https://icecoldres.audiowizard.pl' },
+            { name: 'icecoldresUrl', label: 'Adres silnika IceColdRes', type: 'text', defaultValue: 'https://booking.matygowaosada.pl' },
             { name: 'hotresUrl', label: 'Adres rezerwacji Hotres', type: 'text', defaultValue: 'https://booking.hotres.pl/v4_step1?oid=5244' },
             { name: 'showPrices', label: 'Pokazuj ceny i dostępność z IceColdRes', type: 'checkbox', defaultValue: true },
             { name: 'priceSlogan', label: 'Hasło przy pasku rezerwacji', type: 'text', localized: true },

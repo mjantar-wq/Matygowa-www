@@ -46,14 +46,14 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 
 ## Integracja z IceColdRes
 
-- API: `ICECOLDRES_API_URL` i `ICECOLDRES_SLUG` w `wrangler.jsonc` (`vars`). Test: `https://icecoldres.audiowizard.pl`, adres obiektu `booking` (silnik: https://icecoldres.audiowizard.pl/pl/booking i `/en/booking`).
+- API: `ICECOLDRES_API_URL` i `ICECOLDRES_SLUG` w `wrangler.jsonc` (`vars`). API (zdjęcia, ceny, dostępność): `https://icecoldres.audiowizard.pl`, adres obiektu `booking`. Silnik rezerwacji, na który prowadzą przyciski i ramka kalendarza, także na teście: `https://booking.matygowaosada.pl/pl/booking` i `/en/booking` (adres z Ustawień strony → Rezerwacje → „Adres silnika IceColdRes”, od 22.11.2026).
 - Adresy (ustalenie Michała, źródło prawdy: sekcja domen w `docs/integracja-strony.md` w IceColdRes):
 
   | | Test | Produkcja |
   |---|---|---|
   | Strona | `matygowa.audiowizard.pl` | `matygowaosada.pl` |
   | Panel treści strony | `matygowa.audiowizard.pl/panel` | `matygowaosada.pl/panel` |
-  | Rezerwacje (silnik) | `icecoldres.audiowizard.pl/pl/booking`, `/en/booking` | `booking.matygowaosada.pl` |
+  | Rezerwacje (silnik) | `booking.matygowaosada.pl/pl/booking`, `/en/booking` (od 22.11.2026; `icecoldres.audiowizard.pl` zostaje jako adres techniczny API) | `booking.matygowaosada.pl` |
   | Panel IceColdRes | `icecoldres.audiowizard.pl/panel` | `icecoldres.matygowaosada.pl/panel` |
 
   Zmiana środowiska to `routes` i `vars` (`ICECOLDRES_API_URL`, `ICECOLDRES_SLUG`, `NEXT_PUBLIC_SITE_URL`) w `wrangler.jsonc` oraz adres silnika w Ustawieniach strony. Stary adres panelu `/admin` przekierowuje na `/panel`.

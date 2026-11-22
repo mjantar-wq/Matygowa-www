@@ -16,11 +16,14 @@ export interface EngineSettings {
   bookingEngine?: 'hotres' | 'icecoldres' | null
   icecoldresUrl?: string | null
   hotresUrl?: string | null
-  /** adres obiektu w IceColdRes (na teście „booking”: icecoldres.audiowizard.pl/pl/booking) */
+  /** adres obiektu w IceColdRes („booking”: booking.matygowaosada.pl/pl/booking) */
   slug?: string | null
   /** ceny i wyniki wyszukiwania na stronie (Ustawienia → Rezerwacje); bez nich pasek od razu otwiera silnik */
   showPrices?: boolean | null
 }
+
+/** Adres silnika rezerwacji, gdy w panelu jest pusty (Michał, 22.11.2026: booking.matygowaosada.pl także na teście; stary icecoldres.audiowizard.pl to adres techniczny API). */
+export const DEFAULT_ENGINE_URL = 'https://booking.matygowaosada.pl'
 
 /** Parametry kampanii przekazywane do silnika (trafiają do rezerwacji jako jej źródło). */
 export const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id'] as const
@@ -31,7 +34,7 @@ export const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term',
  */
 export function bookingUrl(settings: EngineSettings | null, locale: Locale, q: BookingQuery = {}, utm: Record<string, string> = {}) {
   if (settings?.bookingEngine === 'icecoldres') {
-    const url = new URL(`/${locale === 'pl' ? 'pl' : 'en'}/${settings.slug || 'booking'}`, settings.icecoldresUrl || 'https://icecoldres.audiowizard.pl')
+    const url = new URL(`/${locale === 'pl' ? 'pl' : 'en'}/${settings.slug || 'booking'}`, settings.icecoldresUrl || DEFAULT_ENGINE_URL)
     const params: Record<string, string | undefined> = {
       arrival: q.arrival,
       departure: q.departure,
@@ -57,7 +60,7 @@ export function bookingUrl(settings: EngineSettings | null, locale: Locale, q: B
  * z jednym kodem). Zasady przyjazdów, wyjazdów i minimalnego pobytu są tylko w IceColdRes.
  */
 export function engineCalendarUrl(settings: EngineSettings | null, locale: Locale, q: { unit?: string; arrival?: string; departure?: string } = {}) {
-  const url = new URL(`/${locale}/${settings?.slug || 'booking'}/kalendarz`, settings?.icecoldresUrl || 'https://icecoldres.audiowizard.pl')
+  const url = new URL(`/${locale}/${settings?.slug || 'booking'}/kalendarz`, settings?.icecoldresUrl || DEFAULT_ENGINE_URL)
   for (const [k, v] of Object.entries(q)) if (v) url.searchParams.set(k, v)
   // niższe dni, a na telefonie jeden miesiąc: kalendarz stoi pod paskiem rezerwacji
   url.searchParams.set('compact', '1')

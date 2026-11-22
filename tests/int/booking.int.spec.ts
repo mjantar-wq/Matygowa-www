@@ -16,7 +16,7 @@ describe('daty pobytu', () => {
     expect(engineCalendarUrl({ bookingEngine: 'icecoldres', icecoldresUrl: 'https://booking.matygowaosada.pl', slug: 'booking' }, 'pl', { unit: 'hawran', arrival: '2026-12-20', departure: '' })).toBe(
       'https://booking.matygowaosada.pl/pl/booking/kalendarz?unit=hawran&arrival=2026-12-20&compact=1',
     )
-    expect(engineCalendarUrl(null, 'en')).toBe('https://icecoldres.audiowizard.pl/en/booking/kalendarz?compact=1')
+    expect(engineCalendarUrl(null, 'en')).toBe('https://booking.matygowaosada.pl/en/booking/kalendarz?compact=1')
   })
 
   it('okres promocji dla gościa: „do” to dzień wyjazdu po ostatniej nocy (Michał, 27.10.2026)', () => {

@@ -32,7 +32,7 @@ type Search =
   | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'error' }
-  | { status: 'done'; nights: number; results: Result[] }
+  | { status: 'done'; nights: number; results: Result[]; arrival: string; departure: string }
 
 const AGES = Array.from({ length: 18 }, (_, i) => i)
 
@@ -152,6 +152,8 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
   function pickDates(a: string, d: string) {
     setArrival(a)
     setDeparture(d)
+    // wyniki dotyczą poprzednich dat: po zmianie terminu znikają (inaczej nagłówek wyników formatował pustą datę i strona wywalała błąd)
+    setSearch({ status: 'idle' })
     if (a && d) setOpen(false)
   }
 
@@ -216,7 +218,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       }
       // dom, z którego strony gość szuka, na początku listy
       data.results.sort((a, b) => Number(b.code === unit) - Number(a.code === unit))
-      setSearch({ status: 'done', ...data })
+      setSearch({ status: 'done', ...data, arrival, departure })
       track('booking_search', { unit, arrival, nights, adults, children, results: data.results.filter((x) => x.offers.length).length })
     } catch {
       setSearch({ status: 'error' })
@@ -364,7 +366,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
             <button
               type="button"
               className="mo-btn mo-btn--glowny mo-btn--maly"
-              onClick={() => (setArrival(''), setDeparture(''))}
+              onClick={() => (setArrival(''), setDeparture(''), setSearch({ status: 'idle' }))}
             >
               {t.clear}
             </button>
@@ -394,7 +396,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
         {search.status === 'done' ? (
           <>
             <h3 className="mo-h3">
-              {available.length ? t.results : t.noResults} · {fmt(arrival)} – {fmt(departure)},{' '}
+              {available.length ? t.results : t.noResults} · {fmt(search.arrival)} – {fmt(search.departure)},{' '}
               {nightsLabel(search.nights)}
             </h3>
             <UnitResults

@@ -1,6 +1,6 @@
 import type { AdminViewServerProps } from 'payload'
 import { Gutter } from '@payloadcms/ui'
-import { fetchStats, ga4Setup, type Ga4Problem, type Stats } from '@/lib/ga4'
+import { fetchStats, ga4KeyHint, ga4Setup, type Ga4Problem, type Stats } from '@/lib/ga4'
 
 const PERIODS = [7, 28, 90] as const
 const nf = new Intl.NumberFormat('pl-PL')
@@ -89,6 +89,7 @@ function Setup({ problem }: { problem: Ga4Problem }) {
         </li>
       </ul>
       <p style={{ fontWeight: 600 }}>{PROBLEMS[problem]}</p>
+      {problem === 'bad_key' ? <p style={{ opacity: 0.7 }}>Diagnostyka: {ga4KeyHint()}.</p> : null}
       <p style={{ margin: 0 }}>Szczegóły: docs/pomiar.md, część „Statystyki w panelu”.</p>
     </div>
   )

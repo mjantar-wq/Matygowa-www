@@ -40,7 +40,9 @@
     // tych adresów usunięcie konta w panelu nie wykreśla z bramki (właściciel)
     "CF_ACCESS_KEEP_EMAILS": "m.jantar@gmail.com,michal.jantar@matygowaosada.pl",
     // opinie z Google (src/lib/reviews.ts); klucz GOOGLE_PLACES_API_KEY jest sekretem Workera. Pusty = źródło wyłączone.
-    "GOOGLE_PLACE_ID": "ChIJfWxS06HxFUcRELlrcYV84E8"
+    "GOOGLE_PLACE_ID": "ChIJfWxS06HxFUcRELlrcYV84E8",
+    // statystyki w panelu (src/lib/ga4.ts): numer usługi GA4; klucz konta usługi to sekret GA4_SERVICE_ACCOUNT_JSON
+    "GA4_PROPERTY_ID": "541969624"
   },
   // w poniedziałki i czwartki o 4:30 UTC: pobranie opinii z Google (worker.ts → /api/cron/opinie)
   "triggers": { "crons": ["30 4 * * 1,4"] },

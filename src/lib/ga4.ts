@@ -12,17 +12,42 @@ type ServiceAccount = { client_email: string; private_key: string }
 
 export type Ga4Config = { propertyId: string; account: ServiceAccount }
 
-export function ga4Config(): Ga4Config | null {
-  const propertyId = process.env.GA4_PROPERTY_ID?.trim().replace(/^properties\//, '')
-  const raw = process.env.GA4_SERVICE_ACCOUNT_JSON?.trim()
-  if (!propertyId || !raw) return null
+/** Dlaczego statystyki są wyłączone: brak zmiennej, brak sekretu albo sekret, którego nie da się odczytać jako klucz konta usługi. */
+export type Ga4Problem = 'no_property' | 'no_key' | 'bad_key'
+
+function parseAccount(raw: string): ServiceAccount | null {
+  let text = raw.trim()
+  // sekret wklejony jako base64 albo w cudzysłowie (np. po skopiowaniu z terminala)
+  if (!text.startsWith('{')) {
+    try {
+      text = atob(text.replace(/^"|"$/g, ''))
+    } catch {
+      /* zostaje oryginał */
+    }
+  }
   try {
-    const account = JSON.parse(raw) as ServiceAccount
+    const account = JSON.parse(text) as ServiceAccount
     if (!account.client_email || !account.private_key) return null
-    return { propertyId, account }
+    // prawdziwe znaki nowej linii w kluczu (gdy ktoś rozwinął \n przy wklejaniu)
+    account.private_key = account.private_key.replace(/\\n/g, '\n')
+    return account
   } catch {
     return null
   }
+}
+
+export function ga4Setup(): { config: Ga4Config } | { problem: Ga4Problem } {
+  const propertyId = process.env.GA4_PROPERTY_ID?.trim().replace(/^properties\//, '')
+  const raw = process.env.GA4_SERVICE_ACCOUNT_JSON
+  if (!propertyId) return { problem: 'no_property' }
+  if (!raw?.trim()) return { problem: 'no_key' }
+  const account = parseAccount(raw)
+  return account ? { config: { propertyId, account } } : { problem: 'bad_key' }
+}
+
+export function ga4Config(): Ga4Config | null {
+  const setup = ga4Setup()
+  return 'config' in setup ? setup.config : null
 }
 
 const b64url = (data: ArrayBuffer | string) => {

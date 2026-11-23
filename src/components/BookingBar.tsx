@@ -7,7 +7,7 @@ import type { Dictionary } from '@/i18n/dictionaries'
 import { href } from '@/i18n/routes'
 import { ageLabel } from '@/lib/age'
 import { daysBetween } from '@/lib/availability'
-import { bookingUrl, engineCalendarUrl, type EngineSettings } from '@/lib/booking'
+import { bookingUrl, engineCalendarUrl, type BookingQuery, type EngineSettings } from '@/lib/booking'
 import { campaignParams, nightsBetween, track } from '@/lib/tracking'
 import { CountPicker } from './CountPicker'
 import { EngineCalendar } from './EngineCalendar'
@@ -32,7 +32,10 @@ type Search =
   | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'error' }
-  | { status: 'done'; nights: number; results: Result[] }
+  /** `stay`: dane wyszukiwania, do których należą wyniki (nagłówek i „Rezerwuj”), niezależnie od dat zmienianych później w pasku */
+  | { status: 'done'; nights: number; results: Result[]; stay: Query }
+
+type Query = BookingQuery & { children: number; ages: number[] }
 
 const AGES = Array.from({ length: 18 }, (_, i) => i)
 
@@ -160,7 +163,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
     setAges((a) => Array.from({ length: n }, (_, i) => a[i] ?? null))
   }
 
-  const query = (extra: { unit?: string; offer?: string } = {}) => ({
+  const query = (extra: { unit?: string; offer?: string } = {}): Query => ({
     arrival: arrival || undefined,
     departure: departure || undefined,
     adults: adults ?? undefined,
@@ -216,15 +219,18 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
       }
       // dom, z którego strony gość szuka, na początku listy
       data.results.sort((a, b) => Number(b.code === unit) - Number(a.code === unit))
-      setSearch({ status: 'done', ...data })
+      setSearch({ status: 'done', ...data, stay: q })
       track('booking_search', { unit, arrival, nights, adults, children, results: data.results.filter((x) => x.offers.length).length })
     } catch {
       setSearch({ status: 'error' })
     }
   }
 
-  const fmt = (d: string) =>
-    new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
+  // pusta albo błędna data nie wywraca strony (format rzuca RangeError przy Invalid Date)
+  const fmt = (d: string | undefined) =>
+    !d || Number.isNaN(Date.parse(`${d}T00:00:00Z`))
+      ? '—'
+      : new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
       day: 'numeric',
       month: 'short',
       timeZone: 'UTC',
@@ -394,7 +400,9 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
         {search.status === 'done' ? (
           <>
             <h3 className="mo-h3">
-              {available.length ? t.results : t.noResults} · {fmt(arrival)} – {fmt(departure)},{' '}
+              {/* daty wyszukiwania, nie paska: po wyborze nowego przyjazdu wyjazd jest pusty, a wyniki dotyczą poprzedniego terminu
+                  (Michał, 23.11.2026: zmiana terminu po pierwszym wyszukiwaniu kończyła się błędem strony) */}
+              {available.length ? t.results : t.noResults} · {fmt(search.stay.arrival)} – {fmt(search.stay.departure)},{' '}
               {nightsLabel(search.nights)}
             </h3>
             <UnitResults
@@ -403,7 +411,7 @@ export function BookingBar({ locale, t, fx, engine, unit, slogan }: Props) {
               locale={locale}
               t={t}
               fx={fx}
-              book={(code, offer) => go({ unit: code, offer })}
+              book={(code, offer) => bookingUrl(engine, locale, { ...search.stay, unit: code, offer })}
             />
             {groupTooBig ? (
               <p className="mo-body-s">

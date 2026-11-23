@@ -22,6 +22,8 @@ import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997e
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { OffersSync as OffersSync_42e1b280466d63055a9ba4f266709427 } from '../../../components/admin/OffersSync'
+import { StatystykiLink as StatystykiLink_0ddea9476aac971184461a9d680611d9 } from '../../../components/admin/StatystykiLink'
+import { Statystyki as Statystyki_31c740b58f07a05f2e3c26db720fd784 } from '../../../components/admin/Statystyki'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { R2ClientUploadHandler as R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d } from '@payloadcms/storage-r2/client'
 
@@ -51,6 +53,8 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "/components/admin/OffersSync#OffersSync": OffersSync_42e1b280466d63055a9ba4f266709427,
+  "/components/admin/StatystykiLink#StatystykiLink": StatystykiLink_0ddea9476aac971184461a9d680611d9,
+  "/components/admin/Statystyki#Statystyki": Statystyki_31c740b58f07a05f2e3c26db720fd784,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/storage-r2/client#R2ClientUploadHandler": R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d
 }

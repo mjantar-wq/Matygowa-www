@@ -74,6 +74,11 @@ export default buildConfig({
   routes: { admin: '/panel' },
   admin: {
     user: Users.slug,
+    components: {
+      afterNavLinks: ['/components/admin/StatystykiLink#StatystykiLink'],
+      // statystyki z GA4 (src/lib/ga4.ts), liczby zdarzeń z GTM
+      views: { statystyki: { Component: '/components/admin/Statystyki#Statystyki', path: '/statystyki' } },
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },

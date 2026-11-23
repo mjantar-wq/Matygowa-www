@@ -54,3 +54,16 @@ Przy przejściu nowej strony na `matygowaosada.pl` usuń z WordPressa Site Kit, 
 - Regulamin to obecny „Regulamin rezerwacji oraz pobytu” z 10.10.2025 bez zmian merytorycznych poza kaucją (decyzja Michała 25.10.2026: brak ogólnej kaucji 1500 zł, kaucja zwrotna 1000 zł tylko przy pobycie ze zwierzęciem, § 9 ust. 1 i 8) i imprez (zakaz bez wyjątków, § 6 ust. 16), plus: § 10 ust. 3 zdanie o prawach konsumentów, § 10 ust. 5 (wersja polska rozstrzyga), § 12 (strona i system rezerwacji, wymóg ustawy o świadczeniu usług drogą elektroniczną). Data „Obowiązuje od” do wpisania przy publikacji. Uwaga: 1.11.2026 regulamin ujednolicono z plikiem „Regulamin pobytu” (nowy § 7, numeracja § 8–13; kaucja za zwierzęta jest teraz w § 10 ust. 1 i 8, zakaz imprez w § 6 ust. 16, odsyłacz w § 9 ust. 8 poprawiony na § 6); § 2 ust. 4, § 3 ust. 2 i § 4 ust. 1 bez zmian numeracji.
 - Do decyzji: § 8 ust. 8 odsyła do „§ 5 ust. 3, 8 i 9”, a chodzi raczej o § 6; § 2 ust. 4 i 6 opisują tylko przelew, a IceColdRes wprowadza płatność online (Stripe) i warunki anulacji z oferty, więc przed uruchomieniem IceColdRes regulamin trzeba z nim zgrać; klauzula sądu właściwego dla siedziby Wynajmującego nie działa wobec konsumentów.
 - Treści są w panelu (Strony i sekcje → regulamin / prywatnosc / cookies), więc poprawki prawnika wpisuje się bez wdrożenia. To nie jest porada prawna: przed startem warto dać trzy dokumenty do przejrzenia prawnikowi.
+
+## Statystyki w panelu
+
+Panel ma widok **Statystyki strony** (`/panel/statystyki`, odnośnik pod menu): goście, sesje, odsłony, wyszukiwania terminu, przejścia do rezerwacji (`booking_click`), kliknięcia w kontakt, sesje dzień po dniu, źródła ruchu, najczęstsze strony oraz podziały `booking_location` i `contact_method`. GTM nie przechowuje danych, więc liczby czytamy z GA4 (Data API, `src/lib/ga4.ts`). Widać tylko gości, którzy zaakceptowali cookies analityczne.
+
+Połączenie (jednorazowo):
+
+1. Google Cloud → projekt → włącz **Google Analytics Data API** → IAM → Konta usługi → utwórz konto → Klucze → Dodaj klucz (JSON).
+2. GA4 → Administracja → Zarządzanie dostępem do usługi → dodaj adres konta usługi (`…iam.gserviceaccount.com`) z rolą **Przeglądający**.
+3. Cloudflare → Workers → `matygowa-www` → Settings → Variables and Secrets: `GA4_PROPERTY_ID` (numer usługi, tekst) i `GA4_SERVICE_ACCOUNT_JSON` (typ **Secret**, cała zawartość pliku JSON).
+4. Podziały „Skąd przejścia do rezerwacji” i „Jak goście się kontaktują” wymagają wymiarów niestandardowych `booking_location` i `contact_method` (krok 2 instrukcji wyżej). Bez nich te dwie tabele są puste, reszta działa.
+
+Bez zmiennych widok pokazuje instrukcję zamiast liczb.

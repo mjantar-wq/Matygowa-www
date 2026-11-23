@@ -1,6 +1,6 @@
 import type { AdminViewServerProps } from 'payload'
 import { Gutter } from '@payloadcms/ui'
-import { fetchStats, ga4Config, type Stats } from '@/lib/ga4'
+import { fetchStats, ga4Setup, type Ga4Problem, type Stats } from '@/lib/ga4'
 
 const PERIODS = [7, 28, 90] as const
 const nf = new Intl.NumberFormat('pl-PL')
@@ -65,7 +65,13 @@ function Chart({ daily }: { daily: Stats['daily'] }) {
   )
 }
 
-function Setup() {
+const PROBLEMS: Record<Ga4Problem, string> = {
+  no_property: 'Brakuje zmiennej GA4_PROPERTY_ID w Workerze.',
+  no_key: 'Brakuje sekretu GA4_SERVICE_ACCOUNT_JSON w Workerze.',
+  bad_key: 'Sekret GA4_SERVICE_ACCOUNT_JSON jest ustawiony, ale nie da się go odczytać jako klucz konta usługi. Wklej od nowa całą treść pliku JSON (od { do }).',
+}
+
+function Setup({ problem }: { problem: Ga4Problem }) {
   return (
     <div style={card}>
       <h3 style={{ margin: '0 0 8px' }}>Statystyki nie są jeszcze połączone z Google Analytics</h3>
@@ -82,13 +88,15 @@ function Setup() {
           usługi trzeba dodać w GA4 (Administracja → Zarządzanie dostępem do usługi) z rolą „Przeglądający”.
         </li>
       </ul>
+      <p style={{ fontWeight: 600 }}>{PROBLEMS[problem]}</p>
       <p style={{ margin: 0 }}>Szczegóły: docs/pomiar.md, część „Statystyki w panelu”.</p>
     </div>
   )
 }
 
 export async function Statystyki({ searchParams }: AdminViewServerProps) {
-  const cfg = ga4Config()
+  const setup = ga4Setup()
+  const cfg = 'config' in setup ? setup.config : null
   const requested = Number(Array.isArray(searchParams?.dni) ? searchParams.dni[0] : searchParams?.dni)
   const days = (PERIODS as readonly number[]).includes(requested) ? requested : 28
 
@@ -124,7 +132,7 @@ export async function Statystyki({ searchParams }: AdminViewServerProps) {
           ))}
         </nav>
       ) : null}
-      {!cfg ? <Setup /> : null}
+      {'problem' in setup ? <Setup problem={setup.problem} /> : null}
       {error ? <div style={{ ...card, borderColor: 'var(--theme-error-500, #c33)' }}>{error}</div> : null}
       {stats ? (
         <div style={{ display: 'grid', gap: 16 }}>

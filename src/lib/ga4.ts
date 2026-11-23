@@ -25,15 +25,27 @@ function parseAccount(raw: string): ServiceAccount | null {
       /* zostaje oryginał */
     }
   }
+  let email: string | undefined
+  let key: string | undefined
   try {
     const account = JSON.parse(text) as ServiceAccount
-    if (!account.client_email || !account.private_key) return null
-    // prawdziwe znaki nowej linii w kluczu (gdy ktoś rozwinął \n przy wklejaniu)
-    account.private_key = account.private_key.replace(/\\n/g, '\n')
-    return account
+    email = account.client_email
+    key = account.private_key
   } catch {
-    return null
+    // pole „Value” w Cloudflare potrafi wstawić surowe znaki nowej linii w środku tekstu, czego JSON.parse nie przyjmuje:
+    // wyciągamy dwa potrzebne pola wprost z tekstu
+    email = /"client_email"\s*:\s*"([^"]+)"/.exec(text)?.[1]
+    key = /"private_key"\s*:\s*"([^"]+)"/.exec(text)?.[1]
   }
+  if (!email || !key) return null
+  // klucz ma być w PEM z prawdziwymi znakami nowej linii (w JSON-ie zapisane jako \n)
+  return { client_email: email, private_key: key.replace(/\\n/g, '\n') }
+}
+
+/** Co wiemy o zapisanym sekrecie, bez ujawniania treści: do komunikatu w panelu. */
+export function ga4KeyHint(): string {
+  const raw = process.env.GA4_SERVICE_ACCOUNT_JSON ?? ''
+  return `długość ${raw.length} znaków, zaczyna się od „${raw.trim().slice(0, 1)}”, kończy na „${raw.trim().slice(-1)}”, zawiera client_email: ${raw.includes('client_email') ? 'tak' : 'nie'}, private_key: ${raw.includes('private_key') ? 'tak' : 'nie'}`
 }
 
 export function ga4Setup(): { config: Ga4Config } | { problem: Ga4Problem } {

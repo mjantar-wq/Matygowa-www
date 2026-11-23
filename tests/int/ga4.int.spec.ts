@@ -19,3 +19,24 @@ describe('ga4Config', () => {
     expect(ga4Config()?.propertyId).toBe('123456')
   })
 })
+
+describe('ga4Config: odporność na sposób wklejenia sekretu', () => {
+  const email = 'a@b.iam.gserviceaccount.com'
+  const set = (raw: string) => {
+    process.env.GA4_PROPERTY_ID = '1'
+    process.env.GA4_SERVICE_ACCOUNT_JSON = raw
+  }
+  it('JSON z surowymi znakami nowej linii w kluczu', () => {
+    set(`{"client_email": "${email}",\n"private_key": "-----BEGIN PRIVATE KEY-----\nAAA\n-----END PRIVATE KEY-----\n"}`)
+    expect(ga4Config()?.account.client_email).toBe(email)
+    expect(ga4Config()?.account.private_key).toContain('\nAAA\n')
+  })
+  it('JSON w base64', () => {
+    set(btoa(JSON.stringify({ client_email: email, private_key: 'k' })))
+    expect(ga4Config()?.account.client_email).toBe(email)
+  })
+  it('sam początek pliku („{”) to nadal błąd', () => {
+    set('{')
+    expect(ga4Config()).toBeNull()
+  })
+})

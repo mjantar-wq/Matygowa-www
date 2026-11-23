@@ -40,3 +40,16 @@ describe('ga4Config: odporność na sposób wklejenia sekretu', () => {
     expect(ga4Config()).toBeNull()
   })
 })
+
+describe('ga4Config: uszkodzony początek i koniec pliku', () => {
+  const email = 'a@b.iam.gserviceaccount.com'
+  const body = 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASC'.repeat(5)
+  it('bez początkowego {" i końcowego } (jak po wklejeniu do Cloudflare)', () => {
+    process.env.GA4_PROPERTY_ID = '1'
+    process.env.GA4_SERVICE_ACCOUNT_JSON = `type": "service_account", "client_email": "${email}", "private_key": "-----BEGIN PRIVATE KEY-----\\n${body}\\n-----END PRIVATE KEY-----\\n", "universe_domain": "googleapis.com"`
+    const cfg = ga4Config()
+    expect(cfg?.account.client_email).toBe(email)
+    expect(cfg?.account.private_key).toContain(body.slice(0, 64))
+    expect(cfg?.account.private_key).not.toContain('\\n')
+  })
+})

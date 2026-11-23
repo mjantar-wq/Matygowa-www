@@ -15,31 +15,34 @@ export type Ga4Config = { propertyId: string; account: ServiceAccount }
 /** Dlaczego statystyki są wyłączone: brak zmiennej, brak sekretu albo sekret, którego nie da się odczytać jako klucz konta usługi. */
 export type Ga4Problem = 'no_property' | 'no_key' | 'bad_key'
 
+/** Adres e-mail konta usługi i treść klucza PEM wyciągnięte z dowolnie pociętego tekstu (brak początkowego „{"”, surowe nowe linie, \\n, cudzysłowy ucięte przy wklejaniu). */
+function extractAccount(text: string): ServiceAccount | null {
+  const email = /[\w.+-]+@[\w.-]+\.iam\.gserviceaccount\.com/.exec(text)?.[0]
+  const pem = /-----BEGIN (?:RSA )?PRIVATE KEY-----([\s\S]*?)-----END (?:RSA )?PRIVATE KEY-----/.exec(text)?.[1]
+  if (!email || !pem) return null
+  // zostaje sama treść base64: bez białych znaków i bez zapisanych tekstem „\n”
+  const body = pem.replace(/\\+n/g, '').replace(/\s+/g, '')
+  if (!/^[A-Za-z0-9+/=]+$/.test(body)) return null
+  return { client_email: email, private_key: `-----BEGIN PRIVATE KEY-----\n${body.match(/.{1,64}/g)!.join('\n')}\n-----END PRIVATE KEY-----\n` }
+}
+
 function parseAccount(raw: string): ServiceAccount | null {
   let text = raw.trim()
-  // sekret wklejony jako base64 albo w cudzysłowie (np. po skopiowaniu z terminala)
-  if (!text.startsWith('{')) {
+  // sekret wklejony jako base64 całego pliku
+  if (!text.includes('PRIVATE KEY')) {
     try {
       text = atob(text.replace(/^"|"$/g, ''))
     } catch {
       /* zostaje oryginał */
     }
   }
-  let email: string | undefined
-  let key: string | undefined
   try {
     const account = JSON.parse(text) as ServiceAccount
-    email = account.client_email
-    key = account.private_key
+    if (account.client_email && account.private_key) return extractAccount(`${account.client_email} ${account.private_key}`) ?? account
   } catch {
-    // pole „Value” w Cloudflare potrafi wstawić surowe znaki nowej linii w środku tekstu, czego JSON.parse nie przyjmuje:
-    // wyciągamy dwa potrzebne pola wprost z tekstu
-    email = /"client_email"\s*:\s*"([^"]+)"/.exec(text)?.[1]
-    key = /"private_key"\s*:\s*"([^"]+)"/.exec(text)?.[1]
+    /* niżej: wyciąganie z tekstu */
   }
-  if (!email || !key) return null
-  // klucz ma być w PEM z prawdziwymi znakami nowej linii (w JSON-ie zapisane jako \n)
-  return { client_email: email, private_key: key.replace(/\\n/g, '\n') }
+  return extractAccount(text)
 }
 
 /** Co wiemy o zapisanym sekrecie, bez ujawniania treści: do komunikatu w panelu. */

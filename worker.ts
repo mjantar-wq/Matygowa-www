@@ -1,6 +1,7 @@
 // Worker strony: obsługa żądań z OpenNext plus zadania zaplanowane (crons w wrangler.jsonc).
 import { MEDIA_PREFIX, serveMedia } from './src/edge/media'
 import { cacheablePage, servePage } from './src/edge/pages'
+import { closedRobots, withRobotsHeader, wwwRedirect } from './src/edge/hosts'
 import { CRON_TOKEN } from './src/lib/cron'
 
 type OpenNext = { fetch: (req: Request, env: CloudflareEnv, ctx: ExecutionContext) => Promise<Response> }
@@ -17,16 +18,22 @@ const handler: OpenNext = {
   },
 }
 
+async function route(request: Request, env: CloudflareEnv, ctx: ExecutionContext): Promise<Response> {
+  const { pathname } = new URL(request.url)
+  if (pathname.startsWith(MEDIA_PREFIX)) {
+    const res = await serveMedia(request, env, ctx)
+    if (res) return res
+  }
+  if (cacheablePage(request)) return servePage(request, env, ctx, handler.fetch)
+  return handler.fetch(request, env, ctx)
+}
+
 export default {
-  // zdjęcia prosto z R2 i strony z bufora (src/edge); reszta jak dotąd przez OpenNext
+  // www → bez www, robots i noindex według adresu (src/edge/hosts.ts); zdjęcia prosto z R2 i strony z bufora (src/edge); reszta jak dotąd przez OpenNext
   async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext) {
-    const { pathname } = new URL(request.url)
-    if (pathname.startsWith(MEDIA_PREFIX)) {
-      const res = await serveMedia(request, env, ctx)
-      if (res) return res
-    }
-    if (cacheablePage(request)) return servePage(request, env, ctx, handler.fetch)
-    return handler.fetch(request, env, ctx)
+    const early = wwwRedirect(request) ?? closedRobots(request, env)
+    if (early) return early
+    return withRobotsHeader(request, env, await route(request, env, ctx))
   },
 
   async scheduled(_event: ScheduledController, env: CloudflareEnv, ctx: ExecutionContext) {

@@ -138,5 +138,15 @@
     "from": "/en/village/cottages/lodowy/",
     "to": "/en/houses/lodowy/",
     "status": 301
+  },
+  {
+    "from": "/sitemap_index.xml",
+    "to": "/sitemap.xml",
+    "status": 301
+  },
+  {
+    "from": "/wp-sitemap.xml",
+    "to": "/sitemap.xml",
+    "status": 301
   }
 ]

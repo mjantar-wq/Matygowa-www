@@ -68,10 +68,35 @@ Bez sekretów CI działa, a krok wdrożenia jest pomijany z ostrzeżeniem.
 - **Zdjęcia** (`src/edge/media.ts`): `/api/media/file/…` idzie prosto z R2 (bez Payloada i D1). `?w=480|828|1200|1600|2048` daje mniejszą kopię AVIF/WebP z bindingu Images (plan Images Free: 5000 unikalnych przekształceń miesięcznie, format się nie liczy), zapisaną w R2 pod `_rozmiary/`. Po przekroczeniu limitu albo przy błędzie idzie oryginał. `<img srcset>` w `Media.tsx`, `HeroStage.tsx` i `Lightbox.tsx`.
 - Na łączu 2G/3G (Chrome) i przy oszczędzaniu danych: bez filmu w tle i mniej zdjęć pobieranych z wyprzedzeniem.
 
+## Start na matygowaosada.pl
+
+Strefa DNS `matygowaosada.pl` jest na koncie Cloudflare Przemka, a Worker na koncie Michała, więc domena wchodzi jak `pms` i `booking` w IceColdRes: przez Custom Hostnames (Cloudflare for SaaS) strefy `audiowizard.pl`, fallback origin `pms-saas.audiowizard.pl`. Nazwy `matygowaosada.pl` i `www.matygowaosada.pl` są tam dodane (TLS 1.2, walidacja TXT).
+
+Co robi kod (PR „Start strony na matygowaosada.pl”):
+
+- trasy `matygowaosada.pl/*` i `www.matygowaosada.pl/*` w strefie `audiowizard.pl` (`wrangler.jsonc`);
+- `www.matygowaosada.pl` → 301 na `https://matygowaosada.pl` ze ścieżką i parametrami (Worker, `src/edge/hosts.ts`);
+- `NEXT_PUBLIC_SITE_URL=https://matygowaosada.pl` i `SITE_INDEXABLE=true` w `vars`: robots.txt, mapa witryny, canonical i hreflang wskazują produkcję; indeksowanie dotyczy tylko tej nazwy;
+- `matygowa.audiowizard.pl` zostaje adresem testowym (zawsze `noindex`, robots.txt zamknięty, panel dalej za Access);
+- stare adresy WordPressa (cała mapa `wp-sitemap.xml` z 24.11.2026) → 301 na nowe odpowiedniki: `content/redirects.json`, test `tests/int/wordpress-redirects.int.spec.ts`; `/sitemap_index.xml` i `/wp-sitemap.xml` → `/sitemap.xml`;
+- ciasteczko zgód (`mo_zgody`) baner zapisuje na domenie nadrzędnej liczonej z adresu strony (`.matygowaosada.pl`), więc silnik `booking.matygowaosada.pl` widzi wybór. `NEXT_PUBLIC_CONSENT_DOMAIN` nie jest potrzebne.
+
+### Kolejność dnia startu (bez przerwy dla gości)
+
+Sprawdzone 24.11.2026 w Cloudflare: po wpisaniu rekordów TXT certyfikaty obu nazw są **Active**, ale status nazwy zostaje **Pending (Error)**: „The hostname is using Cloudflare and cannot be activated with a TXT or HTTP validation token. The DNS target needs to point to the SaaS zone”. Strefa Przemka jest na Cloudflare, więc sama walidacja TXT nie aktywuje nazwy, potrzebny jest CNAME na `pms-saas.audiowizard.pl`. Trasa w Workers Routes dla nazwy w statusie Pending została przez Cloudflare przyjęta (test w panelu, usunięta zaraz po sprawdzeniu), więc scalenie PR przed przestawieniem CNAME jest możliwe. Gdyby CI mimo to odrzuciło trasę, wdrożenie po prostu się nie uda i nic się nie zmienia dla gości.
+
+1. Przemek wpisał rekordy TXT (certyfikaty Active). @ i www dalej na WordPressie.
+2. Michał mówi „scalaj”: scalenie PR, CI wdraża Workera z trasami. Ruch dalej idzie na WordPress, bo DNS się nie zmienił. Sprawdzenie: `matygowa.audiowizard.pl` działa, a w Workers Routes pojawiają się `matygowaosada.pl/*` i `www.matygowaosada.pl/*` z Workerem `matygowa-www`.
+3. Michał dodaje `matygowaosada.pl` i `www` (ścieżki `panel`, `admin`) do aplikacji Cloudflare Access „Panel strony Matygowa”, bez `/api`.
+4. Przemek przestawia `@` i `www` na CNAME `pms-saas.audiowizard.pl` (szara chmurka), usuwając stare rekordy WordPressa. Rekordów poczty (MX, SPF, DKIM) nie ruszamy.
+5. Zaraz po tym Michał w Custom Hostnames klika **Refresh** przy obu nazwach; status zmienia się na **Active** w ciągu kilku minut. Do tego czasu odwiedzający mogą zobaczyć błąd Cloudflare, więc przełączenie robimy w porze małego ruchu.
+6. Testy: strona, `/en`, `www` → 301, kilka starych adresów WordPressa, `/robots.txt` i `/sitemap.xml` z nową domeną, `/panel` za Access, rezerwacja z paska otwiera `booking.matygowaosada.pl`.
+7. Powrót w razie kłopotu: Przemek przywraca dawne rekordy `@` i `www` (WordPress wraca w kilka minut).
+
 ## Do zrobienia przed produkcją
 
 - Cloudflare Access na `/panel` i `/admin` (Payload nie ma własnego 2FA), bez `/api` (obrazy dla gości). Hasła panelu: PBKDF2 100 000 rund (limit Workers), łatka `patches/payload@3.92.0.patch`; przy aktualizacji Payloada sprawdź, czy łatka nadal pasuje.
-- `SITE_INDEXABLE=true` tylko na produkcji (na teście nagłówek `noindex`).
+- `SITE_INDEXABLE=true` jest w `wrangler.jsonc`; indeksowana jest tylko nazwa `matygowaosada.pl`, adres testowy ma zawsze `noindex` i zamknięty robots.txt (`src/edge/hosts.ts`).
 - Zdjęcia obiektów w Okolicy: w Galerii i mediach przefiltruj „Prawa do zdjęcia” = „Czeka na zgodę”. Każde takie zdjęcie albo dostaje zgodę obiektu na piśmie (zmień na „Zgoda obiektu”, w repo `pending` na `granted` w `scripts/media/okolica.py`), albo znika. Na produkcji (`SITE_INDEXABLE=true`) strona i tak ich nie pokazuje. Prośby wysłał Michał 25.10.2026 (Termy Bukovina, Terma Bania, SkyWalk, Kotelnica, Szymoszkowa, PKL, Flisacy, Bielska Jaskinia).
 - Termy Bukovina zgodziły się 18.11.2026 (mail Moniki Gustaw, marketing) na użycie wybranych zdjęć w zakładce „Okolica”, pod warunkiem podania źródła i linku do termybukovina.pl; tylko ta publikacja, bez przekazywania i użycia w innych materiałach. Cztery zdjęcia od nich (`A_termy-bukovina_z1…z4`, prawa „granted”, podpis „Fot. Termy Bukovina · termybukovina.pl”) zastąpiły zdjęcia ze strony obiektu. Na żywo: workflow CI z `import_content` i `import_only=attraction-photos` wgrywa pliki i podmienia tylko zdjęcie główne i galerię tej atrakcji.
 - Opinie z Google (`src/lib/reviews.ts`, cron w poniedziałki i czwartki 4:30 UTC; tylko 5 gwiazdek): klucz API z Google Cloud ograniczony do „Places API (New)”, wpisany jako sekret Workera `GOOGLE_PLACES_API_KEY` (Settings → Variables and Secrets, kiedy nie trwa żadne wdrożenie), oraz Place ID obiektu (z [Place ID Finder](https://developers.google.com/maps/documentation/places/web-service/place-id), zaczyna się od „ChIJ”) w `GOOGLE_PLACE_ID` w `wrangler.jsonc`. Rola menedżera wizytówki nie jest potrzebna, bo opinie są publiczne. Place ID jest już w `wrangler.jsonc`; do działania brakuje tylko sekretu. Google zwraca do 5 opinii na zapytanie, więc baza rośnie z czasem.

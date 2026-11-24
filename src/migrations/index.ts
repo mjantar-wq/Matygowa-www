@@ -44,6 +44,7 @@ import * as migration_20261119_090000_regulamin_bez_przelewu from './20261119_09
 
 import * as migration_20261119_100000_regulamin_anulowanie_2_dni from './20261119_100000_regulamin_anulowanie_2_dni';
 import * as migration_20261122_150000_adres_silnika_booking from './20261122_150000_adres_silnika_booking';
+import * as migration_20261124_090000_polityka_bez_hotres from './20261124_090000_polityka_bez_hotres';
 
 export const migrations = [
   {
@@ -255,5 +256,10 @@ export const migrations = [
     up: migration_20261122_150000_adres_silnika_booking.up,
     down: migration_20261122_150000_adres_silnika_booking.down,
     name: '20261122_150000_adres_silnika_booking'
+  },
+  {
+    up: migration_20261124_090000_polityka_bez_hotres.up,
+    down: migration_20261124_090000_polityka_bez_hotres.down,
+    name: '20261124_090000_polityka_bez_hotres'
   },
 ];

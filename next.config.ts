@@ -7,8 +7,7 @@ import legacyRedirects from './content/redirects.json'
 // Next.js obcina końcowy ukośnik, zanim porówna reguły, więc adresy z WordPressa zapisujemy bez niego
 const noSlash = (p: string) => (p.length > 1 ? p.replace(/\/$/, '') : p)
 
-// Środowisko testowe (matygowa.audiowizard.pl) nie może trafić do wyszukiwarek; produkcja ustawi SITE_INDEXABLE=true.
-const indexable = process.env.SITE_INDEXABLE === 'true'
+// Indeksowanie (noindex na adresie testowym, robots.txt) ustawia Worker w czasie żądania: src/edge/hosts.ts, SITE_INDEXABLE w wrangler.jsonc.
 
 const nextConfig: NextConfig = {
   // przy budowaniu każdy proces Next uruchamia lokalny workerd z tą samą bazą .wrangler/state;
@@ -53,7 +52,6 @@ const nextConfig: NextConfig = {
       {
         source: '/:path*',
         headers: [
-          ...(indexable ? [] : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Strict-Transport-Security', value: 'max-age=31536000' },

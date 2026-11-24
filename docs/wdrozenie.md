@@ -83,16 +83,15 @@ Co robi kod (PR „Start strony na matygowaosada.pl”):
 
 ### Kolejność dnia startu (bez przerwy dla gości)
 
-Trasa Workera dla nazwy, która w Custom Hostnames nie jest **Active**, może zatrzymać wdrożenie z CI (tak ostrzega `docs/wdrozenie.md` w IceColdRes; nie da się tego sprawdzić na sucho, bo `wrangler deploy --dry-run` nie woła API tras). Dlatego PR nie wchodzi przed DNS, a DNS nie przełącza się przed PR:
+Sprawdzone 24.11.2026 w Cloudflare: po wpisaniu rekordów TXT certyfikaty obu nazw są **Active**, ale status nazwy zostaje **Pending (Error)**: „The hostname is using Cloudflare and cannot be activated with a TXT or HTTP validation token. The DNS target needs to point to the SaaS zone”. Strefa Przemka jest na Cloudflare, więc sama walidacja TXT nie aktywuje nazwy, potrzebny jest CNAME na `pms-saas.audiowizard.pl`. Trasa w Workers Routes dla nazwy w statusie Pending została przez Cloudflare przyjęta (test w panelu, usunięta zaraz po sprawdzeniu), więc scalenie PR przed przestawieniem CNAME jest możliwe. Gdyby CI mimo to odrzuciło trasę, wdrożenie po prostu się nie uda i nic się nie zmienia dla gości.
 
-1. Przemek wpisuje **same rekordy TXT** (5 sztuk). `@` i `www` zostają na starym WordPressie, strona działa bez zmian.
-2. Cloudflare → `audiowizard.pl` → SSL/TLS → Custom Hostnames: obie nazwy **Active** (status i certyfikat).
-3. Michał mówi „scalaj”: scalenie PR, CI wdraża Workera (trasy przechodzą, bo nazwy są Active). Ruch dalej idzie do WordPressa, bo DNS się jeszcze nie zmienił.
-4. Sprawdzenie przed przełączeniem: `curl --resolve matygowaosada.pl:443:<IP z `dig pms-saas.audiowizard.pl`> https://matygowaosada.pl/` pokazuje nową stronę.
-5. Michał dodaje `matygowaosada.pl` i `www` (ścieżki `panel`, `admin`) do aplikacji Cloudflare Access „Panel strony Matygowa”, bez `/api`.
-6. Przemek przestawia `@` i `www` na CNAME `pms-saas.audiowizard.pl` (szara chmurka), usuwając stare rekordy A/CNAME WordPressa. Przełączenie trwa chwilę (TTL), potem gości obsługuje nowa strona. Rekordów poczty (MX, SPF, DKIM) nie ruszamy.
-7. Testy po przełączeniu: strona, `/en`, `www` → 301, kilka starych adresów WordPressa, `/robots.txt` i `/sitemap.xml` z nową domeną, `/panel` za Access, rezerwacja z paska otwiera `booking.matygowaosada.pl`.
-8. Powrót w razie kłopotu: Przemek przywraca dawne rekordy `@` i `www` (WordPress wraca w kilka minut).
+1. Przemek wpisał rekordy TXT (certyfikaty Active). @ i www dalej na WordPressie.
+2. Michał mówi „scalaj”: scalenie PR, CI wdraża Workera z trasami. Ruch dalej idzie na WordPress, bo DNS się nie zmienił. Sprawdzenie: `matygowa.audiowizard.pl` działa, a w Workers Routes pojawiają się `matygowaosada.pl/*` i `www.matygowaosada.pl/*` z Workerem `matygowa-www`.
+3. Michał dodaje `matygowaosada.pl` i `www` (ścieżki `panel`, `admin`) do aplikacji Cloudflare Access „Panel strony Matygowa”, bez `/api`.
+4. Przemek przestawia `@` i `www` na CNAME `pms-saas.audiowizard.pl` (szara chmurka), usuwając stare rekordy WordPressa. Rekordów poczty (MX, SPF, DKIM) nie ruszamy.
+5. Zaraz po tym Michał w Custom Hostnames klika **Refresh** przy obu nazwach; status zmienia się na **Active** w ciągu kilku minut. Do tego czasu odwiedzający mogą zobaczyć błąd Cloudflare, więc przełączenie robimy w porze małego ruchu.
+6. Testy: strona, `/en`, `www` → 301, kilka starych adresów WordPressa, `/robots.txt` i `/sitemap.xml` z nową domeną, `/panel` za Access, rezerwacja z paska otwiera `booking.matygowaosada.pl`.
+7. Powrót w razie kłopotu: Przemek przywraca dawne rekordy `@` i `www` (WordPress wraca w kilka minut).
 
 ## Do zrobienia przed produkcją
 
